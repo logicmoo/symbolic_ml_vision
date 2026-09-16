@@ -51,6 +51,8 @@ def deduce2_from_payload(payload: object) -> dict:
     previous_order = payload.get("previousOrder")
     user_action = payload.get("userAction")
     history = payload.get("history") if isinstance(payload.get("history"), dict) else None
+    prior_predictions = payload.get("predictions") if isinstance(payload.get("predictions"), list) else None
+    beliefs = payload.get("beliefs") if isinstance(payload.get("beliefs"), list) else None
     if (isinstance(sequence_id, str) and sequence_id and type(current_order) is int
             and type(previous_order) is int and isinstance(current, dict) and isinstance(previous, dict)):
         width, height = payload.get("width"), payload.get("height")
@@ -87,8 +89,10 @@ def deduce2_from_payload(payload: object) -> dict:
                                  current_order=current_order, previous_order=previous_order,
                                  current_groups=_with_ids(cur_groups, cur_gids),
                                  previous_groups=_with_ids(prev_groups, prev_gids),
-                                 user_action=user_action, history=history)
-    return deduce_two_frames(current, previous, user_action=user_action, history=history)
+                                 user_action=user_action, history=history,
+                                 predictions=prior_predictions, beliefs=beliefs)
+    return deduce_two_frames(current, previous, user_action=user_action, history=history,
+                             predictions=prior_predictions, beliefs=beliefs)
 
 
 # --- recording discovery -------------------------------------------------------------------
@@ -277,6 +281,78 @@ def _trim_result(result: dict) -> dict:
 
 # --- inductive guesses ---------------------------------------------------------------------
 
+def _event_type_key(event: dict) -> str:
+    """Canonical type key for implication mining and prediction matching."""
+    if event.get("category") == "action":
+        return f"user_input({(event.get('args') or ['?'])[0].strip(chr(34))})"
+    return event.get("type")
+
+
+def _load_priors(recording: Path) -> dict:
+    """Prior beliefs from the recording's previous induction.json (historical knowledge).
+    Used to seed implication evidence pooling and to issue next-frame predictions."""
+    path = recording / "induction.json"
+    if not path.is_file():
+        return {}
+    try:
+        prior = json.loads(path.read_text(encoding="utf-8"))
+    except (OSError, ValueError):
+        return {}
+    return prior if isinstance(prior, dict) else {}
+
+
+def _predict_next(priors: dict, events: list, matched_ids: set) -> list:
+    """Predictions for the NEXT transition from prior beliefs and this transition's events.
+
+    * next-frame implications: antecedent observed now => predict the consequent.
+    * per-entity motion beliefs: constant_velocity => moved(e); static => stationary(e).
+    Only beliefs with strength >= 0.6 predict; user input is never predicted.
+    """
+    predictions = []
+    seen = set()
+
+    def add(event, entity, source, tv):
+        key = (event, entity)
+        if key in seen or not tv or tv.get("strength", 0) < 0.6:
+            return
+        seen.add(key)
+        predictions.append({"event": event, "entity": entity, "source": source,
+                            "tv": {"strength": tv.get("strength"), "confidence": tv.get("confidence")}})
+
+    kinds = {_event_type_key(ev) for ev in events
+             if ev.get("category") in ("event", "relation", "action")}
+    entity_events = [(ev["type"], ev["args"][0]) for ev in events
+                     if ev.get("category") in ("event", "relation") and ev.get("args")]
+    for imp in priors.get("implications") or []:
+        if imp.get("delay") != 1:
+            continue
+        consequent = imp.get("consequent") or ""
+        if consequent.startswith("user_input("):
+            continue  # never predict the user's own input
+        if imp.get("binding") == "entity":
+            # DEDUCTION, entity-bound: A(e) observed now => predict B(e) next frame.
+            for (etype, entity) in entity_events:
+                if etype == imp.get("antecedent"):
+                    add(consequent, entity,
+                        f"implies({imp['antecedent']},{consequent},next_frame,entity)", imp.get("tv"))
+            continue
+        if imp.get("antecedent") not in kinds:
+            continue
+        source = f"implies({imp['antecedent']},{consequent},next_frame)"
+        if imp.get("derived"):
+            source += f",derived_via({imp.get('via', '?')})"
+        add(consequent, None, source, imp.get("tv"))
+    for guess in priors.get("guesses") or []:
+        entity = guess.get("entity")
+        if entity not in matched_ids:
+            continue
+        if guess.get("kind") == "constant_velocity":
+            add("moved", entity, "constant_velocity", guess.get("tv"))
+        elif guess.get("kind") == "static":
+            add("stationary", entity, "static", guess.get("tv"))
+    return predictions
+
+
 def _tv(positives: int, total: int) -> dict:
     """NARS/PLN-style truth value from counted evidence: strength is the positive-evidence
     ratio, confidence grows with total evidence (evidential horizon k = 1)."""
@@ -285,12 +361,14 @@ def _tv(positives: int, total: int) -> dict:
             "positives": positives, "negatives": total - positives}
 
 
-def induce(transitions: list[dict]) -> dict:
+def induce(transitions: list[dict], priors: dict | None = None) -> dict:
     """Generalise per-transition observations into inductive hypotheses about the sequence.
 
     Every guess carries counted evidence and a truth value: strength = share of
     observations supporting the pattern, confidence = evidence volume n/(n+1).
     Contradicting observations lower strength instead of silently discarding the guess.
+    Prior beliefs (the previous induction pass) pool their implication evidence into the
+    new counts, and every prediction they issued is scored into predictionOutcomes.
     """
     from collections import Counter
     vectors: dict[str, Counter] = {}
@@ -334,27 +412,40 @@ def induce(transitions: list[dict]) -> dict:
     recurring = [{"kind": "recurring_event", "event": name, "count": count,
                   "tv": _tv(min(count, total_transitions), total_transitions)}
                  for name, count in sorted(events.items()) if count >= 2]
-    implications = _induce_implications(transitions)
+    implications = _induce_implications(transitions, priors)
+    outcomes = [p for step in transitions for p in step.get("predictions", [])]
+    confirmed = sum(1 for p in outcomes if p.get("outcome") == "confirmed")
+    prediction_outcomes = {"tested": len(outcomes), "confirmed": confirmed,
+                           "accuracy": round(confirmed / len(outcomes), 4) if outcomes else None}
+    # Aggregate the per-transition abduced explanations into ranked abducibles.
+    abduced: dict = {}
+    for step in transitions:
+        for h in step.get("abductions", []):
+            key = (h.get("hypothesis"), h.get("explains"), h.get("when"))
+            entry = abduced.setdefault(key, {"count": 0, "tv": h.get("tv") or {}})
+            entry["count"] += 1
+    abductions = [{"kind": "abduction", "hypothesis": a, "explains": b, "when": when,
+                   "count": entry["count"], "tv": entry["tv"]}
+                  for (a, b, when), entry in abduced.items()]
+    abductions.sort(key=lambda item: (-item["count"], item["hypothesis"]))
     return {"guesses": guesses, "recurring": recurring, "implications": implications,
-            "transitions": total_transitions}
+            "abductions": abductions[:30],
+            "predictionOutcomes": prediction_outcomes, "transitions": total_transitions}
 
 
-def _induce_implications(transitions: list[dict]) -> list[dict]:
+def _induce_implications(transitions: list[dict], priors: dict | None = None) -> list[dict]:
     """Induce implications BETWEEN event types from their co-occurrence across transitions.
 
     For every pair of observed event/relation/action types: same-transition implication
     A => B and next-transition implication A => B(t+1), each with a counted-evidence truth
     value (strength = P(B|A), confidence = n/(n+1) over occurrences of A). States are
-    excluded (too common to be informative). Bounded to the strongest 40.
+    excluded (too common to be informative). PRIOR beliefs pool their evidence into the
+    new counts (bounded per pair), so beliefs accumulate across crawler passes instead of
+    resetting. Bounded to the strongest 40.
     """
-    def type_key(event):
-        if event.get("category") == "action":
-            return f"user_input({(event.get('args') or ['?'])[0].strip(chr(34))})"
-        return event.get("type")
-
     frames = []
     for step in transitions:
-        kinds = {type_key(ev) for ev in step.get("events", [])
+        kinds = {_event_type_key(ev) for ev in step.get("events", [])
                  if ev.get("category") in ("event", "relation", "action")}
         frames.append(kinds)
     if len(frames) < 2:
@@ -373,20 +464,103 @@ def _induce_implications(transitions: list[dict]) -> list[dict]:
                 for b in frames[index + 1]:
                     if a != b:
                         successive[(a, b)] += 1
+    # Prior evidence pooling: the previous pass's counted evidence joins this pass's,
+    # capped per pair so no single history dominates forever. Derived (deduced) rules
+    # never pool as observational evidence.
+    prior_evidence = {}
+    for imp in (priors or {}).get("implications") or []:
+        if imp.get("derived"):
+            continue
+        tv = imp.get("tv") or {}
+        pos, neg = tv.get("positives"), tv.get("negatives")
+        if type(pos) is int and type(neg) is int:
+            key = (imp.get("antecedent"), imp.get("consequent"), imp.get("delay"),
+                   imp.get("binding"))
+            prior_evidence[key] = (min(pos, 100), min(pos + neg, 100))
     implications = []
     for (counter, delay) in ((together, 0), (successive, 1)):
         for (a, b), count in counter.items():
             n = occur[a]
             if n < 2:
                 continue
-            tv = _tv(count, n)
+            prior_pos, prior_n = prior_evidence.get((a, b, delay, None), (0, 0))
+            tv = _tv(count + prior_pos, n + prior_n)
             if tv["strength"] < 0.5:
                 continue
             implications.append({"kind": "implication", "antecedent": a, "consequent": b,
-                                 "delay": delay, "support": n, "tv": tv})
+                                 "delay": delay, "support": n + prior_n, "tv": tv})
+    # ENTITY-BOUND induction: A(e) => B(e) for the same entity, a sharper causal rule than
+    # type-level co-occurrence (e.g. collision(e) => bounce(e), not just collision => bounce).
+    entity_frames = []
+    for step in transitions:
+        bound = set()
+        for ev in step.get("events", []):
+            if ev.get("category") in ("event", "relation") and ev.get("args"):
+                bound.add((ev["type"], ev["args"][0]))
+        entity_frames.append(bound)
+    e_occur: Counter = Counter()
+    e_together: Counter = Counter()
+    e_successive: Counter = Counter()
+    for index, bound in enumerate(entity_frames):
+        for (ta, ea) in bound:
+            e_occur[ta] += 1
+            for (tb, eb) in bound:
+                if ea == eb and ta != tb:
+                    e_together[(ta, tb)] += 1
+            if index + 1 < len(entity_frames):
+                for (tb, eb) in entity_frames[index + 1]:
+                    if ea == eb and ta != tb:
+                        e_successive[(ta, tb)] += 1
+    for (counter, delay) in ((e_together, 0), (e_successive, 1)):
+        for (a, b), count in counter.items():
+            n = e_occur[a]
+            if n < 2:
+                continue
+            prior_pos, prior_n = prior_evidence.get((a, b, delay, "entity"), (0, 0))
+            tv = _tv(count + prior_pos, n + prior_n)
+            if tv["strength"] < 0.5:
+                continue
+            implications.append({"kind": "implication", "antecedent": a, "consequent": b,
+                                 "delay": delay, "binding": "entity",
+                                 "support": n + prior_n, "tv": tv})
     implications.sort(key=lambda item: (-item["tv"]["strength"] * item["tv"]["confidence"],
                                         item["antecedent"], item["consequent"], item["delay"]))
-    return implications[:40]
+    implications = implications[:60]
+    # DEDUCTION chains (syllogism): strong A=>B and B=>C derive A=>C with NARS-style
+    # composed truth (s = sA*sB, discounted confidence). Derived rules predict but never
+    # pool back as observational evidence.
+    implications.extend(_derive_chains(implications))
+    return implications
+
+
+def _derive_chains(implications: list[dict]) -> list[dict]:
+    strong = [imp for imp in implications
+              if not imp.get("derived") and not imp.get("binding")
+              and imp["tv"]["strength"] >= 0.8 and imp["tv"]["confidence"] >= 0.7]
+    existing = {(imp["antecedent"], imp["consequent"], imp["delay"]) for imp in implications}
+    derived = []
+    for first in strong:
+        for second in strong:
+            if first["consequent"] != second["antecedent"]:
+                continue
+            a, c = first["antecedent"], second["consequent"]
+            delay = first["delay"] + second["delay"]
+            if a == c or delay > 1 or (a, c, delay) in existing:
+                continue
+            tv1, tv2 = first["tv"], second["tv"]
+            strength = round(tv1["strength"] * tv2["strength"], 4)
+            confidence = round(tv1["confidence"] * tv2["confidence"] * 0.9, 4)
+            if strength < 0.5:
+                continue
+            derived.append({"kind": "implication", "antecedent": a, "consequent": c,
+                            "delay": delay, "support": min(first["support"], second["support"]),
+                            "derived": "deduction",
+                            "via": first["consequent"],
+                            "tv": {"strength": strength, "confidence": confidence,
+                                   "positives": 0, "negatives": 0}})
+            existing.add((a, c, delay))
+    derived.sort(key=lambda item: -item["tv"]["strength"] * item["tv"]["confidence"])
+    return derived[:20]
 
 
 def _render_induction(recording_id: str, induction: dict, sources: list[str],
@@ -432,9 +606,22 @@ def _render_induction(recording_id: str, induction: dict, sources: list[str],
         s, c = tv_of(imp)
         a, b, delay, n = imp["antecedent"], imp["consequent"], imp["delay"], imp["support"]
         when = "same_frame" if delay == 0 else "next_frame"
+        binding = ", entity_bound" if imp.get("binding") == "entity" else ""
+        derived = f", derived(deduction, via({imp['via']}))" if imp.get("derived") else ""
         mt.append(f"(guess (implies {a.replace('_', '-').replace('(', ' ').replace(')', '')} "
-                  f"{b.replace('_', '-').replace('(', ' ').replace(')', '')} ({when.replace('_', '-')})) (tv {s} {c}) (support {n}))")
-        pl.append(f"guess(implies({a}, {b}, {when}), tv({s}, {c}), support({n})).")
+                  f"{b.replace('_', '-').replace('(', ' ').replace(')', '')} ({when.replace('_', '-')}"
+                  f"{' entity-bound' if imp.get('binding') == 'entity' else ''}"
+                  f"{' derived' if imp.get('derived') else ''})) (tv {s} {c}) (support {n}))")
+        pl.append(f"guess(implies({a}, {b}, {when}{binding}{derived}), tv({s}, {c}), support({n})).")
+    for h in induction.get("abductions", []):
+        s, c = tv_of(h)
+        mt.append(f"(guess (abducible {h['hypothesis'].replace('_', '-')} (explains {h['explains'].replace('_', '-')}) "
+                  f"(when {h['when'].replace('_', '-')})) (tv {s} {c}) (count {h['count']}))")
+        pl.append(f"guess(abducible({h['hypothesis']}, explains({h['explains']}), when({h['when']})), tv({s}, {c}), count({h['count']})).")
+    outcomes = induction.get("predictionOutcomes") or {}
+    if outcomes.get("tested"):
+        mt.append(f"(prediction-outcomes (tested {outcomes['tested']}) (confirmed {outcomes['confirmed']}) (accuracy {outcomes['accuracy']}))")
+        pl.append(f"prediction_outcomes({outcomes['tested']}, {outcomes['confirmed']}, {outcomes['accuracy']}).")
     if history:
         mt.append(f"; {len(history)} earlier induction revisions kept in induction.json")
         pl.append(f"% {len(history)} earlier induction revisions kept in induction.json")
@@ -478,7 +665,14 @@ def _induction_history(recording: Path, induction: dict) -> list:
             tv = imp.get("tv") or {}
             entries.append({"kind": "implication", "antecedent": imp.get("antecedent"),
                             "consequent": imp.get("consequent"), "delay": imp.get("delay"),
+                            "binding": imp.get("binding"), "derived": imp.get("derived"),
                             "support": imp.get("support"),
+                            "tv": [tv.get("strength"), tv.get("confidence")]})
+        for h in block.get("abductions") or []:
+            tv = h.get("tv") or {}
+            entries.append({"kind": "abduction", "hypothesis": h.get("hypothesis"),
+                            "explains": h.get("explains"), "when": h.get("when"),
+                            "count": h.get("count"),
                             "tv": [tv.get("strength"), tv.get("confidence")]})
         return entries
 
@@ -486,6 +680,7 @@ def _induction_history(recording: Path, induction: dict) -> list:
         return history
     revision = {"inducedAt": previous.get("inducedAt"),
                 "transitions": previous.get("transitions"),
+                "predictionOutcomes": previous.get("predictionOutcomes"),
                 "beliefs": digest(previous)}
     return (history + [revision])[-12:]
 
@@ -528,6 +723,15 @@ def process_recording(recording: Path, *, pipeline: str = "prolog", stamp_epoch:
     prev_raw = None
     known_entities: set = set()
     prev_velocities: dict = {}
+    # Prior beliefs (previous induction pass) drive next-frame predictions and pool their
+    # evidence into this pass's implications.
+    priors = _load_priors(recording)
+    pending_predictions: list = []
+    prev_event_kinds: list = []
+    # Strong observational beliefs feed per-transition abduction inside the deducer.
+    abduction_beliefs = [imp for imp in priors.get("implications") or []
+                         if not imp.get("binding") and not imp.get("derived")
+                         and (imp.get("tv") or {}).get("strength", 0) >= 0.7][:30]
     metta_sources: list[str] = []
 
     def _needs(paths: list[Path]) -> bool:
@@ -601,7 +805,10 @@ def process_recording(recording: Path, *, pipeline: str = "prolog", stamp_epoch:
                     "width": result["width"], "height": result["height"],
                     "userAction": context.get("incoming_action"),
                     "history": {"knownEntities": sorted(known_entities),
-                                "previousVelocities": prev_velocities},
+                                "previousVelocities": prev_velocities,
+                                "previousEventKinds": prev_event_kinds},
+                    "predictions": pending_predictions,
+                    "beliefs": abduction_beliefs,
                 })
                 transitions.append(deduced)
                 # Feed the next transition's cross-frame detectors (bounce, start/end,
@@ -609,6 +816,11 @@ def process_recording(recording: Path, *, pipeline: str = "prolog", stamp_epoch:
                 prev_velocities = {m["current"]: [m["dx"], m["dy"]] for m in deduced.get("matches", [])}
                 known_entities.update(prev_velocities)
                 known_entities.update(a["current"] for a in deduced.get("appeared", []))
+                prev_event_kinds = sorted({_event_type_key(ev) for ev in deduced.get("events", [])
+                                           if ev.get("category") in ("event", "relation", "action")})
+                # Issue next-frame predictions from prior beliefs given what just happened.
+                pending_predictions = _predict_next(priors, deduced.get("events", []),
+                                                    set(prev_velocities))
                 if wrote_any or _needs([frame_dir / "deductions.pl", frame_dir / "deductions.metta"]):
                     for artifact in deduced.get("files", []):
                         if _write(frame_dir / artifact["name"], artifact["content"]):
@@ -634,9 +846,10 @@ def process_recording(recording: Path, *, pipeline: str = "prolog", stamp_epoch:
                 errors.append({"frame": frame_id, "stage": "metta-sidecar",
                                "file": pl_path.name, "error": str(error)})
 
-    # Inductive guesses across the whole sequence, with counted-evidence truth values and
-    # the prior revision preserved in the historical record.
-    induction = induce(transitions)
+    # Inductive guesses across the whole sequence, with counted-evidence truth values,
+    # prior-evidence pooling, prediction scoring, and the prior revision preserved in the
+    # historical record.
+    induction = induce(transitions, priors)
     induction["inducedAt"] = datetime.now(timezone.utc).isoformat(timespec="seconds")
     history = _induction_history(recording, induction)
     rendered = _render_induction(recording_id, induction, sorted(set(metta_sources)), history)

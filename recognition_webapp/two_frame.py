@@ -243,7 +243,7 @@ def _group_deductions(current_groups, previous_groups, move_by, occluded_e):
     return results
 
 
-def _emit_files(matches, appeared, disappeared, current_order, previous_order, groups=None, suggestions=None, explanations=None, user_action=None, events=None) -> list:
+def _emit_files(matches, appeared, disappeared, current_order, previous_order, groups=None, suggestions=None, explanations=None, user_action=None, events=None, predictions=None, abductions=None) -> list:
     """Emit the cross-frame deductions as MeTTa and Prolog files, using ONLY stable e#
     identities (r# never appears). Hypotheses are written as hypothesis/typed facts with
     confidences so consumers keep them as predictions, not certainties."""
@@ -355,6 +355,27 @@ def _emit_files(matches, appeared, disappeared, current_order, previous_order, g
             matom = ev["type"].replace("_", "-")
             margs = " ".join(ev["args"])
             mt.append(f"({ev['category']} ({matom}{' ' + margs if margs else ''}) (frame {co}))")
+    if predictions:
+        pl.append("% Predictions issued from PRIOR beliefs before seeing this frame, then scored.")
+        mt.append("; Predictions issued from prior beliefs before seeing this frame, then scored.")
+        for p in predictions:
+            tv = p.get("tv") or {}
+            s, c = tv.get("strength", 0), tv.get("confidence", 0)
+            head = f"{p['event']}({p['entity']})" if p.get("entity") else p["event"]
+            pl.append(f"prediction({head}, prior({p.get('source', 'unknown')}), tv({s}, {c}), outcome({p['outcome']}), frame({co})).")
+            matom = p["event"].replace("_", "-")
+            margs = f" {p['entity']}" if p.get("entity") else ""
+            mt.append(f"(prediction ({matom}{margs}) (prior {p.get('source', 'unknown').replace('_', '-')}) (tv {s} {c}) (outcome {p['outcome']}) (frame {co}))")
+    if abductions:
+        pl.append("% Abduced explanations: believed implications whose consequent was observed")
+        pl.append("% without the antecedent; the antecedent is HYPOTHESISED, not observed.")
+        mt.append("; Abduced explanations (hypothesised antecedents, never observations).")
+        for h in abductions:
+            tv = h.get("tv") or {}
+            s, c = tv.get("strength", 0), tv.get("confidence", 0)
+            pl.append(f"abduced({h['hypothesis']}, explains({h['explains']}), when({h['when']}), tv({s}, {c}), frame({co})).")
+            mt.append(f"(abduced {h['hypothesis'].replace('_', '-')} (explains {h['explains'].replace('_', '-')}) "
+                      f"(when {h['when'].replace('_', '-')}) (tv {s} {c}) (frame {co}))")
     return [
         {"name": "deductions.metta", "content": "\n".join(mt) + "\n", "media_type": "text/plain; charset=utf-8"},
         {"name": "deductions.pl", "content": "\n".join(pl) + "\n", "media_type": "text/plain; charset=utf-8"},
@@ -546,11 +567,63 @@ def _detect_events(curr, prev, matches, appeared, disappeared, groups, raw_curr,
     return events
 
 
+def _type_key(event: dict) -> str:
+    if event.get("category") == "action":
+        return f"user_input({(event.get('args') or ['?'])[0].strip(chr(34))})"
+    return event.get("type")
+
+
+def _abduce_transition(beliefs, events, history):
+    """ABDUCTION: when a believed implication's consequent is observed but its antecedent
+    was not, hypothesise the antecedent as a hidden explanation. Strength carries over from
+    the belief; confidence is heavily discounted (an explanation, not an observation)."""
+    if not beliefs:
+        return []
+    kinds_now = {_type_key(ev) for ev in events
+                 if ev.get("category") in ("event", "relation", "action")}
+    prev_kinds = set((history or {}).get("previousEventKinds") or [])
+    abduced = []
+    for belief in beliefs:
+        if not isinstance(belief, dict):
+            continue
+        a, b, delay = belief.get("antecedent"), belief.get("consequent"), belief.get("delay")
+        tv = belief.get("tv") or {}
+        if not a or not b or b not in kinds_now:
+            continue
+        observed_antecedent = a in (kinds_now if delay == 0 else prev_kinds)
+        if observed_antecedent:
+            continue
+        strength = tv.get("strength", 0)
+        confidence = round(tv.get("confidence", 0) * strength * 0.5, 4)
+        abduced.append({"hypothesis": a, "explains": b,
+                        "when": "same_frame" if delay == 0 else "previous_frame",
+                        "tv": {"strength": strength, "confidence": confidence}})
+        if len(abduced) >= 15:
+            break
+    return abduced
+
+
+def _score_predictions(predictions, events):
+    """Score last transition's predictions against what actually happened. Each prediction:
+    {event, entity?, source, tv}; outcome is confirmed when the predicted event type (and
+    entity, when bound) is present in this transition's detected events."""
+    scored = []
+    for prediction in predictions or []:
+        if not isinstance(prediction, dict) or not isinstance(prediction.get("event"), str):
+            continue
+        entity = prediction.get("entity")
+        hit = any(ev["type"] == prediction["event"] and (not entity or entity in ev["args"])
+                  for ev in events)
+        scored.append({**prediction, "outcome": "confirmed" if hit else "refuted"})
+    return scored
+
+
 def deduce_two_frames(current: object, previous: object, *, width: object = None,
                       height: object = None, current_order: object = None,
                       previous_order: object = None, current_groups: object = None,
                       previous_groups: object = None, min_score: float = 1.5,
-                      user_action: object = None, history: object = None) -> dict:
+                      user_action: object = None, history: object = None,
+                      predictions: object = None, beliefs: object = None) -> dict:
     if user_action is not None and (not isinstance(user_action, str) or not user_action
                                     or len(user_action) > 128):
         raise ValueError("user_action must be a nonempty string when provided.")
@@ -738,5 +811,11 @@ def deduce_two_frames(current: object, previous: object, *, width: object = None
     events = _detect_events(curr, prev, matches, appeared, disappeared, groups,
                             raw_curr, raw_prev, history, user_action, width, height)
     result["events"] = events
-    result["files"] = _emit_files(matches, appeared, disappeared, current_order, previous_order, groups, suggestions, explanations, user_action, events)
+    # Predictions issued from prior beliefs after the LAST transition, scored against
+    # what this transition actually shows.
+    result["predictions"] = _score_predictions(predictions, events)
+    # Abduction: hypothesise unobserved antecedents that would explain observed consequents.
+    result["abductions"] = _abduce_transition(beliefs if isinstance(beliefs, list) else None,
+                                              events, history)
+    result["files"] = _emit_files(matches, appeared, disappeared, current_order, previous_order, groups, suggestions, explanations, user_action, events, result["predictions"], result["abductions"])
     return result

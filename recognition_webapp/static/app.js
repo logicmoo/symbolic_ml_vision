@@ -2632,7 +2632,16 @@ async function loadInduction() {
     }
     for (const imp of induction.implications || []) {
       const when = imp.delay === 0 ? "same frame" : "next frame";
-      body.append(line("implication:", `${imp.antecedent} \u21d2 ${imp.consequent} (${when})${tv(imp)} \u00b7 ${imp.support} obs`));
+      const extras = `${imp.binding === "entity" ? " \u00b7 entity-bound" : ""}${imp.derived ? ` \u00b7 deduced via ${imp.via}` : ""}`;
+      body.append(line("implication:", `${imp.antecedent} \u21d2 ${imp.consequent} (${when})${extras}${tv(imp)} \u00b7 ${imp.support} obs`));
+    }
+    for (const h of induction.abductions || []) {
+      body.append(line("abduced:", `${h.hypothesis} would explain ${h.explains} (${h.when.replaceAll("_", " ")})${tv(h)} \u00d7${h.count}`));
+    }
+    const outcomes = induction.predictionOutcomes;
+    if (outcomes?.tested) {
+      body.append(line("predictions from prior beliefs:",
+        `${outcomes.confirmed} / ${outcomes.tested} confirmed (${Math.round(outcomes.accuracy * 100)}%)`));
     }
     if (!body.children.length) {
       body.append(line("no inductive guesses yet.", `${induction.transitions ?? 0} transitions examined.`));

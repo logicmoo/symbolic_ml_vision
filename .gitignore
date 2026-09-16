@@ -4,4 +4,11 @@ data/omega_vision/recordings/*/*/*/*.pl
 data/omega_vision/recordings/*/*/*/*.metta
 data/omega_vision/recordings/*/*/*/*.json
 data/omega_vision/recordings/*/*/*/*/
-
+data/omega_vision/recordings/**
+data/omega_vision/.crawler/crawler.out
+data/omega_vision/.crawler/crawler.out.err
+data/omega_vision/.crawler/produced.jsonl
+data/omega_vision/.crawler/serve_8799.pl
+data/omega_vision/.crawler/source.stamp
+data/omega_vision/.crawler/webservice.out
+data/omega_vision/.crawler/webservice.out.err

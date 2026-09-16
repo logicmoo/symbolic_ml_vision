@@ -16,6 +16,7 @@
 :- use_module(library(http/thread_httpd)).
 :- use_module(library(http/http_dispatch)).
 :- use_module(library(http/http_header)).
+:- use_module(library(http/http_client)).
 :- use_module(library(base64)).
 :- use_module(library(janus)).
 :- use_module(library(option)).
@@ -95,14 +96,15 @@ request_dict(Request, ReqDict) :-
     ( memberchk(request_uri(URI), Request), sub_atom(URI, _, _, A, '?')
     -> sub_atom(URI, _, A, 0, Query0), atom_string(Query0, Query)
     ;  Query = "" ),
-    ( memberchk(host(Host), Request) -> true ; Host = '' ),
+    port_(Port),
+    ( memberchk(host(Host0), Request) -> true ; Host0 = '127.0.0.1' ),
+    ( sub_atom(Host0, _, _, _, ':') -> Host = Host0 ; format(atom(Host), '~w:~w', [Host0, Port]) ),
     ( memberchk(origin(Origin), Request) -> true ; Origin = @(none) ),
     ( memberchk(content_type(CT), Request) -> content_type_atom(CT, CTAtom) ; CTAtom = '' ),
     ( memberchk(transfer_encoding(TE), Request) -> TEval = TE ; TEval = @(none) ),
     ( Method == 'POST'
     -> read_body(Request, Body)
     ;  Body = "" ),
-    port_(Port),
     data_root_(DataRoot),
     ReqDict = _{ method: Method, path: Path, query: Query, body: Body,
                  host: Host, origin: Origin, port: Port,
@@ -117,8 +119,13 @@ content_type_atom(CT, Atom) :-
 content_type_atom(_, '').
 
 read_body(Request, Body) :-
-    catch(http_read_data(Request, Data, [to(string)]), _, Data = ""),
-    ( string(Data) -> Body = Data ; term_string(Data, Body) ).
+    ( catch(http_read_data(Request, Data, [to(string)]), E,
+            ( format(user_error, '[web_service] read_body error: ~w~n', [E]), fail))
+    -> ( string(Data) -> Body = Data
+       ; atom(Data)   -> atom_string(Data, Body)
+       ; term_string(Data, Body) )
+    ;  Body = "" ),
+    ( Body == "" -> format(user_error, '[web_service] read_body: empty body~n', []) ; true ).
 
 emit_response(Resp) :-
     Status = Resp.status,

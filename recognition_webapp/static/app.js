@@ -2748,7 +2748,10 @@ async function loadLearnedScene() {
     const pct = Math.round(scene.coverage * 100);
     const awaiting = scene.framesAwaitingReprocess?.length ? ` \u00b7 ${scene.framesAwaitingReprocess.length} awaiting reprocess` : "";
     const stale = scene.framesStale.length ? ` \u00b7 ${scene.framesStale.length} frames not cached yet` : "";
-    byId("scene-tag").textContent = `Learned scene \u00b7 ${scene.framesUsed.length} frames \u00b7 ${pct}% revealed${awaiting}${stale}`;
+    const mode = scene.mode === "aperture" ? "union of everything the aperture revealed" : "last known position of every entity";
+    byId("scene-tag").textContent = `Scene memory \u00b7 ${scene.framesUsed.length} frames \u00b7 ${pct}% ever seen${awaiting}${stale}`;
+    byId("scene-tag").title = `What the system currently believes the scene looks like after ${scene.framesUsed.length} frames (${mode}). ` +
+      "Occlusion/darkness hides but never erases; areas never observed stay dark.";
     cell.hidden = false;
   } catch {
     if (token === sceneRequest) cell.hidden = true; // no fresh cache yet; the crawler will produce it

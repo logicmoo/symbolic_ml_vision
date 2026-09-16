@@ -254,18 +254,21 @@ def learned_scene(data_root: Path, sequence_id: str) -> dict:
         bg_colors = [color for rid, (color, _) in pixels.items() if rid in background]
         if bg_colors:
             darkness = _hex_rgb(bg_colors[0])
-        for rid, (color, cells) in pixels.items():
-            if rid in background:
-                continue  # darkness occludes; it never erases scene memory
-            rgb = _hex_rgb(color)
-            # A mover VACATES its previous cells: erase this entity's old pixels first so
-            # motion leaves no smeared trail (the wall stays; the box shows only where it
-            # is now known to be). Other entities' remembered pixels are untouched.
-            for y in range(height):
-                row = scene[y]
-                for x in range(width):
-                    if row[x] is not None and row[x][1] == rid:
-                        row[x] = None
+        foreground = [(rid, _hex_rgb(color), cells) for rid, (color, cells) in pixels.items()
+                      if rid not in background]
+        # PURGE on observed absence: an opaque frame observes EVERY pixel. Wherever this
+        # frame shows background (not covered by any foreground entity), remembered content
+        # was seen to be gone - a removed wall must not haunt the scene. Memory survives
+        # only under pixels currently covered by a foreground entity (genuine occlusion).
+        covered = set()
+        for _, _, cells in foreground:
+            covered.update((x, y) for x, y in cells)
+        for y in range(height):
+            row = scene[y]
+            for x in range(width):
+                if row[x] is not None and (x, y) not in covered:
+                    row[x] = None
+        for rid, rgb, cells in foreground:
             for x, y in cells:
                 if 0 <= x < width and 0 <= y < height:
                     scene[y][x] = (rgb, rid)

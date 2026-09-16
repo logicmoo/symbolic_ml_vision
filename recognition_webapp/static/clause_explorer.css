@@ -8,3 +8,14 @@
 #clause-explorer .pce-source-toolbar{height:auto;min-height:37px;flex-wrap:wrap;padding-top:2px;padding-bottom:2px}
 #clause-explorer .pce-tabs{flex-wrap:wrap;overflow:visible;row-gap:2px}
 #clause-explorer .pce-tabs button{min-height:29px;max-width:180px;overflow:hidden;text-overflow:ellipsis}
+
+/* LOCAL THEME: light mode for the whole explorer so it matches the page. The vendored
+   stylesheet hardcodes hundreds of dark hex colors, so instead of chasing every rule the
+   explorer subtree is inverted with hue preserved; embedded images, canvases and color
+   swatches are re-inverted so pictures and object colors stay true. */
+#clause-explorer .pce{filter:invert(1) hue-rotate(180deg)}
+#clause-explorer .pce img,#clause-explorer .pce canvas,#clause-explorer .pce [style*="background-color"],#clause-explorer .pce [data-color-swatch]{filter:invert(1) hue-rotate(180deg)}
+
+/* LOCAL FIX (cont.): the source pane pins its toolbar row to 37px, so wrapped tab rows
+   painted over the source header. Let the toolbar row size to its content. */
+#clause-explorer .pce-source-pane{grid-template-rows:auto minmax(0,1fr) 160px}

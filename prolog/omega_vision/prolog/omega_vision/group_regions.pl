@@ -264,8 +264,45 @@ fully_enclosed(Outer, Inner) :-
     outer_squarish(Outer).
 
 enclosed_inners(Outer, Inners) :-
-    findall(I, in_cutout(I, Outer, _), Is),
+    findall(I, held_inside(I, Outer), Is),
     sort(Is, Inners).
+
+% held_inside: enclosure evidence for glyph/readout content. Either the classic
+% cutout (hole ring) proof, or pocket enclosure for content the extractor could
+% not certify individually (chained fillers, border-clipped last segment).
+held_inside(Inner, Outer) :- in_cutout(Inner, Outer, _).
+held_inside(Inner, Outer) :- pocket_member(Outer, Inner).
+
+% A pocket of Outer is the connected set reachable from Inner without crossing
+% Outer. The set is genuinely held inside Outer when it touches Outer, contains
+% no background, touches the image border only when Outer itself is
+% border-clipped, and is smaller than Outer (a pocket, not the rest of the
+% scene). This certifies chained fillers (green + track) and a last segment
+% clipped by the frame edge, which single-region enclosure can never certify.
+pocket_member(Outer, Inner) :-
+    foreground(Outer),
+    foreground(Inner),
+    Inner \== Outer,
+    pocket_closure([Inner], Outer, [], Cluster),
+    \+ ( member(M, Cluster), background(M) ),
+    \+ ( member(M, Cluster), border(M), \+ border(Outer) ),
+    \+ \+ ( member(M, Cluster), adj(M, Outer) ),
+    region(Outer, _, OuterArea, _),
+    cluster_area(Cluster, PocketArea),
+    PocketArea < OuterArea.
+
+pocket_closure([], _, Acc, Cluster) :- sort(Acc, Cluster).
+pocket_closure([X|Q], Outer, Acc, Cluster) :-
+    ( memberchk(X, Acc)
+    -> pocket_closure(Q, Outer, Acc, Cluster)
+    ;  findall(Y, (adj(X, Y), Y \== Outer, \+ memberchk(Y, Acc)), Ns),
+       append(Q, Ns, Q1),
+       pocket_closure(Q1, Outer, [X|Acc], Cluster)
+    ).
+
+cluster_area(Cluster, Area) :-
+    findall(A, (member(M, Cluster), region(M, _, A, _)), As),
+    sum_list(As, Area).
 
 % glyphy: a square-OUTLINE box whose inside is glyph-like content — two or more
 % enclosed regions, or a single enclosed region with a complex (non-squarish)
@@ -278,16 +315,30 @@ glyphy_enclosure(Outer) :-
     ; Inners = [Single], \+ squarish(Single)
     ).
 
+% HUD readout: an elongated (non-squarish) container whose cutouts hold two or
+% more inner regions — an energy bar, meter, or status strip — is treated like
+% a glyphed box / readout: the container and its segments form ONE W group,
+% with each segment also emitted as a child object. Readout contents nearly
+% fill their frame; a sparse pocket (a playfield holding a few pieces) does not.
+glyphy_enclosure(Outer) :-
+    foreground(Outer),
+    \+ outer_squarish(Outer),
+    enclosed_inners(Outer, Inners),
+    Inners = [_, _|_],
+    cluster_area(Inners, InnerArea),
+    region(Outer, _, OuterArea, _),
+    InnerArea * 2 >= OuterArea.
+
 % Keep a glyphy box and everything inside it as ONE W group (non-old modes).
 glyphy_member(Outer, Inner) :-
     \+ w_engine_mode("old"),
     glyphy_enclosure(Outer),
-    in_cutout(Inner, Outer, _).
+    held_inside(Inner, Outer).
 
 % Each enclosed glyph is also its own child object of the container.
 child_of(Inner, Outer) :-
     glyphy_enclosure(Outer),
-    in_cutout(Inner, Outer, _).
+    held_inside(Inner, Outer).
 
 % Solo pull-out only for a simple single fully-enclosed inner (never glyphy).
 solo_cutout(Inner) :-

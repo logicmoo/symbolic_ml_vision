@@ -48,7 +48,8 @@ def _ident(value):
     return Atom(value) if isinstance(value, str) else value
 
 
-def build_frame_metta(frame: dict, source: dict, width: int, height: int, pipeline: str, prolog: dict, objects: list) -> str:
+def build_frame_metta(frame: dict, source: dict, width: int, height: int, pipeline: str, prolog: dict, objects: list,
+                      context: dict | None = None) -> str:
     scope = ("Frame", _ident(frame["sequenceId"]), _ident(frame["frameId"]))
     lines = [
         "; Process output for this frame only.",
@@ -63,6 +64,12 @@ def build_frame_metta(frame: dict, source: dict, width: int, height: int, pipeli
     emit("imageSize", width, height)
     if source.get("sha256"):
         emit("sourceImageSha256", source["sha256"])
+    # Input evidence recorded alongside the frame (commands, level, game state).
+    for key in sorted(context or {}):
+        value = (context or {})[key]
+        if isinstance(value, bool):
+            value = "true" if value else "false"
+        emit("context", Atom(key), value)
     adjacent = set()
     for part in prolog["parts"]:
         identifier = _ident(part["id"])

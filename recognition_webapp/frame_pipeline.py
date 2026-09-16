@@ -9,6 +9,7 @@ induced across the whole sequence.
 
 import base64
 import json
+import re
 from pathlib import Path
 
 from pipelines import run_pipeline
@@ -47,13 +48,18 @@ def deduce2_from_payload(payload: object) -> dict:
     sequence_id = payload.get("sequenceId")
     current_order = payload.get("currentOrder")
     previous_order = payload.get("previousOrder")
+    user_action = payload.get("userAction")
     if (isinstance(sequence_id, str) and sequence_id and type(current_order) is int
             and type(previous_order) is int and isinstance(current, dict) and isinstance(previous, dict)):
         width, height = payload.get("width"), payload.get("height")
-        track_frame(sequence_id, previous_order, previous.get("objects") or [], width, height)
+        # previousOrder -1 is the virtual EMPTY frame before frame 0: nothing to
+        # track there, so the first real frame deduces pure appearances.
+        virtual_previous = previous_order < 0
+        if not virtual_previous:
+            track_frame(sequence_id, previous_order, previous.get("objects") or [], width, height)
         track_frame(sequence_id, current_order, current.get("objects") or [], width, height)
         cmap = tracker_mapping(sequence_id, current_order)
-        pmap = tracker_mapping(sequence_id, previous_order)
+        pmap = {} if virtual_previous else tracker_mapping(sequence_id, previous_order)
         relabel = lambda objs, m: [{**o, "id": m.get(o.get("id"), o.get("id")), "nativeId": o.get("id")} for o in objs]
         current = {"objects": relabel(current.get("objects") or [], cmap)}
         previous = {"objects": relabel(previous.get("objects") or [], pmap)}
@@ -62,7 +68,7 @@ def deduce2_from_payload(payload: object) -> dict:
                                     for layer in ("G", "W")}
         cur_groups = map_groups(payload.get("currentGroups"), cmap)
         prev_groups = map_groups(payload.get("previousGroups"), pmap)
-        prev_gids = track_groups(sequence_id, previous_order, prev_groups)
+        prev_gids = {} if virtual_previous else track_groups(sequence_id, previous_order, prev_groups)
         cur_gids = track_groups(sequence_id, current_order, cur_groups)
 
         def _with_ids(groups, gids):
@@ -76,8 +82,9 @@ def deduce2_from_payload(payload: object) -> dict:
         return deduce_two_frames(current, previous, width=width, height=height,
                                  current_order=current_order, previous_order=previous_order,
                                  current_groups=_with_ids(cur_groups, cur_gids),
-                                 previous_groups=_with_ids(prev_groups, prev_gids))
-    return deduce_two_frames(current, previous)
+                                 previous_groups=_with_ids(prev_groups, prev_gids),
+                                 user_action=user_action)
+    return deduce_two_frames(current, previous, user_action=user_action)
 
 
 # --- recording discovery -------------------------------------------------------------------
@@ -118,6 +125,61 @@ def _group_members(result: dict, layer: str) -> list[list[str]]:
     return [group["members"] for group in result.get("group_layers", {}).get(layer, [])]
 
 
+# --- input/output contract -------------------------------------------------------------------
+# RESERVED INPUTS are the recording's source evidence. The pipeline NEVER writes or deletes
+# them. GENERATED names are the only files this pipeline creates; any cleanup must remove
+# only names matching the generated manifest and must leave everything else untouched.
+
+RESERVED_INPUTS = ("image.png", "image.jpg", "image.jpeg", "state.json")
+
+_GENERATED_NAMES = ("regions.pl", "groups.pl", "acceptance.pl", "turtles.pl", "context.pl",
+                    "geometry.json", "recognition.json", "deductions.pl",
+                    "induction.json", "induction.metta")
+_GENERATED_PATTERNS = (re.compile(r"^frame-[A-Za-z0-9_.-]+\.metta$"),
+                       re.compile(r"^(regions|groups|acceptance|turtles|context|deductions)\.metta$"))
+
+
+def is_reserved_input(path: Path) -> bool:
+    return path.name.lower() in RESERVED_INPUTS
+
+
+def is_generated(path: Path) -> bool:
+    """True only for files this pipeline itself produces. Reserved inputs are never generated."""
+    if is_reserved_input(path):
+        return False
+    name = path.name
+    return name in _GENERATED_NAMES or any(p.match(name) for p in _GENERATED_PATTERNS)
+
+
+def clean_generated(recording: Path, *, dry_run: bool = True) -> list[Path]:
+    """Delete (or list, when dry_run) ONLY the files this pipeline generated in a recording.
+
+    Never touches reserved inputs (image.png/.jpg, state.json), documentation, or any file
+    the pipeline did not produce. Directories are never removed.
+    """
+    victims = [p for p in sorted(recording.rglob("*")) if p.is_file() and is_generated(p)]
+    if not dry_run:
+        for path in victims:
+            path.unlink()
+    return victims
+
+
+def _frame_context(frame_dir: Path) -> dict:
+    """Scalar input evidence from the frame's reserved state.json (commands, level, game state)."""
+    state_path = frame_dir / "state.json"
+    if not state_path.is_file():
+        return {}
+    try:
+        state = json.loads(state_path.read_text(encoding="utf-8"))
+    except (OSError, ValueError):
+        return {}
+    if not isinstance(state, dict):
+        return {}
+    return {key: value for key, value in state.items()
+            if isinstance(key, str) and re.fullmatch(r"[A-Za-z][A-Za-z0-9_]*", key)
+            and (isinstance(value, (str, bool)) or type(value) in (int, float))}
+
+
 # --- output writing ------------------------------------------------------------------------
 
 def _lf(text: str) -> bytes:
@@ -131,6 +193,9 @@ def _write(path: Path, text: str) -> bool:
     Byte comparison (not text) so a file that is currently CRLF is rewritten as LF even when its
     decoded text is unchanged -- this heals any pre-existing CRLF outputs on the next pass.
     """
+    if is_reserved_input(path):
+        raise ValueError(f"Refusing to overwrite reserved input {path.name}; "
+                         "image.* and state.json are source evidence, never pipeline output.")
     data = _lf(text)
     if path.exists() and path.read_bytes() == data:
         return False
@@ -278,12 +343,16 @@ def process_recording(recording: Path, *, pipeline: str = "prolog", stamp_epoch:
 
     for order, frame_dir in enumerate(frames):
         frame_id = frame_dir.name
+        context = _frame_context(frame_dir)
         expected = [frame_dir / name for name in (
             "regions.pl", "groups.pl", "acceptance.pl", "turtles.pl",
             f"frame-{frame_id}.metta", "geometry.json", "recognition.json")]
+        if context:
+            expected.append(frame_dir / "context.pl")
         try:
             result = run_pipeline({"pipeline": pipeline, "image": {"base64": _image_b64(frame_dir)},
-                                   "frame": {"sequenceId": recording_id, "frameId": frame_id}})
+                                   "frame": {"sequenceId": recording_id, "frameId": frame_id},
+                                   "context": context})
         except Exception as error:  # keep crawling the rest of the sequence
             errors.append({"frame": frame_id, "stage": "recognize", "error": str(error)})
             prev_result, prev_order = None, None
@@ -302,16 +371,27 @@ def process_recording(recording: Path, *, pipeline: str = "prolog", stamp_epoch:
                              "file": (frame_dir / "recognition.json").as_posix(), "kind": "json"})
 
         # Cross-frame deductions vs the previous frame (stable e# identities).
-        if prev_result is not None:
+        # The frame before frame 0 is a virtual EMPTY frame at order -1, so every
+        # object in the first frame is deduced as an appearance.
+        if prev_result is not None or order == 0:
+            if prev_result is not None:
+                previous_payload = {"objects": prev_result["objects"]}
+                previous_groups = {"G": _group_members(prev_result, "G"), "W": _group_members(prev_result, "W")}
+                previous_order = prev_order
+            else:
+                previous_payload = {"objects": []}
+                previous_groups = {"G": [], "W": []}
+                previous_order = -1
             try:
                 deduced = deduce2_from_payload({
                     "sequenceId": recording_id,
                     "current": {"objects": result["objects"]},
-                    "previous": {"objects": prev_result["objects"]},
+                    "previous": previous_payload,
                     "currentGroups": {"G": _group_members(result, "G"), "W": _group_members(result, "W")},
-                    "previousGroups": {"G": _group_members(prev_result, "G"), "W": _group_members(prev_result, "W")},
-                    "currentOrder": order, "previousOrder": prev_order,
+                    "previousGroups": previous_groups,
+                    "currentOrder": order, "previousOrder": previous_order,
                     "width": result["width"], "height": result["height"],
+                    "userAction": context.get("incoming_action"),
                 })
                 transitions.append(deduced)
                 if wrote_any or _needs([frame_dir / "deductions.pl", frame_dir / "deductions.metta"]):

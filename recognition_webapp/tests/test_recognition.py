@@ -546,5 +546,73 @@ class NativePipelineTests(unittest.TestCase):
                 self.assert_recorded_result(second, later, pipeline)
 
 
+class HudReadoutAndInputEvidenceTests(unittest.TestCase):
+    """Regressions for HUD/readout W-grouping and state.json input evidence."""
+
+    HUD_FRAME = DATA_ROOT / "recordings" / "ls20" / "saved_136" / "3"
+
+    def hud_payload(self, **extra):
+        image = base64.b64encode((self.HUD_FRAME / "image.png").read_bytes()).decode("ascii")
+        return {"pipeline": "opencv", "image": {"base64": image},
+                "frame": {"sequenceId": "recordings/ls20/saved_136", "frameId": "3"}, **extra}
+
+    def test_energy_bar_hud_is_one_w_group_with_child_group(self):
+        result = run_pipeline(self.hud_payload())
+        colors = {obj["id"]: obj["color"] for obj in result["objects"]}
+        segments = {i for i, c in colors.items() if c == "#80dafd"}
+        self.assertEqual(len(segments), 3, "expected three cyan energy segments")
+        w_groups = [set(g["members"]) for g in result["group_layers"]["W"]]
+        hud = [g for g in w_groups if segments <= g and any(colors.get(m) == "#aaaaa8" for m in g)]
+        self.assertTrue(hud, "energy bar container + segments must form one W group")
+        whole = max(hud, key=len)
+        self.assertTrue(any(colors.get(m) == "#5b5b5b" for m in whole), "track must join the HUD group")
+        children = [g for g in w_groups if g < whole and segments <= g]
+        self.assertTrue(children, "HUD contents must also be emitted as a child group")
+
+    def test_state_json_context_becomes_input_evidence(self):
+        state = json.loads((self.HUD_FRAME / "state.json").read_bytes())
+        context = {k: v for k, v in state.items() if isinstance(v, (str, int, float, bool))}
+        self.assertEqual(context["incoming_action"], "ACTION3")
+        result = run_pipeline(self.hud_payload(context=context))
+        self.assertEqual(result["context"]["incoming_action"], "ACTION3")
+        context_pl = next(a["content"] for a in result["artifacts"] if a["name"] == "context.pl")
+        self.assertIn('frame_context(incoming_action, "ACTION3").', context_pl)
+        self.assertIn("incoming_action ACTION3", result["metta"]["content"])
+        with self.assertRaisesRegex(ValueError, "context"):
+            run_pipeline(self.hud_payload(context={"bad key!": "x"}))
+
+    def test_first_frame_is_an_appearance_from_virtual_empty_frame(self):
+        from frame_pipeline import deduce2_from_payload
+        objs = [{"id": "r1", "shape_id": "s1", "color": "#ff0000", "area": 64,
+                 "bounds": [10, 10, 8, 8], "hole_count": 0,
+                 "cells": [[x, y] for x in range(10, 18) for y in range(10, 18)]}]
+        deduced = deduce2_from_payload({
+            "sequenceId": "synthetic/appearance-test", "current": {"objects": objs},
+            "previous": {"objects": []},
+            "currentGroups": {"G": [["r1"]], "W": [["r1"]]}, "previousGroups": {"G": [], "W": []},
+            "currentOrder": 0, "previousOrder": -1, "width": 64, "height": 64,
+            "userAction": "ACTION3"})
+        self.assertEqual(deduced["userAction"], "ACTION3")
+        deductions = next(f["content"] for f in deduced["files"] if f["name"] == "deductions.pl")
+        self.assertIn('user_action("ACTION3", from_frame(-1), to_frame(0)).', deductions)
+        self.assertIn("appeared(e1, frame(0)).", deductions)
+
+    def test_reserved_inputs_are_never_written_and_generated_manifest_is_safe(self):
+        from frame_pipeline import _write, clean_generated, is_generated, is_reserved_input
+        frame_dir = self.HUD_FRAME
+        for name in ("image.png", "state.json"):
+            self.assertTrue(is_reserved_input(frame_dir / name))
+            self.assertFalse(is_generated(frame_dir / name))
+            with self.assertRaisesRegex(ValueError, "reserved input"):
+                _write(frame_dir / name, "clobber")
+        self.assertTrue(is_generated(frame_dir / "recognition.json"))
+        self.assertTrue(is_generated(frame_dir / "context.pl"))
+        victims = clean_generated(frame_dir.parent, dry_run=True)
+        self.assertFalse(any(is_reserved_input(v) for v in victims))
+        # dry run must not delete anything
+        self.assertTrue((frame_dir / "image.png").is_file())
+        self.assertTrue((frame_dir / "state.json").is_file())
+
+
 if __name__ == "__main__":
     unittest.main()

@@ -31,21 +31,34 @@ Why no W group:
 The engine is deliberately pixel-adjacency based (`% No bounding boxes are ever used`), so it has
 no notion of "a horizontal run of aligned tiles = a bar".
 
-## Fix options (need review — each changes the shared W engine for ALL recordings)
+## Resolution — implemented (readout/HUD enclosure)
 
-1. **Bar-pattern heuristic (recommended, additive).** Add a narrowly-gated rule that groups a
-   horizontal run of ≥3 small foreground regions of similar height sharing a baseline (optionally
-   near a frame edge) into one W group. Additive (adds W groups, leaves existing ones), but needs
-   bounding-box/alignment geometry, which departs from the current no-bbox design.
-2. **Container-hub grouping.** Treat small foreground regions sitting **on** a larger elongated
-   foreground region as attached to it (a non-cutout analogue of `glyphy_member`). Groups the bar
-   via the grey container as hub; broader blast radius than option 1.
-3. **Relax `crack_gate` for small tiles.** Simplest code change, **highest** regression risk —
-   would group many unrelated touching tiles across every recording.
+The user chose to treat the bar as a **glyphed box / HUD readout**. Implemented in
+`group_regions.pl` as a variant of option 2, wired through the existing glyphy machinery:
 
-## Why not applied autonomously
+- **Pocket enclosure** (`pocket_member/2`, `held_inside/2`): a connected cluster reachable
+  from an inner region without crossing the container is *held inside* it when the cluster
+  touches the container, contains no background, touches the image border only if the
+  container itself is border-clipped, and is smaller than the container. This certifies
+  chained fillers (green + track) and the border-clipped last segment, which the extractor's
+  single-region `encloses/2` ("only neighbour, not on border") can never certify.
+- **Readout enclosure** (new `glyphy_enclosure/1` clause): an elongated (non-`outer_squarish`)
+  foreground container holding ≥2 inners whose combined area fills ≥ half the container's
+  area. The fill-ratio gate keeps sparse pockets (a playfield holding a few pieces, 17%
+  fill) out while the energy bar (86% fill) passes.
+- Both feed the existing `glyphy_member`/`child_of` machinery, so the container + track +
+  segments become **one W group** and the contents are also emitted as a **child group** —
+  differences (segments appearing/disappearing) remain trackable frame to frame.
 
-There is no golden-output test for W-group *contents* (tests assert source metadata only), and the
-change affects grouping across all 793 recordings, which cannot be visually validated without the
-reviewer. Recommend option 1, gated tightly, with before/after spot-checks on a sample of
-recordings once approved.
+Validation: saved_136 frame 3 now yields `[r16,r17,r18,r19,r20,r21]` as one W group with a
+`[r17..r21]` child group; 12 random recordings re-ran with **zero** W-group diffs; regression
+tests added in `recognition_webapp/tests/test_recognition.py`
+(`HudReadoutAndInputEvidenceTests`).
+
+## Original fix options (for the record)
+
+1. **Bar-pattern heuristic.** Horizontal run of aligned tiles — rejected (needs bbox geometry,
+   departs from the no-bbox design).
+2. **Container-hub grouping.** Small regions on a larger elongated container — implemented as
+   the pocket/readout enclosure above, with topological (not bbox) evidence.
+3. **Relax `crack_gate`.** Rejected — highest regression risk.

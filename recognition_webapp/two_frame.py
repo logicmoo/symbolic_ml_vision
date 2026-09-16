@@ -243,7 +243,7 @@ def _group_deductions(current_groups, previous_groups, move_by, occluded_e):
     return results
 
 
-def _emit_files(matches, appeared, disappeared, current_order, previous_order, groups=None, suggestions=None, explanations=None) -> list:
+def _emit_files(matches, appeared, disappeared, current_order, previous_order, groups=None, suggestions=None, explanations=None, user_action=None) -> list:
     """Emit the cross-frame deductions as MeTTa and Prolog files, using ONLY stable e#
     identities (r# never appears). Hypotheses are written as hypothesis/typed facts with
     confidences so consumers keep them as predictions, not certainties."""
@@ -258,6 +258,12 @@ def _emit_files(matches, appeared, disappeared, current_order, previous_order, g
     pl.append("% Predictions/hypotheses are not facts; confidences are rough.")
     mt.append(f"; Cross-frame deductions: frame {po} -> frame {co}.")
     mt.append("; Stable e# identities only. Hypotheses carry confidences; they are not facts.")
+    if user_action:
+        # User-raised input event (e.g. left arrow / ACTION3) received between the two
+        # frames: input evidence on the same timeline as moved/appeared, so rules can
+        # correlate the command with its visible consequences.
+        pl.append(f"user_action({json.dumps(user_action, ensure_ascii=False)}, from_frame({po}), to_frame({co})).")
+        mt.append(f"(user-action {_symbol(user_action)} (from {po}) (to {co}))")
     def hypothesis(entity, value):
         label = value["label"]
         pl.append(f"hypothesis({entity}, {json.dumps(label, ensure_ascii=False)}, confidence({value['confidence']}), frame({co})).")
@@ -348,7 +354,11 @@ def _emit_files(matches, appeared, disappeared, current_order, previous_order, g
 def deduce_two_frames(current: object, previous: object, *, width: object = None,
                       height: object = None, current_order: object = None,
                       previous_order: object = None, current_groups: object = None,
-                      previous_groups: object = None, min_score: float = 1.5) -> dict:
+                      previous_groups: object = None, min_score: float = 1.5,
+                      user_action: object = None) -> dict:
+    if user_action is not None and (not isinstance(user_action, str) or not user_action
+                                    or len(user_action) > 128):
+        raise ValueError("user_action must be a nonempty string when provided.")
     curr = _frame(current)
     prev = _frame(previous)
     scored = []
@@ -525,5 +535,7 @@ def deduce_two_frames(current: object, previous: object, *, width: object = None
         if len(s) >= 2 and not any(s <= cs for cs in cur_group_sets):
             suggestions.append({"members": sorted(s), "reason": "revealed_together", "revealedFrom": rev})
     result["suggestedGroups"] = suggestions
-    result["files"] = _emit_files(matches, appeared, disappeared, current_order, previous_order, groups, suggestions, explanations)
+    if user_action:
+        result["userAction"] = user_action
+    result["files"] = _emit_files(matches, appeared, disappeared, current_order, previous_order, groups, suggestions, explanations, user_action)
     return result

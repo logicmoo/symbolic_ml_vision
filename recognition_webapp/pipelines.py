@@ -114,6 +114,21 @@ def _prepare_prolog_image(image):
     return quantized.convert("RGB"), grid, palette
 
 
+def _render_context_facts(context: dict) -> str:
+    """Render reserved-input evidence (state.json commands etc.) as frame_context/2 facts."""
+    lines = ["% Input evidence from the recording's reserved state.json (source data, not pipeline output)."]
+    for key in sorted(context):
+        value = context[key]
+        if isinstance(value, bool):
+            rendered = "true" if value else "false"
+        elif isinstance(value, str):
+            rendered = '"' + value.replace("\\", "\\\\").replace('"', '\\"') + '"'
+        else:
+            rendered = repr(value)
+        lines.append(f"frame_context({key}, {rendered}).")
+    return "\n".join(lines) + "\n"
+
+
 def run_pipeline(payload: object) -> dict:
     if not isinstance(payload, dict) or payload.get("pipeline") not in ("opencv", "prolog"):
         raise ValueError("Choose the opencv or prolog pipeline.")
@@ -140,6 +155,15 @@ def run_pipeline(payload: object) -> dict:
             any(ord(char) < 32 for char in frame[key]) for key in ("sequenceId", "frameId"))
     ):
         raise ValueError("Frame context must contain nonempty sequenceId and frameId strings.")
+    context = payload.get("context")
+    if context is not None and (
+        not isinstance(context, dict) or
+        any(not isinstance(key, str) or not re.fullmatch(r"[A-Za-z][A-Za-z0-9_]*", key) or
+            not (isinstance(value, (str, bool)) or type(value) in (int, float))
+            for key, value in context.items())
+    ):
+        raise ValueError("context must map identifier keys to scalar str/int/float/bool values.")
+    context = context or {}
     if shutil.which("swipl") is None:
         raise PipelineError("SWI-Prolog is required for this pipeline. Put swipl on PATH.")
     started = time.perf_counter()
@@ -277,7 +301,7 @@ def run_pipeline(payload: object) -> dict:
     fillpoints = {part["id"]: [tuple(point) for point in part["fillpoints"]] for part in prolog["parts"]}
     debug_image = BytesIO()
     _draw_parts_debug(image, polygons, midlines, fillpoints).save(debug_image, format="PNG")
-    metta = build_frame_metta(frame, source, image.width, image.height, mode, prolog, objects)
+    metta = build_frame_metta(frame, source, image.width, image.height, mode, prolog, objects, context=context)
     metta_name = "frame-" + re.sub(r"[^A-Za-z0-9_.-]", "_", frame["frameId"])[:64] + ".metta"
     warnings = [
         "Background and groups are inferred by the original Prolog rules, not the grid editor's background selection.",
@@ -296,9 +320,13 @@ def run_pipeline(payload: object) -> dict:
         {"name": "geometry.json", "media_type": "application/json", "content": json.dumps(
             {"parts": prolog["parts"], "groups": prolog["groups"], "opencv": cv_result}, allow_nan=False, indent=2)},
     ]
+    if context:
+        artifacts.insert(4, {"name": "context.pl", "media_type": "text/plain",
+                             "content": _render_context_facts(context)})
     return {
         "schema_version": 1, "native": True, "pipeline": mode, "stages": stages,
         "source": source, "frame": frame, "width": image.width, "height": image.height,
+        "context": context,
         "metta": {"name": metta_name, "content": metta},
         "preview": base64.b64encode(preview.getvalue()).decode("ascii"),
         "debug_image": base64.b64encode(debug_image.getvalue()).decode("ascii"),

@@ -79,7 +79,7 @@ def main(argv=None) -> int:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--data-root", type=Path,
                         default=Path(__file__).resolve().parent.parent / "data" / "omega_vision")
-    parser.add_argument("--pipeline", choices=("prolog", "opencv"), default="prolog")
+    parser.add_argument("--pipeline", choices=("prolog", "opencv"), default="opencv")
     parser.add_argument("--once", action="store_true", help="Single pass, then exit (no sleep/relaunch).")
     args = parser.parse_args(argv)
 

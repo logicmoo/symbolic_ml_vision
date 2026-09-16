@@ -1,0 +1,18 @@
+{
+  "action_data": {},
+  "action_directory": "18",
+  "action_path": [
+    "18"
+  ],
+  "at_seconds": 4.5,
+  "game_directory": "events_tests",
+  "game_id": "events_tests",
+  "image_hash": "e36015d9b5887598",
+  "incoming_action": "ACTION2",
+  "kind": "synthetic_visual_memory_frame",
+  "level": "1",
+  "parent_node": "../17",
+  "recorded_at": "2000-01-01T00:00:00Z",
+  "state": "NOT_FINISHED",
+  "step_count": 18
+}

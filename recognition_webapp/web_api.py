@@ -20,6 +20,7 @@ from pipelines import PipelineError, capabilities, run_pipeline
 from demos import DemoCatalog
 from expectations import frame_expectations
 from frame_pipeline import deduce2_from_payload, process_recording, find_recordings, source_epoch
+from scene_memory import cached_frame_result, learned_scene
 from tracker import track_frame
 from diff_frames import diff_frames
 from source_syntax import analyze_sources
@@ -122,6 +123,14 @@ def _get(path: str, query: str, data_root: Path) -> dict:
                             "frames": frames, "processed": processed,
                             "outputsUpdated": marker.stat().st_mtime if processed else 0})
         return _json(200, {"recordings": listing, "sourceEpoch": source_epoch()})
+    if path == "/omega_vision/api/v1/scene":
+        params = _query_params(query)
+        if len(params.get("sequence", [])) != 1:
+            return _json(422, {"error": "Choose a recording sequence for the learned scene."})
+        try:
+            return _json(200, learned_scene(data_root, params["sequence"][0]))
+        except ValueError as error:
+            return _json(422, {"error": str(error)})
     if path in ("/omega_vision/api/v1/demos", "/omega_vision/api/v1/demos/frame", "/omega_vision/api/v1/demos/expectations"):
         try:
             demos = DemoCatalog(data_root)
@@ -212,7 +221,9 @@ def _post(path: str, body: bytes, content_type: str, transfer_encoding: str | No
     # Recognition is stateless and thread-safe; the threading host serves requests concurrently.
     try:
         if isinstance(payload, dict) and payload.get("pipeline") in ("opencv", "prolog"):
-            result = run_pipeline(payload)
+            # Prefer the crawler's cached symbolic artifacts; stale caches (older than the
+            # source stamp or the reserved inputs) are invalid and fall through to a live run.
+            result = cached_frame_result(payload, data_root) or run_pipeline(payload)
         elif isinstance(payload, dict) and payload.get("pipeline", "geometry") == "geometry":
             result = recognize(payload)
         else:

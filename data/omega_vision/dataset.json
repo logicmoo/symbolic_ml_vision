@@ -170,6 +170,8 @@
   "evaluation/events_tests/split/expected_events.json": "1bc7d71d648b3961b2b47548687453568b9dbc4bc4c69939f74140b886662434",
   "evaluation/events_tests/spotlight_action_modes_click/evaluation.json": "f1b32a3b7ada6acedfc98c31aceec63ea84cfe3a5a6161ed4f7e7c28283c49a2",
   "evaluation/events_tests/spotlight_action_modes_move/evaluation.json": "9c8b5f7473ca941c4418242790be4055aff3405b0bd5a9646b00431664dd6753",
+  "evaluation/events_tests/spotlight_arrows_control_partial/evaluation.json": "56f82fc44e47e07dc5b901008791a6018b442dd80306a1c5ef02d8ffc062f671",
+  "evaluation/events_tests/spotlight_arrows_train_a/evaluation.json": "150bb8d73111a0b42fad28388cce595a07b051734f2aaf3039af087ac961d6b2",
   "evaluation/events_tests/spotlight_scene_control_partial/evaluation.json": "72b677b00518ca552828dbd1ad6d7b644044d2104b1497c2129e93d4a532f566",
   "evaluation/events_tests/spotlight_scene_control_revisit/evaluation.json": "8791d5fa10c6168c8cd8c855cf4ea00c22d23d3b31770dd8a2f270265ccfd758",
   "evaluation/events_tests/spotlight_scene_test_a/evaluation.json": "308761c5ffe401a83a55f20af2a7b9ce23efffa03214305cd7dce93338adb98d",
@@ -191,6 +193,7 @@
   "evaluation/events_tests/teleporter_validation_reverse_lines_v2/evaluation.json": "8c02e139bee931cc7473b37487949c40b56207e5e02d3c88a57dc46b279cfcc5",
   "evaluation/events_tests/turned/expected_events.json": "297ebf4bd8f9374edd470aa8af8249d3e934443ccd6076f71f5410bfcfaa86ed",
   "evaluation/events_tests/unknown/expected_events.json": "677962315073a3305a68841362ffd51d15cc9603c214518df5617471dc15af43",
+  "evaluation/ls20/saved_136/evaluation.json": "71f90b19a576fa2e279e3af21f95def3234fc90b541b11474e3304f63dd65f96",
   "evaluation/symbolic/attachment_missing_mask_keeps_episode.json": "b785902ae7eadb51e283c9c2b0a406856ac92292e97dae1fab7790cc2d917801",
   "evaluation/symbolic/blocked_clear_success_ends.json": "7676b6df858b6f8f1189b21446d48c3ac285a2198eebb20289f5ae23457308df",
   "evaluation/symbolic/blocked_pause_does_not_end.json": "f3bd9f5ce795346be21269cb0a8205d9202c61f7b57b31237e28e60f0fe0396b",
@@ -256,6 +259,7 @@
   "evaluation/symbolic/unknown_relation_never_ends.json": "7795782c344f0ce51bff3bca8f4f48ff92071711f7fffea6f265e6228fc97099",
   "evaluation/symbolic/unmatched_border_not_entry.json": "401d803e64bf3bc592e1300552156a99386d89567f70ff197680c577f9f1648b",
   "evaluation/symbolic/valid_proposal_is_not_evidence.json": "383fdb0b8835fa80691d111fae10d7a887ba0f2460549669c4469ef15b5b08ec",
+  "evaluation/synthetic/occlusion_sweep/evaluation.json": "f6d2ddc726cc2a01ac6af9724e223cdf6f243da2e277493e0cfcba9b71a5d160",
   "recordings/events_tests/accelerated/0/image.png": "f22d75a4f02aea8de982bb402e6a034383d0019622ec6966c2e79d1c64bc8862",
   "recordings/events_tests/accelerated/0/state.json": "178fd37b5018f3c3271b39009dc5a20a4bfee853c3b0b3c02f531348ff80e02e",
   "recordings/events_tests/accelerated/1/image.png": "ecb1e19fae39aecad140675434c906adf7ba7c211612a08dc8d2a51d40ff9042",
@@ -759,6 +763,7 @@
   "recordings/events_tests/documentation/shape_changed.md": "acbcd6b7277202cc2e29247d563e73f7da670b9d93a7cfc55d6ddba49031a529",
   "recordings/events_tests/documentation/split.md": "064a85bf7accdb1174edc60850f545a36e0b94a114ad532a3c24d6c16f46550f",
   "recordings/events_tests/documentation/spotlight_action_modes.md": "5a8dbdd1dc52b7055d76e9f8c9a6d31e1281a1e799a920fdbdded032c7e1a030",
+  "recordings/events_tests/documentation/spotlight_arrows.md": "51310a5ae7be10227a189646f26502946d38a32649ad4e7e504506e64a1d0a03",
   "recordings/events_tests/documentation/spotlight_scene.md": "badf8998711934d1217dfda76d8984d6005fce39ca31269ff4d06adf51d9aac9",
   "recordings/events_tests/documentation/stairs_gravity.md": "9be2d1df89860bf447df8394d1045c01df98168e8f6beeed094660aebc22d4f0",
   "recordings/events_tests/documentation/teleporter.md": "a2a394fa7c32f7afab655e32e765c470f3adb5902a4efb17865436ee6f2bcf35",
@@ -5720,6 +5725,70 @@
   "recordings/events_tests/spotlight_action_modes_move/9/image.png": "4a1b79eee015152b056e3d28700227b51a75da7f3269a13d3a28e3b339423d36",
   "recordings/events_tests/spotlight_action_modes_move/9/state.json": "96352cb4b34943a50534bdb378ba62f04279cf2a864b0e0a16f08cf8a8322929",
   "recordings/events_tests/spotlight_action_modes_move/recording.json": "475fbe1d3019a6a68f7bd2d2145bd814ab06b1bd5b091699ecf8a6dd7d1270f8",
+  "recordings/events_tests/spotlight_arrows_control_partial/0/image.png": "173d8542fb428d51ddfb950ce061e4206c4175b7ad87a405d0dd557dc2f8aa6c",
+  "recordings/events_tests/spotlight_arrows_control_partial/0/state.json": "8e1a01182fee592866060aab19fb364bd108b173fbf23ee13a66e2512e1bf913",
+  "recordings/events_tests/spotlight_arrows_control_partial/1/image.png": "a2584b780014bc21da3856727be54676e772173fadac63997aee92fa9ec99399",
+  "recordings/events_tests/spotlight_arrows_control_partial/1/state.json": "dd4e811d4e26dc07b0ced838c487cfe5c193c6c174d492c782ae912c5be126c6",
+  "recordings/events_tests/spotlight_arrows_control_partial/2/image.png": "1ca47b84eb82d3b806a847e72e3130ea1c28f4653c783fdaa4f70740af1747c9",
+  "recordings/events_tests/spotlight_arrows_control_partial/2/state.json": "a74113e0ad6683fda42847c71733363e093e2c87464f9414f458fb3d0ee5059b",
+  "recordings/events_tests/spotlight_arrows_control_partial/3/image.png": "5f837bbb23a612944524b618af6f89fef0802cc052a3145d6bfbc62ef812f8e9",
+  "recordings/events_tests/spotlight_arrows_control_partial/3/state.json": "f3c3e03d2b9c64635200a03ad772f5e05c09f20d614812dd04cf9e4fdeab3b58",
+  "recordings/events_tests/spotlight_arrows_control_partial/4/image.png": "54eb5bc354adbe329b22e6fba8ef1e41a42ffba035f08a26e132a786f9ed4109",
+  "recordings/events_tests/spotlight_arrows_control_partial/4/state.json": "f73eaab64862a8eecce75390e43fe6b40de712fcd191e6504ae0ec1c5dbbb1a6",
+  "recordings/events_tests/spotlight_arrows_control_partial/5/image.png": "a2584b780014bc21da3856727be54676e772173fadac63997aee92fa9ec99399",
+  "recordings/events_tests/spotlight_arrows_control_partial/5/state.json": "363a71edc8e01ffb481e83bd96ee84d4106c9be881b47f894c12a47fad18f96e",
+  "recordings/events_tests/spotlight_arrows_control_partial/6/image.png": "1ca47b84eb82d3b806a847e72e3130ea1c28f4653c783fdaa4f70740af1747c9",
+  "recordings/events_tests/spotlight_arrows_control_partial/6/state.json": "4ada36356ed8f8972bd87fd0544d765b10cacf5f68635b0830792fd1526ed0e4",
+  "recordings/events_tests/spotlight_arrows_control_partial/recording.json": "7d9c6edc44a02cebcd28e9d152db85961caf221de8e6fd354aaf73a213c6c9cc",
+  "recordings/events_tests/spotlight_arrows_train_a/0/image.png": "173d8542fb428d51ddfb950ce061e4206c4175b7ad87a405d0dd557dc2f8aa6c",
+  "recordings/events_tests/spotlight_arrows_train_a/0/state.json": "8e1a01182fee592866060aab19fb364bd108b173fbf23ee13a66e2512e1bf913",
+  "recordings/events_tests/spotlight_arrows_train_a/1/image.png": "a2584b780014bc21da3856727be54676e772173fadac63997aee92fa9ec99399",
+  "recordings/events_tests/spotlight_arrows_train_a/1/state.json": "dd4e811d4e26dc07b0ced838c487cfe5c193c6c174d492c782ae912c5be126c6",
+  "recordings/events_tests/spotlight_arrows_train_a/10/image.png": "54eb5bc354adbe329b22e6fba8ef1e41a42ffba035f08a26e132a786f9ed4109",
+  "recordings/events_tests/spotlight_arrows_train_a/10/state.json": "8035b12bec00ea9172f17466b7b9571145db64b60717ea7e6e4d176323bdb880",
+  "recordings/events_tests/spotlight_arrows_train_a/11/image.png": "fc6c7e17a98891ea5d984a86bc2c0e15744d7bb6d47256f8c931e3582a6a66ec",
+  "recordings/events_tests/spotlight_arrows_train_a/11/state.json": "b0671d8fd7e6751441d2daea0c0fca901c4e16326a0d1d107c44707eceecadba",
+  "recordings/events_tests/spotlight_arrows_train_a/12/image.png": "aaf478a5e49628e99ffd15cbe26a4a74baa0952bca56b9b3ef90345d67e47e65",
+  "recordings/events_tests/spotlight_arrows_train_a/12/state.json": "792ae8929d798f1b2d95baaf0099ea69d749f288ba88e8e5756a1918e2cf85e1",
+  "recordings/events_tests/spotlight_arrows_train_a/13/image.png": "b0563206690b94c3917422c0175c4e723c2164f851dd3876d8025ab6bd4e74a5",
+  "recordings/events_tests/spotlight_arrows_train_a/13/state.json": "50caca5db526d9b6ddae7d865876a4976f51a0208f6c2f40f8163c70afff4fd4",
+  "recordings/events_tests/spotlight_arrows_train_a/14/image.png": "161abffd2b2a2a0bc611802fe93f53e0e5eb334fe18aa5c291f1b4460228c85f",
+  "recordings/events_tests/spotlight_arrows_train_a/14/state.json": "d3d10ffc005893ab173f1dba2b6d5bdb6e49c8f4c23d0eb3ff07972291eee38c",
+  "recordings/events_tests/spotlight_arrows_train_a/15/image.png": "4847602ca0f44807ae5f226410ac03babf2bb3388188bf7c982802abece4b10b",
+  "recordings/events_tests/spotlight_arrows_train_a/15/state.json": "6eb80599e45d670b3f3800885ac4a178ba64faaf51e1b0e7300c5add3a4b90c7",
+  "recordings/events_tests/spotlight_arrows_train_a/16/image.png": "a7b99ac8c48cf65b6c7d895d2793b1a68d5f1dfb1712d24e79918069133900c1",
+  "recordings/events_tests/spotlight_arrows_train_a/16/state.json": "4e0a80459fb9a8d689263198624cf3dceb11716adcf789aba05e9c64fb09fbe2",
+  "recordings/events_tests/spotlight_arrows_train_a/17/image.png": "0075f04316c8b79eb182ecea8f99da91bc4258384af3121537d16c57b12e210f",
+  "recordings/events_tests/spotlight_arrows_train_a/17/state.json": "66ce54edb7fce1882644891e8c2c8af92e6625e55ff8ebbd9009b279ba870bbd",
+  "recordings/events_tests/spotlight_arrows_train_a/18/image.png": "e36015d9b5887598025bc1d003168105fcaac7c23621608b19de7a67403190ed",
+  "recordings/events_tests/spotlight_arrows_train_a/18/state.json": "28211c03ce553207e54d2f8af101875be1716f262f2ac6dab479ea85df1ee78e",
+  "recordings/events_tests/spotlight_arrows_train_a/19/image.png": "5b9c4bfbc2f3006bd50a6fc67e3449ea95e1c367b8266fc90395bbdf9d194dc3",
+  "recordings/events_tests/spotlight_arrows_train_a/19/state.json": "f40c153c3768a8c91e1f4edee6e9b6154c7eea2b522449a7313e1b7c26a8bbee",
+  "recordings/events_tests/spotlight_arrows_train_a/2/image.png": "1ca47b84eb82d3b806a847e72e3130ea1c28f4653c783fdaa4f70740af1747c9",
+  "recordings/events_tests/spotlight_arrows_train_a/2/state.json": "a74113e0ad6683fda42847c71733363e093e2c87464f9414f458fb3d0ee5059b",
+  "recordings/events_tests/spotlight_arrows_train_a/20/image.png": "c87a89f3791760854856829cf3923049a402d57c72f37fb95cdd604a1747dc00",
+  "recordings/events_tests/spotlight_arrows_train_a/20/state.json": "82a85b2e957ad53b314b39a151864c12852ab67bb2d0ea11a59ea5b4801495b0",
+  "recordings/events_tests/spotlight_arrows_train_a/21/image.png": "14ed858de42dd5a623fcc0d1adadd1211795d7f343bd5311f8a7d34c6d013b21",
+  "recordings/events_tests/spotlight_arrows_train_a/21/state.json": "5d2db42116f0fedec04d6ca493155ab500f5fc4489cdc3e60014852b9b8e57c5",
+  "recordings/events_tests/spotlight_arrows_train_a/22/image.png": "06c5dbf822520e2eb10d80dfdbeb8498f899057cdeaa06240cc79c6f219a5378",
+  "recordings/events_tests/spotlight_arrows_train_a/22/state.json": "0005adbf015b9a1c829572529f077583613320a48cb407f640aa4ff6d0484b00",
+  "recordings/events_tests/spotlight_arrows_train_a/23/image.png": "4f15dadeab413735131d6e8b25b22593e3a564dd36f38d32dce32b15d03d3066",
+  "recordings/events_tests/spotlight_arrows_train_a/23/state.json": "7642df642f2069818ebbd66bf12ecf273170f55a77f765c3a4a2a012ee234783",
+  "recordings/events_tests/spotlight_arrows_train_a/3/image.png": "3639f381b322d9841a3a666709559bef16e610677e3179aee29c7ab6bbf9ff3c",
+  "recordings/events_tests/spotlight_arrows_train_a/3/state.json": "bf896ca3e946fe126e57c4f33ce58a532111404e92f15709b99f0d5227ccc0d6",
+  "recordings/events_tests/spotlight_arrows_train_a/4/image.png": "a0e5a0484909d8dc72fcb4b9b05fb00c955abd8d4c0b2a19be60a9f7ef4cf840",
+  "recordings/events_tests/spotlight_arrows_train_a/4/state.json": "9fd608947baa0f99207fe0a887ae7ad46ea9033fbe1ac47062c792db7d7f7a77",
+  "recordings/events_tests/spotlight_arrows_train_a/5/image.png": "bfa05a14b20917e813dc9b8346cf484946c7d26ce7900e74392591a863dc9200",
+  "recordings/events_tests/spotlight_arrows_train_a/5/state.json": "34919d1ad679119b192e83c1187ed178a4022f10fb3b8e0bc47996313ec21fc7",
+  "recordings/events_tests/spotlight_arrows_train_a/6/image.png": "3865d4c48a8d063bf1270a02515a09ff35e3618ad1b2c86c35b8d42c610b8bb7",
+  "recordings/events_tests/spotlight_arrows_train_a/6/state.json": "1652fa6ff2466757d44a5441849fa2962332f13a47e55a0ddd8037617dd73cb8",
+  "recordings/events_tests/spotlight_arrows_train_a/7/image.png": "b08375d9ff39558d538e67a3ab68ce1d3f73409766ae085108f655b414320b3d",
+  "recordings/events_tests/spotlight_arrows_train_a/7/state.json": "456ebda6f05ea22e34f9fba7af8ad28e16e7ff612ebdb24014de4975a560f0d1",
+  "recordings/events_tests/spotlight_arrows_train_a/8/image.png": "dc50cf62fcb80837369058db1c10b2695d954efdfdcefc647e580ce1a6a43162",
+  "recordings/events_tests/spotlight_arrows_train_a/8/state.json": "06bd3a6f0766f91dd6b08e382fe068d6b7808e0eb76e3827ae5a7e85a8ec90f3",
+  "recordings/events_tests/spotlight_arrows_train_a/9/image.png": "5f837bbb23a612944524b618af6f89fef0802cc052a3145d6bfbc62ef812f8e9",
+  "recordings/events_tests/spotlight_arrows_train_a/9/state.json": "4b02a9d1bd6904889f3c66cec09ce2949da76705254521da0cb27368a10c311d",
+  "recordings/events_tests/spotlight_arrows_train_a/recording.json": "8ca593f9da1dbc9b3335f6871ceed2b9ef671aef4a0b621a8be398224c56b2da",
   "recordings/events_tests/spotlight_scene_control_partial/0/image.png": "5993951fdfbe669a665e2113f75b373de9f87566f5b9d5b28d9394fdc4244171",
   "recordings/events_tests/spotlight_scene_control_partial/0/state.json": "f497c853315297d9a128079c93971a99d5f2c6175dc2ee465a6bd228121952c7",
   "recordings/events_tests/spotlight_scene_control_partial/1/image.png": "3658c9076cb7fb676b5841cf8b52dc366160a81ca202fa8803dc01855240c36a",
@@ -6949,6 +7018,52 @@
   "recordings/events_tests/unknown/2/state.json": "3a7f33bc7f710434a72e1f2047580529ef3c9780439158e0cbd12821493f45ec",
   "recordings/events_tests/unknown/recording.json": "9b81155a054587e5c0189b4ab08cbdeaf9191516e70daa6a10ca668498e00eab",
   "recordings/events_tests/visual_memory_tests.json": "ac21e3288da4e8986b207a76c6ed92a69988fc93a4c76c17a358f4622e87e6bd",
+  "recordings/ls20/documentation/ls20_occlusion.md": "4667eae2f996fdfec8251580406b2ef1db615075e252e828dd75103747ec6979",
+  "recordings/ls20/saved_136/0/image.png": "9c879087889c0adeabaaf8b3371ab58168d9a14bc1dd1758fcfa95ff9cad2dfd",
+  "recordings/ls20/saved_136/0/state.json": "b7791772c85002f25fd9fc388b00bc528b1fa4d6e42800bade3dfa2fd1c3717e",
+  "recordings/ls20/saved_136/1/image.png": "c8aac72598f024fd4d8127195cb331500457a836281732d4436082b3d8436723",
+  "recordings/ls20/saved_136/1/state.json": "5bd1a0e99ef99a6527370905a03b2af674cbe1461e4e695e3671eed3179c0716",
+  "recordings/ls20/saved_136/10/image.png": "845263b79b90fcd75c63eafb7e5ca7328068757a11ed477c63e56d45c29ffcc9",
+  "recordings/ls20/saved_136/10/state.json": "ca0ec0723e14355496d8acaeb79361ea279eca7aafdc60ffaf56644159bd3619",
+  "recordings/ls20/saved_136/11/image.png": "7659d86a8094da7044c54817be86836ca26c0d93e13090de1a75e69c4187bcad",
+  "recordings/ls20/saved_136/11/state.json": "790be43a46b2f52ac9914002fa131065fb737115953825ccfc8eac7cee2598bf",
+  "recordings/ls20/saved_136/12/image.png": "081cfa65124f604b2b468f0cd6ec763269bac77ebc5bfdf7af7abe44ed5fa145",
+  "recordings/ls20/saved_136/12/state.json": "85140a4704e39f4d469f3f400d238e755c7c1249187ac6b09bafe101028e0349",
+  "recordings/ls20/saved_136/13/image.png": "7e264c1b99b773f1673193c1d9b58a42697a7c2a0bdf704aa93950bd327c01a6",
+  "recordings/ls20/saved_136/13/state.json": "d0134cb98419e0d1e6ca1f54190b2053ff6351d393eed1d0be5270ce0c7623d5",
+  "recordings/ls20/saved_136/2/image.png": "256a4d182c9894fb113925a373b99b11b15a556fc1fa0fefdb761153a203337e",
+  "recordings/ls20/saved_136/2/state.json": "46e0138413a03c6ad8d50298828ac75332989e3524f3ecf6fcfe242aab2e3293",
+  "recordings/ls20/saved_136/3/image.png": "dc12b25accade37f8f934f557c198c43705a849eb7bffb7a9f5dcb65c8a76605",
+  "recordings/ls20/saved_136/3/state.json": "940e0ba4203e656b3c3bc098746a6419aa5ddfd9ebeee1331322f13689d74184",
+  "recordings/ls20/saved_136/4/image.png": "fd2cac41b56dccd8a9738bdea9e6920b2675cf518843d303496cec399657b35c",
+  "recordings/ls20/saved_136/4/state.json": "6e5224c2d25bfdcd704b26e4cf7cad5ea8d3246524346dcb51db8491de0d761d",
+  "recordings/ls20/saved_136/5/image.png": "122995df0b8cad0e0bd0bf0c25cebf5d23be99954ec5e05895c254b2ede0708c",
+  "recordings/ls20/saved_136/5/state.json": "acc5cf867efb4177457daf040836697fca9f86d26277b21a948c4e66fa9470b9",
+  "recordings/ls20/saved_136/6/image.png": "87526fc406bb7d588114a40010add67e3e12047fffbe0cda5540cd7c015c5b18",
+  "recordings/ls20/saved_136/6/state.json": "e54b94acf95a14ab336ce85c2724a601514c89b7cd0c4dc618642f7a16d15280",
+  "recordings/ls20/saved_136/7/image.png": "0d5412a203a67d7107b2cc5f4bdb9ea3d88c912071eca3e5c91b5a1d57e3377b",
+  "recordings/ls20/saved_136/7/state.json": "20fd653eb365c2c691047ce64e03511bfa02c771e8191f52235ed4534ae47bb6",
+  "recordings/ls20/saved_136/8/image.png": "4bbb0fc7ed53c5fcd7cd75a053711130dd4acb1ee48e7df105f984c7ab3744c0",
+  "recordings/ls20/saved_136/8/state.json": "17f32c173c7e1709fc9ba1a2f1a6884ce8f076c564d48000e7c056dd6c00d055",
+  "recordings/ls20/saved_136/9/image.png": "f3043394224ee773266588bb14c6a878fe48d82cdaf5ccb01104ced8be69f420",
+  "recordings/ls20/saved_136/9/state.json": "9a0ea1d5aa24b04f0a5bc5ec16b4d6e52ef53aa050e0e38346e4a6f9a9f97f99",
+  "recordings/synthetic/documentation/occlusion_sweep.md": "85b6c9a565888efbb0a522381d2ba99d8bc4f693d338120ee64e312a1b5dbc21",
+  "recordings/synthetic/occlusion_sweep/0/image.png": "49d4d6ebf9900b0a2f192d11ae93c174ebd8b5272651037056851e4c07027054",
+  "recordings/synthetic/occlusion_sweep/0/state.json": "9ddaf7fcfc63e0b09a530af0414eb6e323533cd7d066020b96e35f49980dbfe7",
+  "recordings/synthetic/occlusion_sweep/1/image.png": "57554560c85732f3f121204163380dd79677ded9edc9ebeb5f8a54f88fe61e50",
+  "recordings/synthetic/occlusion_sweep/1/state.json": "d50aa9badee3d7d0dfc7e17f0ae2287503e41206aef225388b5a67eea40a466f",
+  "recordings/synthetic/occlusion_sweep/2/image.png": "968a52727f1de21e0649ae7f8c43fbed9d725e7fd8fd5057cc7008444abe7ea0",
+  "recordings/synthetic/occlusion_sweep/2/state.json": "58f2a030d2f1a639d8a04ae0b0f3c199a39e6a5dfbe8b6cbcf4cb51751770024",
+  "recordings/synthetic/occlusion_sweep/3/image.png": "e8b5a2fd588f4fbf1b2088d79aa03e507cbc2e7dbb4e8719631abebb11c31307",
+  "recordings/synthetic/occlusion_sweep/3/state.json": "24ecd2dfea805cd36584df4c4a309ac4b4f7ba7076781bd3fb9d34db21794dfd",
+  "recordings/synthetic/occlusion_sweep/4/image.png": "46c3b76c688642190569cd9e36dcbff6fd1d426c352f5d7058505c16928c475c",
+  "recordings/synthetic/occlusion_sweep/4/state.json": "0bc9345930547390133fe5b5f49cdc5f42c3b2b36bdd9e83c716425f8f07107c",
+  "recordings/synthetic/occlusion_sweep/5/image.png": "46c3b76c688642190569cd9e36dcbff6fd1d426c352f5d7058505c16928c475c",
+  "recordings/synthetic/occlusion_sweep/5/state.json": "db13f3e81b2ad08a09ef72f274badc9833f42d710e1822adbcc2432bfd84d8f9",
+  "recordings/synthetic/occlusion_sweep/6/image.png": "2ffbc839df01ff7421b1111b47560e0f730d879cbd24aed9bfc5224fa9264c70",
+  "recordings/synthetic/occlusion_sweep/6/state.json": "8173b50286168e761df40a3c6c734d3562f49e8992657a1e6751e625705cd225",
+  "recordings/synthetic/occlusion_sweep/7/image.png": "49d4d6ebf9900b0a2f192d11ae93c174ebd8b5272651037056851e4c07027054",
+  "recordings/synthetic/occlusion_sweep/7/state.json": "ef56e3af6c2d743e8cc5fa67fceddd11f6b07cf809cce29553eeae8c65662a5c",
   "symbolic/inputs/attachment_missing_mask_keeps_episode.json": "55f9953cef9d25d576ac1e9ae24f1bfcaf8d7fc10fe2aff02adfb7911ae1a693",
   "symbolic/inputs/blocked_clear_success_ends.json": "aed6cdafe98b7d57802110a9dda666f779b8963200932f4ca2b42727e56ae014",
   "symbolic/inputs/blocked_pause_does_not_end.json": "ebdf811dc5d86b3e90f0db797bb0ae72fa5f0a28e672e372ad4bbebb6ec53463",
@@ -7013,61 +7128,13 @@
   "symbolic/inputs/unknown_only_no_positive_rule.json": "1d8c14c8c86aefe5b72b3a5b2423276ac7194e4f8e7a8b5ed7da263e346e1bff",
   "symbolic/inputs/unknown_relation_never_ends.json": "f84726f34fa89f45c1093454b9f9afc36f63c8d6ccbc615bca1903fd87efd12a",
   "symbolic/inputs/unmatched_border_not_entry.json": "52b705cba282eede3eb6a62c922ff9238932519e851bdac43ca60d5ab0411fff",
-  "symbolic/inputs/valid_proposal_is_not_evidence.json": "1981422761fd372684651126b15c4d18f6b8ab52316e1a131ef38659f1c567c1",
-  "recordings/ls20/saved_136/0/image.png": "9c879087889c0adeabaaf8b3371ab58168d9a14bc1dd1758fcfa95ff9cad2dfd",
-  "recordings/ls20/saved_136/0/state.json": "b7791772c85002f25fd9fc388b00bc528b1fa4d6e42800bade3dfa2fd1c3717e",
-  "recordings/ls20/saved_136/1/image.png": "c8aac72598f024fd4d8127195cb331500457a836281732d4436082b3d8436723",
-  "recordings/ls20/saved_136/1/state.json": "5bd1a0e99ef99a6527370905a03b2af674cbe1461e4e695e3671eed3179c0716",
-  "recordings/ls20/saved_136/2/image.png": "256a4d182c9894fb113925a373b99b11b15a556fc1fa0fefdb761153a203337e",
-  "recordings/ls20/saved_136/2/state.json": "46e0138413a03c6ad8d50298828ac75332989e3524f3ecf6fcfe242aab2e3293",
-  "recordings/ls20/saved_136/3/image.png": "dc12b25accade37f8f934f557c198c43705a849eb7bffb7a9f5dcb65c8a76605",
-  "recordings/ls20/saved_136/3/state.json": "940e0ba4203e656b3c3bc098746a6419aa5ddfd9ebeee1331322f13689d74184",
-  "recordings/ls20/saved_136/4/image.png": "fd2cac41b56dccd8a9738bdea9e6920b2675cf518843d303496cec399657b35c",
-  "recordings/ls20/saved_136/4/state.json": "6e5224c2d25bfdcd704b26e4cf7cad5ea8d3246524346dcb51db8491de0d761d",
-  "recordings/ls20/saved_136/5/image.png": "122995df0b8cad0e0bd0bf0c25cebf5d23be99954ec5e05895c254b2ede0708c",
-  "recordings/ls20/saved_136/5/state.json": "acc5cf867efb4177457daf040836697fca9f86d26277b21a948c4e66fa9470b9",
-  "recordings/ls20/saved_136/6/image.png": "87526fc406bb7d588114a40010add67e3e12047fffbe0cda5540cd7c015c5b18",
-  "recordings/ls20/saved_136/6/state.json": "e54b94acf95a14ab336ce85c2724a601514c89b7cd0c4dc618642f7a16d15280",
-  "recordings/ls20/saved_136/7/image.png": "0d5412a203a67d7107b2cc5f4bdb9ea3d88c912071eca3e5c91b5a1d57e3377b",
-  "recordings/ls20/saved_136/7/state.json": "20fd653eb365c2c691047ce64e03511bfa02c771e8191f52235ed4534ae47bb6",
-  "recordings/ls20/saved_136/8/image.png": "4bbb0fc7ed53c5fcd7cd75a053711130dd4acb1ee48e7df105f984c7ab3744c0",
-  "recordings/ls20/saved_136/8/state.json": "17f32c173c7e1709fc9ba1a2f1a6884ce8f076c564d48000e7c056dd6c00d055",
-  "recordings/ls20/saved_136/9/image.png": "f3043394224ee773266588bb14c6a878fe48d82cdaf5ccb01104ced8be69f420",
-  "recordings/ls20/saved_136/9/state.json": "9a0ea1d5aa24b04f0a5bc5ec16b4d6e52ef53aa050e0e38346e4a6f9a9f97f99",
-  "recordings/ls20/saved_136/10/image.png": "845263b79b90fcd75c63eafb7e5ca7328068757a11ed477c63e56d45c29ffcc9",
-  "recordings/ls20/saved_136/10/state.json": "ca0ec0723e14355496d8acaeb79361ea279eca7aafdc60ffaf56644159bd3619",
-  "recordings/ls20/saved_136/11/image.png": "7659d86a8094da7044c54817be86836ca26c0d93e13090de1a75e69c4187bcad",
-  "recordings/ls20/saved_136/11/state.json": "790be43a46b2f52ac9914002fa131065fb737115953825ccfc8eac7cee2598bf",
-  "recordings/ls20/saved_136/12/image.png": "081cfa65124f604b2b468f0cd6ec763269bac77ebc5bfdf7af7abe44ed5fa145",
-  "recordings/ls20/saved_136/12/state.json": "85140a4704e39f4d469f3f400d238e755c7c1249187ac6b09bafe101028e0349",
-  "recordings/ls20/saved_136/13/image.png": "7e264c1b99b773f1673193c1d9b58a42697a7c2a0bdf704aa93950bd327c01a6",
-  "recordings/ls20/saved_136/13/state.json": "d0134cb98419e0d1e6ca1f54190b2053ff6351d393eed1d0be5270ce0c7623d5",
-  "evaluation/ls20/saved_136/evaluation.json": "71f90b19a576fa2e279e3af21f95def3234fc90b541b11474e3304f63dd65f96",
-  "recordings/ls20/documentation/ls20_occlusion.md": "4667eae2f996fdfec8251580406b2ef1db615075e252e828dd75103747ec6979",
-  "recordings/synthetic/occlusion_sweep/0/image.png": "49d4d6ebf9900b0a2f192d11ae93c174ebd8b5272651037056851e4c07027054",
-  "recordings/synthetic/occlusion_sweep/0/state.json": "9ddaf7fcfc63e0b09a530af0414eb6e323533cd7d066020b96e35f49980dbfe7",
-  "recordings/synthetic/occlusion_sweep/1/image.png": "57554560c85732f3f121204163380dd79677ded9edc9ebeb5f8a54f88fe61e50",
-  "recordings/synthetic/occlusion_sweep/1/state.json": "d50aa9badee3d7d0dfc7e17f0ae2287503e41206aef225388b5a67eea40a466f",
-  "recordings/synthetic/occlusion_sweep/2/image.png": "968a52727f1de21e0649ae7f8c43fbed9d725e7fd8fd5057cc7008444abe7ea0",
-  "recordings/synthetic/occlusion_sweep/2/state.json": "58f2a030d2f1a639d8a04ae0b0f3c199a39e6a5dfbe8b6cbcf4cb51751770024",
-  "recordings/synthetic/occlusion_sweep/3/image.png": "e8b5a2fd588f4fbf1b2088d79aa03e507cbc2e7dbb4e8719631abebb11c31307",
-  "recordings/synthetic/occlusion_sweep/3/state.json": "24ecd2dfea805cd36584df4c4a309ac4b4f7ba7076781bd3fb9d34db21794dfd",
-  "recordings/synthetic/occlusion_sweep/4/image.png": "46c3b76c688642190569cd9e36dcbff6fd1d426c352f5d7058505c16928c475c",
-  "recordings/synthetic/occlusion_sweep/4/state.json": "0bc9345930547390133fe5b5f49cdc5f42c3b2b36bdd9e83c716425f8f07107c",
-  "recordings/synthetic/occlusion_sweep/5/image.png": "46c3b76c688642190569cd9e36dcbff6fd1d426c352f5d7058505c16928c475c",
-  "recordings/synthetic/occlusion_sweep/5/state.json": "db13f3e81b2ad08a09ef72f274badc9833f42d710e1822adbcc2432bfd84d8f9",
-  "recordings/synthetic/occlusion_sweep/6/image.png": "2ffbc839df01ff7421b1111b47560e0f730d879cbd24aed9bfc5224fa9264c70",
-  "recordings/synthetic/occlusion_sweep/6/state.json": "8173b50286168e761df40a3c6c734d3562f49e8992657a1e6751e625705cd225",
-  "recordings/synthetic/occlusion_sweep/7/image.png": "49d4d6ebf9900b0a2f192d11ae93c174ebd8b5272651037056851e4c07027054",
-  "recordings/synthetic/occlusion_sweep/7/state.json": "ef56e3af6c2d743e8cc5fa67fceddd11f6b07cf809cce29553eeae8c65662a5c",
-  "evaluation/synthetic/occlusion_sweep/evaluation.json": "f6d2ddc726cc2a01ac6af9724e223cdf6f243da2e277493e0cfcba9b71a5d160",
-  "recordings/synthetic/documentation/occlusion_sweep.md": "85b6c9a565888efbb0a522381d2ba99d8bc4f693d338120ee64e312a1b5dbc21"
+  "symbolic/inputs/valid_proposal_is_not_evidence.json": "1981422761fd372684651126b15c4d18f6b8ab52316e1a131ef38659f1c567c1"
  },
  "inventory": {
-  "frames": 3232,
-  "sequences": 190,
+  "frames": 3263,
+  "sequences": 192,
   "symbolicExamples": 65,
-  "tests": 74
+  "tests": 75
  },
  "limits": [
   "Expected events are evaluator intent, not supplied observations or a claim that every domain is implemented.",
@@ -7079,101 +7146,101 @@
  "schemaVersion": 1,
  "sequences": [
   {
-   "id": "recordings/ls20/saved_136",
-   "testId": "ls20_occlusion",
+   "controlProtocol": null,
    "directory": "recordings/ls20/saved_136",
-   "label": "saved 136",
-   "partition": "recording",
+   "evaluation": "evaluation/ls20/saved_136/evaluation.json",
    "frameCount": 14,
    "frames": [
     {
      "frameId": "0",
-     "order": 0,
      "image": "recordings/ls20/saved_136/0/image.png",
+     "order": 0,
      "state": "recordings/ls20/saved_136/0/state.json"
     },
     {
      "frameId": "1",
-     "order": 1,
      "image": "recordings/ls20/saved_136/1/image.png",
+     "order": 1,
      "state": "recordings/ls20/saved_136/1/state.json"
     },
     {
      "frameId": "2",
-     "order": 2,
      "image": "recordings/ls20/saved_136/2/image.png",
+     "order": 2,
      "state": "recordings/ls20/saved_136/2/state.json"
     },
     {
      "frameId": "3",
-     "order": 3,
      "image": "recordings/ls20/saved_136/3/image.png",
+     "order": 3,
      "state": "recordings/ls20/saved_136/3/state.json"
     },
     {
      "frameId": "4",
-     "order": 4,
      "image": "recordings/ls20/saved_136/4/image.png",
+     "order": 4,
      "state": "recordings/ls20/saved_136/4/state.json"
     },
     {
      "frameId": "5",
-     "order": 5,
      "image": "recordings/ls20/saved_136/5/image.png",
+     "order": 5,
      "state": "recordings/ls20/saved_136/5/state.json"
     },
     {
      "frameId": "6",
-     "order": 6,
      "image": "recordings/ls20/saved_136/6/image.png",
+     "order": 6,
      "state": "recordings/ls20/saved_136/6/state.json"
     },
     {
      "frameId": "7",
-     "order": 7,
      "image": "recordings/ls20/saved_136/7/image.png",
+     "order": 7,
      "state": "recordings/ls20/saved_136/7/state.json"
     },
     {
      "frameId": "8",
-     "order": 8,
      "image": "recordings/ls20/saved_136/8/image.png",
+     "order": 8,
      "state": "recordings/ls20/saved_136/8/state.json"
     },
     {
      "frameId": "9",
-     "order": 9,
      "image": "recordings/ls20/saved_136/9/image.png",
+     "order": 9,
      "state": "recordings/ls20/saved_136/9/state.json"
     },
     {
      "frameId": "10",
-     "order": 10,
      "image": "recordings/ls20/saved_136/10/image.png",
+     "order": 10,
      "state": "recordings/ls20/saved_136/10/state.json"
     },
     {
      "frameId": "11",
-     "order": 11,
      "image": "recordings/ls20/saved_136/11/image.png",
+     "order": 11,
      "state": "recordings/ls20/saved_136/11/state.json"
     },
     {
      "frameId": "12",
-     "order": 12,
      "image": "recordings/ls20/saved_136/12/image.png",
+     "order": 12,
      "state": "recordings/ls20/saved_136/12/state.json"
     },
     {
      "frameId": "13",
-     "order": 13,
      "image": "recordings/ls20/saved_136/13/image.png",
+     "order": 13,
      "state": "recordings/ls20/saved_136/13/state.json"
     }
    ],
-   "controlProtocol": null,
-   "evaluation": "evaluation/ls20/saved_136/evaluation.json",
-   "observerAssessment": null
+   "id": "recordings/ls20/saved_136",
+   "label": "saved 136",
+   "observerAssessment": null,
+   "partition": "recording",
+   "testId": "ls20_occlusion"
   },
   {
    "controlProtocol": null,
@@ -28880,65 +28947,277 @@
    "testId": "unknown"
   },
   {
-   "id": "recordings/synthetic/occlusion_sweep",
-   "testId": "synthetic_gradual_occlusion",
+   "controlProtocol": null,
    "directory": "recordings/synthetic/occlusion_sweep",
-   "label": "occlusion sweep",
-   "partition": "synthetic",
+   "evaluation": "evaluation/synthetic/occlusion_sweep/evaluation.json",
    "frameCount": 8,
    "frames": [
     {
      "frameId": "0",
-     "order": 0,
      "image": "recordings/synthetic/occlusion_sweep/0/image.png",
+     "order": 0,
      "state": "recordings/synthetic/occlusion_sweep/0/state.json"
     },
     {
      "frameId": "1",
-     "order": 1,
      "image": "recordings/synthetic/occlusion_sweep/1/image.png",
+     "order": 1,
      "state": "recordings/synthetic/occlusion_sweep/1/state.json"
     },
     {
      "frameId": "2",
-     "order": 2,
      "image": "recordings/synthetic/occlusion_sweep/2/image.png",
+     "order": 2,
      "state": "recordings/synthetic/occlusion_sweep/2/state.json"
     },
     {
      "frameId": "3",
-     "order": 3,
      "image": "recordings/synthetic/occlusion_sweep/3/image.png",
+     "order": 3,
      "state": "recordings/synthetic/occlusion_sweep/3/state.json"
     },
     {
      "frameId": "4",
-     "order": 4,
      "image": "recordings/synthetic/occlusion_sweep/4/image.png",
+     "order": 4,
      "state": "recordings/synthetic/occlusion_sweep/4/state.json"
     },
     {
      "frameId": "5",
-     "order": 5,
      "image": "recordings/synthetic/occlusion_sweep/5/image.png",
+     "order": 5,
      "state": "recordings/synthetic/occlusion_sweep/5/state.json"
     },
     {
      "frameId": "6",
-     "order": 6,
      "image": "recordings/synthetic/occlusion_sweep/6/image.png",
+     "order": 6,
      "state": "recordings/synthetic/occlusion_sweep/6/state.json"
     },
     {
      "frameId": "7",
-     "order": 7,
      "image": "recordings/synthetic/occlusion_sweep/7/image.png",
+     "order": 7,
      "state": "recordings/synthetic/occlusion_sweep/7/state.json"
     }
    ],
+   "id": "recordings/synthetic/occlusion_sweep",
+   "label": "occlusion sweep",
+   "observerAssessment": null,
+   "partition": "synthetic",
+   "testId": "synthetic_gradual_occlusion"
+  },
+  {
    "controlProtocol": null,
-   "evaluation": "evaluation/synthetic/occlusion_sweep/evaluation.json",
-   "observerAssessment": null
+   "directory": "recordings/events_tests/spotlight_arrows_train_a",
+   "evaluation": "evaluation/events_tests/spotlight_arrows_train_a/evaluation.json",
+   "frameCount": 24,
+   "frames": [
+    {
+     "frameId": "0",
+     "image": "recordings/events_tests/spotlight_arrows_train_a/0/image.png",
+     "order": 0,
+     "state": "recordings/events_tests/spotlight_arrows_train_a/0/state.json"
+    },
+    {
+     "frameId": "1",
+     "image": "recordings/events_tests/spotlight_arrows_train_a/1/image.png",
+     "order": 1,
+     "state": "recordings/events_tests/spotlight_arrows_train_a/1/state.json"
+    },
+    {
+     "frameId": "2",
+     "image": "recordings/events_tests/spotlight_arrows_train_a/2/image.png",
+     "order": 2,
+     "state": "recordings/events_tests/spotlight_arrows_train_a/2/state.json"
+    },
+    {
+     "frameId": "3",
+     "image": "recordings/events_tests/spotlight_arrows_train_a/3/image.png",
+     "order": 3,
+     "state": "recordings/events_tests/spotlight_arrows_train_a/3/state.json"
+    },
+    {
+     "frameId": "4",
+     "image": "recordings/events_tests/spotlight_arrows_train_a/4/image.png",
+     "order": 4,
+     "state": "recordings/events_tests/spotlight_arrows_train_a/4/state.json"
+    },
+    {
+     "frameId": "5",
+     "image": "recordings/events_tests/spotlight_arrows_train_a/5/image.png",
+     "order": 5,
+     "state": "recordings/events_tests/spotlight_arrows_train_a/5/state.json"
+    },
+    {
+     "frameId": "6",
+     "image": "recordings/events_tests/spotlight_arrows_train_a/6/image.png",
+     "order": 6,
+     "state": "recordings/events_tests/spotlight_arrows_train_a/6/state.json"
+    },
+    {
+     "frameId": "7",
+     "image": "recordings/events_tests/spotlight_arrows_train_a/7/image.png",
+     "order": 7,
+     "state": "recordings/events_tests/spotlight_arrows_train_a/7/state.json"
+    },
+    {
+     "frameId": "8",
+     "image": "recordings/events_tests/spotlight_arrows_train_a/8/image.png",
+     "order": 8,
+     "state": "recordings/events_tests/spotlight_arrows_train_a/8/state.json"
+    },
+    {
+     "frameId": "9",
+     "image": "recordings/events_tests/spotlight_arrows_train_a/9/image.png",
+     "order": 9,
+     "state": "recordings/events_tests/spotlight_arrows_train_a/9/state.json"
+    },
+    {
+     "frameId": "10",
+     "image": "recordings/events_tests/spotlight_arrows_train_a/10/image.png",
+     "order": 10,
+     "state": "recordings/events_tests/spotlight_arrows_train_a/10/state.json"
+    },
+    {
+     "frameId": "11",
+     "image": "recordings/events_tests/spotlight_arrows_train_a/11/image.png",
+     "order": 11,
+     "state": "recordings/events_tests/spotlight_arrows_train_a/11/state.json"
+    },
+    {
+     "frameId": "12",
+     "image": "recordings/events_tests/spotlight_arrows_train_a/12/image.png",
+     "order": 12,
+     "state": "recordings/events_tests/spotlight_arrows_train_a/12/state.json"
+    },
+    {
+     "frameId": "13",
+     "image": "recordings/events_tests/spotlight_arrows_train_a/13/image.png",
+     "order": 13,
+     "state": "recordings/events_tests/spotlight_arrows_train_a/13/state.json"
+    },
+    {
+     "frameId": "14",
+     "image": "recordings/events_tests/spotlight_arrows_train_a/14/image.png",
+     "order": 14,
+     "state": "recordings/events_tests/spotlight_arrows_train_a/14/state.json"
+    },
+    {
+     "frameId": "15",
+     "image": "recordings/events_tests/spotlight_arrows_train_a/15/image.png",
+     "order": 15,
+     "state": "recordings/events_tests/spotlight_arrows_train_a/15/state.json"
+    },
+    {
+     "frameId": "16",
+     "image": "recordings/events_tests/spotlight_arrows_train_a/16/image.png",
+     "order": 16,
+     "state": "recordings/events_tests/spotlight_arrows_train_a/16/state.json"
+    },
+    {
+     "frameId": "17",
+     "image": "recordings/events_tests/spotlight_arrows_train_a/17/image.png",
+     "order": 17,
+     "state": "recordings/events_tests/spotlight_arrows_train_a/17/state.json"
+    },
+    {
+     "frameId": "18",
+     "image": "recordings/events_tests/spotlight_arrows_train_a/18/image.png",
+     "order": 18,
+     "state": "recordings/events_tests/spotlight_arrows_train_a/18/state.json"
+    },
+    {
+     "frameId": "19",
+     "image": "recordings/events_tests/spotlight_arrows_train_a/19/image.png",
+     "order": 19,
+     "state": "recordings/events_tests/spotlight_arrows_train_a/19/state.json"
+    },
+    {
+     "frameId": "20",
+     "image": "recordings/events_tests/spotlight_arrows_train_a/20/image.png",
+     "order": 20,
+     "state": "recordings/events_tests/spotlight_arrows_train_a/20/state.json"
+    },
+    {
+     "frameId": "21",
+     "image": "recordings/events_tests/spotlight_arrows_train_a/21/image.png",
+     "order": 21,
+     "state": "recordings/events_tests/spotlight_arrows_train_a/21/state.json"
+    },
+    {
+     "frameId": "22",
+     "image": "recordings/events_tests/spotlight_arrows_train_a/22/image.png",
+     "order": 22,
+     "state": "recordings/events_tests/spotlight_arrows_train_a/22/state.json"
+    },
+    {
+     "frameId": "23",
+     "image": "recordings/events_tests/spotlight_arrows_train_a/23/image.png",
+     "order": 23,
+     "state": "recordings/events_tests/spotlight_arrows_train_a/23/state.json"
+    }
+   ],
+   "id": "recordings/events_tests/spotlight_arrows_train_a",
+   "label": "train a",
+   "observerAssessment": null,
+   "partition": "training",
+   "testId": "spotlight_arrows"
+  },
+  {
+   "controlProtocol": null,
+   "directory": "recordings/events_tests/spotlight_arrows_control_partial",
+   "evaluation": "evaluation/events_tests/spotlight_arrows_control_partial/evaluation.json",
+   "frameCount": 7,
+   "frames": [
+    {
+     "frameId": "0",
+     "image": "recordings/events_tests/spotlight_arrows_control_partial/0/image.png",
+     "order": 0,
+     "state": "recordings/events_tests/spotlight_arrows_control_partial/0/state.json"
+    },
+    {
+     "frameId": "1",
+     "image": "recordings/events_tests/spotlight_arrows_control_partial/1/image.png",
+     "order": 1,
+     "state": "recordings/events_tests/spotlight_arrows_control_partial/1/state.json"
+    },
+    {
+     "frameId": "2",
+     "image": "recordings/events_tests/spotlight_arrows_control_partial/2/image.png",
+     "order": 2,
+     "state": "recordings/events_tests/spotlight_arrows_control_partial/2/state.json"
+    },
+    {
+     "frameId": "3",
+     "image": "recordings/events_tests/spotlight_arrows_control_partial/3/image.png",
+     "order": 3,
+     "state": "recordings/events_tests/spotlight_arrows_control_partial/3/state.json"
+    },
+    {
+     "frameId": "4",
+     "image": "recordings/events_tests/spotlight_arrows_control_partial/4/image.png",
+     "order": 4,
+     "state": "recordings/events_tests/spotlight_arrows_control_partial/4/state.json"
+    },
+    {
+     "frameId": "5",
+     "image": "recordings/events_tests/spotlight_arrows_control_partial/5/image.png",
+     "order": 5,
+     "state": "recordings/events_tests/spotlight_arrows_control_partial/5/state.json"
+    },
+    {
+     "frameId": "6",
+     "image": "recordings/events_tests/spotlight_arrows_control_partial/6/image.png",
+     "order": 6,
+     "state": "recordings/events_tests/spotlight_arrows_control_partial/6/state.json"
+    }
+   ],
+   "id": "recordings/events_tests/spotlight_arrows_control_partial",
+   "label": "control partial",
+   "observerAssessment": null,
+   "partition": "training_control",
+   "testId": "spotlight_arrows"
   }
  ],
  "source": {
@@ -29749,14 +30028,14 @@
  ],
  "tests": [
   {
-   "id": "ls20_occlusion",
-   "title": "LS20 \u2014 moving figure occludes the background",
-   "group": "Occlusion",
-   "summary": "Decide that a single moving figure occludes the static background across the 14-frame LS20 clip, rather than creating or destroying background regions.",
    "documentation": "recordings/ls20/documentation/ls20_occlusion.md",
+   "group": "Occlusion",
+   "id": "ls20_occlusion",
    "recordings": [
     "recordings/ls20/saved_136"
-   ]
+   ],
+   "summary": "Decide that a single moving figure occludes the static background across the 14-frame LS20 clip, rather than creating or destroying background regions.",
+   "title": "LS20 \u2014 moving figure occludes the background"
   },
   {
    "documentation": "recordings/events_tests/documentation/appeared.md",
@@ -30595,14 +30874,25 @@
    "title": "Calibrate controls before binding the visible actor"
   },
   {
-   "id": "synthetic_gradual_occlusion",
-   "title": "Synthetic \u2014 gradual occlusion sweep",
-   "group": "Occlusion",
-   "summary": "A red bar sweeps across a green box, occluding it gradually then revealing it. Decide the box is hidden and shown again, not destroyed and recreated.",
    "documentation": "recordings/synthetic/documentation/occlusion_sweep.md",
+   "group": "Occlusion",
+   "id": "synthetic_gradual_occlusion",
    "recordings": [
     "recordings/synthetic/occlusion_sweep"
-   ]
+   ],
+   "summary": "A red bar sweeps across a green box, occluding it gradually then revealing it. Decide the box is hidden and shown again, not destroyed and recreated.",
+   "title": "Synthetic \u2014 gradual occlusion sweep"
+  },
+  {
+   "documentation": "recordings/events_tests/documentation/spotlight_arrows.md",
+   "group": "Events",
+   "id": "spotlight_arrows",
+   "recordings": [
+    "recordings/events_tests/spotlight_arrows_train_a",
+    "recordings/events_tests/spotlight_arrows_control_partial"
+   ],
+   "summary": "Accumulate a static scene through a spotlight moved by discrete arrow commands (ACTION1-4); the command stream is the only motion evidence.",
+   "title": "Spotlight scene by arrow commands"
   }
  ]
 }

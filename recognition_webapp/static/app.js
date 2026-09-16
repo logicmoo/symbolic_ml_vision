@@ -1177,6 +1177,8 @@ function clearDemoSelection() {
   clearFrameGuide();
   byId("demo-test").value = "";
   byId("demo-frame-controls").hidden = true;
+  sceneRequest++;
+  byId("scene-cell").hidden = true;
   byId("recognize").disabled = state.busy || !state.grid.length;
 }
 
@@ -2528,8 +2530,40 @@ function selectRecording() {
   byId("demo-frame-controls").hidden = !available;
   byId("demo-frame").max = String(Math.max(0, (sequence?.frames.length || 0) - 1));
   byId("demo-frame").value = "0";
+  void loadLearnedScene();
   if (available) return loadDemoFrame();
   error("This recording has no frames.");
+}
+
+let sceneRequest = 0;
+async function loadLearnedScene() {
+  // The whole scene this recording has LEARNED across its frames, composed on the server
+  // purely from the crawler's cached recognition artifacts. Darkness only occludes:
+  // revealed pixels persist; never-revealed pixels stay dark. Stale caches are reported,
+  // never silently recomputed.
+  const cell = byId("scene-cell");
+  const sequence = selectedRecording();
+  if (pageMode !== "demos" || !sequence) { cell.hidden = true; return; }
+  const token = ++sceneRequest;
+  try {
+    const scene = await request(`/omega_vision/api/v1/scene?${new URLSearchParams({ sequence: sequence.id })}`);
+    if (token !== sceneRequest) return;
+    const image = await decodeDataImage(scene.scene);
+    if (token !== sceneRequest) return;
+    const canvasEl = byId("scene-canvas");
+    const scale = Math.max(1, Math.floor(360 / Math.max(image.width, image.height)));
+    canvasEl.width = image.width * scale;
+    canvasEl.height = image.height * scale;
+    const brush = canvasEl.getContext("2d");
+    brush.imageSmoothingEnabled = false;
+    brush.drawImage(image, 0, 0, canvasEl.width, canvasEl.height);
+    const pct = Math.round(scene.coverage * 100);
+    const stale = scene.framesStale.length ? ` \u00b7 ${scene.framesStale.length} frames not cached yet` : "";
+    byId("scene-tag").textContent = `Learned scene \u00b7 ${scene.framesUsed.length} frames \u00b7 ${pct}% revealed${stale}`;
+    cell.hidden = false;
+  } catch {
+    if (token === sceneRequest) cell.hidden = true; // no fresh cache yet; the crawler will produce it
+  }
 }
 
 function renderDemos(catalog) {
@@ -3108,6 +3142,7 @@ function refreshSectionNav() {
       byId("demo-frame").max = String(choice.sequence.frames.length - 1);
       const index = choice.sequence.frames.findIndex((frame) => frame.frameId === query.get("frame"));
       byId("demo-frame").value = String(Math.max(0, index));
+      void loadLearnedScene();
       await loadDemoFrame();
     } else {
       document.title = "Shape explorer";

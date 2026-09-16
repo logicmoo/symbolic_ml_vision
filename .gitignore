@@ -1,6 +1,13 @@
-# --- Runtime data root (recordings, generated .pl/.metta/.json, crawler control files) ---
-# The dataset and all generated symbolic output live outside the code repo.
-/data/
+# --- Crawler-generated symbolic output (produced next to the source frames) ---
+# The source dataset (image.png, state.json, recording.json, dataset.json, evaluation/, ...) stays
+# tracked; only the generated Prolog/MeTTa/JSON and crawler control files are ignored.
+data/omega_vision/recordings/**/*.pl
+data/omega_vision/recordings/**/*.metta
+data/omega_vision/recordings/**/geometry.json
+data/omega_vision/recordings/**/recognition.json
+data/omega_vision/recordings/**/deductions.json
+data/omega_vision/recordings/**/induction.json
+data/omega_vision/.crawler/
 
 # --- Python ---
 .venv/

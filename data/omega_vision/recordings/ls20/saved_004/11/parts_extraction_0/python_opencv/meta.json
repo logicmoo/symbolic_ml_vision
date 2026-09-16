@@ -1,0 +1,706 @@
+{
+  "kind": "sequence_set_transformation",
+  "transformation": "parts_extraction_0",
+  "doer": "python_opencv",
+  "options": {
+    "semanticContextRevision": "54cee477e94f0665910873ccccf21b5a804827c5670913bb7de45ca00d85bea2"
+  },
+  "dependsOn": [],
+  "type": "py_pl",
+  "preprocessingRevision": "original:",
+  "createdAt": "2026-09-10T13:57:47.330277Z",
+  "elapsedMs": 6756,
+  "outputRevision": "7095a2a29ae0df96bf6de53630db9de74b55c7531379f414d84bd15e4bf7175a",
+  "inputSignature": "original:081cfa65124f604b2b468f0c",
+  "width": 640,
+  "height": 640,
+  "regionCount": 21,
+  "adjacencyCount": 25,
+  "blobCount": 21,
+  "componentCount": 4,
+  "contourCount": 32,
+  "watershedSegmentCount": 21,
+  "visualGroupCount": 4,
+  "smallFeatureCount": 3,
+  "tolerance": 24,
+  "filterAction": "skipped (flat art/grid)",
+  "attachmentEvidence": {
+    "schemaVersion": 1,
+    "complete": {
+      "regions": true,
+      "shared_edges": true,
+      "adjacency": true,
+      "enclosure": true,
+      "borders": true,
+      "holes": true,
+      "probes": true
+    },
+    "backgroundRolesTrusted": true,
+    "extractionPolicyHash": "f306ab5638b3987bff57195c5f18a7d4b4c260db826dd33704263774998b18b2"
+  },
+  "minArea": 327,
+  "smallFeatureFloor": 16,
+  "smallFeatureContrast": 48,
+  "parts": [
+    {
+      "id": "r2",
+      "color": "#ffdc00",
+      "area": 250900,
+      "outer": 9,
+      "holes": 2,
+      "contours": 3,
+      "midlines": 5,
+      "fillpoints": 90,
+      "watershedSegments": 0,
+      "smallFeature": false,
+      "smallFeatureEvidence": {}
+    },
+    {
+      "id": "r8",
+      "color": "#2ecc40",
+      "area": 87000,
+      "outer": 11,
+      "holes": 2,
+      "contours": 3,
+      "midlines": 3,
+      "fillpoints": 76,
+      "watershedSegments": 1,
+      "smallFeature": false,
+      "smallFeatureEvidence": {}
+    },
+    {
+      "id": "r1",
+      "color": "#aaaaaa",
+      "area": 20800,
+      "outer": 5,
+      "holes": 0,
+      "contours": 1,
+      "midlines": 1,
+      "fillpoints": 1,
+      "watershedSegments": 1,
+      "smallFeature": false,
+      "smallFeatureEvidence": {}
+    },
+    {
+      "id": "r16",
+      "color": "#aaaaaa",
+      "area": 11200,
+      "outer": 9,
+      "holes": 3,
+      "contours": 4,
+      "midlines": 4,
+      "fillpoints": 32,
+      "watershedSegments": 1,
+      "smallFeature": false,
+      "smallFeatureEvidence": {}
+    },
+    {
+      "id": "r9",
+      "color": "#ffdc00",
+      "area": 10000,
+      "outer": 7,
+      "holes": 0,
+      "contours": 1,
+      "midlines": 1,
+      "fillpoints": 11,
+      "watershedSegments": 1,
+      "smallFeature": false,
+      "smallFeatureEvidence": {}
+    },
+    {
+      "id": "r13",
+      "color": "#aaaaaa",
+      "area": 7600,
+      "outer": 5,
+      "holes": 2,
+      "contours": 3,
+      "midlines": 2,
+      "fillpoints": 33,
+      "watershedSegments": 1,
+      "smallFeature": false,
+      "smallFeatureEvidence": {}
+    },
+    {
+      "id": "r18",
+      "color": "#5a5a5a",
+      "area": 6200,
+      "outer": 5,
+      "holes": 0,
+      "contours": 1,
+      "midlines": 1,
+      "fillpoints": 1,
+      "watershedSegments": 1,
+      "smallFeature": false,
+      "smallFeatureEvidence": {}
+    },
+    {
+      "id": "r4",
+      "color": "#aeaeae",
+      "area": 4800,
+      "outer": 9,
+      "holes": 2,
+      "contours": 3,
+      "midlines": 2,
+      "fillpoints": 29,
+      "watershedSegments": 2,
+      "smallFeature": false,
+      "smallFeatureEvidence": {}
+    },
+    {
+      "id": "r3",
+      "color": "#2ecc40",
+      "area": 2700,
+      "outer": 13,
+      "holes": 0,
+      "contours": 1,
+      "midlines": 1,
+      "fillpoints": 9,
+      "watershedSegments": 1,
+      "smallFeature": false,
+      "smallFeatureEvidence": {}
+    },
+    {
+      "id": "r17",
+      "color": "#2ecc40",
+      "area": 2200,
+      "outer": 5,
+      "holes": 0,
+      "contours": 1,
+      "midlines": 1,
+      "fillpoints": 1,
+      "watershedSegments": 1,
+      "smallFeature": false,
+      "smallFeatureEvidence": {}
+    },
+    {
+      "id": "r14",
+      "color": "#870c25",
+      "area": 2000,
+      "outer": 7,
+      "holes": 0,
+      "contours": 1,
+      "midlines": 1,
+      "fillpoints": 5,
+      "watershedSegments": 1,
+      "smallFeature": false,
+      "smallFeatureEvidence": {}
+    },
+    {
+      "id": "r7",
+      "color": "#870c25",
+      "area": 1500,
+      "outer": 5,
+      "holes": 0,
+      "contours": 1,
+      "midlines": 1,
+      "fillpoints": 1,
+      "watershedSegments": 1,
+      "smallFeature": false,
+      "smallFeatureEvidence": {}
+    },
+    {
+      "id": "r5",
+      "color": "#870c25",
+      "area": 500,
+      "outer": 7,
+      "holes": 0,
+      "contours": 1,
+      "midlines": 1,
+      "fillpoints": 3,
+      "watershedSegments": 1,
+      "smallFeature": false,
+      "smallFeatureEvidence": {}
+    },
+    {
+      "id": "r15",
+      "color": "#870c25",
+      "area": 400,
+      "outer": 5,
+      "holes": 0,
+      "contours": 1,
+      "midlines": 1,
+      "fillpoints": 1,
+      "watershedSegments": 1,
+      "smallFeature": false,
+      "smallFeatureEvidence": {}
+    },
+    {
+      "id": "r19",
+      "color": "#7fdbff",
+      "area": 400,
+      "outer": 5,
+      "holes": 0,
+      "contours": 1,
+      "midlines": 1,
+      "fillpoints": 1,
+      "watershedSegments": 1,
+      "smallFeature": false,
+      "smallFeatureEvidence": {}
+    },
+    {
+      "id": "r20",
+      "color": "#7fdbff",
+      "area": 400,
+      "outer": 5,
+      "holes": 0,
+      "contours": 1,
+      "midlines": 1,
+      "fillpoints": 1,
+      "watershedSegments": 1,
+      "smallFeature": false,
+      "smallFeatureEvidence": {}
+    },
+    {
+      "id": "r21",
+      "color": "#7fdbff",
+      "area": 400,
+      "outer": 5,
+      "holes": 0,
+      "contours": 1,
+      "midlines": 1,
+      "fillpoints": 1,
+      "watershedSegments": 1,
+      "smallFeature": false,
+      "smallFeatureEvidence": {}
+    },
+    {
+      "id": "r10",
+      "color": "#000000",
+      "area": 300,
+      "outer": 8,
+      "holes": 0,
+      "contours": 1,
+      "midlines": 1,
+      "fillpoints": 3,
+      "watershedSegments": 1,
+      "smallFeature": true,
+      "smallFeatureEvidence": {
+        "host": 8,
+        "area": 300,
+        "floor": 16,
+        "sharedEdge": 60,
+        "perimeter": 80,
+        "hostContactRatio": 0.75,
+        "surroundContactRatio": 0.75,
+        "minContrast": 204,
+        "colorStd": 0.0,
+        "bboxFill": 0.75,
+        "thickness": 5.73,
+        "openingRetention": 0.983333
+      }
+    },
+    {
+      "id": "r6",
+      "color": "#870c25",
+      "area": 100,
+      "outer": 5,
+      "holes": 0,
+      "contours": 1,
+      "midlines": 1,
+      "fillpoints": 1,
+      "watershedSegments": 1,
+      "smallFeature": false,
+      "smallFeatureEvidence": {}
+    },
+    {
+      "id": "r11",
+      "color": "#0074d9",
+      "area": 100,
+      "outer": 5,
+      "holes": 0,
+      "contours": 1,
+      "midlines": 1,
+      "fillpoints": 1,
+      "watershedSegments": 1,
+      "smallFeature": true,
+      "smallFeatureEvidence": {
+        "host": 8,
+        "area": 100,
+        "floor": 16,
+        "sharedEdge": 30,
+        "perimeter": 40,
+        "hostContactRatio": 0.75,
+        "surroundContactRatio": 0.75,
+        "minContrast": 153,
+        "colorStd": 0.0,
+        "bboxFill": 1.0,
+        "thickness": 4.775,
+        "openingRetention": 0.96
+      }
+    },
+    {
+      "id": "r12",
+      "color": "#0074d9",
+      "area": 100,
+      "outer": 5,
+      "holes": 0,
+      "contours": 1,
+      "midlines": 1,
+      "fillpoints": 1,
+      "watershedSegments": 1,
+      "smallFeature": true,
+      "smallFeatureEvidence": {
+        "host": 8,
+        "area": 100,
+        "floor": 16,
+        "sharedEdge": 30,
+        "perimeter": 40,
+        "hostContactRatio": 0.75,
+        "surroundContactRatio": 0.75,
+        "minContrast": 153,
+        "colorStd": 0.0,
+        "bboxFill": 1.0,
+        "thickness": 4.775,
+        "openingRetention": 0.96
+      }
+    }
+  ],
+  "visualGroups": [
+    {
+      "id": "v1",
+      "method": "connected_component",
+      "members": [
+        "r1"
+      ],
+      "confidence": 0.75,
+      "evidence": {
+        "component": "cc1",
+        "pixelArea": 20800,
+        "centroid": [
+          20,
+          260
+        ],
+        "contourCount": 1,
+        "hierarchyLinkCount": 0,
+        "watershedSegmentCount": 1
+      }
+    },
+    {
+      "id": "v2",
+      "method": "connected_component",
+      "members": [
+        "r3",
+        "r4",
+        "r5",
+        "r6",
+        "r7",
+        "r8",
+        "r9",
+        "r10",
+        "r11",
+        "r12"
+      ],
+      "confidence": 0.75,
+      "evidence": {
+        "component": "cc2",
+        "pixelArea": 107100,
+        "centroid": [
+          350,
+          346
+        ],
+        "contourCount": 14,
+        "hierarchyLinkCount": 6,
+        "watershedSegmentCount": 11
+      }
+    },
+    {
+      "id": "v3",
+      "method": "connected_component",
+      "members": [
+        "r13",
+        "r14",
+        "r15"
+      ],
+      "confidence": 0.75,
+      "evidence": {
+        "component": "cc3",
+        "pixelArea": 10000,
+        "centroid": [
+          60,
+          580
+        ],
+        "contourCount": 5,
+        "hierarchyLinkCount": 3,
+        "watershedSegmentCount": 3
+      }
+    },
+    {
+      "id": "v4",
+      "method": "connected_component",
+      "members": [
+        "r16",
+        "r17",
+        "r18",
+        "r19",
+        "r20",
+        "r21"
+      ],
+      "confidence": 0.75,
+      "evidence": {
+        "component": "cc4",
+        "pixelArea": 20800,
+        "centroid": [
+          380,
+          620
+        ],
+        "contourCount": 9,
+        "hierarchyLinkCount": 4,
+        "watershedSegmentCount": 6
+      }
+    }
+  ],
+  "smallFeatures": [
+    {
+      "id": "r10",
+      "host": 8,
+      "area": 300,
+      "floor": 16,
+      "sharedEdge": 60,
+      "perimeter": 80,
+      "hostContactRatio": 0.75,
+      "surroundContactRatio": 0.75,
+      "minContrast": 204,
+      "colorStd": 0.0,
+      "bboxFill": 0.75,
+      "thickness": 5.73,
+      "openingRetention": 0.983333,
+      "pixelRuns": [
+        [
+          310,
+          210,
+          219
+        ],
+        [
+          311,
+          210,
+          219
+        ],
+        [
+          312,
+          210,
+          219
+        ],
+        [
+          313,
+          210,
+          219
+        ],
+        [
+          314,
+          210,
+          219
+        ],
+        [
+          315,
+          210,
+          219
+        ],
+        [
+          316,
+          210,
+          219
+        ],
+        [
+          317,
+          210,
+          219
+        ],
+        [
+          318,
+          210,
+          219
+        ],
+        [
+          319,
+          210,
+          219
+        ],
+        [
+          320,
+          210,
+          229
+        ],
+        [
+          321,
+          210,
+          229
+        ],
+        [
+          322,
+          210,
+          229
+        ],
+        [
+          323,
+          210,
+          229
+        ],
+        [
+          324,
+          210,
+          229
+        ],
+        [
+          325,
+          210,
+          229
+        ],
+        [
+          326,
+          210,
+          229
+        ],
+        [
+          327,
+          210,
+          229
+        ],
+        [
+          328,
+          210,
+          229
+        ],
+        [
+          329,
+          210,
+          229
+        ]
+      ]
+    },
+    {
+      "id": "r11",
+      "host": 8,
+      "area": 100,
+      "floor": 16,
+      "sharedEdge": 30,
+      "perimeter": 40,
+      "hostContactRatio": 0.75,
+      "surroundContactRatio": 0.75,
+      "minContrast": 153,
+      "colorStd": 0.0,
+      "bboxFill": 1.0,
+      "thickness": 4.775,
+      "openingRetention": 0.96,
+      "pixelRuns": [
+        [
+          320,
+          200,
+          209
+        ],
+        [
+          321,
+          200,
+          209
+        ],
+        [
+          322,
+          200,
+          209
+        ],
+        [
+          323,
+          200,
+          209
+        ],
+        [
+          324,
+          200,
+          209
+        ],
+        [
+          325,
+          200,
+          209
+        ],
+        [
+          326,
+          200,
+          209
+        ],
+        [
+          327,
+          200,
+          209
+        ],
+        [
+          328,
+          200,
+          209
+        ],
+        [
+          329,
+          200,
+          209
+        ]
+      ]
+    },
+    {
+      "id": "r12",
+      "host": 8,
+      "area": 100,
+      "floor": 16,
+      "sharedEdge": 30,
+      "perimeter": 40,
+      "hostContactRatio": 0.75,
+      "surroundContactRatio": 0.75,
+      "minContrast": 153,
+      "colorStd": 0.0,
+      "bboxFill": 1.0,
+      "thickness": 4.775,
+      "openingRetention": 0.96,
+      "pixelRuns": [
+        [
+          330,
+          210,
+          219
+        ],
+        [
+          331,
+          210,
+          219
+        ],
+        [
+          332,
+          210,
+          219
+        ],
+        [
+          333,
+          210,
+          219
+        ],
+        [
+          334,
+          210,
+          219
+        ],
+        [
+          335,
+          210,
+          219
+        ],
+        [
+          336,
+          210,
+          219
+        ],
+        [
+          337,
+          210,
+          219
+        ],
+        [
+          338,
+          210,
+          219
+        ],
+        [
+          339,
+          210,
+          219
+        ]
+      ]
+    }
+  ],
+  "module": "omega_vision.perception.pixels_to_regions_cv"
+}

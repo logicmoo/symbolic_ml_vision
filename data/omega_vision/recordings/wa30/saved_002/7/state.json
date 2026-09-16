@@ -1,0 +1,61 @@
+{
+  "state": "NOT_FINISHED",
+  "level": "1",
+  "level_source": "default",
+  "next_level_expected": null,
+  "observation": {
+    "game_id": "wa30-ee6fef47",
+    "state": "NOT_FINISHED",
+    "levels_completed": 0,
+    "win_levels": 9,
+    "action_input": {
+      "id": "ACTION4",
+      "data": {},
+      "reasoning": null
+    },
+    "guid": "117d5444-4cbe-4184-97ce-dddf9bfa9a0a",
+    "full_reset": false,
+    "available_actions": [
+      1,
+      2,
+      3,
+      4,
+      5
+    ]
+  },
+  "step_count": 8,
+  "game_id": "wa30",
+  "game_directory": "wa30",
+  "image_hash": "f0dbcc45353ef8db",
+  "incoming_action": "ACTION4",
+  "action_directory": "7",
+  "action_data": {},
+  "parent_node": "..",
+  "action_path": [
+    "0",
+    "1",
+    "2",
+    "3",
+    "4",
+    "5",
+    "6",
+    "7"
+  ],
+  "recorded_at": "2026-09-10T06:49:03.824254Z",
+  "scan": {
+    "path": "data/recordings/wa30/saved_002/7",
+    "results": {
+      "obj_images": [],
+      "grp_images": [],
+      "sub_images": [
+        "data/recordings/wa30/saved_002/7/image.png"
+      ],
+      "pl_files": [],
+      "eng_files": [],
+      "json_files": [],
+      "metta_files": [],
+      "prompt_files": [],
+      "unknown_files": []
+    }
+  }
+}

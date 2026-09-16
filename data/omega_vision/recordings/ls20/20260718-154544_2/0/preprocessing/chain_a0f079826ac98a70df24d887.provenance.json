@@ -1,0 +1,116 @@
+{
+  "kind": "video_import_image_provenance",
+  "version": 1,
+  "image": "data/recordings/ls20/20260718-154544_2/0/preprocessing/chain_a0f079826ac98a70df24d887.png",
+  "provenance": "data/recordings/ls20/20260718-154544_2/0/preprocessing/chain_a0f079826ac98a70df24d887.provenance.json",
+  "createdAt": "2026-09-10T11:50:35.166024Z",
+  "operation": "image_preprocessing_0",
+  "dimensions": {
+    "width": 1920,
+    "height": 1920
+  },
+  "originalDimensions": {
+    "width": 640,
+    "height": 640
+  },
+  "root": {
+    "firstSeenImage": "data/recordings/ls20/20260718-154544_2/0/image.png",
+    "dimensions": {
+      "width": 640,
+      "height": 640
+    }
+  },
+  "parent": {
+    "image": "data/recordings/ls20/20260718-154544_2/0/image.png",
+    "provenance": "data/recordings/ls20/20260718-154544_2/0/image.provenance.json"
+  },
+  "source": {
+    "chainSignature": "chain:a0f079826ac98a70df24d887",
+    "sourceSignature": "c8aac72598f024fd4d812719",
+    "steps": [
+      {
+        "stepId": "pp-original-1",
+        "entryId": "scale_3x_nearest",
+        "params": {}
+      }
+    ],
+    "implementationVersions": {
+      "scale_3x_nearest": "1519b2296969826c151c7624a327a41afa4fba5f690cf961fba4066779443474"
+    }
+  },
+  "transform": {
+    "coordinateSpace": "pixel-edges",
+    "originalSize": [
+      640,
+      640
+    ],
+    "size": [
+      1920,
+      1920
+    ],
+    "sourceToVariant": [
+      3.0,
+      0,
+      0,
+      0,
+      3.0,
+      0
+    ],
+    "variantToSource": [
+      0.3333333333333333,
+      0,
+      0,
+      0,
+      0.3333333333333333,
+      0
+    ]
+  },
+  "lineage": [
+    {
+      "image": "data/recordings/ls20/20260718-154544_2/0/image.png",
+      "operation": "legacy_source",
+      "dimensions": {
+        "width": 640,
+        "height": 640
+      },
+      "transform": {},
+      "createdAt": "2026-09-10T11:50:35.148906Z"
+    },
+    {
+      "image": "data/recordings/ls20/20260718-154544_2/0/preprocessing/chain_a0f079826ac98a70df24d887.png",
+      "operation": "image_preprocessing_0",
+      "dimensions": {
+        "width": 1920,
+        "height": 1920
+      },
+      "transform": {
+        "coordinateSpace": "pixel-edges",
+        "originalSize": [
+          640,
+          640
+        ],
+        "size": [
+          1920,
+          1920
+        ],
+        "sourceToVariant": [
+          3.0,
+          0,
+          0,
+          0,
+          3.0,
+          0
+        ],
+        "variantToSource": [
+          0.3333333333333333,
+          0,
+          0,
+          0,
+          0.3333333333333333,
+          0
+        ]
+      },
+      "createdAt": "2026-09-10T11:50:35.166024Z"
+    }
+  ]
+}

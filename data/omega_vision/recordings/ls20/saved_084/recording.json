@@ -1,0 +1,383 @@
+{
+  "kind": "arc3_play_recording",
+  "session_id": "0ec3ec152ec9462fb4e7d363f4503871",
+  "game_id": "ls20-9607627b",
+  "game_directory": "ls20",
+  "level": "3",
+  "level_directory": "data/recordings/ls20/saved_084",
+  "started_at": "2026-09-07T11:06:05.204520Z",
+  "updated_at": "2026-09-07T11:07:08.251130Z",
+  "last_event": "level_complete",
+  "moves": [
+    {
+      "index": 0,
+      "action": "ACTION1",
+      "data": {},
+      "directory": "data/recordings/ls20/saved_084/0",
+      "state": "NOT_FINISHED",
+      "level": "3",
+      "recorded_at": "2026-09-07T11:06:49.875753Z"
+    },
+    {
+      "index": 1,
+      "action": "ACTION1",
+      "data": {},
+      "directory": "data/recordings/ls20/saved_084/1",
+      "state": "NOT_FINISHED",
+      "level": "3",
+      "recorded_at": "2026-09-07T11:06:50.230553Z"
+    },
+    {
+      "index": 2,
+      "action": "ACTION1",
+      "data": {},
+      "directory": "data/recordings/ls20/saved_084/2",
+      "state": "NOT_FINISHED",
+      "level": "3",
+      "recorded_at": "2026-09-07T11:06:50.583623Z"
+    },
+    {
+      "index": 3,
+      "action": "ACTION1",
+      "data": {},
+      "directory": "data/recordings/ls20/saved_084/3",
+      "state": "NOT_FINISHED",
+      "level": "3",
+      "recorded_at": "2026-09-07T11:06:50.973495Z"
+    },
+    {
+      "index": 4,
+      "action": "ACTION1",
+      "data": {},
+      "directory": "data/recordings/ls20/saved_084/4",
+      "state": "NOT_FINISHED",
+      "level": "3",
+      "recorded_at": "2026-09-07T11:06:51.332747Z"
+    },
+    {
+      "index": 5,
+      "action": "ACTION1",
+      "data": {},
+      "directory": "data/recordings/ls20/saved_084/5",
+      "state": "NOT_FINISHED",
+      "level": "3",
+      "recorded_at": "2026-09-07T11:06:51.688456Z"
+    },
+    {
+      "index": 6,
+      "action": "ACTION1",
+      "data": {},
+      "directory": "data/recordings/ls20/saved_084/6",
+      "state": "NOT_FINISHED",
+      "level": "3",
+      "recorded_at": "2026-09-07T11:06:52.027183Z"
+    },
+    {
+      "index": 7,
+      "action": "ACTION1",
+      "data": {},
+      "directory": "data/recordings/ls20/saved_084/7",
+      "state": "NOT_FINISHED",
+      "level": "3",
+      "recorded_at": "2026-09-07T11:06:52.389385Z"
+    },
+    {
+      "index": 8,
+      "action": "ACTION3",
+      "data": {},
+      "directory": "data/recordings/ls20/saved_084/8",
+      "state": "NOT_FINISHED",
+      "level": "3",
+      "recorded_at": "2026-09-07T11:06:52.742931Z"
+    },
+    {
+      "index": 9,
+      "action": "ACTION2",
+      "data": {},
+      "directory": "data/recordings/ls20/saved_084/9",
+      "state": "NOT_FINISHED",
+      "level": "3",
+      "recorded_at": "2026-09-07T11:06:53.105031Z"
+    },
+    {
+      "index": 10,
+      "action": "ACTION2",
+      "data": {},
+      "directory": "data/recordings/ls20/saved_084/10",
+      "state": "NOT_FINISHED",
+      "level": "3",
+      "recorded_at": "2026-09-07T11:06:53.477844Z"
+    },
+    {
+      "index": 11,
+      "action": "ACTION4",
+      "data": {},
+      "directory": "data/recordings/ls20/saved_084/11",
+      "state": "NOT_FINISHED",
+      "level": "3",
+      "recorded_at": "2026-09-07T11:06:53.835636Z"
+    },
+    {
+      "index": 12,
+      "action": "ACTION2",
+      "data": {},
+      "directory": "data/recordings/ls20/saved_084/12",
+      "state": "NOT_FINISHED",
+      "level": "3",
+      "recorded_at": "2026-09-07T11:06:54.219088Z"
+    },
+    {
+      "index": 13,
+      "action": "ACTION2",
+      "data": {},
+      "directory": "data/recordings/ls20/saved_084/13",
+      "state": "NOT_FINISHED",
+      "level": "3",
+      "recorded_at": "2026-09-07T11:06:54.633094Z"
+    },
+    {
+      "index": 14,
+      "action": "ACTION2",
+      "data": {},
+      "directory": "data/recordings/ls20/saved_084/14",
+      "state": "NOT_FINISHED",
+      "level": "3",
+      "recorded_at": "2026-09-07T11:06:55.054291Z"
+    },
+    {
+      "index": 15,
+      "action": "ACTION3",
+      "data": {},
+      "directory": "data/recordings/ls20/saved_084/15",
+      "state": "NOT_FINISHED",
+      "level": "3",
+      "recorded_at": "2026-09-07T11:06:55.402932Z"
+    },
+    {
+      "index": 16,
+      "action": "ACTION2",
+      "data": {},
+      "directory": "data/recordings/ls20/saved_084/16",
+      "state": "NOT_FINISHED",
+      "level": "3",
+      "recorded_at": "2026-09-07T11:06:55.725905Z"
+    },
+    {
+      "index": 17,
+      "action": "ACTION2",
+      "data": {},
+      "directory": "data/recordings/ls20/saved_084/17",
+      "state": "NOT_FINISHED",
+      "level": "3",
+      "recorded_at": "2026-09-07T11:06:56.097654Z"
+    },
+    {
+      "index": 18,
+      "action": "ACTION2",
+      "data": {},
+      "directory": "data/recordings/ls20/saved_084/18",
+      "state": "NOT_FINISHED",
+      "level": "3",
+      "recorded_at": "2026-09-07T11:06:56.470143Z"
+    },
+    {
+      "index": 19,
+      "action": "ACTION1",
+      "data": {},
+      "directory": "data/recordings/ls20/saved_084/19",
+      "state": "NOT_FINISHED",
+      "level": "3",
+      "recorded_at": "2026-09-07T11:06:56.861862Z"
+    },
+    {
+      "index": 20,
+      "action": "ACTION1",
+      "data": {},
+      "directory": "data/recordings/ls20/saved_084/20",
+      "state": "NOT_FINISHED",
+      "level": "3",
+      "recorded_at": "2026-09-07T11:06:57.238444Z"
+    },
+    {
+      "index": 21,
+      "action": "ACTION1",
+      "data": {},
+      "directory": "data/recordings/ls20/saved_084/21",
+      "state": "NOT_FINISHED",
+      "level": "3",
+      "recorded_at": "2026-09-07T11:06:57.585579Z"
+    },
+    {
+      "index": 22,
+      "action": "ACTION3",
+      "data": {},
+      "directory": "data/recordings/ls20/saved_084/22",
+      "state": "NOT_FINISHED",
+      "level": "3",
+      "recorded_at": "2026-09-07T11:06:57.951904Z"
+    },
+    {
+      "index": 23,
+      "action": "ACTION3",
+      "data": {},
+      "directory": "data/recordings/ls20/saved_084/23",
+      "state": "NOT_FINISHED",
+      "level": "3",
+      "recorded_at": "2026-09-07T11:06:58.265094Z"
+    },
+    {
+      "index": 24,
+      "action": "ACTION1",
+      "data": {},
+      "directory": "data/recordings/ls20/saved_084/24",
+      "state": "NOT_FINISHED",
+      "level": "3",
+      "recorded_at": "2026-09-07T11:06:58.570160Z"
+    },
+    {
+      "index": 25,
+      "action": "ACTION4",
+      "data": {},
+      "directory": "data/recordings/ls20/saved_084/25",
+      "state": "NOT_FINISHED",
+      "level": "3",
+      "recorded_at": "2026-09-07T11:06:58.864335Z"
+    },
+    {
+      "index": 26,
+      "action": "ACTION4",
+      "data": {},
+      "directory": "data/recordings/ls20/saved_084/26",
+      "state": "NOT_FINISHED",
+      "level": "3",
+      "recorded_at": "2026-09-07T11:06:59.107447Z"
+    },
+    {
+      "index": 27,
+      "action": "ACTION4",
+      "data": {},
+      "directory": "data/recordings/ls20/saved_084/27",
+      "state": "NOT_FINISHED",
+      "level": "3",
+      "recorded_at": "2026-09-07T11:06:59.361340Z"
+    },
+    {
+      "index": 28,
+      "action": "ACTION4",
+      "data": {},
+      "directory": "data/recordings/ls20/saved_084/28",
+      "state": "NOT_FINISHED",
+      "level": "3",
+      "recorded_at": "2026-09-07T11:07:04.748804Z"
+    },
+    {
+      "index": 29,
+      "action": "ACTION4",
+      "data": {},
+      "directory": "data/recordings/ls20/saved_084/29",
+      "state": "NOT_FINISHED",
+      "level": "3",
+      "recorded_at": "2026-09-07T11:07:05.038644Z"
+    },
+    {
+      "index": 30,
+      "action": "ACTION4",
+      "data": {},
+      "directory": "data/recordings/ls20/saved_084/30",
+      "state": "NOT_FINISHED",
+      "level": "3",
+      "recorded_at": "2026-09-07T11:07:05.377606Z"
+    },
+    {
+      "index": 31,
+      "action": "ACTION4",
+      "data": {},
+      "directory": "data/recordings/ls20/saved_084/31",
+      "state": "NOT_FINISHED",
+      "level": "3",
+      "recorded_at": "2026-09-07T11:07:05.701161Z"
+    },
+    {
+      "index": 32,
+      "action": "ACTION1",
+      "data": {},
+      "directory": "data/recordings/ls20/saved_084/32",
+      "state": "NOT_FINISHED",
+      "level": "3",
+      "recorded_at": "2026-09-07T11:07:05.998223Z"
+    },
+    {
+      "index": 33,
+      "action": "ACTION1",
+      "data": {},
+      "directory": "data/recordings/ls20/saved_084/33",
+      "state": "NOT_FINISHED",
+      "level": "3",
+      "recorded_at": "2026-09-07T11:07:06.305540Z"
+    },
+    {
+      "index": 34,
+      "action": "ACTION1",
+      "data": {},
+      "directory": "data/recordings/ls20/saved_084/34",
+      "state": "NOT_FINISHED",
+      "level": "3",
+      "recorded_at": "2026-09-07T11:07:06.628902Z"
+    },
+    {
+      "index": 35,
+      "action": "ACTION3",
+      "data": {},
+      "directory": "data/recordings/ls20/saved_084/35",
+      "state": "NOT_FINISHED",
+      "level": "3",
+      "recorded_at": "2026-09-07T11:07:06.967239Z"
+    },
+    {
+      "index": 36,
+      "action": "ACTION1",
+      "data": {},
+      "directory": "data/recordings/ls20/saved_084/36",
+      "state": "NOT_FINISHED",
+      "level": "3",
+      "recorded_at": "2026-09-07T11:07:07.200266Z"
+    },
+    {
+      "index": 37,
+      "action": "ACTION2",
+      "data": {},
+      "directory": "data/recordings/ls20/saved_084/37",
+      "state": "NOT_FINISHED",
+      "level": "3",
+      "recorded_at": "2026-09-07T11:07:07.410338Z"
+    },
+    {
+      "index": 38,
+      "action": "ACTION1",
+      "data": {},
+      "directory": "data/recordings/ls20/saved_084/38",
+      "state": "NOT_FINISHED",
+      "level": "3",
+      "recorded_at": "2026-09-07T11:07:07.640343Z"
+    },
+    {
+      "index": 39,
+      "action": "ACTION4",
+      "data": {},
+      "directory": "data/recordings/ls20/saved_084/39",
+      "state": "NOT_FINISHED",
+      "level": "3",
+      "recorded_at": "2026-09-07T11:07:07.901357Z"
+    },
+    {
+      "index": 40,
+      "action": "ACTION2",
+      "data": {},
+      "directory": "data/recordings/ls20/saved_084/40",
+      "state": "NOT_FINISHED",
+      "level": "4",
+      "recorded_at": "2026-09-07T11:07:08.117420Z",
+      "level_completed": "3"
+    }
+  ]
+}

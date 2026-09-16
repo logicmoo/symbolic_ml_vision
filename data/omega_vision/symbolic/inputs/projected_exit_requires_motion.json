@@ -1,0 +1,16 @@
+{
+  "continuations": true,
+  "occlusions": [],
+  "rows": [
+    {
+      "ambiguous": false,
+      "currently_visible": false,
+      "entity": "hidden",
+      "exit_fraction": 1,
+      "previous_status": "visible",
+      "projection_supported": false,
+      "status": "exited",
+      "was_visible": true
+    }
+  ]
+}

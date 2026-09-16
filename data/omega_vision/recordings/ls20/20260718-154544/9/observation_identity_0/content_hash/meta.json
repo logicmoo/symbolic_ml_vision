@@ -1,0 +1,54 @@
+{
+  "kind": "sequence_set_transformation",
+  "transformation": "observation_identity_0",
+  "doer": "content_hash",
+  "options": {},
+  "dependsOn": [
+    "parts_extraction_0/python_opencv",
+    "parts_grouping_0/group_regions_prolog",
+    "group_acceptance_0/group_acceptance_prolog"
+  ],
+  "type": "py_pl",
+  "preprocessingRevision": "chain:257a35e4836a75b6e967d81f",
+  "createdAt": "2026-09-10T15:53:13.038961Z",
+  "elapsedMs": 442,
+  "outputRevision": "13b644a5ad0c0106",
+  "inputSignature": "chain:ccb766c1bce78ae1ce5b5ef3",
+  "consumedDeps": {
+    "parts_extraction_0/python_opencv": {
+      "frameId": "9",
+      "output": "parts_extraction_0/python_opencv",
+      "revision": "a9128c10530bc356893401b87c71fe0f0c0e7104035b5d6ebb82dee7fc09c29a"
+    },
+    "parts_grouping_0/group_regions_prolog": {
+      "frameId": "9",
+      "output": "parts_grouping_0/group_regions_prolog",
+      "revision": "a65ac0e771963997"
+    },
+    "group_acceptance_0/group_acceptance_prolog": {
+      "frameId": "9",
+      "output": "group_acceptance_0/group_acceptance_prolog",
+      "revision": "09fd07f74c2c4350"
+    }
+  },
+  "module": "omega_vision.perception.observation_identity",
+  "partsFacts": "parts_extraction_0/python_opencv/result.pl",
+  "observationBundleId": "observation-bundle-a193aa35ea7e92fd44538154",
+  "frameObservationId": "frame-observation-8d2d7928c7d76f48289c7b63",
+  "observationArtifact": "observation_identity_0/content_hash/observations.json",
+  "observationCount": 46,
+  "regionObservationCount": 22,
+  "visualGroupObservationCount": 4,
+  "symbolicGroupObservationCount": 6,
+  "finalGroupObservationCount": 13,
+  "identityVersion": "observation-identity-v1",
+  "artifactHashes": {
+    "image": "c0ec413fc82c9be2e9912fcfce9847992b1c92fa39f84d4673bcdf5903b006ee",
+    "partsFacts": "0897af3048cc77443bd445543e3d6d7804b666d60cc44ea3ea2dc4a04abe85df",
+    "groupingFacts": "1fe812defad6d08598c6234fe878fcce22608e9b033a4808a377986d237bdc3c",
+    "acceptanceFacts": "43e7769df837d394f7bbc16f536620c9952849c71fbebea918a1c46ea971b8b0",
+    "acceptanceMetadata": "59e7c124f922ab60238eb0cc0a064e14ac17d6b8bc866ba266f58566838bba22",
+    "geometry": "402721ad59df911c0fe23035ff136e1f398b044d0b5d3185dec7c33e81d62bed",
+    "extractionMetadata": "71d69bf82dfa665cdc0be4e24f3ea1371bdf3d26f56adbdc6a49841e429026f8"
+  }
+}

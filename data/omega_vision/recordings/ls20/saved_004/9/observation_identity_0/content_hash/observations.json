@@ -1,0 +1,2179 @@
+{
+  "schemaVersion": 1,
+  "identityVersion": "observation-identity-v1",
+  "bundleUid": "observation-bundle-28d1a61d3575ede846b9a521",
+  "frame": {
+    "uid": "frame-observation-c0e8295e291913b65fb1a862",
+    "alias": "9",
+    "sequenceId": "data/recordings/ls20/saved_004",
+    "frameOrder": 10,
+    "sourceKey": "9/image.png",
+    "imageHash": "845263b79b90fcd75c63eafb7e5ca7328068757a11ed477c63e56d45c29ffcc9",
+    "width": 640,
+    "height": 640
+  },
+  "artifactHashes": {
+    "image": "845263b79b90fcd75c63eafb7e5ca7328068757a11ed477c63e56d45c29ffcc9",
+    "partsFacts": "475198b3503a7d9fb0281ff5f71dcde10eb2b6eb29755c8513fa987b84c29f41",
+    "groupingFacts": "63ae8170c4702e9127f32f6a0536c01648663470e6c645b772d9077e16fb7edf",
+    "acceptanceFacts": "1f79bcdcf09a046f747c88411fe4a3e9bfcd18bc2bcf71681e05d290fd525bea",
+    "acceptanceMetadata": "1d6b60a939cc74b93cdf80fc49e6c592e8d06eec6b4ecb1ceb9f3c651386dbf1",
+    "geometry": "0a89a902575493862069070dd1869cddb2ee2420ed792d9903bbc48f3276cd6d",
+    "extractionMetadata": "f28bf3c40430e3f215267cfbb9e5e58aecd7dcad4b804cd282e6197798e230f8"
+  },
+  "regions": [
+    {
+      "uid": "region-observation-cd6c519505ee6559bab82e7d",
+      "alias": "r2",
+      "sourceOrder": 0,
+      "fingerprint": "91c3a51a710b2eb3b58f4251cd3843012b18e65ac789d1d3a99d663344392226",
+      "color": "#ffdc00",
+      "area": 250900.0,
+      "centroid": [
+        337.0,
+        278.0
+      ],
+      "geometry": {
+        "outer": [
+          [
+            0.0,
+            520.0
+          ],
+          [
+            0.0,
+            639.0
+          ],
+          [
+            119.0,
+            639.0
+          ],
+          [
+            120.0,
+            599.0
+          ],
+          [
+            639.0,
+            599.0
+          ],
+          [
+            639.0,
+            0.0
+          ],
+          [
+            40.0,
+            0.0
+          ],
+          [
+            40.0,
+            519.0
+          ]
+        ],
+        "holes": [
+          [
+            [
+              139.0,
+              250.0
+            ],
+            [
+              139.0,
+              399.0
+            ],
+            [
+              189.0,
+              400.0
+            ],
+            [
+              189.0,
+              499.0
+            ],
+            [
+              539.0,
+              500.0
+            ],
+            [
+              540.0,
+              250.0
+            ],
+            [
+              390.0,
+              249.0
+            ],
+            [
+              390.0,
+              170.0
+            ],
+            [
+              410.0,
+              169.0
+            ],
+            [
+              410.0,
+              80.0
+            ],
+            [
+              320.0,
+              79.0
+            ],
+            [
+              319.0,
+              169.0
+            ],
+            [
+              339.0,
+              170.0
+            ],
+            [
+              339.0,
+              249.0
+            ]
+          ],
+          [
+            [
+              9.0,
+              530.0
+            ],
+            [
+              10.0,
+              630.0
+            ],
+            [
+              110.0,
+              629.0
+            ],
+            [
+              109.0,
+              529.0
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "uid": "region-observation-ace178162f9ade6596ea1bee",
+      "alias": "r7",
+      "sourceOrder": 1,
+      "fingerprint": "92edc877bf6e9c01cf1341d7776461e830a7b8ad71192fab90e4213cfa52f548",
+      "color": "#2ecc40",
+      "area": 82000.0,
+      "centroid": [
+        355.0,
+        372.0
+      ],
+      "geometry": {
+        "outer": [
+          [
+            140.0,
+            250.0
+          ],
+          [
+            140.0,
+            399.0
+          ],
+          [
+            190.0,
+            400.0
+          ],
+          [
+            190.0,
+            499.0
+          ],
+          [
+            539.0,
+            499.0
+          ],
+          [
+            539.0,
+            250.0
+          ],
+          [
+            390.0,
+            250.0
+          ],
+          [
+            389.0,
+            300.0
+          ],
+          [
+            340.0,
+            300.0
+          ],
+          [
+            339.0,
+            250.0
+          ]
+        ],
+        "holes": [
+          [
+            [
+              199.0,
+              320.0
+            ],
+            [
+              199.0,
+              329.0
+            ],
+            [
+              209.0,
+              330.0
+            ],
+            [
+              210.0,
+              340.0
+            ],
+            [
+              219.0,
+              340.0
+            ],
+            [
+              220.0,
+              330.0
+            ],
+            [
+              230.0,
+              329.0
+            ],
+            [
+              230.0,
+              320.0
+            ],
+            [
+              220.0,
+              319.0
+            ],
+            [
+              219.0,
+              309.0
+            ],
+            [
+              210.0,
+              309.0
+            ],
+            [
+              209.0,
+              319.0
+            ]
+          ],
+          [
+            [
+              239.0,
+              400.0
+            ],
+            [
+              240.0,
+              450.0
+            ],
+            [
+              340.0,
+              449.0
+            ],
+            [
+              340.0,
+              300.0
+            ],
+            [
+              290.0,
+              299.0
+            ],
+            [
+              289.0,
+              399.0
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "uid": "region-observation-9acfb76b7b2b064aba1d1785",
+      "alias": "r1",
+      "sourceOrder": 2,
+      "fingerprint": "876cc95bc224c6e737ee08961bb9a7491d9b3ec637c6cbb48fd71c7545c81366",
+      "color": "#aaaaaa",
+      "area": 20800.0,
+      "centroid": [
+        20.0,
+        260.0
+      ],
+      "geometry": {
+        "outer": [
+          [
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            519.0
+          ],
+          [
+            39.0,
+            519.0
+          ],
+          [
+            39.0,
+            0.0
+          ]
+        ],
+        "holes": []
+      }
+    },
+    {
+      "uid": "region-observation-228814264c36364398624842",
+      "alias": "r17",
+      "sourceOrder": 3,
+      "fingerprint": "603863ef70778bdd4702bd5f76b2e865e1fdebc65afa94e151377428510ab51d",
+      "color": "#aaaaaa",
+      "area": 11200.0,
+      "centroid": [
+        386.0,
+        620.0
+      ],
+      "geometry": {
+        "outer": [
+          [
+            120.0,
+            600.0
+          ],
+          [
+            120.0,
+            639.0
+          ],
+          [
+            639.0,
+            639.0
+          ],
+          [
+            639.0,
+            630.0
+          ],
+          [
+            619.0,
+            629.0
+          ],
+          [
+            619.0,
+            610.0
+          ],
+          [
+            639.0,
+            609.0
+          ],
+          [
+            639.0,
+            600.0
+          ]
+        ],
+        "holes": [
+          [
+            [
+              129.0,
+              610.0
+            ],
+            [
+              130.0,
+              630.0
+            ],
+            [
+              550.0,
+              629.0
+            ],
+            [
+              549.0,
+              609.0
+            ]
+          ],
+          [
+            [
+              559.0,
+              610.0
+            ],
+            [
+              560.0,
+              630.0
+            ],
+            [
+              580.0,
+              629.0
+            ],
+            [
+              579.0,
+              609.0
+            ]
+          ],
+          [
+            [
+              589.0,
+              610.0
+            ],
+            [
+              590.0,
+              630.0
+            ],
+            [
+              610.0,
+              629.0
+            ],
+            [
+              609.0,
+              609.0
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "uid": "region-observation-aeeadeaf414e114f298975c9",
+      "alias": "r10",
+      "sourceOrder": 4,
+      "fingerprint": "45971ccbf47658d41170996c7a6d3d8ca4a956bdeba6f89e963a99de87163bac",
+      "color": "#ffdc00",
+      "area": 10000.0,
+      "centroid": [
+        302.0,
+        387.0
+      ],
+      "geometry": {
+        "outer": [
+          [
+            240.0,
+            400.0
+          ],
+          [
+            240.0,
+            449.0
+          ],
+          [
+            339.0,
+            449.0
+          ],
+          [
+            339.0,
+            300.0
+          ],
+          [
+            290.0,
+            300.0
+          ],
+          [
+            290.0,
+            399.0
+          ]
+        ],
+        "holes": []
+      }
+    },
+    {
+      "uid": "region-observation-7646eb2a45d2506d014fe297",
+      "alias": "r14",
+      "sourceOrder": 5,
+      "fingerprint": "a22d6257e5ba662abb2f711cecc36abf7c13d907cbf369c98ec8844b421489db",
+      "color": "#aaaaaa",
+      "area": 7600.0,
+      "centroid": [
+        58.0,
+        581.0
+      ],
+      "geometry": {
+        "outer": [
+          [
+            10.0,
+            530.0
+          ],
+          [
+            10.0,
+            629.0
+          ],
+          [
+            109.0,
+            629.0
+          ],
+          [
+            109.0,
+            530.0
+          ]
+        ],
+        "holes": [
+          [
+            [
+              29.0,
+              550.0
+            ],
+            [
+              30.0,
+              570.0
+            ],
+            [
+              69.0,
+              570.0
+            ],
+            [
+              70.0,
+              610.0
+            ],
+            [
+              90.0,
+              609.0
+            ],
+            [
+              89.0,
+              549.0
+            ]
+          ],
+          [
+            [
+              29.0,
+              590.0
+            ],
+            [
+              30.0,
+              610.0
+            ],
+            [
+              50.0,
+              609.0
+            ],
+            [
+              49.0,
+              589.0
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "uid": "region-observation-f2305f2d6386e2c7ab1e316e",
+      "alias": "r3",
+      "sourceOrder": 6,
+      "fingerprint": "b115f368774b899f61e762e4a89c65d651a2ecce9b084318b2dd9bca4a806d1e",
+      "color": "#2ecc40",
+      "area": 7200.0,
+      "centroid": [
+        364.0,
+        172.0
+      ],
+      "geometry": {
+        "outer": [
+          [
+            320.0,
+            80.0
+          ],
+          [
+            320.0,
+            169.0
+          ],
+          [
+            340.0,
+            170.0
+          ],
+          [
+            340.0,
+            249.0
+          ],
+          [
+            389.0,
+            249.0
+          ],
+          [
+            389.0,
+            170.0
+          ],
+          [
+            409.0,
+            169.0
+          ],
+          [
+            409.0,
+            80.0
+          ]
+        ],
+        "holes": [
+          [
+            [
+              329.0,
+              90.0
+            ],
+            [
+              330.0,
+              160.0
+            ],
+            [
+              400.0,
+              159.0
+            ],
+            [
+              399.0,
+              89.0
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "uid": "region-observation-1f32555231ad054291478670",
+      "alias": "r19",
+      "sourceOrder": 7,
+      "fingerprint": "f0a6eecb90f48a335c3908aa8e37f27b20ea621cb474b3b6dd3bf521ccea03b9",
+      "color": "#5a5a5a",
+      "area": 6600.0,
+      "centroid": [
+        384.0,
+        620.0
+      ],
+      "geometry": {
+        "outer": [
+          [
+            220.0,
+            610.0
+          ],
+          [
+            220.0,
+            629.0
+          ],
+          [
+            549.0,
+            629.0
+          ],
+          [
+            549.0,
+            610.0
+          ]
+        ],
+        "holes": []
+      }
+    },
+    {
+      "uid": "region-observation-62b15bd94e69a6bba47ac326",
+      "alias": "r4",
+      "sourceOrder": 8,
+      "fingerprint": "35ad483af5febc6a480d0d76b697236a80cdb65883631407f1cd0feeee9fa436",
+      "color": "#aaaaaa",
+      "area": 4300.0,
+      "centroid": [
+        364.0,
+        125.0
+      ],
+      "geometry": {
+        "outer": [
+          [
+            330.0,
+            90.0
+          ],
+          [
+            330.0,
+            159.0
+          ],
+          [
+            399.0,
+            159.0
+          ],
+          [
+            399.0,
+            90.0
+          ]
+        ],
+        "holes": [
+          [
+            [
+              349.0,
+              110.0
+            ],
+            [
+              350.0,
+              120.0
+            ],
+            [
+              369.0,
+              120.0
+            ],
+            [
+              370.0,
+              140.0
+            ],
+            [
+              380.0,
+              139.0
+            ],
+            [
+              379.0,
+              109.0
+            ]
+          ],
+          [
+            [
+              349.0,
+              130.0
+            ],
+            [
+              350.0,
+              140.0
+            ],
+            [
+              360.0,
+              139.0
+            ],
+            [
+              359.0,
+              129.0
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "uid": "region-observation-6e142bd38f04b70fe2514d94",
+      "alias": "r15",
+      "sourceOrder": 9,
+      "fingerprint": "cebd9a8c504a829ca6507ba62342ce246864a381d9444cc71fc8134ae28d4bd4",
+      "color": "#870c25",
+      "area": 2000.0,
+      "centroid": [
+        68.0,
+        572.0
+      ],
+      "geometry": {
+        "outer": [
+          [
+            30.0,
+            550.0
+          ],
+          [
+            30.0,
+            569.0
+          ],
+          [
+            69.0,
+            569.0
+          ],
+          [
+            70.0,
+            609.0
+          ],
+          [
+            89.0,
+            609.0
+          ],
+          [
+            89.0,
+            550.0
+          ]
+        ],
+        "holes": []
+      }
+    },
+    {
+      "uid": "region-observation-26359fb6f4c61a39657b62c5",
+      "alias": "r18",
+      "sourceOrder": 10,
+      "fingerprint": "23349905edf07ee5f3d12d7d54f78ea454b205a5809350340f599752dc98f779",
+      "color": "#2ecc40",
+      "area": 1800.0,
+      "centroid": [
+        174.0,
+        620.0
+      ],
+      "geometry": {
+        "outer": [
+          [
+            130.0,
+            610.0
+          ],
+          [
+            130.0,
+            629.0
+          ],
+          [
+            219.0,
+            629.0
+          ],
+          [
+            219.0,
+            610.0
+          ]
+        ],
+        "holes": []
+      }
+    },
+    {
+      "uid": "region-observation-2368ffcb92e158d2eb875db7",
+      "alias": "r9",
+      "sourceOrder": 11,
+      "fingerprint": "4edfa51c02a69811b5ba5858e58835be61d29f9928904a0ee10b87ead0c89705",
+      "color": "#870c25",
+      "area": 1500.0,
+      "centroid": [
+        364.0,
+        284.0
+      ],
+      "geometry": {
+        "outer": [
+          [
+            340.0,
+            270.0
+          ],
+          [
+            340.0,
+            299.0
+          ],
+          [
+            389.0,
+            299.0
+          ],
+          [
+            389.0,
+            270.0
+          ]
+        ],
+        "holes": []
+      }
+    },
+    {
+      "uid": "region-observation-12d0c4205c2f272e1f48d4f8",
+      "alias": "r8",
+      "sourceOrder": 12,
+      "fingerprint": "5008de0675a331e43258aece7b9c41a810f0890deaa894374fc2063505e50f45",
+      "color": "#bebebe",
+      "area": 1000.0,
+      "centroid": [
+        364.0,
+        260.0
+      ],
+      "geometry": {
+        "outer": [
+          [
+            340.0,
+            250.0
+          ],
+          [
+            340.0,
+            269.0
+          ],
+          [
+            389.0,
+            269.0
+          ],
+          [
+            389.0,
+            250.0
+          ]
+        ],
+        "holes": []
+      }
+    },
+    {
+      "uid": "region-observation-3f4938c94965b725bce7e022",
+      "alias": "r5",
+      "sourceOrder": 13,
+      "fingerprint": "45aa2b95c02c1c8f2138a649587b91d39141d0b02c3860d3c9fe2881772de610",
+      "color": "#870c25",
+      "area": 500.0,
+      "centroid": [
+        368.0,
+        120.0
+      ],
+      "geometry": {
+        "outer": [
+          [
+            350.0,
+            110.0
+          ],
+          [
+            350.0,
+            119.0
+          ],
+          [
+            369.0,
+            119.0
+          ],
+          [
+            370.0,
+            139.0
+          ],
+          [
+            379.0,
+            139.0
+          ],
+          [
+            379.0,
+            110.0
+          ]
+        ],
+        "holes": []
+      }
+    },
+    {
+      "uid": "region-observation-08c767ac6c1f1ab28270f97a",
+      "alias": "r16",
+      "sourceOrder": 14,
+      "fingerprint": "4bbe2111ff0dc83ce14cbc0388f7e6c50bf5e36b7fe6cb309898aa124307018c",
+      "color": "#870c25",
+      "area": 400.0,
+      "centroid": [
+        40.0,
+        600.0
+      ],
+      "geometry": {
+        "outer": [
+          [
+            30.0,
+            590.0
+          ],
+          [
+            30.0,
+            609.0
+          ],
+          [
+            49.0,
+            609.0
+          ],
+          [
+            49.0,
+            590.0
+          ]
+        ],
+        "holes": []
+      }
+    },
+    {
+      "uid": "region-observation-437214a2fe197fcff214fac3",
+      "alias": "r20",
+      "sourceOrder": 15,
+      "fingerprint": "614315e9658fac2b533b4f46e89c815c8a69766b7fc57773e096335195fba587",
+      "color": "#7fdbff",
+      "area": 400.0,
+      "centroid": [
+        570.0,
+        620.0
+      ],
+      "geometry": {
+        "outer": [
+          [
+            560.0,
+            610.0
+          ],
+          [
+            560.0,
+            629.0
+          ],
+          [
+            579.0,
+            629.0
+          ],
+          [
+            579.0,
+            610.0
+          ]
+        ],
+        "holes": []
+      }
+    },
+    {
+      "uid": "region-observation-50bf2ff024cfc79a9189d5ce",
+      "alias": "r21",
+      "sourceOrder": 16,
+      "fingerprint": "d94f3afe83028ba1d289cf8b38a4a30bac63c38292db37be08af961001f75d18",
+      "color": "#7fdbff",
+      "area": 400.0,
+      "centroid": [
+        600.0,
+        620.0
+      ],
+      "geometry": {
+        "outer": [
+          [
+            590.0,
+            610.0
+          ],
+          [
+            590.0,
+            629.0
+          ],
+          [
+            609.0,
+            629.0
+          ],
+          [
+            609.0,
+            610.0
+          ]
+        ],
+        "holes": []
+      }
+    },
+    {
+      "uid": "region-observation-5eff5ea0ee0ca0a6c108fe28",
+      "alias": "r22",
+      "sourceOrder": 17,
+      "fingerprint": "2fb0f23c10baf3d846eb58a85cedc689e56ef97e3025e4c241c7f4ff93d60a17",
+      "color": "#7fdbff",
+      "area": 400.0,
+      "centroid": [
+        630.0,
+        620.0
+      ],
+      "geometry": {
+        "outer": [
+          [
+            620.0,
+            610.0
+          ],
+          [
+            620.0,
+            629.0
+          ],
+          [
+            639.0,
+            629.0
+          ],
+          [
+            639.0,
+            610.0
+          ]
+        ],
+        "holes": []
+      }
+    },
+    {
+      "uid": "region-observation-5344a226ef940225e3d31249",
+      "alias": "r11",
+      "sourceOrder": 18,
+      "fingerprint": "87763a47e16fe023b399fabfe5f5807c4791dd14cb3d2e0a3da6466ad40c0315",
+      "color": "#000000",
+      "area": 300.0,
+      "centroid": [
+        218.0,
+        321.0
+      ],
+      "geometry": {
+        "outer": [
+          [
+            210.0,
+            310.0
+          ],
+          [
+            210.0,
+            329.0
+          ],
+          [
+            229.0,
+            329.0
+          ],
+          [
+            229.0,
+            320.0
+          ],
+          [
+            220.0,
+            320.0
+          ],
+          [
+            219.0,
+            319.0
+          ],
+          [
+            219.0,
+            310.0
+          ]
+        ],
+        "holes": [],
+        "pixelRuns": [
+          [
+            310,
+            210,
+            219
+          ],
+          [
+            311,
+            210,
+            219
+          ],
+          [
+            312,
+            210,
+            219
+          ],
+          [
+            313,
+            210,
+            219
+          ],
+          [
+            314,
+            210,
+            219
+          ],
+          [
+            315,
+            210,
+            219
+          ],
+          [
+            316,
+            210,
+            219
+          ],
+          [
+            317,
+            210,
+            219
+          ],
+          [
+            318,
+            210,
+            219
+          ],
+          [
+            319,
+            210,
+            219
+          ],
+          [
+            320,
+            210,
+            229
+          ],
+          [
+            321,
+            210,
+            229
+          ],
+          [
+            322,
+            210,
+            229
+          ],
+          [
+            323,
+            210,
+            229
+          ],
+          [
+            324,
+            210,
+            229
+          ],
+          [
+            325,
+            210,
+            229
+          ],
+          [
+            326,
+            210,
+            229
+          ],
+          [
+            327,
+            210,
+            229
+          ],
+          [
+            328,
+            210,
+            229
+          ],
+          [
+            329,
+            210,
+            229
+          ]
+        ]
+      }
+    },
+    {
+      "uid": "region-observation-2cb592d93675f07f6f530d19",
+      "alias": "r6",
+      "sourceOrder": 19,
+      "fingerprint": "87ae8a397f188d1b4c0211690f40bf868f7d9ee270edcbeb276464cf04d6e662",
+      "color": "#870c25",
+      "area": 100.0,
+      "centroid": [
+        354.0,
+        134.0
+      ],
+      "geometry": {
+        "outer": [
+          [
+            350.0,
+            130.0
+          ],
+          [
+            350.0,
+            139.0
+          ],
+          [
+            359.0,
+            139.0
+          ],
+          [
+            359.0,
+            130.0
+          ]
+        ],
+        "holes": []
+      }
+    },
+    {
+      "uid": "region-observation-9154c068be1a4d148ddf98b6",
+      "alias": "r12",
+      "sourceOrder": 20,
+      "fingerprint": "ea145b3d8dba9595eca23e9747e9718877ae077ae16da12b3da5dbd21cced041",
+      "color": "#0074d9",
+      "area": 100.0,
+      "centroid": [
+        204.0,
+        324.0
+      ],
+      "geometry": {
+        "outer": [
+          [
+            200.0,
+            320.0
+          ],
+          [
+            200.0,
+            329.0
+          ],
+          [
+            209.0,
+            329.0
+          ],
+          [
+            209.0,
+            320.0
+          ]
+        ],
+        "holes": [],
+        "pixelRuns": [
+          [
+            320,
+            200,
+            209
+          ],
+          [
+            321,
+            200,
+            209
+          ],
+          [
+            322,
+            200,
+            209
+          ],
+          [
+            323,
+            200,
+            209
+          ],
+          [
+            324,
+            200,
+            209
+          ],
+          [
+            325,
+            200,
+            209
+          ],
+          [
+            326,
+            200,
+            209
+          ],
+          [
+            327,
+            200,
+            209
+          ],
+          [
+            328,
+            200,
+            209
+          ],
+          [
+            329,
+            200,
+            209
+          ]
+        ]
+      }
+    },
+    {
+      "uid": "region-observation-c58301a8c7c27c0e30e0d39c",
+      "alias": "r13",
+      "sourceOrder": 21,
+      "fingerprint": "e5851bb557ed27854e8e640e8917fa83aebeb5e82747a27b207d13a9f457dde4",
+      "color": "#0074d9",
+      "area": 100.0,
+      "centroid": [
+        214.0,
+        334.0
+      ],
+      "geometry": {
+        "outer": [
+          [
+            210.0,
+            330.0
+          ],
+          [
+            210.0,
+            339.0
+          ],
+          [
+            219.0,
+            339.0
+          ],
+          [
+            219.0,
+            330.0
+          ]
+        ],
+        "holes": [],
+        "pixelRuns": [
+          [
+            330,
+            210,
+            219
+          ],
+          [
+            331,
+            210,
+            219
+          ],
+          [
+            332,
+            210,
+            219
+          ],
+          [
+            333,
+            210,
+            219
+          ],
+          [
+            334,
+            210,
+            219
+          ],
+          [
+            335,
+            210,
+            219
+          ],
+          [
+            336,
+            210,
+            219
+          ],
+          [
+            337,
+            210,
+            219
+          ],
+          [
+            338,
+            210,
+            219
+          ],
+          [
+            339,
+            210,
+            219
+          ]
+        ]
+      }
+    }
+  ],
+  "groups": {
+    "visual": [
+      {
+        "uid": "group-observation-8c8f415467396f8ce95491c2",
+        "alias": "v1",
+        "kind": "visual",
+        "members": [
+          "region-observation-9acfb76b7b2b064aba1d1785"
+        ],
+        "memberAliases": [
+          "r1"
+        ],
+        "sourceOrder": 0,
+        "evidenceHash": "48615d1b630ee2dc3dae82c98fc6847bca650605d23919f2af7db604f50d3c94",
+        "evidence": {
+          "confidence": 0.75,
+          "evidence": {
+            "centroid": [
+              20,
+              260
+            ],
+            "component": "cc1",
+            "contourCount": 1,
+            "hierarchyLinkCount": 0,
+            "pixelArea": 20800,
+            "watershedSegmentCount": 1
+          },
+          "method": "connected_component"
+        }
+      },
+      {
+        "uid": "group-observation-722a1f31793a341a852bf706",
+        "alias": "v2",
+        "kind": "visual",
+        "members": [
+          "region-observation-12d0c4205c2f272e1f48d4f8",
+          "region-observation-2368ffcb92e158d2eb875db7",
+          "region-observation-2cb592d93675f07f6f530d19",
+          "region-observation-3f4938c94965b725bce7e022",
+          "region-observation-5344a226ef940225e3d31249",
+          "region-observation-62b15bd94e69a6bba47ac326",
+          "region-observation-9154c068be1a4d148ddf98b6",
+          "region-observation-ace178162f9ade6596ea1bee",
+          "region-observation-aeeadeaf414e114f298975c9",
+          "region-observation-c58301a8c7c27c0e30e0d39c",
+          "region-observation-f2305f2d6386e2c7ab1e316e"
+        ],
+        "memberAliases": [
+          "r3",
+          "r4",
+          "r5",
+          "r6",
+          "r7",
+          "r8",
+          "r9",
+          "r10",
+          "r11",
+          "r12",
+          "r13"
+        ],
+        "sourceOrder": 1,
+        "evidenceHash": "8a7aef6e065d74f2fa3bd08c55a68cfcd1ee4ee3c7d3e66fc51775ceca9a9fb9",
+        "evidence": {
+          "confidence": 0.75,
+          "evidence": {
+            "centroid": [
+              350,
+              346
+            ],
+            "component": "cc2",
+            "contourCount": 16,
+            "hierarchyLinkCount": 8,
+            "pixelArea": 107100,
+            "watershedSegmentCount": 13
+          },
+          "method": "connected_component"
+        }
+      },
+      {
+        "uid": "group-observation-d76a054f91094690f1da23cb",
+        "alias": "v3",
+        "kind": "visual",
+        "members": [
+          "region-observation-08c767ac6c1f1ab28270f97a",
+          "region-observation-6e142bd38f04b70fe2514d94",
+          "region-observation-7646eb2a45d2506d014fe297"
+        ],
+        "memberAliases": [
+          "r14",
+          "r15",
+          "r16"
+        ],
+        "sourceOrder": 2,
+        "evidenceHash": "09ab52ccb02656d90c66de914e2b355cc86d4d73199e5f8e231bf5f2bc7fffcb",
+        "evidence": {
+          "confidence": 0.75,
+          "evidence": {
+            "centroid": [
+              60,
+              580
+            ],
+            "component": "cc3",
+            "contourCount": 5,
+            "hierarchyLinkCount": 3,
+            "pixelArea": 10000,
+            "watershedSegmentCount": 3
+          },
+          "method": "connected_component"
+        }
+      },
+      {
+        "uid": "group-observation-28b73e2c3bb30f5f705be24a",
+        "alias": "v4",
+        "kind": "visual",
+        "members": [
+          "region-observation-1f32555231ad054291478670",
+          "region-observation-228814264c36364398624842",
+          "region-observation-26359fb6f4c61a39657b62c5",
+          "region-observation-437214a2fe197fcff214fac3",
+          "region-observation-50bf2ff024cfc79a9189d5ce",
+          "region-observation-5eff5ea0ee0ca0a6c108fe28"
+        ],
+        "memberAliases": [
+          "r17",
+          "r18",
+          "r19",
+          "r20",
+          "r21",
+          "r22"
+        ],
+        "sourceOrder": 3,
+        "evidenceHash": "f54d59084fa9088580d430685007aa7aa194ba20e013571c27028fdd63769a97",
+        "evidence": {
+          "confidence": 0.75,
+          "evidence": {
+            "centroid": [
+              380,
+              620
+            ],
+            "component": "cc4",
+            "contourCount": 9,
+            "hierarchyLinkCount": 4,
+            "pixelArea": 20800,
+            "watershedSegmentCount": 6
+          },
+          "method": "connected_component"
+        }
+      }
+    ],
+    "symbolic": [
+      {
+        "uid": "group-observation-f1155fb58d68d660022eaa56",
+        "alias": "w1",
+        "kind": "symbolic",
+        "members": [
+          "region-observation-ace178162f9ade6596ea1bee",
+          "region-observation-f2305f2d6386e2c7ab1e316e"
+        ],
+        "memberAliases": [
+          "r3",
+          "r7"
+        ],
+        "sourceOrder": 0,
+        "evidenceHash": "a946804d5c0203a0c6bf0e4a0db16bc1b13654cf4e4e3cd933798e3b3c45967f",
+        "evidence": {
+          "area": 89200.0,
+          "sourceId": null
+        }
+      },
+      {
+        "uid": "group-observation-d6e942763582fb04c1c22987",
+        "alias": "w2",
+        "kind": "symbolic",
+        "members": [
+          "region-observation-5344a226ef940225e3d31249",
+          "region-observation-9154c068be1a4d148ddf98b6",
+          "region-observation-c58301a8c7c27c0e30e0d39c"
+        ],
+        "memberAliases": [
+          "r11",
+          "r12",
+          "r13"
+        ],
+        "sourceOrder": 1,
+        "evidenceHash": "9a6d2a3e49a14fabe4af8894dac3d5a706c493101f22c3e8e2f751938899a67f",
+        "evidence": {
+          "area": 500.0,
+          "sourceId": null
+        }
+      },
+      {
+        "uid": "group-observation-16e258d31af1647f6cca883b",
+        "alias": "w3",
+        "kind": "symbolic",
+        "members": [
+          "region-observation-2cb592d93675f07f6f530d19",
+          "region-observation-3f4938c94965b725bce7e022",
+          "region-observation-62b15bd94e69a6bba47ac326"
+        ],
+        "memberAliases": [
+          "r4",
+          "r5",
+          "r6"
+        ],
+        "sourceOrder": 2,
+        "evidenceHash": "9521e64c5edd3f0ea98d178aa4c123c9ee48d2aceeac70ac2d87eb467fe25b4c",
+        "evidence": {
+          "area": 4900.0,
+          "sourceId": null
+        }
+      },
+      {
+        "uid": "group-observation-3b7035c365e5b4654b00b673",
+        "alias": "w4",
+        "kind": "symbolic",
+        "members": [
+          "region-observation-12d0c4205c2f272e1f48d4f8",
+          "region-observation-2368ffcb92e158d2eb875db7"
+        ],
+        "memberAliases": [
+          "r8",
+          "r9"
+        ],
+        "sourceOrder": 3,
+        "evidenceHash": "cf8b49ddf97968d9febc167e952f2d9c6a372bd648bf01c51aed016b16f94aeb",
+        "evidence": {
+          "area": 2500.0,
+          "sourceId": null
+        }
+      },
+      {
+        "uid": "group-observation-d2cfef7d267722d37fe8b4df",
+        "alias": "w5",
+        "kind": "symbolic",
+        "members": [
+          "region-observation-9acfb76b7b2b064aba1d1785"
+        ],
+        "memberAliases": [
+          "r1"
+        ],
+        "sourceOrder": 4,
+        "evidenceHash": "cf3389f821559bd3e89bf32823219d2f47a043fde50132da04039e4ae6df9117",
+        "evidence": {
+          "area": 20800.0,
+          "sourceId": null
+        }
+      },
+      {
+        "uid": "group-observation-d1447100b544bb398624998d",
+        "alias": "w6",
+        "kind": "symbolic",
+        "members": [
+          "region-observation-1f32555231ad054291478670",
+          "region-observation-228814264c36364398624842",
+          "region-observation-26359fb6f4c61a39657b62c5",
+          "region-observation-437214a2fe197fcff214fac3",
+          "region-observation-50bf2ff024cfc79a9189d5ce",
+          "region-observation-5eff5ea0ee0ca0a6c108fe28"
+        ],
+        "memberAliases": [
+          "r17",
+          "r18",
+          "r19",
+          "r20",
+          "r21",
+          "r22"
+        ],
+        "sourceOrder": 5,
+        "evidenceHash": "cf3389f821559bd3e89bf32823219d2f47a043fde50132da04039e4ae6df9117",
+        "evidence": {
+          "area": 20800.0,
+          "sourceId": null
+        }
+      },
+      {
+        "uid": "group-observation-592285087e1bbfd055e24539",
+        "alias": "w7",
+        "kind": "symbolic",
+        "members": [
+          "region-observation-08c767ac6c1f1ab28270f97a",
+          "region-observation-6e142bd38f04b70fe2514d94",
+          "region-observation-7646eb2a45d2506d014fe297"
+        ],
+        "memberAliases": [
+          "r14",
+          "r15",
+          "r16"
+        ],
+        "sourceOrder": 6,
+        "evidenceHash": "e5a1f8b7409cae6cd4773ca948fb42bb5d5670591d302ef2d390f5a964950d11",
+        "evidence": {
+          "area": 10000.0,
+          "sourceId": null
+        }
+      }
+    ],
+    "final": [
+      {
+        "uid": "group-observation-eebaf4d8d5838d098f34998b",
+        "alias": "g1",
+        "kind": "final",
+        "members": [
+          "region-observation-9acfb76b7b2b064aba1d1785"
+        ],
+        "memberAliases": [
+          "r1"
+        ],
+        "sourceOrder": 0,
+        "evidenceHash": "b46fc5a39b251ede4ca5229853614609c9212767466d635a105a702f3d3d7f4f",
+        "evidence": {
+          "mode": "exact_consensus",
+          "provenance": {
+            "frame": "9",
+            "mode": "exact_consensus",
+            "score": 1.0,
+            "sources": {
+              "acceptanceMeasurements": "group_acceptance_0/group_acceptance_prolog/acceptance_input.pl",
+              "acceptanceRules": "prolog/omega_vision/group_acceptance.pl",
+              "candidateFacts": "parts_grouping_0/group_regions_prolog/result.pl",
+              "partsFacts": "parts_extraction_0/python_opencv/result.pl"
+            },
+            "symbolicEvidence": [
+              {
+                "area": 20800.0,
+                "id": "w5",
+                "sourceId": null
+              }
+            ],
+            "symbolicGroups": [
+              "w5"
+            ],
+            "visualEvidence": [
+              {
+                "centroid": [
+                  20,
+                  260
+                ],
+                "component": "cc1",
+                "contourCount": 1,
+                "hierarchyLinkCount": 0,
+                "pixelArea": 20800,
+                "watershedSegmentCount": 1
+              }
+            ],
+            "visualGroups": [
+              "v1"
+            ]
+          }
+        }
+      },
+      {
+        "uid": "group-observation-15f001be257e3aa83a91a2f3",
+        "alias": "g2",
+        "kind": "final",
+        "members": [
+          "region-observation-1f32555231ad054291478670",
+          "region-observation-228814264c36364398624842",
+          "region-observation-26359fb6f4c61a39657b62c5",
+          "region-observation-437214a2fe197fcff214fac3",
+          "region-observation-50bf2ff024cfc79a9189d5ce",
+          "region-observation-5eff5ea0ee0ca0a6c108fe28"
+        ],
+        "memberAliases": [
+          "r17",
+          "r19",
+          "r18",
+          "r20",
+          "r21",
+          "r22"
+        ],
+        "sourceOrder": 1,
+        "evidenceHash": "bda923f76cd59b31e9968120c8a28bfd90f709492a45abe358ba76bb623678e1",
+        "evidence": {
+          "mode": "exact_consensus",
+          "provenance": {
+            "frame": "9",
+            "mode": "exact_consensus",
+            "score": 1.0,
+            "sources": {
+              "acceptanceMeasurements": "group_acceptance_0/group_acceptance_prolog/acceptance_input.pl",
+              "acceptanceRules": "prolog/omega_vision/group_acceptance.pl",
+              "candidateFacts": "parts_grouping_0/group_regions_prolog/result.pl",
+              "partsFacts": "parts_extraction_0/python_opencv/result.pl"
+            },
+            "symbolicEvidence": [
+              {
+                "area": 20800.0,
+                "id": "w6",
+                "sourceId": null
+              }
+            ],
+            "symbolicGroups": [
+              "w6"
+            ],
+            "visualEvidence": [
+              {
+                "centroid": [
+                  380,
+                  620
+                ],
+                "component": "cc4",
+                "contourCount": 9,
+                "hierarchyLinkCount": 4,
+                "pixelArea": 20800,
+                "watershedSegmentCount": 6
+              }
+            ],
+            "visualGroups": [
+              "v4"
+            ]
+          }
+        }
+      },
+      {
+        "uid": "group-observation-e4c5b11964c6ecbe2d50acb6",
+        "alias": "g3",
+        "kind": "final",
+        "members": [
+          "region-observation-08c767ac6c1f1ab28270f97a",
+          "region-observation-6e142bd38f04b70fe2514d94",
+          "region-observation-7646eb2a45d2506d014fe297"
+        ],
+        "memberAliases": [
+          "r14",
+          "r15",
+          "r16"
+        ],
+        "sourceOrder": 2,
+        "evidenceHash": "bcb31d717c44465ca85895314a14089085d6677c550ba0fb3b173107badc51ef",
+        "evidence": {
+          "mode": "exact_consensus",
+          "provenance": {
+            "frame": "9",
+            "mode": "exact_consensus",
+            "score": 1.0,
+            "sources": {
+              "acceptanceMeasurements": "group_acceptance_0/group_acceptance_prolog/acceptance_input.pl",
+              "acceptanceRules": "prolog/omega_vision/group_acceptance.pl",
+              "candidateFacts": "parts_grouping_0/group_regions_prolog/result.pl",
+              "partsFacts": "parts_extraction_0/python_opencv/result.pl"
+            },
+            "symbolicEvidence": [
+              {
+                "area": 10000.0,
+                "id": "w7",
+                "sourceId": null
+              }
+            ],
+            "symbolicGroups": [
+              "w7"
+            ],
+            "visualEvidence": [
+              {
+                "centroid": [
+                  60,
+                  580
+                ],
+                "component": "cc3",
+                "contourCount": 5,
+                "hierarchyLinkCount": 3,
+                "pixelArea": 10000,
+                "watershedSegmentCount": 3
+              }
+            ],
+            "visualGroups": [
+              "v3"
+            ]
+          }
+        }
+      },
+      {
+        "uid": "group-observation-096228dfc1203d1de561c552",
+        "alias": "g4",
+        "kind": "final",
+        "members": [
+          "region-observation-2cb592d93675f07f6f530d19",
+          "region-observation-3f4938c94965b725bce7e022",
+          "region-observation-62b15bd94e69a6bba47ac326"
+        ],
+        "memberAliases": [
+          "r4",
+          "r5",
+          "r6"
+        ],
+        "sourceOrder": 3,
+        "evidenceHash": "2d321bbbee3afcad95cde30d9b337a2d5276776f96639327fb5bd5fe8a749907",
+        "evidence": {
+          "mode": "symbolic_shape_analogy",
+          "provenance": {
+            "attempts": [
+              "symbolic_shape_analogy"
+            ],
+            "correspondence": [
+              {
+                "candidate": "r4",
+                "template": "r14"
+              },
+              {
+                "candidate": "r5",
+                "template": "r15"
+              },
+              {
+                "candidate": "r6",
+                "template": "r16"
+              }
+            ],
+            "frame": "9",
+            "measures": {
+              "angleRmse": 0.033376583,
+              "areaRmse": 0.089065676,
+              "error": 0.063308374,
+              "pairDistanceRmse": 0.080599636,
+              "positionRmse": 0.051977931,
+              "radialRmse": 0.05246481
+            },
+            "mode": "symbolic_shape_analogy",
+            "score": 0.940460947,
+            "sources": {
+              "acceptanceMeasurements": "group_acceptance_0/group_acceptance_prolog/acceptance_input.pl",
+              "acceptanceRules": "prolog/omega_vision/group_acceptance.pl",
+              "candidateFacts": "parts_grouping_0/group_regions_prolog/result.pl",
+              "partsFacts": "parts_extraction_0/python_opencv/result.pl"
+            },
+            "symbolicGroup": "w3",
+            "templateGroup": "g3",
+            "templateKey": "t3",
+            "templateSymbolicGroups": [
+              "w7"
+            ],
+            "templateVisualGroups": [
+              "v3"
+            ],
+            "tolerance": 0.18
+          }
+        }
+      },
+      {
+        "uid": "group-observation-9f3ece0539049aeef34baf0b",
+        "alias": "g5",
+        "kind": "final",
+        "members": [
+          "region-observation-ace178162f9ade6596ea1bee"
+        ],
+        "memberAliases": [
+          "r7"
+        ],
+        "sourceOrder": 4,
+        "evidenceHash": "254a854094beb1848d6db52bb28a9fdd29e97ca2025895693beabd36b7d4164d",
+        "evidence": {
+          "mode": "singleton_remainder",
+          "provenance": {
+            "frame": "9",
+            "mode": "singleton_remainder",
+            "reason": "uncovered_foreground",
+            "region": "r7",
+            "score": 1.0,
+            "sources": {
+              "acceptanceMeasurements": "group_acceptance_0/group_acceptance_prolog/acceptance_input.pl",
+              "acceptanceRules": "prolog/omega_vision/group_acceptance.pl",
+              "candidateFacts": "parts_grouping_0/group_regions_prolog/result.pl",
+              "partsFacts": "parts_extraction_0/python_opencv/result.pl"
+            }
+          }
+        }
+      },
+      {
+        "uid": "group-observation-ca2bd2d3e7667ca5ecaff96b",
+        "alias": "g6",
+        "kind": "final",
+        "members": [
+          "region-observation-f2305f2d6386e2c7ab1e316e"
+        ],
+        "memberAliases": [
+          "r3"
+        ],
+        "sourceOrder": 5,
+        "evidenceHash": "45c8394284b0b6a066e5575e339d1d46f64557398d1fb32ff19aaab8d55d870a",
+        "evidence": {
+          "mode": "singleton_remainder",
+          "provenance": {
+            "frame": "9",
+            "mode": "singleton_remainder",
+            "reason": "uncovered_foreground",
+            "region": "r3",
+            "score": 1.0,
+            "sources": {
+              "acceptanceMeasurements": "group_acceptance_0/group_acceptance_prolog/acceptance_input.pl",
+              "acceptanceRules": "prolog/omega_vision/group_acceptance.pl",
+              "candidateFacts": "parts_grouping_0/group_regions_prolog/result.pl",
+              "partsFacts": "parts_extraction_0/python_opencv/result.pl"
+            }
+          }
+        }
+      },
+      {
+        "uid": "group-observation-aaf90b727e01a130d5178a0d",
+        "alias": "g7",
+        "kind": "final",
+        "members": [
+          "region-observation-2368ffcb92e158d2eb875db7"
+        ],
+        "memberAliases": [
+          "r9"
+        ],
+        "sourceOrder": 6,
+        "evidenceHash": "577ed7afebf6fc4f0fa2851f703993eb17499af472b8c78a33499bbd4b3648f6",
+        "evidence": {
+          "mode": "singleton_remainder",
+          "provenance": {
+            "frame": "9",
+            "mode": "singleton_remainder",
+            "reason": "uncovered_foreground",
+            "region": "r9",
+            "score": 1.0,
+            "sources": {
+              "acceptanceMeasurements": "group_acceptance_0/group_acceptance_prolog/acceptance_input.pl",
+              "acceptanceRules": "prolog/omega_vision/group_acceptance.pl",
+              "candidateFacts": "parts_grouping_0/group_regions_prolog/result.pl",
+              "partsFacts": "parts_extraction_0/python_opencv/result.pl"
+            }
+          }
+        }
+      },
+      {
+        "uid": "group-observation-1f681d070e50e4676adc308e",
+        "alias": "g8",
+        "kind": "final",
+        "members": [
+          "region-observation-12d0c4205c2f272e1f48d4f8"
+        ],
+        "memberAliases": [
+          "r8"
+        ],
+        "sourceOrder": 7,
+        "evidenceHash": "8087d97eb3e69cd752ecf2bb6f98e94533abce19701a1920f1f55e12c8d63a41",
+        "evidence": {
+          "mode": "singleton_remainder",
+          "provenance": {
+            "frame": "9",
+            "mode": "singleton_remainder",
+            "reason": "uncovered_foreground",
+            "region": "r8",
+            "score": 1.0,
+            "sources": {
+              "acceptanceMeasurements": "group_acceptance_0/group_acceptance_prolog/acceptance_input.pl",
+              "acceptanceRules": "prolog/omega_vision/group_acceptance.pl",
+              "candidateFacts": "parts_grouping_0/group_regions_prolog/result.pl",
+              "partsFacts": "parts_extraction_0/python_opencv/result.pl"
+            }
+          }
+        }
+      },
+      {
+        "uid": "group-observation-caf96ffb89a2f6f2c6f07c62",
+        "alias": "g9",
+        "kind": "final",
+        "members": [
+          "region-observation-5344a226ef940225e3d31249"
+        ],
+        "memberAliases": [
+          "r11"
+        ],
+        "sourceOrder": 8,
+        "evidenceHash": "ab394cd3e14bca943b0a328db86ac000bd01d4ca525d799613a993408e8b2aa0",
+        "evidence": {
+          "mode": "singleton_remainder",
+          "provenance": {
+            "frame": "9",
+            "mode": "singleton_remainder",
+            "reason": "uncovered_foreground",
+            "region": "r11",
+            "score": 1.0,
+            "sources": {
+              "acceptanceMeasurements": "group_acceptance_0/group_acceptance_prolog/acceptance_input.pl",
+              "acceptanceRules": "prolog/omega_vision/group_acceptance.pl",
+              "candidateFacts": "parts_grouping_0/group_regions_prolog/result.pl",
+              "partsFacts": "parts_extraction_0/python_opencv/result.pl"
+            }
+          }
+        }
+      },
+      {
+        "uid": "group-observation-13333cde3eb3343f8b4a2236",
+        "alias": "g10",
+        "kind": "final",
+        "members": [
+          "region-observation-9154c068be1a4d148ddf98b6"
+        ],
+        "memberAliases": [
+          "r12"
+        ],
+        "sourceOrder": 9,
+        "evidenceHash": "89e1ce6a346134d6dc98687b5348ca7a214ea2e46543032aa7f12ee7cf7cdd65",
+        "evidence": {
+          "mode": "singleton_remainder",
+          "provenance": {
+            "frame": "9",
+            "mode": "singleton_remainder",
+            "reason": "uncovered_foreground",
+            "region": "r12",
+            "score": 1.0,
+            "sources": {
+              "acceptanceMeasurements": "group_acceptance_0/group_acceptance_prolog/acceptance_input.pl",
+              "acceptanceRules": "prolog/omega_vision/group_acceptance.pl",
+              "candidateFacts": "parts_grouping_0/group_regions_prolog/result.pl",
+              "partsFacts": "parts_extraction_0/python_opencv/result.pl"
+            }
+          }
+        }
+      },
+      {
+        "uid": "group-observation-241a32dffe591fe39fa8ccd2",
+        "alias": "g11",
+        "kind": "final",
+        "members": [
+          "region-observation-c58301a8c7c27c0e30e0d39c"
+        ],
+        "memberAliases": [
+          "r13"
+        ],
+        "sourceOrder": 10,
+        "evidenceHash": "37a6ede57786181abd272e39b12244d955e30b611895433337251e602a725e69",
+        "evidence": {
+          "mode": "singleton_remainder",
+          "provenance": {
+            "frame": "9",
+            "mode": "singleton_remainder",
+            "reason": "uncovered_foreground",
+            "region": "r13",
+            "score": 1.0,
+            "sources": {
+              "acceptanceMeasurements": "group_acceptance_0/group_acceptance_prolog/acceptance_input.pl",
+              "acceptanceRules": "prolog/omega_vision/group_acceptance.pl",
+              "candidateFacts": "parts_grouping_0/group_regions_prolog/result.pl",
+              "partsFacts": "parts_extraction_0/python_opencv/result.pl"
+            }
+          }
+        }
+      }
+    ]
+  },
+  "aliasIndex": {
+    "regions": {
+      "r2": "region-observation-cd6c519505ee6559bab82e7d",
+      "r7": "region-observation-ace178162f9ade6596ea1bee",
+      "r1": "region-observation-9acfb76b7b2b064aba1d1785",
+      "r17": "region-observation-228814264c36364398624842",
+      "r10": "region-observation-aeeadeaf414e114f298975c9",
+      "r14": "region-observation-7646eb2a45d2506d014fe297",
+      "r3": "region-observation-f2305f2d6386e2c7ab1e316e",
+      "r19": "region-observation-1f32555231ad054291478670",
+      "r4": "region-observation-62b15bd94e69a6bba47ac326",
+      "r15": "region-observation-6e142bd38f04b70fe2514d94",
+      "r18": "region-observation-26359fb6f4c61a39657b62c5",
+      "r9": "region-observation-2368ffcb92e158d2eb875db7",
+      "r8": "region-observation-12d0c4205c2f272e1f48d4f8",
+      "r5": "region-observation-3f4938c94965b725bce7e022",
+      "r16": "region-observation-08c767ac6c1f1ab28270f97a",
+      "r20": "region-observation-437214a2fe197fcff214fac3",
+      "r21": "region-observation-50bf2ff024cfc79a9189d5ce",
+      "r22": "region-observation-5eff5ea0ee0ca0a6c108fe28",
+      "r11": "region-observation-5344a226ef940225e3d31249",
+      "r6": "region-observation-2cb592d93675f07f6f530d19",
+      "r12": "region-observation-9154c068be1a4d148ddf98b6",
+      "r13": "region-observation-c58301a8c7c27c0e30e0d39c"
+    },
+    "visual": {
+      "v1": "group-observation-8c8f415467396f8ce95491c2",
+      "v2": "group-observation-722a1f31793a341a852bf706",
+      "v3": "group-observation-d76a054f91094690f1da23cb",
+      "v4": "group-observation-28b73e2c3bb30f5f705be24a"
+    },
+    "symbolic": {
+      "w1": "group-observation-f1155fb58d68d660022eaa56",
+      "w2": "group-observation-d6e942763582fb04c1c22987",
+      "w3": "group-observation-16e258d31af1647f6cca883b",
+      "w4": "group-observation-3b7035c365e5b4654b00b673",
+      "w5": "group-observation-d2cfef7d267722d37fe8b4df",
+      "w6": "group-observation-d1447100b544bb398624998d",
+      "w7": "group-observation-592285087e1bbfd055e24539"
+    },
+    "final": {
+      "g1": "group-observation-eebaf4d8d5838d098f34998b",
+      "g2": "group-observation-15f001be257e3aa83a91a2f3",
+      "g3": "group-observation-e4c5b11964c6ecbe2d50acb6",
+      "g4": "group-observation-096228dfc1203d1de561c552",
+      "g5": "group-observation-9f3ece0539049aeef34baf0b",
+      "g6": "group-observation-ca2bd2d3e7667ca5ecaff96b",
+      "g7": "group-observation-aaf90b727e01a130d5178a0d",
+      "g8": "group-observation-1f681d070e50e4676adc308e",
+      "g9": "group-observation-caf96ffb89a2f6f2c6f07c62",
+      "g10": "group-observation-13333cde3eb3343f8b4a2236",
+      "g11": "group-observation-241a32dffe591fe39fa8ccd2"
+    }
+  }
+}

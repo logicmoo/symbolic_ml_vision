@@ -1,0 +1,54 @@
+{
+  "kind": "sequence_set_transformation",
+  "transformation": "observation_identity_0",
+  "doer": "content_hash",
+  "options": {},
+  "dependsOn": [
+    "parts_extraction_0/python_opencv",
+    "parts_grouping_0/group_regions_prolog",
+    "group_acceptance_0/group_acceptance_prolog"
+  ],
+  "type": "py_pl",
+  "preprocessingRevision": "chain:257a35e4836a75b6e967d81f",
+  "createdAt": "2026-09-10T15:54:08.505454Z",
+  "elapsedMs": 1878,
+  "outputRevision": "562f4159493b78bf",
+  "inputSignature": "chain:5d28b7ec057042744053b2ef",
+  "consumedDeps": {
+    "parts_extraction_0/python_opencv": {
+      "frameId": "5",
+      "output": "parts_extraction_0/python_opencv",
+      "revision": "12b18c032992d654c9e1b8f5cf7890643d7d55648dd2279f80c1b5fbb8bde9e4"
+    },
+    "parts_grouping_0/group_regions_prolog": {
+      "frameId": "5",
+      "output": "parts_grouping_0/group_regions_prolog",
+      "revision": "6f1d1bcf52190eb7"
+    },
+    "group_acceptance_0/group_acceptance_prolog": {
+      "frameId": "5",
+      "output": "group_acceptance_0/group_acceptance_prolog",
+      "revision": "3cfdae1bf67fda3f"
+    }
+  },
+  "module": "omega_vision.perception.observation_identity",
+  "partsFacts": "parts_extraction_0/python_opencv/result.pl",
+  "observationBundleId": "observation-bundle-a84cce1ac5a32cab9105efe1",
+  "frameObservationId": "frame-observation-cb3895db987d0d05739be011",
+  "observationArtifact": "observation_identity_0/content_hash/observations.json",
+  "observationCount": 38,
+  "regionObservationCount": 18,
+  "visualGroupObservationCount": 4,
+  "symbolicGroupObservationCount": 6,
+  "finalGroupObservationCount": 9,
+  "identityVersion": "observation-identity-v1",
+  "artifactHashes": {
+    "image": "5b3b96a24d69774a852b891f8737158bee214c6ae0a117b99bf4378e196a09a6",
+    "partsFacts": "e5b963512a946b3451ac4daa360f20fcec5455ab97298f5dea4186f70514855c",
+    "groupingFacts": "0e130a0ebbc15e1ae94ed264137c518182aba96c4e6ebbb47c31770345a31c3d",
+    "acceptanceFacts": "8261ad355eefdc10ffa451a1c4dfbf23e6f7ddafb03fb26b2e2896664660632e",
+    "acceptanceMetadata": "065c8e4314c8416261f226d78d7d1473a1d56d5ebe05ac4f6c94b80e764c456c",
+    "geometry": "879e9363a469f938f2585f851b2ef74c857bc0dfa4a0052f67851080510c7ad6",
+    "extractionMetadata": "9608594fc937ef5edf16431427afad78877e147f1999b3d1e3e7f5ae5464879e"
+  }
+}

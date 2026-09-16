@@ -1,0 +1,593 @@
+{
+  "description": "Only RIGHT inputs traverse varied two/three-cell treads; gravity and collision determine descent during input and sensor-only frames. Three final RIGHT attempts remain blocked by the visible right-hand barrier.",
+  "frames": [
+    {
+      "actorId": "teacher_same_actor",
+      "atSeconds": 0.0,
+      "authoredPosition": [
+        4,
+        8
+      ],
+      "frameId": "0",
+      "sha256": "a5e6e41647d3a4bf679a7c6e1cd7c384b4a01935d67f45fa9a35c73ff8515d2f",
+      "supported": true,
+      "verticalVelocityPixelsPerTick": 0
+    },
+    {
+      "actorId": "teacher_same_actor",
+      "atSeconds": 0.25,
+      "authoredPosition": [
+        8,
+        9
+      ],
+      "frameId": "1",
+      "sha256": "6b7643e93885077d4b36a51a887272005159aae4a59acb31907cbd741064a8db",
+      "supported": false,
+      "verticalVelocityPixelsPerTick": 1
+    },
+    {
+      "actorId": "teacher_same_actor",
+      "atSeconds": 0.5,
+      "authoredPosition": [
+        8,
+        11
+      ],
+      "frameId": "2",
+      "sha256": "d936e7a332718952f927aaa011b72e53ea9ce978f9eecebc77c16eb806b06905",
+      "supported": false,
+      "verticalVelocityPixelsPerTick": 2
+    },
+    {
+      "actorId": "teacher_same_actor",
+      "atSeconds": 0.75,
+      "authoredPosition": [
+        8,
+        12
+      ],
+      "frameId": "3",
+      "sha256": "08e3dd5ebdbf5f8450c746851d31c75864681eec20f3857d7a369675450a45b5",
+      "supported": true,
+      "verticalVelocityPixelsPerTick": 0
+    },
+    {
+      "actorId": "teacher_same_actor",
+      "atSeconds": 1.0,
+      "authoredPosition": [
+        12,
+        12
+      ],
+      "frameId": "4",
+      "sha256": "35938a565f7dca34ac6343a9a3599210416db018da027b90b4963228955b2774",
+      "supported": true,
+      "verticalVelocityPixelsPerTick": 0
+    },
+    {
+      "actorId": "teacher_same_actor",
+      "atSeconds": 1.25,
+      "authoredPosition": [
+        16,
+        12
+      ],
+      "frameId": "5",
+      "sha256": "5015b5e0d62fc506c48c50d1e3c5592aff8fca9295eb08bc47450a04cc3dd3c8",
+      "supported": true,
+      "verticalVelocityPixelsPerTick": 0
+    },
+    {
+      "actorId": "teacher_same_actor",
+      "atSeconds": 1.5,
+      "authoredPosition": [
+        20,
+        13
+      ],
+      "frameId": "6",
+      "sha256": "6d4e8063eb11be3bdf3b86415ca0febb97a070b68299a1736e712a243654b973",
+      "supported": false,
+      "verticalVelocityPixelsPerTick": 1
+    },
+    {
+      "actorId": "teacher_same_actor",
+      "atSeconds": 1.75,
+      "authoredPosition": [
+        20,
+        15
+      ],
+      "frameId": "7",
+      "sha256": "4436c718359bfc4f6cc47e83d6c053d3165f5b95ca139715764988ad45fde98b",
+      "supported": false,
+      "verticalVelocityPixelsPerTick": 2
+    },
+    {
+      "actorId": "teacher_same_actor",
+      "atSeconds": 2.0,
+      "authoredPosition": [
+        20,
+        16
+      ],
+      "frameId": "8",
+      "sha256": "7fecb3ba9ed72947cc3924454163a0b13bb2f6179470a9b6825509527baa1fc9",
+      "supported": true,
+      "verticalVelocityPixelsPerTick": 0
+    },
+    {
+      "actorId": "teacher_same_actor",
+      "atSeconds": 2.25,
+      "authoredPosition": [
+        24,
+        16
+      ],
+      "frameId": "9",
+      "sha256": "39dd8bcde0f6bcf279e29823987344d55913fc3c4607c7b211ba0e2cc8000690",
+      "supported": true,
+      "verticalVelocityPixelsPerTick": 0
+    },
+    {
+      "actorId": "teacher_same_actor",
+      "atSeconds": 2.5,
+      "authoredPosition": [
+        28,
+        17
+      ],
+      "frameId": "10",
+      "sha256": "171693738cd54b28f709055e7181866b046e44a5d1f8571a9c3c5bd774eb585e",
+      "supported": false,
+      "verticalVelocityPixelsPerTick": 1
+    },
+    {
+      "actorId": "teacher_same_actor",
+      "atSeconds": 2.75,
+      "authoredPosition": [
+        28,
+        19
+      ],
+      "frameId": "11",
+      "sha256": "745638f48717fec0fb38300fb4eac6b4b9e128708cfb8bdfbfd3f3d6f510de8f",
+      "supported": false,
+      "verticalVelocityPixelsPerTick": 2
+    },
+    {
+      "actorId": "teacher_same_actor",
+      "atSeconds": 3.0,
+      "authoredPosition": [
+        28,
+        20
+      ],
+      "frameId": "12",
+      "sha256": "03b9e9353718e32c33913c952c68c7b434f25ae2ca6752d62c2f7749db57a184",
+      "supported": true,
+      "verticalVelocityPixelsPerTick": 0
+    },
+    {
+      "actorId": "teacher_same_actor",
+      "atSeconds": 3.25,
+      "authoredPosition": [
+        32,
+        20
+      ],
+      "frameId": "13",
+      "sha256": "e2a36f9788d62bc95e7e07606f095d4a805d4b1d8d19341559db2928f931abce",
+      "supported": true,
+      "verticalVelocityPixelsPerTick": 0
+    },
+    {
+      "actorId": "teacher_same_actor",
+      "atSeconds": 3.5,
+      "authoredPosition": [
+        36,
+        20
+      ],
+      "frameId": "14",
+      "sha256": "97d7530e0871f9567b19d482476c143ead06fd05e5efc0cd0490857dfbf8a967",
+      "supported": true,
+      "verticalVelocityPixelsPerTick": 0
+    },
+    {
+      "actorId": "teacher_same_actor",
+      "atSeconds": 3.75,
+      "authoredPosition": [
+        40,
+        21
+      ],
+      "frameId": "15",
+      "sha256": "f60f4f90778324d2f8db817eadda652507323962645844eaf96fa8386407c002",
+      "supported": false,
+      "verticalVelocityPixelsPerTick": 1
+    },
+    {
+      "actorId": "teacher_same_actor",
+      "atSeconds": 4.0,
+      "authoredPosition": [
+        40,
+        23
+      ],
+      "frameId": "16",
+      "sha256": "5b7a7623b7032401afa110a216c6390056cfbe81b428ee1a6089e6e82303249e",
+      "supported": false,
+      "verticalVelocityPixelsPerTick": 2
+    },
+    {
+      "actorId": "teacher_same_actor",
+      "atSeconds": 4.25,
+      "authoredPosition": [
+        40,
+        24
+      ],
+      "frameId": "17",
+      "sha256": "16f47bba63d763384f4ce06f250a82d01dd407873c21c5be9b56e3282ebc1784",
+      "supported": true,
+      "verticalVelocityPixelsPerTick": 0
+    },
+    {
+      "actorId": "teacher_same_actor",
+      "atSeconds": 4.5,
+      "authoredPosition": [
+        44,
+        24
+      ],
+      "frameId": "18",
+      "sha256": "bb4762d758c175c6b16779abbe8b948cf427f94704e634f4737afc717480f214",
+      "supported": true,
+      "verticalVelocityPixelsPerTick": 0
+    },
+    {
+      "actorId": "teacher_same_actor",
+      "atSeconds": 4.75,
+      "authoredPosition": [
+        48,
+        25
+      ],
+      "frameId": "19",
+      "sha256": "3659290a6df8842776e2ae95bcca8116c3c5216e82a4333a525d24538ab52d91",
+      "supported": false,
+      "verticalVelocityPixelsPerTick": 1
+    },
+    {
+      "actorId": "teacher_same_actor",
+      "atSeconds": 5.0,
+      "authoredPosition": [
+        48,
+        27
+      ],
+      "frameId": "20",
+      "sha256": "418eaf9a7b4370930540073d4bac6992b22d22d498df59317ace82f553e56b9f",
+      "supported": false,
+      "verticalVelocityPixelsPerTick": 2
+    },
+    {
+      "actorId": "teacher_same_actor",
+      "atSeconds": 5.25,
+      "authoredPosition": [
+        48,
+        28
+      ],
+      "frameId": "21",
+      "sha256": "3c193befb45a3b0c2aab54b1f68368f9981bd607a80da01070107e5df86292d7",
+      "supported": true,
+      "verticalVelocityPixelsPerTick": 0
+    },
+    {
+      "actorId": "teacher_same_actor",
+      "atSeconds": 5.5,
+      "authoredPosition": [
+        52,
+        28
+      ],
+      "frameId": "22",
+      "sha256": "754e707aceb619875eee2954ea01b111f78dadedfa00d92b21068e6553540278",
+      "supported": true,
+      "verticalVelocityPixelsPerTick": 0
+    },
+    {
+      "actorId": "teacher_same_actor",
+      "atSeconds": 5.75,
+      "authoredPosition": [
+        56,
+        28
+      ],
+      "frameId": "23",
+      "sha256": "2886a725e2fb4358a89beedf7a7694b31072c317292d6a7d48b4bb9520620f83",
+      "supported": true,
+      "verticalVelocityPixelsPerTick": 0
+    },
+    {
+      "actorId": "teacher_same_actor",
+      "atSeconds": 6.0,
+      "authoredPosition": [
+        60,
+        29
+      ],
+      "frameId": "24",
+      "sha256": "9818dc9975dc879e2eb48450af513be0a10be2421a7663038f770009a6253a23",
+      "supported": false,
+      "verticalVelocityPixelsPerTick": 1
+    },
+    {
+      "actorId": "teacher_same_actor",
+      "atSeconds": 6.25,
+      "authoredPosition": [
+        60,
+        31
+      ],
+      "frameId": "25",
+      "sha256": "1580d7755b7895f5130b3a481e8dc3a7c738d089cd25e38388ffc282fdeea651",
+      "supported": false,
+      "verticalVelocityPixelsPerTick": 2
+    },
+    {
+      "actorId": "teacher_same_actor",
+      "atSeconds": 6.5,
+      "authoredPosition": [
+        60,
+        32
+      ],
+      "frameId": "26",
+      "sha256": "146d50473411e453c4aa6901184f3e0005f367ce380b6229c7ca4859dab819be",
+      "supported": true,
+      "verticalVelocityPixelsPerTick": 0
+    },
+    {
+      "actorId": "teacher_same_actor",
+      "atSeconds": 6.75,
+      "authoredPosition": [
+        64,
+        32
+      ],
+      "frameId": "27",
+      "sha256": "3bea3b5d9319a516fb4878afee1cd93249aa86e148d683e84c958351f816fe34",
+      "supported": true,
+      "verticalVelocityPixelsPerTick": 0
+    },
+    {
+      "actorId": "teacher_same_actor",
+      "atSeconds": 7.0,
+      "authoredPosition": [
+        68,
+        33
+      ],
+      "frameId": "28",
+      "sha256": "d04cbfe230f1b5f5365e6f51dc40d3597df21f0264f08dd3c5f34770b87ccc33",
+      "supported": false,
+      "verticalVelocityPixelsPerTick": 1
+    },
+    {
+      "actorId": "teacher_same_actor",
+      "atSeconds": 7.25,
+      "authoredPosition": [
+        68,
+        35
+      ],
+      "frameId": "29",
+      "sha256": "3b8f1333614031dca0acdd3c1645ad54baa0e8c8da5eb4c28031fd91d4142cfc",
+      "supported": false,
+      "verticalVelocityPixelsPerTick": 2
+    },
+    {
+      "actorId": "teacher_same_actor",
+      "atSeconds": 7.5,
+      "authoredPosition": [
+        68,
+        36
+      ],
+      "frameId": "30",
+      "sha256": "8d9c0027d778f50b15e499aac8bbebfdaedaf122c73546abda0921556087f767",
+      "supported": true,
+      "verticalVelocityPixelsPerTick": 0
+    },
+    {
+      "actorId": "teacher_same_actor",
+      "atSeconds": 7.75,
+      "authoredPosition": [
+        72,
+        36
+      ],
+      "frameId": "31",
+      "sha256": "ea0a62229499669a4ff2d052bcf8d440014143d6c6645d612ea168bbeaf07db5",
+      "supported": true,
+      "verticalVelocityPixelsPerTick": 0
+    },
+    {
+      "actorId": "teacher_same_actor",
+      "atSeconds": 8.0,
+      "authoredPosition": [
+        76,
+        36
+      ],
+      "frameId": "32",
+      "sha256": "e0b014e60bf9f572802c51eda9a8d9f7adc6cd37254edc1eaaef8f6dab03cd6b",
+      "supported": true,
+      "verticalVelocityPixelsPerTick": 0
+    },
+    {
+      "actorId": "teacher_same_actor",
+      "atSeconds": 8.25,
+      "authoredPosition": [
+        80,
+        37
+      ],
+      "frameId": "33",
+      "sha256": "04d6bce5405e4dcb131e11cc302d7da2d2cd79fcbe5a1a806b0694656cda0d87",
+      "supported": false,
+      "verticalVelocityPixelsPerTick": 1
+    },
+    {
+      "actorId": "teacher_same_actor",
+      "atSeconds": 8.5,
+      "authoredPosition": [
+        80,
+        39
+      ],
+      "frameId": "34",
+      "sha256": "993f263937b764c7f148b757e7a46e0249459794538edff8d4cd6ff9e61a0020",
+      "supported": false,
+      "verticalVelocityPixelsPerTick": 2
+    },
+    {
+      "actorId": "teacher_same_actor",
+      "atSeconds": 8.75,
+      "authoredPosition": [
+        80,
+        40
+      ],
+      "frameId": "35",
+      "sha256": "9f657da11c42a11f33629e1954c49fce95e0c6aea0c84833a990d8ae020e77ad",
+      "supported": true,
+      "verticalVelocityPixelsPerTick": 0
+    },
+    {
+      "actorId": "teacher_same_actor",
+      "atSeconds": 9.0,
+      "authoredPosition": [
+        84,
+        40
+      ],
+      "frameId": "36",
+      "sha256": "493477a73d0b6baf4f5f0cb8ae38ae541b79f2fe098aeb4da654c7827d504513",
+      "supported": true,
+      "verticalVelocityPixelsPerTick": 0
+    },
+    {
+      "actorId": "teacher_same_actor",
+      "atSeconds": 9.25,
+      "authoredPosition": [
+        88,
+        41
+      ],
+      "frameId": "37",
+      "sha256": "6c59c6e2e1b7065e4deeac78b03eb1bdcaafcf09543860cd255a48601563c5f8",
+      "supported": false,
+      "verticalVelocityPixelsPerTick": 1
+    },
+    {
+      "actorId": "teacher_same_actor",
+      "atSeconds": 9.5,
+      "authoredPosition": [
+        88,
+        43
+      ],
+      "frameId": "38",
+      "sha256": "5801c40865c1db27c4471dbd5a6247986c94c0896dc82727e04e88e4a3d20f44",
+      "supported": false,
+      "verticalVelocityPixelsPerTick": 2
+    },
+    {
+      "actorId": "teacher_same_actor",
+      "atSeconds": 9.75,
+      "authoredPosition": [
+        88,
+        44
+      ],
+      "frameId": "39",
+      "sha256": "ae9409f292dcb77fc895bff97c6f9d4891a14c8a8d016cbd90c319cf9aad8b20",
+      "supported": true,
+      "verticalVelocityPixelsPerTick": 0
+    },
+    {
+      "actorId": "teacher_same_actor",
+      "atSeconds": 10.0,
+      "authoredPosition": [
+        88,
+        44
+      ],
+      "frameId": "40",
+      "sha256": "ae9409f292dcb77fc895bff97c6f9d4891a14c8a8d016cbd90c319cf9aad8b20",
+      "supported": true,
+      "verticalVelocityPixelsPerTick": 0
+    },
+    {
+      "actorId": "teacher_same_actor",
+      "atSeconds": 10.25,
+      "authoredPosition": [
+        88,
+        44
+      ],
+      "frameId": "41",
+      "sha256": "ae9409f292dcb77fc895bff97c6f9d4891a14c8a8d016cbd90c319cf9aad8b20",
+      "supported": true,
+      "verticalVelocityPixelsPerTick": 0
+    },
+    {
+      "actorId": "teacher_same_actor",
+      "atSeconds": 10.5,
+      "authoredPosition": [
+        88,
+        44
+      ],
+      "frameId": "42",
+      "sha256": "ae9409f292dcb77fc895bff97c6f9d4891a14c8a8d016cbd90c319cf9aad8b20",
+      "supported": true,
+      "verticalVelocityPixelsPerTick": 0
+    }
+  ],
+  "groundTruthIsRecognizerInput": false,
+  "partition": "training",
+  "recognizerStatus": "not_run",
+  "schemaVersion": 1,
+  "suiteId": "action-mechanism-recordings-v1",
+  "teacher": {
+    "actorColor": [
+      225,
+      165,
+      50
+    ],
+    "actorId": "teacher_same_actor",
+    "actorSizePixels": 4,
+    "barrierX": 92,
+    "dropsInCells": [
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1
+    ],
+    "floorTopPixels": [
+      12,
+      12,
+      16,
+      16,
+      16,
+      20,
+      20,
+      24,
+      24,
+      24,
+      28,
+      28,
+      32,
+      32,
+      32,
+      36,
+      36,
+      40,
+      40,
+      40,
+      44,
+      44,
+      48,
+      48
+    ],
+    "gravityPixelsPerTickSquared": 1,
+    "initialPosition": [
+      4,
+      8
+    ],
+    "source": "teacher_only_floor_map_and_dynamics_not_detector_input",
+    "terminalVelocityPixelsPerTick": 4,
+    "treadsInCells": [
+      2,
+      3,
+      2,
+      3,
+      2,
+      3,
+      2,
+      3,
+      2,
+      2
+    ]
+  },
+  "testId": "stairs_gravity"
+}

@@ -1,0 +1,32 @@
+{
+  "kind": "sequence_set_transformation",
+  "transformation": "parts_debug_0",
+  "doer": "python_pil",
+  "options": {},
+  "dependsOn": [
+    "parts_extraction_0/python_opencv",
+    "turtle_programs/turtle_programs_prolog"
+  ],
+  "type": "ui",
+  "preprocessingRevision": "original:",
+  "createdAt": "2026-09-10T13:58:56.676322Z",
+  "elapsedMs": 438,
+  "outputRevision": "a9648e104b7561ae",
+  "inputSignature": "original:122995df0b8cad0e0bd0bf0c",
+  "consumedDeps": {
+    "parts_extraction_0/python_opencv": {
+      "frameId": "4",
+      "output": "parts_extraction_0/python_opencv",
+      "revision": "ee04a28a31ed962d78ed96d520685477b01486bc4dc7b431f445cc1e752f57dd"
+    },
+    "turtle_programs/turtle_programs_prolog": {
+      "frameId": "4",
+      "output": "turtle_programs/turtle_programs_prolog",
+      "revision": "6c4e8f2568c9a5be"
+    }
+  },
+  "width": 640,
+  "height": 640,
+  "module": "omega_vision.perception.pixels_to_regions",
+  "source": "geometry"
+}

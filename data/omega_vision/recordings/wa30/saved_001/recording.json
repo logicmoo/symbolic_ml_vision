@@ -1,0 +1,12 @@
+{
+  "kind": "arc3_play_recording",
+  "session_id": "3c8819ab456f4330a60a41f0cfd7b6eb",
+  "game_id": "wa30",
+  "game_directory": "wa30",
+  "level": "1",
+  "level_directory": "data/recordings/wa30/saved_001",
+  "started_at": "2026-09-10T06:48:32.777358Z",
+  "updated_at": "2026-09-10T06:48:38.326700Z",
+  "last_event": "session_start",
+  "moves": []
+}

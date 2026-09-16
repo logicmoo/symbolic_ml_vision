@@ -1,0 +1,461 @@
+{
+  "canvas": {
+    "background": [
+      0,
+      0,
+      0
+    ],
+    "height": 48,
+    "width": 64
+  },
+  "caseId": "occlude",
+  "comparisonPolicy": {
+    "eventMatching": "required_subset_after_independent_entity_alignment",
+    "groundTruthIsRecognizerInput": false,
+    "incidentalEventsAllowed": true,
+    "initialFrame": "baseline_only"
+  },
+  "description": "Actor travels behind an opaque foreground strip and emerges.",
+  "entityIds": [
+    "actor",
+    "occluder"
+  ],
+  "expectedAssessment": null,
+  "expectedEvents": [
+    {
+      "display": "start(occlude(occluder, actor))",
+      "fromFrameId": "1",
+      "target": "start(occlude)",
+      "term": {
+        "args": [
+          {
+            "args": [
+              "occluder",
+              "actor"
+            ],
+            "predicate": "occlude"
+          }
+        ],
+        "predicate": "start"
+      },
+      "toFrameId": "2"
+    },
+    {
+      "display": "continue(occlude(occluder, actor))",
+      "fromFrameId": "2",
+      "target": "continue(occlude)",
+      "term": {
+        "args": [
+          {
+            "args": [
+              "occluder",
+              "actor"
+            ],
+            "predicate": "occlude"
+          }
+        ],
+        "predicate": "continue"
+      },
+      "toFrameId": "3"
+    },
+    {
+      "display": "end(occlude(occluder, actor))",
+      "fromFrameId": "3",
+      "target": "end(occlude)",
+      "term": {
+        "args": [
+          {
+            "args": [
+              "occluder",
+              "actor"
+            ],
+            "predicate": "occlude"
+          }
+        ],
+        "predicate": "end"
+      },
+      "toFrameId": "4"
+    }
+  ],
+  "fixtureArgumentConventions": {
+    "group_member": [
+      "member",
+      "group"
+    ],
+    "member_added": [
+      "member",
+      "group"
+    ],
+    "member_removed": [
+      "member",
+      "group"
+    ],
+    "merged": [
+      "source_a",
+      "source_b",
+      "result"
+    ],
+    "split": [
+      "source",
+      "child_a",
+      "child_b"
+    ],
+    "status": "fixture_conventions_not_a_new_runtime_schema"
+  },
+  "frames": [
+    {
+      "atSeconds": 0,
+      "authoredAnnotations": [],
+      "authoredObjects": [
+        {
+          "color": [
+            0,
+            116,
+            217
+          ],
+          "entity": "actor",
+          "mask": [
+            "111111",
+            "111111",
+            "111111",
+            "111111",
+            "111111",
+            "111111"
+          ],
+          "x": 10,
+          "y": 20
+        },
+        {
+          "color": [
+            170,
+            170,
+            170
+          ],
+          "entity": "occluder",
+          "mask": [
+            "11111111",
+            "11111111",
+            "11111111",
+            "11111111",
+            "11111111",
+            "11111111",
+            "11111111",
+            "11111111",
+            "11111111",
+            "11111111",
+            "11111111",
+            "11111111",
+            "11111111",
+            "11111111",
+            "11111111",
+            "11111111",
+            "11111111",
+            "11111111",
+            "11111111",
+            "11111111",
+            "11111111",
+            "11111111",
+            "11111111",
+            "11111111",
+            "11111111",
+            "11111111",
+            "11111111",
+            "11111111"
+          ],
+          "x": 24,
+          "y": 10
+        }
+      ],
+      "caption": "Actor approaching a visible foreground strip.",
+      "frameId": "0",
+      "frameOrder": 0,
+      "image": "data/recordings/events_tests/occlude/0/image.png",
+      "sha256": "5a32f2780886c7c2265f6bb7c4ef5665c11dcc00f4c54f36cd077bb6caa93f81"
+    },
+    {
+      "atSeconds": 1,
+      "authoredAnnotations": [],
+      "authoredObjects": [
+        {
+          "color": [
+            0,
+            116,
+            217
+          ],
+          "entity": "actor",
+          "mask": [
+            "111111",
+            "111111",
+            "111111",
+            "111111",
+            "111111",
+            "111111"
+          ],
+          "x": 17,
+          "y": 20
+        },
+        {
+          "color": [
+            170,
+            170,
+            170
+          ],
+          "entity": "occluder",
+          "mask": [
+            "11111111",
+            "11111111",
+            "11111111",
+            "11111111",
+            "11111111",
+            "11111111",
+            "11111111",
+            "11111111",
+            "11111111",
+            "11111111",
+            "11111111",
+            "11111111",
+            "11111111",
+            "11111111",
+            "11111111",
+            "11111111",
+            "11111111",
+            "11111111",
+            "11111111",
+            "11111111",
+            "11111111",
+            "11111111",
+            "11111111",
+            "11111111",
+            "11111111",
+            "11111111",
+            "11111111",
+            "11111111"
+          ],
+          "x": 24,
+          "y": 10
+        }
+      ],
+      "caption": "Rightward motion established.",
+      "frameId": "1",
+      "frameOrder": 1,
+      "image": "data/recordings/events_tests/occlude/1/image.png",
+      "sha256": "2721eef047cf66281d2aa61885ede171ab87a9610ae609caf3eeddd0b7757c24"
+    },
+    {
+      "atSeconds": 2,
+      "authoredAnnotations": [],
+      "authoredObjects": [
+        {
+          "color": [
+            0,
+            116,
+            217
+          ],
+          "entity": "actor",
+          "mask": [
+            "111111",
+            "111111",
+            "111111",
+            "111111",
+            "111111",
+            "111111"
+          ],
+          "x": 24,
+          "y": 20
+        },
+        {
+          "color": [
+            170,
+            170,
+            170
+          ],
+          "entity": "occluder",
+          "mask": [
+            "11111111",
+            "11111111",
+            "11111111",
+            "11111111",
+            "11111111",
+            "11111111",
+            "11111111",
+            "11111111",
+            "11111111",
+            "11111111",
+            "11111111",
+            "11111111",
+            "11111111",
+            "11111111",
+            "11111111",
+            "11111111",
+            "11111111",
+            "11111111",
+            "11111111",
+            "11111111",
+            "11111111",
+            "11111111",
+            "11111111",
+            "11111111",
+            "11111111",
+            "11111111",
+            "11111111",
+            "11111111"
+          ],
+          "x": 24,
+          "y": 10
+        }
+      ],
+      "caption": "Actor fully hidden behind the strip.",
+      "frameId": "2",
+      "frameOrder": 2,
+      "image": "data/recordings/events_tests/occlude/2/image.png",
+      "sha256": "afa1ccf3ae4768a3007308bd0f487f2633809314ebc438bba65496eeaf7f32a5"
+    },
+    {
+      "atSeconds": 3,
+      "authoredAnnotations": [],
+      "authoredObjects": [
+        {
+          "color": [
+            0,
+            116,
+            217
+          ],
+          "entity": "actor",
+          "mask": [
+            "111111",
+            "111111",
+            "111111",
+            "111111",
+            "111111",
+            "111111"
+          ],
+          "x": 31,
+          "y": 20
+        },
+        {
+          "color": [
+            170,
+            170,
+            170
+          ],
+          "entity": "occluder",
+          "mask": [
+            "11111111",
+            "11111111",
+            "11111111",
+            "11111111",
+            "11111111",
+            "11111111",
+            "11111111",
+            "11111111",
+            "11111111",
+            "11111111",
+            "11111111",
+            "11111111",
+            "11111111",
+            "11111111",
+            "11111111",
+            "11111111",
+            "11111111",
+            "11111111",
+            "11111111",
+            "11111111",
+            "11111111",
+            "11111111",
+            "11111111",
+            "11111111",
+            "11111111",
+            "11111111",
+            "11111111",
+            "11111111"
+          ],
+          "x": 24,
+          "y": 10
+        }
+      ],
+      "caption": "Actor still partly hidden.",
+      "frameId": "3",
+      "frameOrder": 3,
+      "image": "data/recordings/events_tests/occlude/3/image.png",
+      "sha256": "f634e8f806b20451096e09811556e5f4899fc87fac13bc1f9ebac36934822e73"
+    },
+    {
+      "atSeconds": 4,
+      "authoredAnnotations": [],
+      "authoredObjects": [
+        {
+          "color": [
+            0,
+            116,
+            217
+          ],
+          "entity": "actor",
+          "mask": [
+            "111111",
+            "111111",
+            "111111",
+            "111111",
+            "111111",
+            "111111"
+          ],
+          "x": 38,
+          "y": 20
+        },
+        {
+          "color": [
+            170,
+            170,
+            170
+          ],
+          "entity": "occluder",
+          "mask": [
+            "11111111",
+            "11111111",
+            "11111111",
+            "11111111",
+            "11111111",
+            "11111111",
+            "11111111",
+            "11111111",
+            "11111111",
+            "11111111",
+            "11111111",
+            "11111111",
+            "11111111",
+            "11111111",
+            "11111111",
+            "11111111",
+            "11111111",
+            "11111111",
+            "11111111",
+            "11111111",
+            "11111111",
+            "11111111",
+            "11111111",
+            "11111111",
+            "11111111",
+            "11111111",
+            "11111111",
+            "11111111"
+          ],
+          "x": 24,
+          "y": 10
+        }
+      ],
+      "caption": "Actor reappears beyond the strip.",
+      "frameId": "4",
+      "frameOrder": 4,
+      "image": "data/recordings/events_tests/occlude/4/image.png",
+      "sha256": "6ba35b8dd743a3d979c79e1ac0f6839cbdd66bec78b1a9e8bec5f66502610fb0"
+    }
+  ],
+  "origin": "authored_synthetic_test_oracle",
+  "recognizerStatus": "not_run",
+  "requirements": [
+    "Positive depth, predicted motion and identity evidence must justify occlusion; draw order is oracle-only."
+  ],
+  "sampleIntervalSeconds": 1,
+  "schemaVersion": 1,
+  "sequenceId": "data/recordings/events_tests/occlude",
+  "suiteId": "event-mini-recordings-v1"
+}

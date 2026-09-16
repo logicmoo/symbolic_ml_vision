@@ -1,0 +1,30 @@
+{
+  "continuations": true,
+  "occlusions": [
+    {
+      "active": false,
+      "confirmed": true,
+      "depth_contradicted": false,
+      "depth_positive": true,
+      "motion_supported": true,
+      "occluded": "hidden",
+      "occluder": "front",
+      "occluder_visible": true,
+      "overlap_fraction": 1,
+      "reappeared": false,
+      "was_visible": true
+    }
+  ],
+  "rows": [
+    {
+      "ambiguous": false,
+      "currently_visible": false,
+      "entity": "hidden",
+      "exit_fraction": 0,
+      "previous_status": "visible",
+      "projection_supported": false,
+      "status": "missing",
+      "was_visible": true
+    }
+  ]
+}

@@ -1,0 +1,72 @@
+{
+  "complete_predicates": [],
+  "facts": [
+    {
+      "args": [
+        "actor",
+        2
+      ],
+      "predicate": "displacement_magnitude"
+    }
+  ],
+  "kind": "event_detector",
+  "known_absent": [],
+  "rules": [
+    {
+      "proof": "detector-a",
+      "rule": {
+        "body": [
+          {
+            "args": [
+              {
+                "var": "Amount"
+              },
+              1.5
+            ],
+            "predicate": "greater_equal"
+          },
+          {
+            "args": [
+              {
+                "var": "X"
+              },
+              {
+                "var": "Amount"
+              }
+            ],
+            "predicate": "displacement_magnitude"
+          }
+        ],
+        "delay": {
+          "max": 0,
+          "min": 0
+        },
+        "exceptions": [
+          {
+            "args": [
+              {
+                "var": "X"
+              }
+            ],
+            "predicate": "stationary"
+          }
+        ],
+        "head": {
+          "args": [
+            {
+              "var": "X"
+            }
+          ],
+          "predicate": "moved"
+        }
+      },
+      "scope": {
+        "domain": "test"
+      }
+    }
+  ],
+  "scope_context": {
+    "domain": "test"
+  },
+  "source_order": 10
+}

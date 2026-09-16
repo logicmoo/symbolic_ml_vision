@@ -1,0 +1,89 @@
+{
+  "description": "After confirmed joint motion, a member becomes unobserved; do not claim dissolution.",
+  "expected_events_file": "expected_events.json",
+  "fixture_suite": "group-lifecycle-recordings-v1",
+  "game_directory": "events_tests",
+  "game_id": "events_tests",
+  "kind": "arc3_play_recording",
+  "last_event": "fixture_created",
+  "level": "1",
+  "level_directory": "data/recordings/events_tests/group_lifecycle_missing_member",
+  "moves": [
+    {
+      "action": null,
+      "data": {},
+      "directory": "data/recordings/events_tests/group_lifecycle_missing_member/0",
+      "index": 0,
+      "level": "1",
+      "recorded_at": "2000-01-01T00:00:00Z",
+      "state": "NOT_FINISHED"
+    },
+    {
+      "action": "FRAME",
+      "data": {},
+      "directory": "data/recordings/events_tests/group_lifecycle_missing_member/1",
+      "index": 1,
+      "level": "1",
+      "recorded_at": "2000-01-01T00:00:00Z",
+      "state": "NOT_FINISHED"
+    },
+    {
+      "action": "FRAME",
+      "data": {},
+      "directory": "data/recordings/events_tests/group_lifecycle_missing_member/2",
+      "index": 2,
+      "level": "1",
+      "recorded_at": "2000-01-01T00:00:00Z",
+      "state": "NOT_FINISHED"
+    },
+    {
+      "action": "FRAME",
+      "data": {},
+      "directory": "data/recordings/events_tests/group_lifecycle_missing_member/3",
+      "index": 3,
+      "level": "1",
+      "recorded_at": "2000-01-01T00:00:00Z",
+      "state": "NOT_FINISHED"
+    },
+    {
+      "action": "FRAME",
+      "data": {},
+      "directory": "data/recordings/events_tests/group_lifecycle_missing_member/4",
+      "index": 4,
+      "level": "1",
+      "recorded_at": "2000-01-01T00:00:00Z",
+      "state": "NOT_FINISHED"
+    },
+    {
+      "action": "FRAME",
+      "data": {},
+      "directory": "data/recordings/events_tests/group_lifecycle_missing_member/5",
+      "index": 5,
+      "level": "1",
+      "recorded_at": "2000-01-01T00:00:00Z",
+      "state": "NOT_FINISHED"
+    },
+    {
+      "action": "FRAME",
+      "data": {},
+      "directory": "data/recordings/events_tests/group_lifecycle_missing_member/6",
+      "index": 6,
+      "level": "1",
+      "recorded_at": "2000-01-01T00:00:00Z",
+      "state": "NOT_FINISHED"
+    },
+    {
+      "action": "FRAME",
+      "data": {},
+      "directory": "data/recordings/events_tests/group_lifecycle_missing_member/7",
+      "index": 7,
+      "level": "1",
+      "recorded_at": "2000-01-01T00:00:00Z",
+      "state": "NOT_FINISHED"
+    }
+  ],
+  "session_id": null,
+  "source": "synthetic_event_tests",
+  "started_at": "2000-01-01T00:00:00Z",
+  "updated_at": "2000-01-01T00:00:00Z"
+}

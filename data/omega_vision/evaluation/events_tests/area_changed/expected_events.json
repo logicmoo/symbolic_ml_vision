@@ -1,0 +1,135 @@
+{
+  "canvas": {
+    "background": [
+      0,
+      0,
+      0
+    ],
+    "height": 48,
+    "width": 64
+  },
+  "caseId": "area_changed",
+  "comparisonPolicy": {
+    "eventMatching": "required_subset_after_independent_entity_alignment",
+    "groundTruthIsRecognizerInput": false,
+    "incidentalEventsAllowed": true,
+    "initialFrame": "baseline_only"
+  },
+  "description": "One centered boundary protrusion increases occupied area.",
+  "entityIds": [
+    "actor"
+  ],
+  "expectedAssessment": null,
+  "expectedEvents": [
+    {
+      "display": "area_changed(actor)",
+      "fromFrameId": "0",
+      "target": "area_changed",
+      "term": {
+        "args": [
+          "actor"
+        ],
+        "predicate": "area_changed"
+      },
+      "toFrameId": "1"
+    }
+  ],
+  "fixtureArgumentConventions": {
+    "group_member": [
+      "member",
+      "group"
+    ],
+    "member_added": [
+      "member",
+      "group"
+    ],
+    "member_removed": [
+      "member",
+      "group"
+    ],
+    "merged": [
+      "source_a",
+      "source_b",
+      "result"
+    ],
+    "split": [
+      "source",
+      "child_a",
+      "child_b"
+    ],
+    "status": "fixture_conventions_not_a_new_runtime_schema"
+  },
+  "frames": [
+    {
+      "atSeconds": 0,
+      "authoredAnnotations": [],
+      "authoredObjects": [
+        {
+          "color": [
+            0,
+            116,
+            217
+          ],
+          "entity": "actor",
+          "mask": [
+            "11111111",
+            "11111111",
+            "11111111",
+            "11111111",
+            "11111111",
+            "11111111",
+            "11111111",
+            "11111111"
+          ],
+          "x": 12,
+          "y": 20
+        }
+      ],
+      "caption": "8 by 8 square, area 64.",
+      "frameId": "0",
+      "frameOrder": 0,
+      "image": "data/recordings/events_tests/area_changed/0/image.png",
+      "sha256": "602f3630dfeefddd6602a5581aec00488f3ab293fb8e55bf3b69004610cc363d"
+    },
+    {
+      "atSeconds": 1,
+      "authoredAnnotations": [],
+      "authoredObjects": [
+        {
+          "color": [
+            0,
+            116,
+            217
+          ],
+          "entity": "actor",
+          "mask": [
+            "111111110",
+            "111111110",
+            "111111110",
+            "111111111",
+            "111111111",
+            "111111110",
+            "111111110",
+            "111111110"
+          ],
+          "x": 12,
+          "y": 20
+        }
+      ],
+      "caption": "Two extra boundary pixels, not uniform scaling.",
+      "frameId": "1",
+      "frameOrder": 1,
+      "image": "data/recordings/events_tests/area_changed/1/image.png",
+      "sha256": "e45daecfd143b3270b7f9fed28a82ed7a628279edf98a234703998c436bff48b"
+    }
+  ],
+  "origin": "authored_synthetic_test_oracle",
+  "recognizerStatus": "not_run",
+  "requirements": [
+    "Stable identity is an authored oracle; the tracker must establish its own correspondence."
+  ],
+  "sampleIntervalSeconds": 1,
+  "schemaVersion": 1,
+  "sequenceId": "data/recordings/events_tests/area_changed",
+  "suiteId": "event-mini-recordings-v1"
+}

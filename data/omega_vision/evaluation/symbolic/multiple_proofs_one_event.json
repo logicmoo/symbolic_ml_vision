@@ -1,0 +1,19 @@
+{
+  "output": {
+    "events": [
+      {
+        "proofs": [
+          "proof-distance",
+          "proof-presence"
+        ],
+        "term": {
+          "args": [
+            "actor"
+          ],
+          "predicate": "moved"
+        }
+      }
+    ],
+    "predictions": []
+  }
+}

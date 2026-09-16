@@ -1,0 +1,25 @@
+{
+  "kind": "sequence_set_transformation",
+  "transformation": "turtle_programs",
+  "doer": "turtle_programs_prolog",
+  "options": {},
+  "dependsOn": [
+    "group_acceptance_0/group_acceptance_prolog"
+  ],
+  "type": "py_pl",
+  "preprocessingRevision": "original:",
+  "createdAt": "2026-09-10T13:59:32.343786Z",
+  "elapsedMs": 1071,
+  "outputRevision": "7450e52a69f21ab9",
+  "inputSignature": "original:4bbb0fc7ed53c5fcd7cd75a0",
+  "consumedDeps": {
+    "group_acceptance_0/group_acceptance_prolog": {
+      "frameId": "7",
+      "output": "group_acceptance_0/group_acceptance_prolog",
+      "revision": "c999a9af780ea3b9"
+    }
+  },
+  "module": "prolog/omega_vision/turtle_programs.pl",
+  "partsFacts": "parts_extraction_0/python_opencv/result.pl",
+  "programCount": 68
+}

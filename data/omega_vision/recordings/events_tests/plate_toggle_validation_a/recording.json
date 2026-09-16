@@ -1,0 +1,286 @@
+{
+  "description": "Synthetic action-bearing visual sequence; evaluation is separate and has not run.",
+  "fixture_suite": "documented-recording-tests-v1",
+  "game_directory": "events_tests",
+  "game_id": "events_tests",
+  "kind": "arc3_play_recording",
+  "last_event": "fixture_created",
+  "level": "1",
+  "level_directory": "data/recordings/events_tests/plate_toggle_validation_a",
+  "moves": [
+    {
+      "action": null,
+      "at_seconds": 0.0,
+      "data": {},
+      "directory": "data/recordings/events_tests/plate_toggle_validation_a/0",
+      "index": 0,
+      "level": "1",
+      "recorded_at": "2000-01-01T00:00:00Z",
+      "state": "NOT_FINISHED"
+    },
+    {
+      "action": "WAIT",
+      "at_seconds": 1.0,
+      "data": {},
+      "directory": "data/recordings/events_tests/plate_toggle_validation_a/1",
+      "index": 1,
+      "level": "1",
+      "recorded_at": "2000-01-01T00:00:00Z",
+      "state": "NOT_FINISHED"
+    },
+    {
+      "action": "LEFT",
+      "at_seconds": 2.0,
+      "data": {},
+      "directory": "data/recordings/events_tests/plate_toggle_validation_a/2",
+      "index": 2,
+      "level": "1",
+      "recorded_at": "2000-01-01T00:00:00Z",
+      "state": "NOT_FINISHED"
+    },
+    {
+      "action": "LEFT",
+      "at_seconds": 3.0,
+      "data": {},
+      "directory": "data/recordings/events_tests/plate_toggle_validation_a/3",
+      "index": 3,
+      "level": "1",
+      "recorded_at": "2000-01-01T00:00:00Z",
+      "state": "NOT_FINISHED"
+    },
+    {
+      "action": "WAIT",
+      "at_seconds": 4.0,
+      "data": {},
+      "directory": "data/recordings/events_tests/plate_toggle_validation_a/4",
+      "index": 4,
+      "level": "1",
+      "recorded_at": "2000-01-01T00:00:00Z",
+      "state": "NOT_FINISHED"
+    },
+    {
+      "action": "WAIT",
+      "at_seconds": 5.0,
+      "data": {},
+      "directory": "data/recordings/events_tests/plate_toggle_validation_a/5",
+      "index": 5,
+      "level": "1",
+      "recorded_at": "2000-01-01T00:00:00Z",
+      "state": "NOT_FINISHED"
+    },
+    {
+      "action": "WAIT",
+      "at_seconds": 6.0,
+      "data": {},
+      "directory": "data/recordings/events_tests/plate_toggle_validation_a/6",
+      "index": 6,
+      "level": "1",
+      "recorded_at": "2000-01-01T00:00:00Z",
+      "state": "NOT_FINISHED"
+    },
+    {
+      "action": "RIGHT",
+      "at_seconds": 7.0,
+      "data": {},
+      "directory": "data/recordings/events_tests/plate_toggle_validation_a/7",
+      "index": 7,
+      "level": "1",
+      "recorded_at": "2000-01-01T00:00:00Z",
+      "state": "NOT_FINISHED"
+    },
+    {
+      "action": "WAIT",
+      "at_seconds": 8.0,
+      "data": {},
+      "directory": "data/recordings/events_tests/plate_toggle_validation_a/8",
+      "index": 8,
+      "level": "1",
+      "recorded_at": "2000-01-01T00:00:00Z",
+      "state": "NOT_FINISHED"
+    },
+    {
+      "action": "WAIT",
+      "at_seconds": 9.0,
+      "data": {},
+      "directory": "data/recordings/events_tests/plate_toggle_validation_a/9",
+      "index": 9,
+      "level": "1",
+      "recorded_at": "2000-01-01T00:00:00Z",
+      "state": "NOT_FINISHED"
+    },
+    {
+      "action": "WAIT",
+      "at_seconds": 10.0,
+      "data": {},
+      "directory": "data/recordings/events_tests/plate_toggle_validation_a/10",
+      "index": 10,
+      "level": "1",
+      "recorded_at": "2000-01-01T00:00:00Z",
+      "state": "NOT_FINISHED"
+    },
+    {
+      "action": "LEFT",
+      "at_seconds": 11.0,
+      "data": {},
+      "directory": "data/recordings/events_tests/plate_toggle_validation_a/11",
+      "index": 11,
+      "level": "1",
+      "recorded_at": "2000-01-01T00:00:00Z",
+      "state": "NOT_FINISHED"
+    },
+    {
+      "action": "WAIT",
+      "at_seconds": 12.0,
+      "data": {},
+      "directory": "data/recordings/events_tests/plate_toggle_validation_a/12",
+      "index": 12,
+      "level": "1",
+      "recorded_at": "2000-01-01T00:00:00Z",
+      "state": "NOT_FINISHED"
+    },
+    {
+      "action": "WAIT",
+      "at_seconds": 13.0,
+      "data": {},
+      "directory": "data/recordings/events_tests/plate_toggle_validation_a/13",
+      "index": 13,
+      "level": "1",
+      "recorded_at": "2000-01-01T00:00:00Z",
+      "state": "NOT_FINISHED"
+    },
+    {
+      "action": "WAIT",
+      "at_seconds": 14.0,
+      "data": {},
+      "directory": "data/recordings/events_tests/plate_toggle_validation_a/14",
+      "index": 14,
+      "level": "1",
+      "recorded_at": "2000-01-01T00:00:00Z",
+      "state": "NOT_FINISHED"
+    },
+    {
+      "action": "RIGHT",
+      "at_seconds": 15.0,
+      "data": {},
+      "directory": "data/recordings/events_tests/plate_toggle_validation_a/15",
+      "index": 15,
+      "level": "1",
+      "recorded_at": "2000-01-01T00:00:00Z",
+      "state": "NOT_FINISHED"
+    },
+    {
+      "action": "WAIT",
+      "at_seconds": 16.0,
+      "data": {},
+      "directory": "data/recordings/events_tests/plate_toggle_validation_a/16",
+      "index": 16,
+      "level": "1",
+      "recorded_at": "2000-01-01T00:00:00Z",
+      "state": "NOT_FINISHED"
+    },
+    {
+      "action": "WAIT",
+      "at_seconds": 17.0,
+      "data": {},
+      "directory": "data/recordings/events_tests/plate_toggle_validation_a/17",
+      "index": 17,
+      "level": "1",
+      "recorded_at": "2000-01-01T00:00:00Z",
+      "state": "NOT_FINISHED"
+    },
+    {
+      "action": "WAIT",
+      "at_seconds": 18.0,
+      "data": {},
+      "directory": "data/recordings/events_tests/plate_toggle_validation_a/18",
+      "index": 18,
+      "level": "1",
+      "recorded_at": "2000-01-01T00:00:00Z",
+      "state": "NOT_FINISHED"
+    },
+    {
+      "action": "LEFT",
+      "at_seconds": 19.0,
+      "data": {},
+      "directory": "data/recordings/events_tests/plate_toggle_validation_a/19",
+      "index": 19,
+      "level": "1",
+      "recorded_at": "2000-01-01T00:00:00Z",
+      "state": "NOT_FINISHED"
+    },
+    {
+      "action": "WAIT",
+      "at_seconds": 20.0,
+      "data": {},
+      "directory": "data/recordings/events_tests/plate_toggle_validation_a/20",
+      "index": 20,
+      "level": "1",
+      "recorded_at": "2000-01-01T00:00:00Z",
+      "state": "NOT_FINISHED"
+    },
+    {
+      "action": "WAIT",
+      "at_seconds": 21.0,
+      "data": {},
+      "directory": "data/recordings/events_tests/plate_toggle_validation_a/21",
+      "index": 21,
+      "level": "1",
+      "recorded_at": "2000-01-01T00:00:00Z",
+      "state": "NOT_FINISHED"
+    },
+    {
+      "action": "WAIT",
+      "at_seconds": 22.0,
+      "data": {},
+      "directory": "data/recordings/events_tests/plate_toggle_validation_a/22",
+      "index": 22,
+      "level": "1",
+      "recorded_at": "2000-01-01T00:00:00Z",
+      "state": "NOT_FINISHED"
+    },
+    {
+      "action": "RIGHT",
+      "at_seconds": 23.0,
+      "data": {},
+      "directory": "data/recordings/events_tests/plate_toggle_validation_a/23",
+      "index": 23,
+      "level": "1",
+      "recorded_at": "2000-01-01T00:00:00Z",
+      "state": "NOT_FINISHED"
+    },
+    {
+      "action": "WAIT",
+      "at_seconds": 24.0,
+      "data": {},
+      "directory": "data/recordings/events_tests/plate_toggle_validation_a/24",
+      "index": 24,
+      "level": "1",
+      "recorded_at": "2000-01-01T00:00:00Z",
+      "state": "NOT_FINISHED"
+    },
+    {
+      "action": "WAIT",
+      "at_seconds": 25.0,
+      "data": {},
+      "directory": "data/recordings/events_tests/plate_toggle_validation_a/25",
+      "index": 25,
+      "level": "1",
+      "recorded_at": "2000-01-01T00:00:00Z",
+      "state": "NOT_FINISHED"
+    },
+    {
+      "action": "WAIT",
+      "at_seconds": 26.0,
+      "data": {},
+      "directory": "data/recordings/events_tests/plate_toggle_validation_a/26",
+      "index": 26,
+      "level": "1",
+      "recorded_at": "2000-01-01T00:00:00Z",
+      "state": "NOT_FINISHED"
+    }
+  ],
+  "session_id": null,
+  "source": "synthetic_action_tests",
+  "started_at": "2000-01-01T00:00:00Z",
+  "updated_at": "2000-01-01T00:00:00Z"
+}

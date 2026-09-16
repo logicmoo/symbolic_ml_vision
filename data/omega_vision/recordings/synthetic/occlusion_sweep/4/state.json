@@ -1,0 +1,13 @@
+{
+  "action_data": {},
+  "at_seconds": 2.0,
+  "game_directory": "synthetic",
+  "game_id": "synthetic-occlusion_sweep",
+  "image_hash": "46c3b76c68864219",
+  "incoming_action": null,
+  "kind": "synthetic_frame",
+  "level": "1",
+  "recorded_at": "2026-01-01T00:00:00.000000Z",
+  "state": "NOT_FINISHED",
+  "step_count": 4
+}

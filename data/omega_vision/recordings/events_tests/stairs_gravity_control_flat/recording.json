@@ -1,0 +1,266 @@
+{
+  "description": "Action-bearing observation sequence; recognition has not run and evaluator information is separate.",
+  "fixture_suite": "action-mechanism-recordings-v1",
+  "game_directory": "events_tests",
+  "game_id": "events_tests",
+  "kind": "arc3_play_recording",
+  "last_event": "fixture_created",
+  "level": "1",
+  "level_directory": "data/recordings/events_tests/stairs_gravity_control_flat",
+  "moves": [
+    {
+      "action": null,
+      "at_seconds": 0.0,
+      "data": {},
+      "directory": "data/recordings/events_tests/stairs_gravity_control_flat/0",
+      "index": 0,
+      "level": "1",
+      "recorded_at": "2000-01-01T00:00:00Z",
+      "state": "NOT_FINISHED"
+    },
+    {
+      "action": "RIGHT",
+      "at_seconds": 0.25,
+      "data": {},
+      "directory": "data/recordings/events_tests/stairs_gravity_control_flat/1",
+      "index": 1,
+      "level": "1",
+      "recorded_at": "2000-01-01T00:00:00Z",
+      "state": "NOT_FINISHED"
+    },
+    {
+      "action": "RIGHT",
+      "at_seconds": 0.5,
+      "data": {},
+      "directory": "data/recordings/events_tests/stairs_gravity_control_flat/2",
+      "index": 2,
+      "level": "1",
+      "recorded_at": "2000-01-01T00:00:00Z",
+      "state": "NOT_FINISHED"
+    },
+    {
+      "action": "RIGHT",
+      "at_seconds": 0.75,
+      "data": {},
+      "directory": "data/recordings/events_tests/stairs_gravity_control_flat/3",
+      "index": 3,
+      "level": "1",
+      "recorded_at": "2000-01-01T00:00:00Z",
+      "state": "NOT_FINISHED"
+    },
+    {
+      "action": "RIGHT",
+      "at_seconds": 1.0,
+      "data": {},
+      "directory": "data/recordings/events_tests/stairs_gravity_control_flat/4",
+      "index": 4,
+      "level": "1",
+      "recorded_at": "2000-01-01T00:00:00Z",
+      "state": "NOT_FINISHED"
+    },
+    {
+      "action": "RIGHT",
+      "at_seconds": 1.25,
+      "data": {},
+      "directory": "data/recordings/events_tests/stairs_gravity_control_flat/5",
+      "index": 5,
+      "level": "1",
+      "recorded_at": "2000-01-01T00:00:00Z",
+      "state": "NOT_FINISHED"
+    },
+    {
+      "action": "RIGHT",
+      "at_seconds": 1.5,
+      "data": {},
+      "directory": "data/recordings/events_tests/stairs_gravity_control_flat/6",
+      "index": 6,
+      "level": "1",
+      "recorded_at": "2000-01-01T00:00:00Z",
+      "state": "NOT_FINISHED"
+    },
+    {
+      "action": "RIGHT",
+      "at_seconds": 1.75,
+      "data": {},
+      "directory": "data/recordings/events_tests/stairs_gravity_control_flat/7",
+      "index": 7,
+      "level": "1",
+      "recorded_at": "2000-01-01T00:00:00Z",
+      "state": "NOT_FINISHED"
+    },
+    {
+      "action": "RIGHT",
+      "at_seconds": 2.0,
+      "data": {},
+      "directory": "data/recordings/events_tests/stairs_gravity_control_flat/8",
+      "index": 8,
+      "level": "1",
+      "recorded_at": "2000-01-01T00:00:00Z",
+      "state": "NOT_FINISHED"
+    },
+    {
+      "action": "RIGHT",
+      "at_seconds": 2.25,
+      "data": {},
+      "directory": "data/recordings/events_tests/stairs_gravity_control_flat/9",
+      "index": 9,
+      "level": "1",
+      "recorded_at": "2000-01-01T00:00:00Z",
+      "state": "NOT_FINISHED"
+    },
+    {
+      "action": "RIGHT",
+      "at_seconds": 2.5,
+      "data": {},
+      "directory": "data/recordings/events_tests/stairs_gravity_control_flat/10",
+      "index": 10,
+      "level": "1",
+      "recorded_at": "2000-01-01T00:00:00Z",
+      "state": "NOT_FINISHED"
+    },
+    {
+      "action": "RIGHT",
+      "at_seconds": 2.75,
+      "data": {},
+      "directory": "data/recordings/events_tests/stairs_gravity_control_flat/11",
+      "index": 11,
+      "level": "1",
+      "recorded_at": "2000-01-01T00:00:00Z",
+      "state": "NOT_FINISHED"
+    },
+    {
+      "action": "RIGHT",
+      "at_seconds": 3.0,
+      "data": {},
+      "directory": "data/recordings/events_tests/stairs_gravity_control_flat/12",
+      "index": 12,
+      "level": "1",
+      "recorded_at": "2000-01-01T00:00:00Z",
+      "state": "NOT_FINISHED"
+    },
+    {
+      "action": "RIGHT",
+      "at_seconds": 3.25,
+      "data": {},
+      "directory": "data/recordings/events_tests/stairs_gravity_control_flat/13",
+      "index": 13,
+      "level": "1",
+      "recorded_at": "2000-01-01T00:00:00Z",
+      "state": "NOT_FINISHED"
+    },
+    {
+      "action": "RIGHT",
+      "at_seconds": 3.5,
+      "data": {},
+      "directory": "data/recordings/events_tests/stairs_gravity_control_flat/14",
+      "index": 14,
+      "level": "1",
+      "recorded_at": "2000-01-01T00:00:00Z",
+      "state": "NOT_FINISHED"
+    },
+    {
+      "action": "RIGHT",
+      "at_seconds": 3.75,
+      "data": {},
+      "directory": "data/recordings/events_tests/stairs_gravity_control_flat/15",
+      "index": 15,
+      "level": "1",
+      "recorded_at": "2000-01-01T00:00:00Z",
+      "state": "NOT_FINISHED"
+    },
+    {
+      "action": "RIGHT",
+      "at_seconds": 4.0,
+      "data": {},
+      "directory": "data/recordings/events_tests/stairs_gravity_control_flat/16",
+      "index": 16,
+      "level": "1",
+      "recorded_at": "2000-01-01T00:00:00Z",
+      "state": "NOT_FINISHED"
+    },
+    {
+      "action": "RIGHT",
+      "at_seconds": 4.25,
+      "data": {},
+      "directory": "data/recordings/events_tests/stairs_gravity_control_flat/17",
+      "index": 17,
+      "level": "1",
+      "recorded_at": "2000-01-01T00:00:00Z",
+      "state": "NOT_FINISHED"
+    },
+    {
+      "action": "RIGHT",
+      "at_seconds": 4.5,
+      "data": {},
+      "directory": "data/recordings/events_tests/stairs_gravity_control_flat/18",
+      "index": 18,
+      "level": "1",
+      "recorded_at": "2000-01-01T00:00:00Z",
+      "state": "NOT_FINISHED"
+    },
+    {
+      "action": "RIGHT",
+      "at_seconds": 4.75,
+      "data": {},
+      "directory": "data/recordings/events_tests/stairs_gravity_control_flat/19",
+      "index": 19,
+      "level": "1",
+      "recorded_at": "2000-01-01T00:00:00Z",
+      "state": "NOT_FINISHED"
+    },
+    {
+      "action": "RIGHT",
+      "at_seconds": 5.0,
+      "data": {},
+      "directory": "data/recordings/events_tests/stairs_gravity_control_flat/20",
+      "index": 20,
+      "level": "1",
+      "recorded_at": "2000-01-01T00:00:00Z",
+      "state": "NOT_FINISHED"
+    },
+    {
+      "action": "RIGHT",
+      "at_seconds": 5.25,
+      "data": {},
+      "directory": "data/recordings/events_tests/stairs_gravity_control_flat/21",
+      "index": 21,
+      "level": "1",
+      "recorded_at": "2000-01-01T00:00:00Z",
+      "state": "NOT_FINISHED"
+    },
+    {
+      "action": "RIGHT",
+      "at_seconds": 5.5,
+      "data": {},
+      "directory": "data/recordings/events_tests/stairs_gravity_control_flat/22",
+      "index": 22,
+      "level": "1",
+      "recorded_at": "2000-01-01T00:00:00Z",
+      "state": "NOT_FINISHED"
+    },
+    {
+      "action": "RIGHT",
+      "at_seconds": 5.75,
+      "data": {},
+      "directory": "data/recordings/events_tests/stairs_gravity_control_flat/23",
+      "index": 23,
+      "level": "1",
+      "recorded_at": "2000-01-01T00:00:00Z",
+      "state": "NOT_FINISHED"
+    },
+    {
+      "action": "RIGHT",
+      "at_seconds": 6.0,
+      "data": {},
+      "directory": "data/recordings/events_tests/stairs_gravity_control_flat/24",
+      "index": 24,
+      "level": "1",
+      "recorded_at": "2000-01-01T00:00:00Z",
+      "state": "NOT_FINISHED"
+    }
+  ],
+  "session_id": null,
+  "source": "synthetic_action_mechanism_tests",
+  "started_at": "2000-01-01T00:00:00Z",
+  "updated_at": "2000-01-01T00:00:00Z"
+}

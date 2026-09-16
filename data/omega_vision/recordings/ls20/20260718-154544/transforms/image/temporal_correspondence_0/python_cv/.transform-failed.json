@@ -1,0 +1,6 @@
+{
+  "kind": "sequence_transform_failure",
+  "step": "temporal_correspondence_0/python_cv",
+  "error": "lineage variant size differs from geometry",
+  "failedAt": "2026-09-10T15:52:04.547038Z"
+}

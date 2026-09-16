@@ -1,0 +1,12 @@
+{
+  "kind": "arc3_play_recording",
+  "session_id": "d96fa2f53c05460e8a08f5e0c9f05ee3",
+  "game_id": "ls20-9607627b",
+  "game_directory": "ls20",
+  "level": "2",
+  "level_directory": "data/recordings/ls20/saved_005",
+  "started_at": "2026-09-07T10:57:44.364747Z",
+  "updated_at": "2026-09-07T10:58:26.134492Z",
+  "last_event": "level_start",
+  "moves": []
+}

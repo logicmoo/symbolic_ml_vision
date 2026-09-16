@@ -1,0 +1,253 @@
+{
+  "baselineStatus": "fixture_unit_baseline_only_not_workbench_execution",
+  "description": "Observed approach, partial entry, exactly four consecutive fully hidden samples, partial exit and reappearance while traveling in the reversed direction with changed appearance.",
+  "frames": [
+    {
+      "actorId": "teacher_same_actor",
+      "atSeconds": 0.0,
+      "authoredPosition": [
+        72,
+        21
+      ],
+      "frameId": "0",
+      "fullyHidden": false,
+      "renderedActor": true,
+      "sha256": "a69b5511d9d04008319eb2750ffda5a9ec898cf133c2b71f6bba7dd623abd793",
+      "visibleActorPixels": 24
+    },
+    {
+      "actorId": "teacher_same_actor",
+      "atSeconds": 0.5,
+      "authoredPosition": [
+        70,
+        21
+      ],
+      "frameId": "1",
+      "fullyHidden": false,
+      "renderedActor": true,
+      "sha256": "255cf63fce1cd0b13f02df30a5da3b915c6c09d1ab3ff59cd439c76a4ad5131f",
+      "visibleActorPixels": 24
+    },
+    {
+      "actorId": "teacher_same_actor",
+      "atSeconds": 1.0,
+      "authoredPosition": [
+        68,
+        21
+      ],
+      "frameId": "2",
+      "fullyHidden": false,
+      "renderedActor": true,
+      "sha256": "ffbbee732a813d37b6a21f4333679f10662571cf85c8ff219eee131ad9fd9196",
+      "visibleActorPixels": 24
+    },
+    {
+      "actorId": "teacher_same_actor",
+      "atSeconds": 1.5,
+      "authoredPosition": [
+        66,
+        21
+      ],
+      "frameId": "3",
+      "fullyHidden": false,
+      "renderedActor": true,
+      "sha256": "3b21a46495a15a350b045f1fbc38bca1b03a30b681238023d1e90716334939c8",
+      "visibleActorPixels": 24
+    },
+    {
+      "actorId": "teacher_same_actor",
+      "atSeconds": 2.0,
+      "authoredPosition": [
+        64,
+        21
+      ],
+      "frameId": "4",
+      "fullyHidden": false,
+      "renderedActor": true,
+      "sha256": "d38953229d75f4c669c1d0b98702e4624c0528660cb3ae1190795964c88459c7",
+      "visibleActorPixels": 20
+    },
+    {
+      "actorId": "teacher_same_actor",
+      "atSeconds": 2.5,
+      "authoredPosition": [
+        62,
+        21
+      ],
+      "frameId": "5",
+      "fullyHidden": false,
+      "renderedActor": true,
+      "sha256": "927a59fdfdcc8eb5c186db954848bbff18e1b5d76c8d1a8f1b7742eb155b415e",
+      "visibleActorPixels": 16
+    },
+    {
+      "actorId": "teacher_same_actor",
+      "atSeconds": 3.0,
+      "authoredPosition": [
+        60,
+        21
+      ],
+      "frameId": "6",
+      "fullyHidden": true,
+      "renderedActor": true,
+      "sha256": "4a74306f8c3a249898ad5cb16e735386feaa19e8576747d4b4e43df1093c7f23",
+      "visibleActorPixels": 0
+    },
+    {
+      "actorId": "teacher_same_actor",
+      "atSeconds": 3.5,
+      "authoredPosition": [
+        58,
+        21
+      ],
+      "frameId": "7",
+      "fullyHidden": true,
+      "renderedActor": true,
+      "sha256": "4a74306f8c3a249898ad5cb16e735386feaa19e8576747d4b4e43df1093c7f23",
+      "visibleActorPixels": 0
+    },
+    {
+      "actorId": "teacher_same_actor",
+      "atSeconds": 4.0,
+      "authoredPosition": [
+        56,
+        21
+      ],
+      "frameId": "8",
+      "fullyHidden": true,
+      "renderedActor": true,
+      "sha256": "4a74306f8c3a249898ad5cb16e735386feaa19e8576747d4b4e43df1093c7f23",
+      "visibleActorPixels": 0
+    },
+    {
+      "actorId": "teacher_same_actor",
+      "atSeconds": 4.5,
+      "authoredPosition": [
+        54,
+        21
+      ],
+      "frameId": "9",
+      "fullyHidden": true,
+      "renderedActor": true,
+      "sha256": "4a74306f8c3a249898ad5cb16e735386feaa19e8576747d4b4e43df1093c7f23",
+      "visibleActorPixels": 0
+    },
+    {
+      "actorId": "teacher_same_actor",
+      "atSeconds": 5.0,
+      "authoredPosition": [
+        52,
+        21
+      ],
+      "frameId": "10",
+      "fullyHidden": false,
+      "renderedActor": true,
+      "sha256": "029d56c9241f568f9a1fd65b1e4925198d4deab58fe3058b9a4a4c2bd1807c85",
+      "visibleActorPixels": 4
+    },
+    {
+      "actorId": "teacher_same_actor",
+      "atSeconds": 5.5,
+      "authoredPosition": [
+        50,
+        21
+      ],
+      "frameId": "11",
+      "fullyHidden": false,
+      "renderedActor": true,
+      "sha256": "dd4b65bb9970fab2050e870cdcae1abcd75ff852d9b9dca30c7db5d6181d4427",
+      "visibleActorPixels": 8
+    },
+    {
+      "actorId": "teacher_same_actor",
+      "atSeconds": 6.0,
+      "authoredPosition": [
+        48,
+        21
+      ],
+      "frameId": "12",
+      "fullyHidden": false,
+      "renderedActor": true,
+      "sha256": "f093b5d0ce8219e754dd1cddc3e9869d29d28b12513d4dfcfac9a39d20750e52",
+      "visibleActorPixels": 24
+    },
+    {
+      "actorId": "teacher_same_actor",
+      "atSeconds": 6.5,
+      "authoredPosition": [
+        46,
+        21
+      ],
+      "frameId": "13",
+      "fullyHidden": false,
+      "renderedActor": true,
+      "sha256": "bf0dce1ef5bb34ca730986b9fe6e88a282649027496b6315b744a58ea3f83c0a",
+      "visibleActorPixels": 24
+    },
+    {
+      "actorId": "teacher_same_actor",
+      "atSeconds": 7.0,
+      "authoredPosition": [
+        44,
+        21
+      ],
+      "frameId": "14",
+      "fullyHidden": false,
+      "renderedActor": true,
+      "sha256": "ab5d51468f39cb69097a4caf928b696315d5aa14b0b184047bfb6d37146c15ca",
+      "visibleActorPixels": 24
+    },
+    {
+      "actorId": "teacher_same_actor",
+      "atSeconds": 7.5,
+      "authoredPosition": [
+        42,
+        21
+      ],
+      "frameId": "15",
+      "fullyHidden": false,
+      "renderedActor": true,
+      "sha256": "54a4bbde9f2e51f962d2acee8802c1150e0ce6b0e82d957944e5285e68237a62",
+      "visibleActorPixels": 24
+    }
+  ],
+  "groundTruthIsRecognizerInput": false,
+  "partition": "validation",
+  "recognizerStatus": "not_run",
+  "schemaVersion": 1,
+  "suiteId": "visual-memory-recordings-v1",
+  "teacher": {
+    "actorColor": [
+      75,
+      215,
+      150
+    ],
+    "actorId": "teacher_same_actor",
+    "actorMask": [
+      "000011",
+      "000011",
+      "000011",
+      "000011",
+      "000011",
+      "000011",
+      "111111",
+      "111111"
+    ],
+    "expectedFullyHiddenFrameIds": [
+      "6",
+      "7",
+      "8",
+      "9"
+    ],
+    "occluderBounds": [
+      54,
+      5,
+      66,
+      45
+    ],
+    "sameIdentityAcrossGap": true,
+    "source": "teacher_only_hidden_geometry_not_observed",
+    "velocityPixelsPerSecond": -4.0
+  },
+  "testId": "occlusion_pole"
+}

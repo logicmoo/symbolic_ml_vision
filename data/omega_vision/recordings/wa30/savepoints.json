@@ -1,0 +1,444 @@
+[
+  {
+    "id": "065c3ba678c1",
+    "kind": "arc3_play_savepoint",
+    "created_at": "2026-09-10T06:51:30.940645Z",
+    "label": "auto save (latest)",
+    "game_id": "wa30",
+    "game_directory": "wa30",
+    "level": "1",
+    "level_directory": "data/recordings/wa30/saved_003",
+    "move_index": 60,
+    "state": "NOT_FINISHED",
+    "session_id": "3c8819ab456f4330a60a41f0cfd7b6eb",
+    "replay_log": [
+      {
+        "op": "step",
+        "action": "ACTION1",
+        "data": {},
+        "directory": "data/recordings/wa30/saved_003/0",
+        "level": "1"
+      },
+      {
+        "op": "step",
+        "action": "ACTION1",
+        "data": {},
+        "directory": "data/recordings/wa30/saved_003/1",
+        "level": "1"
+      },
+      {
+        "op": "step",
+        "action": "ACTION1",
+        "data": {},
+        "directory": "data/recordings/wa30/saved_003/2",
+        "level": "1"
+      },
+      {
+        "op": "step",
+        "action": "ACTION4",
+        "data": {},
+        "directory": "data/recordings/wa30/saved_003/3",
+        "level": "1"
+      },
+      {
+        "op": "step",
+        "action": "ACTION4",
+        "data": {},
+        "directory": "data/recordings/wa30/saved_003/4",
+        "level": "1"
+      },
+      {
+        "op": "step",
+        "action": "ACTION4",
+        "data": {},
+        "directory": "data/recordings/wa30/saved_003/5",
+        "level": "1"
+      },
+      {
+        "op": "step",
+        "action": "ACTION1",
+        "data": {},
+        "directory": "data/recordings/wa30/saved_003/6",
+        "level": "1"
+      },
+      {
+        "op": "step",
+        "action": "ACTION1",
+        "data": {},
+        "directory": "data/recordings/wa30/saved_003/7",
+        "level": "1"
+      },
+      {
+        "op": "step",
+        "action": "ACTION1",
+        "data": {},
+        "directory": "data/recordings/wa30/saved_003/8",
+        "level": "1"
+      },
+      {
+        "op": "step",
+        "action": "ACTION1",
+        "data": {},
+        "directory": "data/recordings/wa30/saved_003/9",
+        "level": "1"
+      },
+      {
+        "op": "step",
+        "action": "ACTION3",
+        "data": {},
+        "directory": "data/recordings/wa30/saved_003/10",
+        "level": "1"
+      },
+      {
+        "op": "step",
+        "action": "ACTION3",
+        "data": {},
+        "directory": "data/recordings/wa30/saved_003/11",
+        "level": "1"
+      },
+      {
+        "op": "step",
+        "action": "ACTION3",
+        "data": {},
+        "directory": "data/recordings/wa30/saved_003/12",
+        "level": "1"
+      },
+      {
+        "op": "step",
+        "action": "ACTION3",
+        "data": {},
+        "directory": "data/recordings/wa30/saved_003/13",
+        "level": "1"
+      },
+      {
+        "op": "step",
+        "action": "ACTION3",
+        "data": {},
+        "directory": "data/recordings/wa30/saved_003/14",
+        "level": "1"
+      },
+      {
+        "op": "step",
+        "action": "ACTION3",
+        "data": {},
+        "directory": "data/recordings/wa30/saved_003/15",
+        "level": "1"
+      },
+      {
+        "op": "step",
+        "action": "ACTION3",
+        "data": {},
+        "directory": "data/recordings/wa30/saved_003/16",
+        "level": "1"
+      },
+      {
+        "op": "step",
+        "action": "ACTION3",
+        "data": {},
+        "directory": "data/recordings/wa30/saved_003/17",
+        "level": "1"
+      },
+      {
+        "op": "step",
+        "action": "ACTION4",
+        "data": {},
+        "directory": "data/recordings/wa30/saved_003/18",
+        "level": "1"
+      },
+      {
+        "op": "step",
+        "action": "ACTION4",
+        "data": {},
+        "directory": "data/recordings/wa30/saved_003/19",
+        "level": "1"
+      },
+      {
+        "op": "step",
+        "action": "ACTION4",
+        "data": {},
+        "directory": "data/recordings/wa30/saved_003/20",
+        "level": "1"
+      },
+      {
+        "op": "step",
+        "action": "ACTION4",
+        "data": {},
+        "directory": "data/recordings/wa30/saved_003/21",
+        "level": "1"
+      },
+      {
+        "op": "step",
+        "action": "ACTION4",
+        "data": {},
+        "directory": "data/recordings/wa30/saved_003/22",
+        "level": "1"
+      },
+      {
+        "op": "step",
+        "action": "ACTION4",
+        "data": {},
+        "directory": "data/recordings/wa30/saved_003/23",
+        "level": "1"
+      },
+      {
+        "op": "step",
+        "action": "ACTION1",
+        "data": {},
+        "directory": "data/recordings/wa30/saved_003/24",
+        "level": "1"
+      },
+      {
+        "op": "step",
+        "action": "ACTION2",
+        "data": {},
+        "directory": "data/recordings/wa30/saved_003/25",
+        "level": "1"
+      },
+      {
+        "op": "step",
+        "action": "ACTION2",
+        "data": {},
+        "directory": "data/recordings/wa30/saved_003/26",
+        "level": "1"
+      },
+      {
+        "op": "step",
+        "action": "ACTION2",
+        "data": {},
+        "directory": "data/recordings/wa30/saved_003/27",
+        "level": "1"
+      },
+      {
+        "op": "step",
+        "action": "ACTION1",
+        "data": {},
+        "directory": "data/recordings/wa30/saved_003/28",
+        "level": "1"
+      },
+      {
+        "op": "step",
+        "action": "ACTION3",
+        "data": {},
+        "directory": "data/recordings/wa30/saved_003/29",
+        "level": "1"
+      },
+      {
+        "op": "step",
+        "action": "ACTION3",
+        "data": {},
+        "directory": "data/recordings/wa30/saved_003/30",
+        "level": "1"
+      },
+      {
+        "op": "step",
+        "action": "ACTION3",
+        "data": {},
+        "directory": "data/recordings/wa30/saved_003/31",
+        "level": "1"
+      },
+      {
+        "op": "step",
+        "action": "ACTION3",
+        "data": {},
+        "directory": "data/recordings/wa30/saved_003/32",
+        "level": "1"
+      },
+      {
+        "op": "step",
+        "action": "ACTION3",
+        "data": {},
+        "directory": "data/recordings/wa30/saved_003/33",
+        "level": "1"
+      },
+      {
+        "op": "step",
+        "action": "ACTION3",
+        "data": {},
+        "directory": "data/recordings/wa30/saved_003/34",
+        "level": "1"
+      },
+      {
+        "op": "step",
+        "action": "ACTION1",
+        "data": {},
+        "directory": "data/recordings/wa30/saved_003/35",
+        "level": "1"
+      },
+      {
+        "op": "step",
+        "action": "ACTION3",
+        "data": {},
+        "directory": "data/recordings/wa30/saved_003/36",
+        "level": "1"
+      },
+      {
+        "op": "step",
+        "action": "ACTION3",
+        "data": {},
+        "directory": "data/recordings/wa30/saved_003/37",
+        "level": "1"
+      },
+      {
+        "op": "step",
+        "action": "ACTION3",
+        "data": {},
+        "directory": "data/recordings/wa30/saved_003/38",
+        "level": "1"
+      },
+      {
+        "op": "step",
+        "action": "ACTION1",
+        "data": {},
+        "directory": "data/recordings/wa30/saved_003/39",
+        "level": "1"
+      },
+      {
+        "op": "step",
+        "action": "ACTION1",
+        "data": {},
+        "directory": "data/recordings/wa30/saved_003/40",
+        "level": "1"
+      },
+      {
+        "op": "step",
+        "action": "ACTION3",
+        "data": {},
+        "directory": "data/recordings/wa30/saved_003/41",
+        "level": "1"
+      },
+      {
+        "op": "step",
+        "action": "ACTION3",
+        "data": {},
+        "directory": "data/recordings/wa30/saved_003/42",
+        "level": "1"
+      },
+      {
+        "op": "step",
+        "action": "ACTION4",
+        "data": {},
+        "directory": "data/recordings/wa30/saved_003/43",
+        "level": "1"
+      },
+      {
+        "op": "step",
+        "action": "ACTION4",
+        "data": {},
+        "directory": "data/recordings/wa30/saved_003/44",
+        "level": "1"
+      },
+      {
+        "op": "step",
+        "action": "ACTION4",
+        "data": {},
+        "directory": "data/recordings/wa30/saved_003/45",
+        "level": "1"
+      },
+      {
+        "op": "step",
+        "action": "ACTION4",
+        "data": {},
+        "directory": "data/recordings/wa30/saved_003/46",
+        "level": "1"
+      },
+      {
+        "op": "step",
+        "action": "ACTION4",
+        "data": {},
+        "directory": "data/recordings/wa30/saved_003/47",
+        "level": "1"
+      },
+      {
+        "op": "step",
+        "action": "ACTION4",
+        "data": {},
+        "directory": "data/recordings/wa30/saved_003/48",
+        "level": "1"
+      },
+      {
+        "op": "step",
+        "action": "ACTION2",
+        "data": {},
+        "directory": "data/recordings/wa30/saved_003/49",
+        "level": "1"
+      },
+      {
+        "op": "step",
+        "action": "ACTION2",
+        "data": {},
+        "directory": "data/recordings/wa30/saved_003/50",
+        "level": "1"
+      },
+      {
+        "op": "step",
+        "action": "ACTION2",
+        "data": {},
+        "directory": "data/recordings/wa30/saved_003/51",
+        "level": "1"
+      },
+      {
+        "op": "step",
+        "action": "ACTION2",
+        "data": {},
+        "directory": "data/recordings/wa30/saved_003/52",
+        "level": "1"
+      },
+      {
+        "op": "step",
+        "action": "ACTION1",
+        "data": {},
+        "directory": "data/recordings/wa30/saved_003/53",
+        "level": "1"
+      },
+      {
+        "op": "step",
+        "action": "ACTION3",
+        "data": {},
+        "directory": "data/recordings/wa30/saved_003/54",
+        "level": "1"
+      },
+      {
+        "op": "step",
+        "action": "ACTION1",
+        "data": {},
+        "directory": "data/recordings/wa30/saved_003/55",
+        "level": "1"
+      },
+      {
+        "op": "step",
+        "action": "ACTION1",
+        "data": {},
+        "directory": "data/recordings/wa30/saved_003/56",
+        "level": "1"
+      },
+      {
+        "op": "step",
+        "action": "ACTION3",
+        "data": {},
+        "directory": "data/recordings/wa30/saved_003/57",
+        "level": "1"
+      },
+      {
+        "op": "step",
+        "action": "ACTION3",
+        "data": {},
+        "directory": "data/recordings/wa30/saved_003/58",
+        "level": "1"
+      },
+      {
+        "op": "step",
+        "action": "ACTION3",
+        "data": {},
+        "directory": "data/recordings/wa30/saved_003/59",
+        "level": "1"
+      },
+      {
+        "op": "step",
+        "action": "ACTION3",
+        "data": {},
+        "directory": "data/recordings/wa30/saved_003/60",
+        "level": "1"
+      }
+    ]
+  }
+]

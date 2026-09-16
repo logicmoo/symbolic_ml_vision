@@ -1,0 +1,27 @@
+{
+  "action_data": {
+    "x": 47,
+    "y": 8
+  },
+  "action_directory": "7",
+  "action_path": [
+    "1",
+    "2",
+    "3",
+    "4",
+    "5",
+    "6",
+    "7"
+  ],
+  "at_seconds": 1.75,
+  "game_directory": "events_tests",
+  "game_id": "events_tests",
+  "image_hash": "ee65f0193676cb13",
+  "incoming_action": "MOVE_POINTER",
+  "kind": "synthetic_visual_memory_frame",
+  "level": "1",
+  "parent_node": "../6",
+  "recorded_at": "2000-01-01T00:00:00Z",
+  "state": "NOT_FINISHED",
+  "step_count": 7
+}

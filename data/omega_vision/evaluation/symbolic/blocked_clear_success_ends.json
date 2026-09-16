@@ -1,0 +1,37 @@
+{
+  "output": {
+    "events": [
+      {
+        "order": 3,
+        "term": {
+          "args": [
+            {
+              "args": [
+                "actor",
+                "wall"
+              ],
+              "predicate": "blocked"
+            }
+          ],
+          "predicate": "start"
+        }
+      },
+      {
+        "order": 4,
+        "term": {
+          "args": [
+            {
+              "args": [
+                "actor",
+                "wall"
+              ],
+              "predicate": "blocked"
+            }
+          ],
+          "predicate": "end"
+        }
+      }
+    ],
+    "open": false
+  }
+}

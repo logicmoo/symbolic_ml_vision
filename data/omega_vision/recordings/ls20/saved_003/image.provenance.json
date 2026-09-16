@@ -1,0 +1,40 @@
+{
+  "kind": "video_import_image_provenance",
+  "version": 1,
+  "image": "data/recordings/ls20/saved_003/image.png",
+  "provenance": "data/recordings/ls20/saved_003/image.provenance.json",
+  "createdAt": "2026-09-07T10:51:45.809416Z",
+  "operation": "legacy_source",
+  "dimensions": {
+    "width": 640,
+    "height": 640
+  },
+  "originalDimensions": {
+    "width": 640,
+    "height": 640
+  },
+  "root": {
+    "firstSeenImage": "data/recordings/ls20/saved_003/image.png",
+    "dimensions": {
+      "width": 640,
+      "height": 640
+    }
+  },
+  "parent": null,
+  "source": {
+    "path": "data/recordings/ls20/saved_003/image.png"
+  },
+  "transform": {},
+  "lineage": [
+    {
+      "image": "data/recordings/ls20/saved_003/image.png",
+      "operation": "legacy_source",
+      "dimensions": {
+        "width": 640,
+        "height": 640
+      },
+      "transform": {},
+      "createdAt": "2026-09-07T10:51:45.809416Z"
+    }
+  ]
+}

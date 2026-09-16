@@ -1,0 +1,468 @@
+{
+  "description": "Synthetic visual observation sequence; expected results are separate and recognition has not run.",
+  "fixture_suite": "visual-memory-recordings-v1",
+  "game_directory": "events_tests",
+  "game_id": "events_tests",
+  "kind": "arc3_play_recording",
+  "last_event": "fixture_created",
+  "level": "1",
+  "level_directory": "data/recordings/events_tests/spotlight_scene_train_a",
+  "moves": [
+    {
+      "action": null,
+      "at_seconds": 0.0,
+      "data": {},
+      "directory": "data/recordings/events_tests/spotlight_scene_train_a/0",
+      "index": 0,
+      "level": "1",
+      "recorded_at": "2000-01-01T00:00:00Z",
+      "state": "NOT_FINISHED"
+    },
+    {
+      "action": "MOVE_POINTER",
+      "at_seconds": 0.25,
+      "data": {
+        "x": 8,
+        "y": 0
+      },
+      "directory": "data/recordings/events_tests/spotlight_scene_train_a/1",
+      "index": 1,
+      "level": "1",
+      "recorded_at": "2000-01-01T00:00:00Z",
+      "state": "NOT_FINISHED"
+    },
+    {
+      "action": "MOVE_POINTER",
+      "at_seconds": 0.5,
+      "data": {
+        "x": 16,
+        "y": 0
+      },
+      "directory": "data/recordings/events_tests/spotlight_scene_train_a/2",
+      "index": 2,
+      "level": "1",
+      "recorded_at": "2000-01-01T00:00:00Z",
+      "state": "NOT_FINISHED"
+    },
+    {
+      "action": "MOVE_POINTER",
+      "at_seconds": 0.75,
+      "data": {
+        "x": 24,
+        "y": 0
+      },
+      "directory": "data/recordings/events_tests/spotlight_scene_train_a/3",
+      "index": 3,
+      "level": "1",
+      "recorded_at": "2000-01-01T00:00:00Z",
+      "state": "NOT_FINISHED"
+    },
+    {
+      "action": "MOVE_POINTER",
+      "at_seconds": 1.0,
+      "data": {
+        "x": 32,
+        "y": 0
+      },
+      "directory": "data/recordings/events_tests/spotlight_scene_train_a/4",
+      "index": 4,
+      "level": "1",
+      "recorded_at": "2000-01-01T00:00:00Z",
+      "state": "NOT_FINISHED"
+    },
+    {
+      "action": "MOVE_POINTER",
+      "at_seconds": 1.25,
+      "data": {
+        "x": 40,
+        "y": 0
+      },
+      "directory": "data/recordings/events_tests/spotlight_scene_train_a/5",
+      "index": 5,
+      "level": "1",
+      "recorded_at": "2000-01-01T00:00:00Z",
+      "state": "NOT_FINISHED"
+    },
+    {
+      "action": "MOVE_POINTER",
+      "at_seconds": 1.5,
+      "data": {
+        "x": 47,
+        "y": 0
+      },
+      "directory": "data/recordings/events_tests/spotlight_scene_train_a/6",
+      "index": 6,
+      "level": "1",
+      "recorded_at": "2000-01-01T00:00:00Z",
+      "state": "NOT_FINISHED"
+    },
+    {
+      "action": "MOVE_POINTER",
+      "at_seconds": 1.75,
+      "data": {
+        "x": 47,
+        "y": 8
+      },
+      "directory": "data/recordings/events_tests/spotlight_scene_train_a/7",
+      "index": 7,
+      "level": "1",
+      "recorded_at": "2000-01-01T00:00:00Z",
+      "state": "NOT_FINISHED"
+    },
+    {
+      "action": "MOVE_POINTER",
+      "at_seconds": 2.0,
+      "data": {
+        "x": 40,
+        "y": 8
+      },
+      "directory": "data/recordings/events_tests/spotlight_scene_train_a/8",
+      "index": 8,
+      "level": "1",
+      "recorded_at": "2000-01-01T00:00:00Z",
+      "state": "NOT_FINISHED"
+    },
+    {
+      "action": "MOVE_POINTER",
+      "at_seconds": 2.25,
+      "data": {
+        "x": 32,
+        "y": 8
+      },
+      "directory": "data/recordings/events_tests/spotlight_scene_train_a/9",
+      "index": 9,
+      "level": "1",
+      "recorded_at": "2000-01-01T00:00:00Z",
+      "state": "NOT_FINISHED"
+    },
+    {
+      "action": "MOVE_POINTER",
+      "at_seconds": 2.5,
+      "data": {
+        "x": 24,
+        "y": 8
+      },
+      "directory": "data/recordings/events_tests/spotlight_scene_train_a/10",
+      "index": 10,
+      "level": "1",
+      "recorded_at": "2000-01-01T00:00:00Z",
+      "state": "NOT_FINISHED"
+    },
+    {
+      "action": "MOVE_POINTER",
+      "at_seconds": 2.75,
+      "data": {
+        "x": 16,
+        "y": 8
+      },
+      "directory": "data/recordings/events_tests/spotlight_scene_train_a/11",
+      "index": 11,
+      "level": "1",
+      "recorded_at": "2000-01-01T00:00:00Z",
+      "state": "NOT_FINISHED"
+    },
+    {
+      "action": "MOVE_POINTER",
+      "at_seconds": 3.0,
+      "data": {
+        "x": 8,
+        "y": 8
+      },
+      "directory": "data/recordings/events_tests/spotlight_scene_train_a/12",
+      "index": 12,
+      "level": "1",
+      "recorded_at": "2000-01-01T00:00:00Z",
+      "state": "NOT_FINISHED"
+    },
+    {
+      "action": "MOVE_POINTER",
+      "at_seconds": 3.25,
+      "data": {
+        "x": 0,
+        "y": 8
+      },
+      "directory": "data/recordings/events_tests/spotlight_scene_train_a/13",
+      "index": 13,
+      "level": "1",
+      "recorded_at": "2000-01-01T00:00:00Z",
+      "state": "NOT_FINISHED"
+    },
+    {
+      "action": "MOVE_POINTER",
+      "at_seconds": 3.5,
+      "data": {
+        "x": 0,
+        "y": 16
+      },
+      "directory": "data/recordings/events_tests/spotlight_scene_train_a/14",
+      "index": 14,
+      "level": "1",
+      "recorded_at": "2000-01-01T00:00:00Z",
+      "state": "NOT_FINISHED"
+    },
+    {
+      "action": "MOVE_POINTER",
+      "at_seconds": 3.75,
+      "data": {
+        "x": 8,
+        "y": 16
+      },
+      "directory": "data/recordings/events_tests/spotlight_scene_train_a/15",
+      "index": 15,
+      "level": "1",
+      "recorded_at": "2000-01-01T00:00:00Z",
+      "state": "NOT_FINISHED"
+    },
+    {
+      "action": "MOVE_POINTER",
+      "at_seconds": 4.0,
+      "data": {
+        "x": 16,
+        "y": 16
+      },
+      "directory": "data/recordings/events_tests/spotlight_scene_train_a/16",
+      "index": 16,
+      "level": "1",
+      "recorded_at": "2000-01-01T00:00:00Z",
+      "state": "NOT_FINISHED"
+    },
+    {
+      "action": "MOVE_POINTER",
+      "at_seconds": 4.25,
+      "data": {
+        "x": 24,
+        "y": 16
+      },
+      "directory": "data/recordings/events_tests/spotlight_scene_train_a/17",
+      "index": 17,
+      "level": "1",
+      "recorded_at": "2000-01-01T00:00:00Z",
+      "state": "NOT_FINISHED"
+    },
+    {
+      "action": "MOVE_POINTER",
+      "at_seconds": 4.5,
+      "data": {
+        "x": 32,
+        "y": 16
+      },
+      "directory": "data/recordings/events_tests/spotlight_scene_train_a/18",
+      "index": 18,
+      "level": "1",
+      "recorded_at": "2000-01-01T00:00:00Z",
+      "state": "NOT_FINISHED"
+    },
+    {
+      "action": "MOVE_POINTER",
+      "at_seconds": 4.75,
+      "data": {
+        "x": 40,
+        "y": 16
+      },
+      "directory": "data/recordings/events_tests/spotlight_scene_train_a/19",
+      "index": 19,
+      "level": "1",
+      "recorded_at": "2000-01-01T00:00:00Z",
+      "state": "NOT_FINISHED"
+    },
+    {
+      "action": "MOVE_POINTER",
+      "at_seconds": 5.0,
+      "data": {
+        "x": 47,
+        "y": 16
+      },
+      "directory": "data/recordings/events_tests/spotlight_scene_train_a/20",
+      "index": 20,
+      "level": "1",
+      "recorded_at": "2000-01-01T00:00:00Z",
+      "state": "NOT_FINISHED"
+    },
+    {
+      "action": "MOVE_POINTER",
+      "at_seconds": 5.25,
+      "data": {
+        "x": 47,
+        "y": 24
+      },
+      "directory": "data/recordings/events_tests/spotlight_scene_train_a/21",
+      "index": 21,
+      "level": "1",
+      "recorded_at": "2000-01-01T00:00:00Z",
+      "state": "NOT_FINISHED"
+    },
+    {
+      "action": "MOVE_POINTER",
+      "at_seconds": 5.5,
+      "data": {
+        "x": 40,
+        "y": 24
+      },
+      "directory": "data/recordings/events_tests/spotlight_scene_train_a/22",
+      "index": 22,
+      "level": "1",
+      "recorded_at": "2000-01-01T00:00:00Z",
+      "state": "NOT_FINISHED"
+    },
+    {
+      "action": "MOVE_POINTER",
+      "at_seconds": 5.75,
+      "data": {
+        "x": 32,
+        "y": 24
+      },
+      "directory": "data/recordings/events_tests/spotlight_scene_train_a/23",
+      "index": 23,
+      "level": "1",
+      "recorded_at": "2000-01-01T00:00:00Z",
+      "state": "NOT_FINISHED"
+    },
+    {
+      "action": "MOVE_POINTER",
+      "at_seconds": 6.0,
+      "data": {
+        "x": 24,
+        "y": 24
+      },
+      "directory": "data/recordings/events_tests/spotlight_scene_train_a/24",
+      "index": 24,
+      "level": "1",
+      "recorded_at": "2000-01-01T00:00:00Z",
+      "state": "NOT_FINISHED"
+    },
+    {
+      "action": "MOVE_POINTER",
+      "at_seconds": 6.25,
+      "data": {
+        "x": 16,
+        "y": 24
+      },
+      "directory": "data/recordings/events_tests/spotlight_scene_train_a/25",
+      "index": 25,
+      "level": "1",
+      "recorded_at": "2000-01-01T00:00:00Z",
+      "state": "NOT_FINISHED"
+    },
+    {
+      "action": "MOVE_POINTER",
+      "at_seconds": 6.5,
+      "data": {
+        "x": 8,
+        "y": 24
+      },
+      "directory": "data/recordings/events_tests/spotlight_scene_train_a/26",
+      "index": 26,
+      "level": "1",
+      "recorded_at": "2000-01-01T00:00:00Z",
+      "state": "NOT_FINISHED"
+    },
+    {
+      "action": "MOVE_POINTER",
+      "at_seconds": 6.75,
+      "data": {
+        "x": 0,
+        "y": 24
+      },
+      "directory": "data/recordings/events_tests/spotlight_scene_train_a/27",
+      "index": 27,
+      "level": "1",
+      "recorded_at": "2000-01-01T00:00:00Z",
+      "state": "NOT_FINISHED"
+    },
+    {
+      "action": "MOVE_POINTER",
+      "at_seconds": 7.0,
+      "data": {
+        "x": 0,
+        "y": 31
+      },
+      "directory": "data/recordings/events_tests/spotlight_scene_train_a/28",
+      "index": 28,
+      "level": "1",
+      "recorded_at": "2000-01-01T00:00:00Z",
+      "state": "NOT_FINISHED"
+    },
+    {
+      "action": "MOVE_POINTER",
+      "at_seconds": 7.25,
+      "data": {
+        "x": 8,
+        "y": 31
+      },
+      "directory": "data/recordings/events_tests/spotlight_scene_train_a/29",
+      "index": 29,
+      "level": "1",
+      "recorded_at": "2000-01-01T00:00:00Z",
+      "state": "NOT_FINISHED"
+    },
+    {
+      "action": "MOVE_POINTER",
+      "at_seconds": 7.5,
+      "data": {
+        "x": 16,
+        "y": 31
+      },
+      "directory": "data/recordings/events_tests/spotlight_scene_train_a/30",
+      "index": 30,
+      "level": "1",
+      "recorded_at": "2000-01-01T00:00:00Z",
+      "state": "NOT_FINISHED"
+    },
+    {
+      "action": "MOVE_POINTER",
+      "at_seconds": 7.75,
+      "data": {
+        "x": 24,
+        "y": 31
+      },
+      "directory": "data/recordings/events_tests/spotlight_scene_train_a/31",
+      "index": 31,
+      "level": "1",
+      "recorded_at": "2000-01-01T00:00:00Z",
+      "state": "NOT_FINISHED"
+    },
+    {
+      "action": "MOVE_POINTER",
+      "at_seconds": 8.0,
+      "data": {
+        "x": 32,
+        "y": 31
+      },
+      "directory": "data/recordings/events_tests/spotlight_scene_train_a/32",
+      "index": 32,
+      "level": "1",
+      "recorded_at": "2000-01-01T00:00:00Z",
+      "state": "NOT_FINISHED"
+    },
+    {
+      "action": "MOVE_POINTER",
+      "at_seconds": 8.25,
+      "data": {
+        "x": 40,
+        "y": 31
+      },
+      "directory": "data/recordings/events_tests/spotlight_scene_train_a/33",
+      "index": 33,
+      "level": "1",
+      "recorded_at": "2000-01-01T00:00:00Z",
+      "state": "NOT_FINISHED"
+    },
+    {
+      "action": "MOVE_POINTER",
+      "at_seconds": 8.5,
+      "data": {
+        "x": 47,
+        "y": 31
+      },
+      "directory": "data/recordings/events_tests/spotlight_scene_train_a/34",
+      "index": 34,
+      "level": "1",
+      "recorded_at": "2000-01-01T00:00:00Z",
+      "state": "NOT_FINISHED"
+    }
+  ],
+  "session_id": null,
+  "source": "synthetic_visual_memory_tests",
+  "started_at": "2000-01-01T00:00:00Z",
+  "updated_at": "2000-01-01T00:00:00Z"
+}

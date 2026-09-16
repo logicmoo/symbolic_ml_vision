@@ -1,0 +1,97 @@
+{
+  "executionStatus": "not_run",
+  "expectationFormat": "fixture assessment prose, not registered runtime predicates",
+  "groundTruthIsRecognizerInput": false,
+  "laterDiscrimination": {
+    "frames": [
+      24,
+      43
+    ],
+    "mayBackdateKnowledgeToFirstJump": false,
+    "repeatArrivalFrame": 41,
+    "repeatEntryFrame": 37,
+    "requirements": [
+      "Freeze the later destination hypothesis from earlier witnessed gate associations.",
+      "Compare independent changed-layout trials and no-entry/decorative-line controls.",
+      "Keep untested causes unresolved; a conditional association prediction is not proof of teleportation."
+    ],
+    "returnArrivalFrame": 33
+  },
+  "measurementSource": "rendered PNG actor components and recorded acquisition intervals",
+  "phase1": {
+    "frames": [
+      0,
+      13
+    ],
+    "fullyHiddenFrames": [
+      7,
+      8,
+      9,
+      10
+    ],
+    "hiddenPositionsAreObserved": false,
+    "measurement": {
+      "afterFrame": 13,
+      "beforeFrame": 4,
+      "elapsedSeconds": 2.25,
+      "measuredHorizontalDisplacementPixels": 18,
+      "priorConstantSpeedPredictionPixels": 18.0
+    },
+    "partialEntryFrames": [
+      5,
+      6
+    ],
+    "partialExitFrames": [
+      11,
+      12
+    ],
+    "requiredAssessment": "ordinary occlusion is consistent with remembered constant-speed motion"
+  },
+  "phase2": {
+    "absenceAloneEstablishesCause": false,
+    "additionalInferenceLimits": [
+      "identity uncertainty",
+      "other unobserved causes"
+    ],
+    "claimsNotEstablishedAtDecision": [
+      "definitive teleportation",
+      "definitive acceleration"
+    ],
+    "earliestMismatchDecisionFrame": 23,
+    "firstRequiredConclusion": "constant-speed model mismatch",
+    "frames": [
+      14,
+      23
+    ],
+    "fullyMissingFrames": [
+      19,
+      20,
+      21,
+      22
+    ],
+    "gradingRule": "A jump or decorative lines alone MUST NOT be graded as definitive teleportation.",
+    "measurement": {
+      "afterFrame": 23,
+      "beforeFrame": 18,
+      "elapsedSeconds": 1.25,
+      "measuredHorizontalDisplacementPixels": 43,
+      "priorConstantSpeedPredictionPixels": 10.0
+    },
+    "predictionObservationCutoffFrame": 18,
+    "requiredUnresolvedAlternatives": [
+      "unseen acceleration or fast motion",
+      "teleportation"
+    ]
+  },
+  "priorVelocityPixelsPerSecond": 8.0,
+  "role": "evaluator_only_observer_assessment_contract",
+  "runtimeIntegration": "No new detector, registered predicate, semantic stage or automatic grading is implemented.",
+  "schemaVersion": 1,
+  "teacherCause": {
+    "cause": "teleporter",
+    "source": "evaluation.json",
+    "usableAsStudentEvidence": false
+  },
+  "testId": "teleporter",
+  "visualSequenceId": "recordings/events_tests/teleporter_train_delayed_lines_v2"
+}

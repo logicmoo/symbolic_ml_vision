@@ -1,0 +1,468 @@
+{
+  "kind": "sequence_set_transformation",
+  "transformation": "group_acceptance_0",
+  "doer": "group_acceptance_prolog",
+  "options": {},
+  "dependsOn": [
+    "parts_extraction_0/python_opencv",
+    "parts_grouping_0/group_regions_prolog"
+  ],
+  "type": "py_pl",
+  "preprocessingRevision": "original:",
+  "createdAt": "2026-09-10T13:57:36.371387Z",
+  "elapsedMs": 850,
+  "outputRevision": "5fae9bd96823bd78",
+  "inputSignature": "original:c8aac72598f024fd4d812719",
+  "consumedDeps": {
+    "parts_extraction_0/python_opencv": {
+      "frameId": "0",
+      "output": "parts_extraction_0/python_opencv",
+      "revision": "2fff364667a8d98144c3c81a245acaa504ae63f4d1348929cc4fbff96de1b71b"
+    },
+    "parts_grouping_0/group_regions_prolog": {
+      "frameId": "0",
+      "output": "parts_grouping_0/group_regions_prolog",
+      "revision": "9be94c1931ed0e1f"
+    }
+  },
+  "module": "omega_vision.perception.group_acceptance",
+  "partsFacts": "parts_extraction_0/python_opencv/result.pl",
+  "candidateFacts": "parts_grouping_0/group_regions_prolog/result.pl",
+  "acceptedGroupCount": 11,
+  "exactConsensusCount": 3,
+  "symbolicShapeAnalogyCount": 1,
+  "pixelShapeFallbackCount": 0,
+  "singletonRemainderCount": 7,
+  "foregroundCount": 20,
+  "backgroundCount": 1,
+  "acceptedGroups": [
+    {
+      "id": "g1",
+      "members": [
+        "r1"
+      ],
+      "mode": "exact_consensus",
+      "provenance": {
+        "frame": "0",
+        "mode": "exact_consensus",
+        "score": 1.0,
+        "symbolicEvidence": [
+          {
+            "area": 20800.0,
+            "id": "w5",
+            "sourceId": null
+          }
+        ],
+        "symbolicGroups": [
+          "w5"
+        ],
+        "visualEvidence": [
+          {
+            "centroid": [
+              20,
+              260
+            ],
+            "component": "cc1",
+            "contourCount": 1,
+            "hierarchyLinkCount": 0,
+            "pixelArea": 20800,
+            "watershedSegmentCount": 1
+          }
+        ],
+        "visualGroups": [
+          "v1"
+        ],
+        "sources": {
+          "partsFacts": "parts_extraction_0/python_opencv/result.pl",
+          "candidateFacts": "parts_grouping_0/group_regions_prolog/result.pl",
+          "acceptanceMeasurements": "group_acceptance_0/group_acceptance_prolog/acceptance_input.pl",
+          "acceptanceRules": "prolog/omega_vision/group_acceptance.pl"
+        }
+      }
+    },
+    {
+      "id": "g2",
+      "members": [
+        "r16",
+        "r18",
+        "r19",
+        "r20",
+        "r21",
+        "r17"
+      ],
+      "mode": "exact_consensus",
+      "provenance": {
+        "frame": "0",
+        "mode": "exact_consensus",
+        "score": 1.0,
+        "symbolicEvidence": [
+          {
+            "area": 20800.0,
+            "id": "w6",
+            "sourceId": null
+          }
+        ],
+        "symbolicGroups": [
+          "w6"
+        ],
+        "visualEvidence": [
+          {
+            "centroid": [
+              380,
+              620
+            ],
+            "component": "cc4",
+            "contourCount": 9,
+            "hierarchyLinkCount": 4,
+            "pixelArea": 20800,
+            "watershedSegmentCount": 6
+          }
+        ],
+        "visualGroups": [
+          "v4"
+        ],
+        "sources": {
+          "partsFacts": "parts_extraction_0/python_opencv/result.pl",
+          "candidateFacts": "parts_grouping_0/group_regions_prolog/result.pl",
+          "acceptanceMeasurements": "group_acceptance_0/group_acceptance_prolog/acceptance_input.pl",
+          "acceptanceRules": "prolog/omega_vision/group_acceptance.pl"
+        }
+      }
+    },
+    {
+      "id": "g3",
+      "members": [
+        "r13",
+        "r14",
+        "r15"
+      ],
+      "mode": "exact_consensus",
+      "provenance": {
+        "frame": "0",
+        "mode": "exact_consensus",
+        "score": 1.0,
+        "symbolicEvidence": [
+          {
+            "area": 10000.0,
+            "id": "w7",
+            "sourceId": null
+          }
+        ],
+        "symbolicGroups": [
+          "w7"
+        ],
+        "visualEvidence": [
+          {
+            "centroid": [
+              60,
+              580
+            ],
+            "component": "cc3",
+            "contourCount": 5,
+            "hierarchyLinkCount": 3,
+            "pixelArea": 10000,
+            "watershedSegmentCount": 3
+          }
+        ],
+        "visualGroups": [
+          "v3"
+        ],
+        "sources": {
+          "partsFacts": "parts_extraction_0/python_opencv/result.pl",
+          "candidateFacts": "parts_grouping_0/group_regions_prolog/result.pl",
+          "acceptanceMeasurements": "group_acceptance_0/group_acceptance_prolog/acceptance_input.pl",
+          "acceptanceRules": "prolog/omega_vision/group_acceptance.pl"
+        }
+      }
+    },
+    {
+      "id": "g4",
+      "members": [
+        "r4",
+        "r5",
+        "r6"
+      ],
+      "mode": "symbolic_shape_analogy",
+      "provenance": {
+        "attempts": [
+          "symbolic_shape_analogy"
+        ],
+        "correspondence": [
+          {
+            "candidate": "r4",
+            "template": "r13"
+          },
+          {
+            "candidate": "r5",
+            "template": "r14"
+          },
+          {
+            "candidate": "r6",
+            "template": "r15"
+          }
+        ],
+        "frame": "0",
+        "measures": {
+          "angleRmse": 0.49431273897571953,
+          "areaRmse": 0.08906567638847905,
+          "error": 0.17635096903508293,
+          "pairDistanceRmse": 0.08151734148535708,
+          "positionRmse": 0.21804524280777787,
+          "radialRmse": 0.05584994439632587
+        },
+        "mode": "symbolic_shape_analogy",
+        "score": 0.8500864336604091,
+        "symbolicGroup": "w4",
+        "templateKey": "t3",
+        "templateSymbolicGroups": [
+          "w7"
+        ],
+        "templateVisualGroups": [
+          "v3"
+        ],
+        "tolerance": 0.18,
+        "templateGroup": "g3",
+        "sources": {
+          "partsFacts": "parts_extraction_0/python_opencv/result.pl",
+          "candidateFacts": "parts_grouping_0/group_regions_prolog/result.pl",
+          "acceptanceMeasurements": "group_acceptance_0/group_acceptance_prolog/acceptance_input.pl",
+          "acceptanceRules": "prolog/omega_vision/group_acceptance.pl"
+        }
+      }
+    },
+    {
+      "id": "g5",
+      "members": [
+        "r3"
+      ],
+      "mode": "singleton_remainder",
+      "provenance": {
+        "frame": "0",
+        "mode": "singleton_remainder",
+        "reason": "uncovered_foreground",
+        "region": "r3",
+        "score": 1.0,
+        "sources": {
+          "partsFacts": "parts_extraction_0/python_opencv/result.pl",
+          "candidateFacts": "parts_grouping_0/group_regions_prolog/result.pl",
+          "acceptanceMeasurements": "group_acceptance_0/group_acceptance_prolog/acceptance_input.pl",
+          "acceptanceRules": "prolog/omega_vision/group_acceptance.pl"
+        }
+      }
+    },
+    {
+      "id": "g6",
+      "members": [
+        "r7"
+      ],
+      "mode": "singleton_remainder",
+      "provenance": {
+        "frame": "0",
+        "mode": "singleton_remainder",
+        "reason": "uncovered_foreground",
+        "region": "r7",
+        "score": 1.0,
+        "sources": {
+          "partsFacts": "parts_extraction_0/python_opencv/result.pl",
+          "candidateFacts": "parts_grouping_0/group_regions_prolog/result.pl",
+          "acceptanceMeasurements": "group_acceptance_0/group_acceptance_prolog/acceptance_input.pl",
+          "acceptanceRules": "prolog/omega_vision/group_acceptance.pl"
+        }
+      }
+    },
+    {
+      "id": "g7",
+      "members": [
+        "r12"
+      ],
+      "mode": "singleton_remainder",
+      "provenance": {
+        "frame": "0",
+        "mode": "singleton_remainder",
+        "reason": "uncovered_foreground",
+        "region": "r12",
+        "score": 1.0,
+        "sources": {
+          "partsFacts": "parts_extraction_0/python_opencv/result.pl",
+          "candidateFacts": "parts_grouping_0/group_regions_prolog/result.pl",
+          "acceptanceMeasurements": "group_acceptance_0/group_acceptance_prolog/acceptance_input.pl",
+          "acceptanceRules": "prolog/omega_vision/group_acceptance.pl"
+        }
+      }
+    },
+    {
+      "id": "g8",
+      "members": [
+        "r11"
+      ],
+      "mode": "singleton_remainder",
+      "provenance": {
+        "frame": "0",
+        "mode": "singleton_remainder",
+        "reason": "uncovered_foreground",
+        "region": "r11",
+        "score": 1.0,
+        "sources": {
+          "partsFacts": "parts_extraction_0/python_opencv/result.pl",
+          "candidateFacts": "parts_grouping_0/group_regions_prolog/result.pl",
+          "acceptanceMeasurements": "group_acceptance_0/group_acceptance_prolog/acceptance_input.pl",
+          "acceptanceRules": "prolog/omega_vision/group_acceptance.pl"
+        }
+      }
+    },
+    {
+      "id": "g9",
+      "members": [
+        "r8"
+      ],
+      "mode": "singleton_remainder",
+      "provenance": {
+        "frame": "0",
+        "mode": "singleton_remainder",
+        "reason": "uncovered_foreground",
+        "region": "r8",
+        "score": 1.0,
+        "sources": {
+          "partsFacts": "parts_extraction_0/python_opencv/result.pl",
+          "candidateFacts": "parts_grouping_0/group_regions_prolog/result.pl",
+          "acceptanceMeasurements": "group_acceptance_0/group_acceptance_prolog/acceptance_input.pl",
+          "acceptanceRules": "prolog/omega_vision/group_acceptance.pl"
+        }
+      }
+    },
+    {
+      "id": "g10",
+      "members": [
+        "r9"
+      ],
+      "mode": "singleton_remainder",
+      "provenance": {
+        "frame": "0",
+        "mode": "singleton_remainder",
+        "reason": "uncovered_foreground",
+        "region": "r9",
+        "score": 1.0,
+        "sources": {
+          "partsFacts": "parts_extraction_0/python_opencv/result.pl",
+          "candidateFacts": "parts_grouping_0/group_regions_prolog/result.pl",
+          "acceptanceMeasurements": "group_acceptance_0/group_acceptance_prolog/acceptance_input.pl",
+          "acceptanceRules": "prolog/omega_vision/group_acceptance.pl"
+        }
+      }
+    },
+    {
+      "id": "g11",
+      "members": [
+        "r10"
+      ],
+      "mode": "singleton_remainder",
+      "provenance": {
+        "frame": "0",
+        "mode": "singleton_remainder",
+        "reason": "uncovered_foreground",
+        "region": "r10",
+        "score": 1.0,
+        "sources": {
+          "partsFacts": "parts_extraction_0/python_opencv/result.pl",
+          "candidateFacts": "parts_grouping_0/group_regions_prolog/result.pl",
+          "acceptanceMeasurements": "group_acceptance_0/group_acceptance_prolog/acceptance_input.pl",
+          "acceptanceRules": "prolog/omega_vision/group_acceptance.pl"
+        }
+      }
+    }
+  ],
+  "rejectedSymbolicGroups": [
+    {
+      "id": "w1",
+      "reason": "below_threshold",
+      "attempts": [
+        "symbolic_shape_analogy",
+        "pixel_shape_fallback"
+      ],
+      "members": [
+        "r3"
+      ],
+      "evidence": {
+        "frame": "0",
+        "symbolicGroup": "w1",
+        "members": [
+          "r3"
+        ],
+        "sources": {
+          "partsFacts": "parts_extraction_0/python_opencv/result.pl",
+          "candidateFacts": "parts_grouping_0/group_regions_prolog/result.pl",
+          "acceptanceMeasurements": "group_acceptance_0/group_acceptance_prolog/acceptance_input.pl",
+          "acceptanceRules": "prolog/omega_vision/group_acceptance.pl"
+        }
+      }
+    },
+    {
+      "id": "w2",
+      "reason": "below_threshold",
+      "attempts": [
+        "symbolic_shape_analogy",
+        "pixel_shape_fallback"
+      ],
+      "members": [
+        "r8",
+        "r9",
+        "r10"
+      ],
+      "evidence": {
+        "frame": "0",
+        "symbolicGroup": "w2",
+        "members": [
+          "r8",
+          "r9",
+          "r10"
+        ],
+        "sources": {
+          "partsFacts": "parts_extraction_0/python_opencv/result.pl",
+          "candidateFacts": "parts_grouping_0/group_regions_prolog/result.pl",
+          "acceptanceMeasurements": "group_acceptance_0/group_acceptance_prolog/acceptance_input.pl",
+          "acceptanceRules": "prolog/omega_vision/group_acceptance.pl"
+        }
+      }
+    },
+    {
+      "id": "w3",
+      "reason": "below_threshold",
+      "attempts": [
+        "symbolic_shape_analogy",
+        "pixel_shape_fallback"
+      ],
+      "members": [
+        "r7",
+        "r12",
+        "r11"
+      ],
+      "evidence": {
+        "frame": "0",
+        "symbolicGroup": "w3",
+        "members": [
+          "r7",
+          "r12",
+          "r11"
+        ],
+        "sources": {
+          "partsFacts": "parts_extraction_0/python_opencv/result.pl",
+          "candidateFacts": "parts_grouping_0/group_regions_prolog/result.pl",
+          "acceptanceMeasurements": "group_acceptance_0/group_acceptance_prolog/acceptance_input.pl",
+          "acceptanceRules": "prolog/omega_vision/group_acceptance.pl"
+        }
+      }
+    }
+  ],
+  "rejectedTemplateCandidates": [],
+  "trustedTemplateGroups": [
+    "g1",
+    "g2",
+    "g3"
+  ],
+  "parameters": {
+    "symbolicGeometryTolerance": 0.18,
+    "pixelShapeThreshold": 0.82,
+    "pixelUniqueMargin": 0.03,
+    "pixelColorMassTolerance": 0.12
+  }
+}

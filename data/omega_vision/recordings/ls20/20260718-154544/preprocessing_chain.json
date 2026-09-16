@@ -1,0 +1,18 @@
+{
+  "kind": "preprocessing_chain",
+  "schemaVersion": 1,
+  "sequenceId": "data/recordings/ls20/20260718-154544_2",
+  "steps": [
+    {
+      "stepId": "pp-original-1",
+      "entryId": "scale_3x_nearest",
+      "params": {}
+    },
+    {
+      "stepId": "pp-original-2",
+      "entryId": "select:original",
+      "params": {}
+    }
+  ],
+  "updatedAt": "2026-09-10T12:02:18.610234Z"
+}

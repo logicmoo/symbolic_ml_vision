@@ -1,0 +1,22 @@
+{
+  "output": {
+    "events": [
+      {
+        "order": 3,
+        "term": {
+          "args": [
+            {
+              "args": [
+                "actor",
+                "wall"
+              ],
+              "predicate": "blocked"
+            }
+          ],
+          "predicate": "start"
+        }
+      }
+    ],
+    "open": true
+  }
+}

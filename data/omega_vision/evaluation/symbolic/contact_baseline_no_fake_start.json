@@ -1,0 +1,23 @@
+{
+  "output": {
+    "baseline": true,
+    "events": [
+      {
+        "order": 1,
+        "term": {
+          "args": [
+            {
+              "args": [
+                "left",
+                "right"
+              ],
+              "predicate": "contact"
+            }
+          ],
+          "predicate": "end"
+        }
+      }
+    ],
+    "open": false
+  }
+}

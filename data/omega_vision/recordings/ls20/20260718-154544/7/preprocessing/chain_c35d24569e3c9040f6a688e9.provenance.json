@@ -1,0 +1,116 @@
+{
+  "kind": "video_import_image_provenance",
+  "version": 1,
+  "image": "data/recordings/ls20/20260718-154544/7/preprocessing/chain_c35d24569e3c9040f6a688e9.png",
+  "provenance": "data/recordings/ls20/20260718-154544/7/preprocessing/chain_c35d24569e3c9040f6a688e9.provenance.json",
+  "createdAt": "2026-09-10T15:51:55.148678Z",
+  "operation": "image_preprocessing_0",
+  "dimensions": {
+    "width": 1920,
+    "height": 1920
+  },
+  "originalDimensions": {
+    "width": 640,
+    "height": 640
+  },
+  "root": {
+    "firstSeenImage": "data/recordings/ls20/20260718-154544_2/7/image.png",
+    "dimensions": {
+      "width": 640,
+      "height": 640
+    }
+  },
+  "parent": {
+    "image": "data/recordings/ls20/20260718-154544/7/image.png",
+    "provenance": "data/recordings/ls20/20260718-154544/7/image.provenance.json"
+  },
+  "source": {
+    "chainSignature": "chain:c35d24569e3c9040f6a688e9",
+    "sourceSignature": "4bbb0fc7ed53c5fcd7cd75a0",
+    "steps": [
+      {
+        "stepId": "pp-original-1",
+        "entryId": "scale_3x_nearest",
+        "params": {}
+      }
+    ],
+    "implementationVersions": {
+      "scale_3x_nearest": "089e9a7e7aa84f8b710337fbb1dd6ba827531afe8b98f33e9cd186e985a659fe"
+    }
+  },
+  "transform": {
+    "coordinateSpace": "pixel-edges",
+    "originalSize": [
+      640,
+      640
+    ],
+    "size": [
+      1920,
+      1920
+    ],
+    "sourceToVariant": [
+      3.0,
+      0,
+      0,
+      0,
+      3.0,
+      0
+    ],
+    "variantToSource": [
+      0.3333333333333333,
+      0,
+      0,
+      0,
+      0.3333333333333333,
+      0
+    ]
+  },
+  "lineage": [
+    {
+      "image": "data/recordings/ls20/20260718-154544_2/7/image.png",
+      "operation": "legacy_source",
+      "dimensions": {
+        "width": 640,
+        "height": 640
+      },
+      "transform": {},
+      "createdAt": "2026-09-10T11:50:36.397854Z"
+    },
+    {
+      "image": "data/recordings/ls20/20260718-154544/7/preprocessing/chain_c35d24569e3c9040f6a688e9.png",
+      "operation": "image_preprocessing_0",
+      "dimensions": {
+        "width": 1920,
+        "height": 1920
+      },
+      "transform": {
+        "coordinateSpace": "pixel-edges",
+        "originalSize": [
+          640,
+          640
+        ],
+        "size": [
+          1920,
+          1920
+        ],
+        "sourceToVariant": [
+          3.0,
+          0,
+          0,
+          0,
+          3.0,
+          0
+        ],
+        "variantToSource": [
+          0.3333333333333333,
+          0,
+          0,
+          0,
+          0.3333333333333333,
+          0
+        ]
+      },
+      "createdAt": "2026-09-10T15:51:55.148678Z"
+    }
+  ]
+}

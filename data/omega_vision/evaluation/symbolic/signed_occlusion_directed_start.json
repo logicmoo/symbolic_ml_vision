@@ -1,0 +1,19 @@
+{
+  "output": {
+    "comparison_complete": true,
+    "events": [
+      {
+        "args": [
+          {
+            "args": [
+              "front",
+              "hidden"
+            ],
+            "predicate": "occlude"
+          }
+        ],
+        "predicate": "start"
+      }
+    ]
+  }
+}

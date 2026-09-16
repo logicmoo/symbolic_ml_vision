@@ -1,0 +1,61 @@
+{
+  "output": {
+    "frames": [
+      {
+        "assessment": "initial_observation",
+        "events": [],
+        "heading_delta": null,
+        "speed_delta": null,
+        "states": []
+      },
+      {
+        "assessment": "changed",
+        "events": [
+          {
+            "args": [
+              "actor"
+            ],
+            "predicate": "moved"
+          }
+        ],
+        "heading_delta": null,
+        "speed_delta": null,
+        "states": [
+          {
+            "args": [
+              "actor"
+            ],
+            "predicate": "move"
+          }
+        ]
+      },
+      {
+        "assessment": "changed",
+        "events": [
+          {
+            "args": [
+              "actor"
+            ],
+            "predicate": "moved"
+          },
+          {
+            "args": [
+              "actor"
+            ],
+            "predicate": "turned"
+          }
+        ],
+        "heading_delta": 90,
+        "speed_delta": null,
+        "states": [
+          {
+            "args": [
+              "actor"
+            ],
+            "predicate": "move"
+          }
+        ]
+      }
+    ]
+  }
+}

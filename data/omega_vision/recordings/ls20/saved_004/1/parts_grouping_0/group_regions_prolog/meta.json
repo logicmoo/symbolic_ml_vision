@@ -1,0 +1,26 @@
+{
+  "kind": "sequence_set_transformation",
+  "transformation": "parts_grouping_0",
+  "doer": "group_regions_prolog",
+  "options": {},
+  "dependsOn": [
+    "parts_extraction_0/python_opencv"
+  ],
+  "type": "py_pl",
+  "preprocessingRevision": "original:",
+  "createdAt": "2026-09-10T13:57:40.159930Z",
+  "elapsedMs": 517,
+  "outputRevision": "9be94c1931ed0e1f",
+  "inputSignature": "original:256a4d182c9894fb113925a3",
+  "consumedDeps": {
+    "parts_extraction_0/python_opencv": {
+      "frameId": "1",
+      "output": "parts_extraction_0/python_opencv",
+      "revision": "d2ce6ff8faf66a1a36879503f5ddd7143582f1d2f31e3b72ba929c6f789c23e7"
+    }
+  },
+  "module": "prolog/omega_vision/group_regions.pl",
+  "partsFacts": "parts_extraction_0/python_opencv/result.pl",
+  "groupCount": 7,
+  "objectCount": 4
+}

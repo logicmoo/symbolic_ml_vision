@@ -1,0 +1,987 @@
+{
+  "kind": "arc3_play_recording",
+  "session_id": "import-8aed7120-f7a",
+  "game_id": "ls20-9607627b",
+  "game_directory": "ls20",
+  "level": "6",
+  "level_directory": "data/recordings/ls20/ls20-8aed7120-f7a9-45a1-837a-68bc7dc37a4f_attempt6",
+  "started_at": "2026-03-02T19:41:40.910509+00:00",
+  "updated_at": "2026-09-08T17:55:34.691723Z",
+  "last_event": "level_complete",
+  "imported_from": "data/importables/human_25/ls20-8aed7120-f7a9-45a1-837a-68bc7dc37a4f.json",
+  "moves": [
+    {
+      "index": 0,
+      "action": "ACTION1",
+      "data": {},
+      "directory": "data/recordings/ls20/ls20-8aed7120-f7a9-45a1-837a-68bc7dc37a4f_attempt6/0",
+      "state": "NOT_FINISHED",
+      "level": "6",
+      "recorded_at": "2026-03-02T19:47:48.895471+00:00"
+    },
+    {
+      "index": 1,
+      "action": "ACTION1",
+      "data": {},
+      "directory": "data/recordings/ls20/ls20-8aed7120-f7a9-45a1-837a-68bc7dc37a4f_attempt6/1",
+      "state": "NOT_FINISHED",
+      "level": "6",
+      "recorded_at": "2026-03-02T19:47:52.025011+00:00"
+    },
+    {
+      "index": 2,
+      "action": "ACTION2",
+      "data": {},
+      "directory": "data/recordings/ls20/ls20-8aed7120-f7a9-45a1-837a-68bc7dc37a4f_attempt6/2",
+      "state": "NOT_FINISHED",
+      "level": "6",
+      "recorded_at": "2026-03-02T19:47:53.361667+00:00"
+    },
+    {
+      "index": 3,
+      "action": "ACTION1",
+      "data": {},
+      "directory": "data/recordings/ls20/ls20-8aed7120-f7a9-45a1-837a-68bc7dc37a4f_attempt6/3",
+      "state": "NOT_FINISHED",
+      "level": "6",
+      "recorded_at": "2026-03-02T19:47:55.398029+00:00"
+    },
+    {
+      "index": 4,
+      "action": "ACTION3",
+      "data": {},
+      "directory": "data/recordings/ls20/ls20-8aed7120-f7a9-45a1-837a-68bc7dc37a4f_attempt6/4",
+      "state": "NOT_FINISHED",
+      "level": "6",
+      "recorded_at": "2026-03-02T19:47:56.236371+00:00"
+    },
+    {
+      "index": 5,
+      "action": "ACTION4",
+      "data": {},
+      "directory": "data/recordings/ls20/ls20-8aed7120-f7a9-45a1-837a-68bc7dc37a4f_attempt6/5",
+      "state": "NOT_FINISHED",
+      "level": "6",
+      "recorded_at": "2026-03-02T19:48:02.867588+00:00"
+    },
+    {
+      "index": 6,
+      "action": "ACTION3",
+      "data": {},
+      "directory": "data/recordings/ls20/ls20-8aed7120-f7a9-45a1-837a-68bc7dc37a4f_attempt6/6",
+      "state": "NOT_FINISHED",
+      "level": "6",
+      "recorded_at": "2026-03-02T19:48:04.865052+00:00"
+    },
+    {
+      "index": 7,
+      "action": "ACTION4",
+      "data": {},
+      "directory": "data/recordings/ls20/ls20-8aed7120-f7a9-45a1-837a-68bc7dc37a4f_attempt6/7",
+      "state": "NOT_FINISHED",
+      "level": "6",
+      "recorded_at": "2026-03-02T19:48:05.485853+00:00"
+    },
+    {
+      "index": 8,
+      "action": "ACTION4",
+      "data": {},
+      "directory": "data/recordings/ls20/ls20-8aed7120-f7a9-45a1-837a-68bc7dc37a4f_attempt6/8",
+      "state": "NOT_FINISHED",
+      "level": "6",
+      "recorded_at": "2026-03-02T19:48:06.101891+00:00"
+    },
+    {
+      "index": 9,
+      "action": "ACTION4",
+      "data": {},
+      "directory": "data/recordings/ls20/ls20-8aed7120-f7a9-45a1-837a-68bc7dc37a4f_attempt6/9",
+      "state": "NOT_FINISHED",
+      "level": "6",
+      "recorded_at": "2026-03-02T19:48:06.404143+00:00"
+    },
+    {
+      "index": 10,
+      "action": "ACTION3",
+      "data": {},
+      "directory": "data/recordings/ls20/ls20-8aed7120-f7a9-45a1-837a-68bc7dc37a4f_attempt6/10",
+      "state": "NOT_FINISHED",
+      "level": "6",
+      "recorded_at": "2026-03-02T19:48:07.774602+00:00"
+    },
+    {
+      "index": 11,
+      "action": "ACTION3",
+      "data": {},
+      "directory": "data/recordings/ls20/ls20-8aed7120-f7a9-45a1-837a-68bc7dc37a4f_attempt6/11",
+      "state": "NOT_FINISHED",
+      "level": "6",
+      "recorded_at": "2026-03-02T19:48:08.314222+00:00"
+    },
+    {
+      "index": 12,
+      "action": "ACTION3",
+      "data": {},
+      "directory": "data/recordings/ls20/ls20-8aed7120-f7a9-45a1-837a-68bc7dc37a4f_attempt6/12",
+      "state": "NOT_FINISHED",
+      "level": "6",
+      "recorded_at": "2026-03-02T19:48:08.800563+00:00"
+    },
+    {
+      "index": 13,
+      "action": "ACTION3",
+      "data": {},
+      "directory": "data/recordings/ls20/ls20-8aed7120-f7a9-45a1-837a-68bc7dc37a4f_attempt6/13",
+      "state": "NOT_FINISHED",
+      "level": "6",
+      "recorded_at": "2026-03-02T19:48:09.919999+00:00"
+    },
+    {
+      "index": 14,
+      "action": "ACTION4",
+      "data": {},
+      "directory": "data/recordings/ls20/ls20-8aed7120-f7a9-45a1-837a-68bc7dc37a4f_attempt6/14",
+      "state": "NOT_FINISHED",
+      "level": "6",
+      "recorded_at": "2026-03-02T19:48:10.680285+00:00"
+    },
+    {
+      "index": 15,
+      "action": "ACTION4",
+      "data": {},
+      "directory": "data/recordings/ls20/ls20-8aed7120-f7a9-45a1-837a-68bc7dc37a4f_attempt6/15",
+      "state": "NOT_FINISHED",
+      "level": "6",
+      "recorded_at": "2026-03-02T19:48:11.347140+00:00"
+    },
+    {
+      "index": 16,
+      "action": "ACTION4",
+      "data": {},
+      "directory": "data/recordings/ls20/ls20-8aed7120-f7a9-45a1-837a-68bc7dc37a4f_attempt6/16",
+      "state": "NOT_FINISHED",
+      "level": "6",
+      "recorded_at": "2026-03-02T19:48:11.869375+00:00"
+    },
+    {
+      "index": 17,
+      "action": "ACTION2",
+      "data": {},
+      "directory": "data/recordings/ls20/ls20-8aed7120-f7a9-45a1-837a-68bc7dc37a4f_attempt6/17",
+      "state": "NOT_FINISHED",
+      "level": "6",
+      "recorded_at": "2026-03-02T19:48:13.027606+00:00"
+    },
+    {
+      "index": 18,
+      "action": "ACTION4",
+      "data": {},
+      "directory": "data/recordings/ls20/ls20-8aed7120-f7a9-45a1-837a-68bc7dc37a4f_attempt6/18",
+      "state": "NOT_FINISHED",
+      "level": "6",
+      "recorded_at": "2026-03-02T19:48:15.315651+00:00"
+    },
+    {
+      "index": 19,
+      "action": "ACTION4",
+      "data": {},
+      "directory": "data/recordings/ls20/ls20-8aed7120-f7a9-45a1-837a-68bc7dc37a4f_attempt6/19",
+      "state": "NOT_FINISHED",
+      "level": "6",
+      "recorded_at": "2026-03-02T19:48:15.720270+00:00"
+    },
+    {
+      "index": 20,
+      "action": "ACTION1",
+      "data": {},
+      "directory": "data/recordings/ls20/ls20-8aed7120-f7a9-45a1-837a-68bc7dc37a4f_attempt6/20",
+      "state": "NOT_FINISHED",
+      "level": "6",
+      "recorded_at": "2026-03-02T19:48:16.057578+00:00"
+    },
+    {
+      "index": 21,
+      "action": "ACTION1",
+      "data": {},
+      "directory": "data/recordings/ls20/ls20-8aed7120-f7a9-45a1-837a-68bc7dc37a4f_attempt6/21",
+      "state": "NOT_FINISHED",
+      "level": "6",
+      "recorded_at": "2026-03-02T19:48:16.302843+00:00"
+    },
+    {
+      "index": 22,
+      "action": "ACTION1",
+      "data": {},
+      "directory": "data/recordings/ls20/ls20-8aed7120-f7a9-45a1-837a-68bc7dc37a4f_attempt6/22",
+      "state": "NOT_FINISHED",
+      "level": "6",
+      "recorded_at": "2026-03-02T19:48:16.606340+00:00"
+    },
+    {
+      "index": 23,
+      "action": "ACTION1",
+      "data": {},
+      "directory": "data/recordings/ls20/ls20-8aed7120-f7a9-45a1-837a-68bc7dc37a4f_attempt6/23",
+      "state": "NOT_FINISHED",
+      "level": "6",
+      "recorded_at": "2026-03-02T19:48:17.298061+00:00"
+    },
+    {
+      "index": 24,
+      "action": "ACTION3",
+      "data": {},
+      "directory": "data/recordings/ls20/ls20-8aed7120-f7a9-45a1-837a-68bc7dc37a4f_attempt6/24",
+      "state": "NOT_FINISHED",
+      "level": "6",
+      "recorded_at": "2026-03-02T19:48:19.240922+00:00"
+    },
+    {
+      "index": 25,
+      "action": "ACTION3",
+      "data": {},
+      "directory": "data/recordings/ls20/ls20-8aed7120-f7a9-45a1-837a-68bc7dc37a4f_attempt6/25",
+      "state": "NOT_FINISHED",
+      "level": "6",
+      "recorded_at": "2026-03-02T19:48:20.003278+00:00"
+    },
+    {
+      "index": 26,
+      "action": "ACTION3",
+      "data": {},
+      "directory": "data/recordings/ls20/ls20-8aed7120-f7a9-45a1-837a-68bc7dc37a4f_attempt6/26",
+      "state": "NOT_FINISHED",
+      "level": "6",
+      "recorded_at": "2026-03-02T19:48:20.689258+00:00"
+    },
+    {
+      "index": 27,
+      "action": "ACTION1",
+      "data": {},
+      "directory": "data/recordings/ls20/ls20-8aed7120-f7a9-45a1-837a-68bc7dc37a4f_attempt6/27",
+      "state": "NOT_FINISHED",
+      "level": "6",
+      "recorded_at": "2026-03-02T19:48:21.522350+00:00"
+    },
+    {
+      "index": 28,
+      "action": "ACTION2",
+      "data": {},
+      "directory": "data/recordings/ls20/ls20-8aed7120-f7a9-45a1-837a-68bc7dc37a4f_attempt6/28",
+      "state": "NOT_FINISHED",
+      "level": "6",
+      "recorded_at": "2026-03-02T19:48:25.217901+00:00"
+    },
+    {
+      "index": 29,
+      "action": "ACTION3",
+      "data": {},
+      "directory": "data/recordings/ls20/ls20-8aed7120-f7a9-45a1-837a-68bc7dc37a4f_attempt6/29",
+      "state": "NOT_FINISHED",
+      "level": "6",
+      "recorded_at": "2026-03-02T19:48:27.275649+00:00"
+    },
+    {
+      "index": 30,
+      "action": "ACTION4",
+      "data": {},
+      "directory": "data/recordings/ls20/ls20-8aed7120-f7a9-45a1-837a-68bc7dc37a4f_attempt6/30",
+      "state": "NOT_FINISHED",
+      "level": "6",
+      "recorded_at": "2026-03-02T19:48:27.702711+00:00"
+    },
+    {
+      "index": 31,
+      "action": "ACTION4",
+      "data": {},
+      "directory": "data/recordings/ls20/ls20-8aed7120-f7a9-45a1-837a-68bc7dc37a4f_attempt6/31",
+      "state": "NOT_FINISHED",
+      "level": "6",
+      "recorded_at": "2026-03-02T19:48:28.301812+00:00"
+    },
+    {
+      "index": 32,
+      "action": "ACTION4",
+      "data": {},
+      "directory": "data/recordings/ls20/ls20-8aed7120-f7a9-45a1-837a-68bc7dc37a4f_attempt6/32",
+      "state": "NOT_FINISHED",
+      "level": "6",
+      "recorded_at": "2026-03-02T19:48:28.703258+00:00"
+    },
+    {
+      "index": 33,
+      "action": "ACTION4",
+      "data": {},
+      "directory": "data/recordings/ls20/ls20-8aed7120-f7a9-45a1-837a-68bc7dc37a4f_attempt6/33",
+      "state": "NOT_FINISHED",
+      "level": "6",
+      "recorded_at": "2026-03-02T19:48:29.064009+00:00"
+    },
+    {
+      "index": 34,
+      "action": "ACTION1",
+      "data": {},
+      "directory": "data/recordings/ls20/ls20-8aed7120-f7a9-45a1-837a-68bc7dc37a4f_attempt6/34",
+      "state": "NOT_FINISHED",
+      "level": "6",
+      "recorded_at": "2026-03-02T19:48:30.262608+00:00"
+    },
+    {
+      "index": 35,
+      "action": "ACTION1",
+      "data": {},
+      "directory": "data/recordings/ls20/ls20-8aed7120-f7a9-45a1-837a-68bc7dc37a4f_attempt6/35",
+      "state": "NOT_FINISHED",
+      "level": "6",
+      "recorded_at": "2026-03-02T19:48:31.286530+00:00"
+    },
+    {
+      "index": 36,
+      "action": "ACTION2",
+      "data": {},
+      "directory": "data/recordings/ls20/ls20-8aed7120-f7a9-45a1-837a-68bc7dc37a4f_attempt6/36",
+      "state": "NOT_FINISHED",
+      "level": "6",
+      "recorded_at": "2026-03-02T19:48:32.333859+00:00"
+    },
+    {
+      "index": 37,
+      "action": "ACTION1",
+      "data": {},
+      "directory": "data/recordings/ls20/ls20-8aed7120-f7a9-45a1-837a-68bc7dc37a4f_attempt6/37",
+      "state": "NOT_FINISHED",
+      "level": "6",
+      "recorded_at": "2026-03-02T19:48:32.835084+00:00"
+    },
+    {
+      "index": 38,
+      "action": "ACTION1",
+      "data": {},
+      "directory": "data/recordings/ls20/ls20-8aed7120-f7a9-45a1-837a-68bc7dc37a4f_attempt6/38",
+      "state": "NOT_FINISHED",
+      "level": "6",
+      "recorded_at": "2026-03-02T19:48:33.032804+00:00"
+    },
+    {
+      "index": 39,
+      "action": "ACTION1",
+      "data": {},
+      "directory": "data/recordings/ls20/ls20-8aed7120-f7a9-45a1-837a-68bc7dc37a4f_attempt6/39",
+      "state": "NOT_FINISHED",
+      "level": "6",
+      "recorded_at": "2026-03-02T19:48:33.354451+00:00"
+    },
+    {
+      "index": 40,
+      "action": "ACTION2",
+      "data": {},
+      "directory": "data/recordings/ls20/ls20-8aed7120-f7a9-45a1-837a-68bc7dc37a4f_attempt6/40",
+      "state": "NOT_FINISHED",
+      "level": "6",
+      "recorded_at": "2026-03-02T19:48:34.007600+00:00"
+    },
+    {
+      "index": 41,
+      "action": "ACTION2",
+      "data": {},
+      "directory": "data/recordings/ls20/ls20-8aed7120-f7a9-45a1-837a-68bc7dc37a4f_attempt6/41",
+      "state": "NOT_FINISHED",
+      "level": "6",
+      "recorded_at": "2026-03-02T19:48:34.338619+00:00"
+    },
+    {
+      "index": 42,
+      "action": "ACTION4",
+      "data": {},
+      "directory": "data/recordings/ls20/ls20-8aed7120-f7a9-45a1-837a-68bc7dc37a4f_attempt6/42",
+      "state": "NOT_FINISHED",
+      "level": "6",
+      "recorded_at": "2026-03-02T19:48:35.038213+00:00"
+    },
+    {
+      "index": 43,
+      "action": "ACTION4",
+      "data": {},
+      "directory": "data/recordings/ls20/ls20-8aed7120-f7a9-45a1-837a-68bc7dc37a4f_attempt6/43",
+      "state": "NOT_FINISHED",
+      "level": "6",
+      "recorded_at": "2026-03-02T19:48:35.519017+00:00"
+    },
+    {
+      "index": 44,
+      "action": "ACTION1",
+      "data": {},
+      "directory": "data/recordings/ls20/ls20-8aed7120-f7a9-45a1-837a-68bc7dc37a4f_attempt6/44",
+      "state": "NOT_FINISHED",
+      "level": "6",
+      "recorded_at": "2026-03-02T19:48:35.847850+00:00"
+    },
+    {
+      "index": 45,
+      "action": "ACTION1",
+      "data": {},
+      "directory": "data/recordings/ls20/ls20-8aed7120-f7a9-45a1-837a-68bc7dc37a4f_attempt6/45",
+      "state": "NOT_FINISHED",
+      "level": "6",
+      "recorded_at": "2026-03-02T19:48:36.232075+00:00"
+    },
+    {
+      "index": 46,
+      "action": "ACTION4",
+      "data": {},
+      "directory": "data/recordings/ls20/ls20-8aed7120-f7a9-45a1-837a-68bc7dc37a4f_attempt6/46",
+      "state": "NOT_FINISHED",
+      "level": "6",
+      "recorded_at": "2026-03-02T19:48:37.397882+00:00"
+    },
+    {
+      "index": 47,
+      "action": "ACTION2",
+      "data": {},
+      "directory": "data/recordings/ls20/ls20-8aed7120-f7a9-45a1-837a-68bc7dc37a4f_attempt6/47",
+      "state": "NOT_FINISHED",
+      "level": "6",
+      "recorded_at": "2026-03-02T19:48:37.813606+00:00"
+    },
+    {
+      "index": 48,
+      "action": "ACTION2",
+      "data": {},
+      "directory": "data/recordings/ls20/ls20-8aed7120-f7a9-45a1-837a-68bc7dc37a4f_attempt6/48",
+      "state": "NOT_FINISHED",
+      "level": "6",
+      "recorded_at": "2026-03-02T19:48:38.225726+00:00"
+    },
+    {
+      "index": 49,
+      "action": "ACTION1",
+      "data": {},
+      "directory": "data/recordings/ls20/ls20-8aed7120-f7a9-45a1-837a-68bc7dc37a4f_attempt6/49",
+      "state": "NOT_FINISHED",
+      "level": "6",
+      "recorded_at": "2026-03-02T19:48:39.941070+00:00"
+    },
+    {
+      "index": 50,
+      "action": "ACTION1",
+      "data": {},
+      "directory": "data/recordings/ls20/ls20-8aed7120-f7a9-45a1-837a-68bc7dc37a4f_attempt6/50",
+      "state": "NOT_FINISHED",
+      "level": "6",
+      "recorded_at": "2026-03-02T19:48:40.371592+00:00"
+    },
+    {
+      "index": 51,
+      "action": "ACTION3",
+      "data": {},
+      "directory": "data/recordings/ls20/ls20-8aed7120-f7a9-45a1-837a-68bc7dc37a4f_attempt6/51",
+      "state": "NOT_FINISHED",
+      "level": "6",
+      "recorded_at": "2026-03-02T19:48:40.868505+00:00"
+    },
+    {
+      "index": 52,
+      "action": "ACTION1",
+      "data": {},
+      "directory": "data/recordings/ls20/ls20-8aed7120-f7a9-45a1-837a-68bc7dc37a4f_attempt6/52",
+      "state": "NOT_FINISHED",
+      "level": "6",
+      "recorded_at": "2026-03-02T19:48:42.661671+00:00"
+    },
+    {
+      "index": 53,
+      "action": "ACTION2",
+      "data": {},
+      "directory": "data/recordings/ls20/ls20-8aed7120-f7a9-45a1-837a-68bc7dc37a4f_attempt6/53",
+      "state": "NOT_FINISHED",
+      "level": "6",
+      "recorded_at": "2026-03-02T19:48:43.751865+00:00"
+    },
+    {
+      "index": 54,
+      "action": "ACTION3",
+      "data": {},
+      "directory": "data/recordings/ls20/ls20-8aed7120-f7a9-45a1-837a-68bc7dc37a4f_attempt6/54",
+      "state": "NOT_FINISHED",
+      "level": "6",
+      "recorded_at": "2026-03-02T19:48:44.361333+00:00"
+    },
+    {
+      "index": 55,
+      "action": "ACTION3",
+      "data": {},
+      "directory": "data/recordings/ls20/ls20-8aed7120-f7a9-45a1-837a-68bc7dc37a4f_attempt6/55",
+      "state": "NOT_FINISHED",
+      "level": "6",
+      "recorded_at": "2026-03-02T19:48:44.775598+00:00"
+    },
+    {
+      "index": 56,
+      "action": "ACTION3",
+      "data": {},
+      "directory": "data/recordings/ls20/ls20-8aed7120-f7a9-45a1-837a-68bc7dc37a4f_attempt6/56",
+      "state": "NOT_FINISHED",
+      "level": "6",
+      "recorded_at": "2026-03-02T19:48:45.260140+00:00"
+    },
+    {
+      "index": 57,
+      "action": "ACTION3",
+      "data": {},
+      "directory": "data/recordings/ls20/ls20-8aed7120-f7a9-45a1-837a-68bc7dc37a4f_attempt6/57",
+      "state": "NOT_FINISHED",
+      "level": "6",
+      "recorded_at": "2026-03-02T19:48:47.791050+00:00"
+    },
+    {
+      "index": 58,
+      "action": "ACTION3",
+      "data": {},
+      "directory": "data/recordings/ls20/ls20-8aed7120-f7a9-45a1-837a-68bc7dc37a4f_attempt6/58",
+      "state": "NOT_FINISHED",
+      "level": "6",
+      "recorded_at": "2026-03-02T19:48:50.270428+00:00"
+    },
+    {
+      "index": 59,
+      "action": "ACTION4",
+      "data": {},
+      "directory": "data/recordings/ls20/ls20-8aed7120-f7a9-45a1-837a-68bc7dc37a4f_attempt6/59",
+      "state": "NOT_FINISHED",
+      "level": "6",
+      "recorded_at": "2026-03-02T19:48:50.758711+00:00"
+    },
+    {
+      "index": 60,
+      "action": "ACTION4",
+      "data": {},
+      "directory": "data/recordings/ls20/ls20-8aed7120-f7a9-45a1-837a-68bc7dc37a4f_attempt6/60",
+      "state": "NOT_FINISHED",
+      "level": "6",
+      "recorded_at": "2026-03-02T19:48:51.055333+00:00"
+    },
+    {
+      "index": 61,
+      "action": "ACTION4",
+      "data": {},
+      "directory": "data/recordings/ls20/ls20-8aed7120-f7a9-45a1-837a-68bc7dc37a4f_attempt6/61",
+      "state": "NOT_FINISHED",
+      "level": "6",
+      "recorded_at": "2026-03-02T19:48:51.514929+00:00"
+    },
+    {
+      "index": 62,
+      "action": "ACTION4",
+      "data": {},
+      "directory": "data/recordings/ls20/ls20-8aed7120-f7a9-45a1-837a-68bc7dc37a4f_attempt6/62",
+      "state": "NOT_FINISHED",
+      "level": "6",
+      "recorded_at": "2026-03-02T19:48:52.823096+00:00"
+    },
+    {
+      "index": 63,
+      "action": "ACTION4",
+      "data": {},
+      "directory": "data/recordings/ls20/ls20-8aed7120-f7a9-45a1-837a-68bc7dc37a4f_attempt6/63",
+      "state": "NOT_FINISHED",
+      "level": "6",
+      "recorded_at": "2026-03-02T19:48:53.150903+00:00"
+    },
+    {
+      "index": 64,
+      "action": "ACTION1",
+      "data": {},
+      "directory": "data/recordings/ls20/ls20-8aed7120-f7a9-45a1-837a-68bc7dc37a4f_attempt6/64",
+      "state": "NOT_FINISHED",
+      "level": "6",
+      "recorded_at": "2026-03-02T19:48:53.506942+00:00"
+    },
+    {
+      "index": 65,
+      "action": "ACTION1",
+      "data": {},
+      "directory": "data/recordings/ls20/ls20-8aed7120-f7a9-45a1-837a-68bc7dc37a4f_attempt6/65",
+      "state": "NOT_FINISHED",
+      "level": "6",
+      "recorded_at": "2026-03-02T19:48:53.747256+00:00"
+    },
+    {
+      "index": 66,
+      "action": "ACTION1",
+      "data": {},
+      "directory": "data/recordings/ls20/ls20-8aed7120-f7a9-45a1-837a-68bc7dc37a4f_attempt6/66",
+      "state": "NOT_FINISHED",
+      "level": "6",
+      "recorded_at": "2026-03-02T19:48:54.100182+00:00"
+    },
+    {
+      "index": 67,
+      "action": "ACTION3",
+      "data": {},
+      "directory": "data/recordings/ls20/ls20-8aed7120-f7a9-45a1-837a-68bc7dc37a4f_attempt6/67",
+      "state": "NOT_FINISHED",
+      "level": "6",
+      "recorded_at": "2026-03-02T19:48:54.400253+00:00"
+    },
+    {
+      "index": 68,
+      "action": "ACTION3",
+      "data": {},
+      "directory": "data/recordings/ls20/ls20-8aed7120-f7a9-45a1-837a-68bc7dc37a4f_attempt6/68",
+      "state": "NOT_FINISHED",
+      "level": "6",
+      "recorded_at": "2026-03-02T19:48:55.916529+00:00"
+    },
+    {
+      "index": 69,
+      "action": "ACTION3",
+      "data": {},
+      "directory": "data/recordings/ls20/ls20-8aed7120-f7a9-45a1-837a-68bc7dc37a4f_attempt6/69",
+      "state": "NOT_FINISHED",
+      "level": "6",
+      "recorded_at": "2026-03-02T19:48:58.168794+00:00"
+    },
+    {
+      "index": 70,
+      "action": "ACTION3",
+      "data": {},
+      "directory": "data/recordings/ls20/ls20-8aed7120-f7a9-45a1-837a-68bc7dc37a4f_attempt6/70",
+      "state": "NOT_FINISHED",
+      "level": "6",
+      "recorded_at": "2026-03-02T19:48:59.348483+00:00"
+    },
+    {
+      "index": 71,
+      "action": "ACTION1",
+      "data": {},
+      "directory": "data/recordings/ls20/ls20-8aed7120-f7a9-45a1-837a-68bc7dc37a4f_attempt6/71",
+      "state": "NOT_FINISHED",
+      "level": "6",
+      "recorded_at": "2026-03-02T19:49:01.469135+00:00"
+    },
+    {
+      "index": 72,
+      "action": "ACTION2",
+      "data": {},
+      "directory": "data/recordings/ls20/ls20-8aed7120-f7a9-45a1-837a-68bc7dc37a4f_attempt6/72",
+      "state": "NOT_FINISHED",
+      "level": "6",
+      "recorded_at": "2026-03-02T19:49:02.775131+00:00"
+    },
+    {
+      "index": 73,
+      "action": "ACTION1",
+      "data": {},
+      "directory": "data/recordings/ls20/ls20-8aed7120-f7a9-45a1-837a-68bc7dc37a4f_attempt6/73",
+      "state": "NOT_FINISHED",
+      "level": "6",
+      "recorded_at": "2026-03-02T19:49:07.772943+00:00"
+    },
+    {
+      "index": 74,
+      "action": "ACTION3",
+      "data": {},
+      "directory": "data/recordings/ls20/ls20-8aed7120-f7a9-45a1-837a-68bc7dc37a4f_attempt6/74",
+      "state": "NOT_FINISHED",
+      "level": "6",
+      "recorded_at": "2026-03-02T19:49:08.692710+00:00"
+    },
+    {
+      "index": 75,
+      "action": "ACTION3",
+      "data": {},
+      "directory": "data/recordings/ls20/ls20-8aed7120-f7a9-45a1-837a-68bc7dc37a4f_attempt6/75",
+      "state": "NOT_FINISHED",
+      "level": "6",
+      "recorded_at": "2026-03-02T19:49:09.378731+00:00"
+    },
+    {
+      "index": 76,
+      "action": "ACTION2",
+      "data": {},
+      "directory": "data/recordings/ls20/ls20-8aed7120-f7a9-45a1-837a-68bc7dc37a4f_attempt6/76",
+      "state": "NOT_FINISHED",
+      "level": "6",
+      "recorded_at": "2026-03-02T19:49:10.665683+00:00"
+    },
+    {
+      "index": 77,
+      "action": "ACTION2",
+      "data": {},
+      "directory": "data/recordings/ls20/ls20-8aed7120-f7a9-45a1-837a-68bc7dc37a4f_attempt6/77",
+      "state": "NOT_FINISHED",
+      "level": "6",
+      "recorded_at": "2026-03-02T19:49:10.995856+00:00"
+    },
+    {
+      "index": 78,
+      "action": "ACTION2",
+      "data": {},
+      "directory": "data/recordings/ls20/ls20-8aed7120-f7a9-45a1-837a-68bc7dc37a4f_attempt6/78",
+      "state": "NOT_FINISHED",
+      "level": "6",
+      "recorded_at": "2026-03-02T19:49:11.234310+00:00"
+    },
+    {
+      "index": 79,
+      "action": "ACTION2",
+      "data": {},
+      "directory": "data/recordings/ls20/ls20-8aed7120-f7a9-45a1-837a-68bc7dc37a4f_attempt6/79",
+      "state": "NOT_FINISHED",
+      "level": "6",
+      "recorded_at": "2026-03-02T19:49:11.493275+00:00"
+    },
+    {
+      "index": 80,
+      "action": "ACTION2",
+      "data": {},
+      "directory": "data/recordings/ls20/ls20-8aed7120-f7a9-45a1-837a-68bc7dc37a4f_attempt6/80",
+      "state": "NOT_FINISHED",
+      "level": "6",
+      "recorded_at": "2026-03-02T19:49:11.779712+00:00"
+    },
+    {
+      "index": 81,
+      "action": "ACTION2",
+      "data": {},
+      "directory": "data/recordings/ls20/ls20-8aed7120-f7a9-45a1-837a-68bc7dc37a4f_attempt6/81",
+      "state": "NOT_FINISHED",
+      "level": "6",
+      "recorded_at": "2026-03-02T19:49:12.158298+00:00"
+    },
+    {
+      "index": 82,
+      "action": "ACTION2",
+      "data": {},
+      "directory": "data/recordings/ls20/ls20-8aed7120-f7a9-45a1-837a-68bc7dc37a4f_attempt6/82",
+      "state": "NOT_FINISHED",
+      "level": "6",
+      "recorded_at": "2026-03-02T19:49:12.578092+00:00"
+    },
+    {
+      "index": 83,
+      "action": "ACTION4",
+      "data": {},
+      "directory": "data/recordings/ls20/ls20-8aed7120-f7a9-45a1-837a-68bc7dc37a4f_attempt6/83",
+      "state": "NOT_FINISHED",
+      "level": "6",
+      "recorded_at": "2026-03-02T19:49:12.873079+00:00"
+    },
+    {
+      "index": 84,
+      "action": "ACTION2",
+      "data": {},
+      "directory": "data/recordings/ls20/ls20-8aed7120-f7a9-45a1-837a-68bc7dc37a4f_attempt6/84",
+      "state": "NOT_FINISHED",
+      "level": "6",
+      "recorded_at": "2026-03-02T19:49:14.165472+00:00"
+    },
+    {
+      "index": 85,
+      "action": "ACTION4",
+      "data": {},
+      "directory": "data/recordings/ls20/ls20-8aed7120-f7a9-45a1-837a-68bc7dc37a4f_attempt6/85",
+      "state": "NOT_FINISHED",
+      "level": "6",
+      "recorded_at": "2026-03-02T19:49:14.787911+00:00"
+    },
+    {
+      "index": 86,
+      "action": "ACTION1",
+      "data": {},
+      "directory": "data/recordings/ls20/ls20-8aed7120-f7a9-45a1-837a-68bc7dc37a4f_attempt6/86",
+      "state": "NOT_FINISHED",
+      "level": "6",
+      "recorded_at": "2026-03-02T19:49:15.570877+00:00"
+    },
+    {
+      "index": 87,
+      "action": "ACTION4",
+      "data": {},
+      "directory": "data/recordings/ls20/ls20-8aed7120-f7a9-45a1-837a-68bc7dc37a4f_attempt6/87",
+      "state": "NOT_FINISHED",
+      "level": "6",
+      "recorded_at": "2026-03-02T19:49:16.206241+00:00"
+    },
+    {
+      "index": 88,
+      "action": "ACTION4",
+      "data": {},
+      "directory": "data/recordings/ls20/ls20-8aed7120-f7a9-45a1-837a-68bc7dc37a4f_attempt6/88",
+      "state": "NOT_FINISHED",
+      "level": "6",
+      "recorded_at": "2026-03-02T19:49:16.922004+00:00"
+    },
+    {
+      "index": 89,
+      "action": "ACTION3",
+      "data": {},
+      "directory": "data/recordings/ls20/ls20-8aed7120-f7a9-45a1-837a-68bc7dc37a4f_attempt6/89",
+      "state": "NOT_FINISHED",
+      "level": "6",
+      "recorded_at": "2026-03-02T19:49:18.882509+00:00"
+    },
+    {
+      "index": 90,
+      "action": "ACTION4",
+      "data": {},
+      "directory": "data/recordings/ls20/ls20-8aed7120-f7a9-45a1-837a-68bc7dc37a4f_attempt6/90",
+      "state": "NOT_FINISHED",
+      "level": "6",
+      "recorded_at": "2026-03-02T19:49:20.091115+00:00"
+    },
+    {
+      "index": 91,
+      "action": "ACTION4",
+      "data": {},
+      "directory": "data/recordings/ls20/ls20-8aed7120-f7a9-45a1-837a-68bc7dc37a4f_attempt6/91",
+      "state": "NOT_FINISHED",
+      "level": "6",
+      "recorded_at": "2026-03-02T19:49:20.554285+00:00"
+    },
+    {
+      "index": 92,
+      "action": "ACTION4",
+      "data": {},
+      "directory": "data/recordings/ls20/ls20-8aed7120-f7a9-45a1-837a-68bc7dc37a4f_attempt6/92",
+      "state": "NOT_FINISHED",
+      "level": "6",
+      "recorded_at": "2026-03-02T19:49:21.167255+00:00"
+    },
+    {
+      "index": 93,
+      "action": "ACTION1",
+      "data": {},
+      "directory": "data/recordings/ls20/ls20-8aed7120-f7a9-45a1-837a-68bc7dc37a4f_attempt6/93",
+      "state": "NOT_FINISHED",
+      "level": "6",
+      "recorded_at": "2026-03-02T19:49:21.748830+00:00"
+    },
+    {
+      "index": 94,
+      "action": "ACTION1",
+      "data": {},
+      "directory": "data/recordings/ls20/ls20-8aed7120-f7a9-45a1-837a-68bc7dc37a4f_attempt6/94",
+      "state": "NOT_FINISHED",
+      "level": "6",
+      "recorded_at": "2026-03-02T19:49:22.011281+00:00"
+    },
+    {
+      "index": 95,
+      "action": "ACTION1",
+      "data": {},
+      "directory": "data/recordings/ls20/ls20-8aed7120-f7a9-45a1-837a-68bc7dc37a4f_attempt6/95",
+      "state": "NOT_FINISHED",
+      "level": "6",
+      "recorded_at": "2026-03-02T19:49:22.232922+00:00"
+    },
+    {
+      "index": 96,
+      "action": "ACTION1",
+      "data": {},
+      "directory": "data/recordings/ls20/ls20-8aed7120-f7a9-45a1-837a-68bc7dc37a4f_attempt6/96",
+      "state": "NOT_FINISHED",
+      "level": "6",
+      "recorded_at": "2026-03-02T19:49:22.451982+00:00"
+    },
+    {
+      "index": 97,
+      "action": "ACTION1",
+      "data": {},
+      "directory": "data/recordings/ls20/ls20-8aed7120-f7a9-45a1-837a-68bc7dc37a4f_attempt6/97",
+      "state": "NOT_FINISHED",
+      "level": "6",
+      "recorded_at": "2026-03-02T19:49:22.718583+00:00"
+    },
+    {
+      "index": 98,
+      "action": "ACTION4",
+      "data": {},
+      "directory": "data/recordings/ls20/ls20-8aed7120-f7a9-45a1-837a-68bc7dc37a4f_attempt6/98",
+      "state": "NOT_FINISHED",
+      "level": "6",
+      "recorded_at": "2026-03-02T19:49:22.983682+00:00"
+    },
+    {
+      "index": 99,
+      "action": "ACTION4",
+      "data": {},
+      "directory": "data/recordings/ls20/ls20-8aed7120-f7a9-45a1-837a-68bc7dc37a4f_attempt6/99",
+      "state": "NOT_FINISHED",
+      "level": "6",
+      "recorded_at": "2026-03-02T19:49:23.202997+00:00"
+    },
+    {
+      "index": 100,
+      "action": "ACTION1",
+      "data": {},
+      "directory": "data/recordings/ls20/ls20-8aed7120-f7a9-45a1-837a-68bc7dc37a4f_attempt6/100",
+      "state": "NOT_FINISHED",
+      "level": "6",
+      "recorded_at": "2026-03-02T19:49:23.536772+00:00"
+    },
+    {
+      "index": 101,
+      "action": "ACTION1",
+      "data": {},
+      "directory": "data/recordings/ls20/ls20-8aed7120-f7a9-45a1-837a-68bc7dc37a4f_attempt6/101",
+      "state": "NOT_FINISHED",
+      "level": "6",
+      "recorded_at": "2026-03-02T19:49:23.907111+00:00"
+    },
+    {
+      "index": 102,
+      "action": "ACTION4",
+      "data": {},
+      "directory": "data/recordings/ls20/ls20-8aed7120-f7a9-45a1-837a-68bc7dc37a4f_attempt6/102",
+      "state": "NOT_FINISHED",
+      "level": "6",
+      "recorded_at": "2026-03-02T19:49:25.145689+00:00"
+    },
+    {
+      "index": 103,
+      "action": "ACTION2",
+      "data": {},
+      "directory": "data/recordings/ls20/ls20-8aed7120-f7a9-45a1-837a-68bc7dc37a4f_attempt6/103",
+      "state": "NOT_FINISHED",
+      "level": "6",
+      "recorded_at": "2026-03-02T19:49:25.559093+00:00"
+    },
+    {
+      "index": 104,
+      "action": "ACTION2",
+      "data": {},
+      "directory": "data/recordings/ls20/ls20-8aed7120-f7a9-45a1-837a-68bc7dc37a4f_attempt6/104",
+      "state": "NOT_FINISHED",
+      "level": "6",
+      "recorded_at": "2026-03-02T19:49:25.704866+00:00"
+    },
+    {
+      "index": 105,
+      "action": "ACTION2",
+      "data": {},
+      "directory": "data/recordings/ls20/ls20-8aed7120-f7a9-45a1-837a-68bc7dc37a4f_attempt6/105",
+      "state": "NOT_FINISHED",
+      "level": "6",
+      "recorded_at": "2026-03-02T19:49:25.851094+00:00"
+    },
+    {
+      "index": 106,
+      "action": "ACTION2",
+      "data": {},
+      "directory": "data/recordings/ls20/ls20-8aed7120-f7a9-45a1-837a-68bc7dc37a4f_attempt6/106",
+      "state": "NOT_FINISHED",
+      "level": "6",
+      "recorded_at": "2026-03-02T19:49:26.021008+00:00"
+    },
+    {
+      "index": 107,
+      "action": "ACTION2",
+      "data": {},
+      "directory": "data/recordings/ls20/ls20-8aed7120-f7a9-45a1-837a-68bc7dc37a4f_attempt6/107",
+      "state": "NOT_FINISHED",
+      "level": "6",
+      "recorded_at": "2026-03-02T19:49:26.395527+00:00",
+      "level_completed": "6"
+    }
+  ]
+}

@@ -1,0 +1,113 @@
+{
+  "kind": "transformation_todos",
+  "unit": "7",
+  "workspaceId": "arc3_random_player",
+  "memorySessionId": "8d491946-9cff-4ccc-b9ab-5f01f42d8ecb",
+  "sequenceId": "data/recordings/ls20/20260718-154544",
+  "frameOrder": 8,
+  "frameSourceKey": "7/image.png",
+  "sequenceOrdered": true,
+  "imagePath": "preprocessing/chain_c35d24569e3c9040f6a688e9.png",
+  "inputSignature": "chain:c35d24569e3c9040f6a688e9",
+  "sourceSignature": "4bbb0fc7ed53c5fcd7cd75a0",
+  "preprocessingRevision": "chain:257a35e4836a75b6e967d81f",
+  "sourceImagePath": "image.png",
+  "sequenceRoot": "..",
+  "updatedAt": "2026-09-10T15:55:15.196910Z",
+  "todos": [
+    {
+      "transformation": "parts_extraction_0",
+      "doer": "python_opencv",
+      "options": {
+        "semanticContextRevision": "54cee477e94f0665910873ccccf21b5a804827c5670913bb7de45ca00d85bea2"
+      },
+      "output": "parts_extraction_0/python_opencv",
+      "dependsOn": [],
+      "priority": 10,
+      "type": "py_pl",
+      "memorySessionId": "8d491946-9cff-4ccc-b9ab-5f01f42d8ecb",
+      "status": "done",
+      "elapsedMs": 20587,
+      "completedAt": "2026-09-10T15:52:54.132215Z"
+    },
+    {
+      "transformation": "parts_grouping_0",
+      "doer": "group_regions_prolog",
+      "options": {},
+      "output": "parts_grouping_0/group_regions_prolog",
+      "dependsOn": [
+        "parts_extraction_0/python_opencv"
+      ],
+      "priority": 30,
+      "type": "py_pl",
+      "memorySessionId": "8d491946-9cff-4ccc-b9ab-5f01f42d8ecb",
+      "status": "done",
+      "elapsedMs": 2727,
+      "completedAt": "2026-09-10T15:53:23.056847Z"
+    },
+    {
+      "transformation": "group_acceptance_0",
+      "doer": "group_acceptance_prolog",
+      "options": {},
+      "output": "group_acceptance_0/group_acceptance_prolog",
+      "dependsOn": [
+        "parts_extraction_0/python_opencv",
+        "parts_grouping_0/group_regions_prolog"
+      ],
+      "priority": 35,
+      "type": "py_pl",
+      "memorySessionId": "8d491946-9cff-4ccc-b9ab-5f01f42d8ecb",
+      "status": "done",
+      "elapsedMs": 2913,
+      "completedAt": "2026-09-10T15:53:49.997647Z"
+    },
+    {
+      "transformation": "observation_identity_0",
+      "doer": "content_hash",
+      "options": {},
+      "output": "observation_identity_0/content_hash",
+      "dependsOn": [
+        "parts_extraction_0/python_opencv",
+        "parts_grouping_0/group_regions_prolog",
+        "group_acceptance_0/group_acceptance_prolog"
+      ],
+      "priority": 37,
+      "type": "py_pl",
+      "memorySessionId": "8d491946-9cff-4ccc-b9ab-5f01f42d8ecb",
+      "status": "done",
+      "elapsedMs": 1937,
+      "completedAt": "2026-09-10T15:54:13.675636Z"
+    },
+    {
+      "transformation": "turtle_programs",
+      "doer": "turtle_programs_prolog",
+      "options": {},
+      "output": "turtle_programs/turtle_programs_prolog",
+      "dependsOn": [
+        "group_acceptance_0/group_acceptance_prolog"
+      ],
+      "priority": 40,
+      "type": "py_pl",
+      "memorySessionId": "8d491946-9cff-4ccc-b9ab-5f01f42d8ecb",
+      "status": "done",
+      "elapsedMs": 2171,
+      "completedAt": "2026-09-10T15:54:35.779556Z"
+    },
+    {
+      "transformation": "parts_debug_0",
+      "doer": "python_pil",
+      "options": {},
+      "output": "parts_debug_0/python_pil",
+      "dependsOn": [
+        "parts_extraction_0/python_opencv",
+        "turtle_programs/turtle_programs_prolog"
+      ],
+      "priority": 50,
+      "type": "ui",
+      "memorySessionId": "8d491946-9cff-4ccc-b9ab-5f01f42d8ecb",
+      "status": "done",
+      "elapsedMs": 2184,
+      "completedAt": "2026-09-10T15:55:05.514622Z"
+    }
+  ]
+}

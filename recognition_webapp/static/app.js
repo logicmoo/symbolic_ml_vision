@@ -1188,6 +1188,8 @@ function clearDemoSelection() {
   byId("demo-frame-controls").hidden = true;
   sceneRequest++;
   byId("scene-cell").hidden = true;
+  inductionRequest++;
+  byId("induction-sub").hidden = true;
   byId("recognize").disabled = state.busy || !state.grid.length;
 }
 
@@ -2555,8 +2557,64 @@ function selectRecording() {
   byId("demo-frame").max = String(Math.max(0, (sequence?.frames.length || 0) - 1));
   byId("demo-frame").value = "0";
   void loadLearnedScene();
+  void loadInduction();
   if (available) return loadDemoFrame();
   error("This recording has no frames.");
+}
+
+let inductionRequest = 0;
+async function loadInduction() {
+  // Whole-recording inductive guesses shown in the same Interframe tab as the two-frame
+  // deductions, using the same stable e# identities. Read from the crawler's
+  // induction.json; hidden until the crawler has induced the recording.
+  const sub = byId("induction-sub");
+  const sequence = selectedRecording();
+  if (pageMode !== "demos" || !sequence) { sub.hidden = true; return; }
+  const token = ++inductionRequest;
+  try {
+    const data = await request(`/omega_vision/api/v1/induction?${new URLSearchParams({ sequence: sequence.id })}`);
+    if (token !== inductionRequest) return;
+    const induction = data.induction || {};
+    const body = byId("induction-body");
+    body.replaceChildren();
+    const line = (strong, rest) => {
+      const p = document.createElement("p");
+      const b = document.createElement("strong");
+      b.textContent = strong;
+      p.append(b, ` ${rest}`);
+      return p;
+    };
+    const guesses = induction.guesses || [];
+    const statics = guesses.filter((g) => g.kind === "static");
+    const constant = guesses.filter((g) => g.kind === "constant_velocity");
+    const variable = guesses.filter((g) => g.kind === "variable_motion");
+    if (statics.length) {
+      body.append(line(`static (${statics.length}):`,
+        statics.map((g) => `${g.entity} (${g.support}f)`).join(", ")));
+    }
+    for (const g of constant) {
+      body.append(line("constant velocity:", `${g.entity} moves (${g.dx}, ${g.dy}) px per frame \u00b7 ${g.support} frames`));
+    }
+    for (const g of variable) {
+      body.append(line("variable motion:", `${g.entity} \u00b7 ${g.vectors.length} distinct vectors over ${g.support} frames \u00b7 ` +
+        g.vectors.slice(0, 4).map(([dx, dy]) => `(${dx},${dy})`).join(" ") + (g.vectors.length > 4 ? " \u2026" : "")));
+    }
+    for (const event of induction.recurring || []) {
+      body.append(line("recurring event:", `${event.event} \u00d7${event.count}`));
+    }
+    if (!body.children.length) {
+      body.append(line("no inductive guesses yet.", `${induction.transitions ?? 0} transitions examined.`));
+    } else {
+      const note = document.createElement("p");
+      note.className = "hint";
+      note.textContent = `${guesses.length} guesses from ${induction.transitions ?? "?"} transitions across the whole recording.`;
+      body.append(note);
+    }
+    sub.hidden = false;
+    byId("interframe").hidden = false;
+  } catch {
+    if (token === inductionRequest) sub.hidden = true; // not induced yet; crawler will produce it
+  }
 }
 
 let sceneRequest = 0;
@@ -3193,6 +3251,7 @@ function refreshSectionNav() {
       const index = choice.sequence.frames.findIndex((frame) => frame.frameId === query.get("frame"));
       byId("demo-frame").value = String(Math.max(0, index));
       void loadLearnedScene();
+      void loadInduction();
       await loadDemoFrame();
     } else {
       document.title = "Shape explorer";

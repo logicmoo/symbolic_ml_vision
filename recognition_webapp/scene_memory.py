@@ -200,7 +200,7 @@ def learned_scene(data_root: Path, sequence_id: str) -> dict:
         raise ValueError("Scene sequence must be under recordings/ or curated/.")
     root = data_root.resolve()
     recording = (root / sequence_id).resolve()
-    if not recording.is_relative_to(root) or not (recording / "recording.json").is_file():
+    if not recording.is_relative_to(root) or not recording.is_dir():
         raise ValueError("Unknown recording.")
     frames = sorted((child for child in recording.iterdir()
                      if child.is_dir() and child.name.isdigit() and (child / "image.png").is_file()),

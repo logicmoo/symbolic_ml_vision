@@ -132,6 +132,32 @@ def _get(path: str, query: str, data_root: Path) -> dict:
             return _json(200, learned_scene(data_root, params["sequence"][0]))
         except ValueError as error:
             return _json(422, {"error": str(error)})
+    if path == "/omega_vision/api/v1/induction":
+        params = _query_params(query)
+        if len(params.get("sequence", [])) != 1:
+            return _json(422, {"error": "Choose a recording sequence for the induction summary."})
+        sequence = params["sequence"][0]
+        root = data_root.resolve()
+        if not isinstance(sequence, str) or sequence.split("/", 1)[0] not in ("recordings", "curated"):
+            return _json(422, {"error": "Induction sequences live under recordings/ or curated/."})
+        try:
+            recording = (root / sequence).resolve()
+        except OSError:
+            return _json(422, {"error": "Invalid sequence path."})
+        if (not recording.is_relative_to(root) or not recording.is_dir()
+                or not ((recording / "recording.json").is_file()
+                        or any(child.is_dir() and child.name.isdigit() and (child / "image.png").is_file()
+                               for child in recording.iterdir()))):
+            return _json(404, {"error": "Unknown recording."})
+        induction_path = recording / "induction.json"
+        if not induction_path.is_file():
+            return _json(404, {"error": "The crawler has not induced this recording yet."})
+        try:
+            return _json(200, {"sequenceId": sequence,
+                               "induction": json.loads(induction_path.read_text(encoding="utf-8")),
+                               "updated": induction_path.stat().st_mtime})
+        except (OSError, ValueError):
+            return _json(422, {"error": "induction.json is unreadable."})
     if path in ("/omega_vision/api/v1/demos", "/omega_vision/api/v1/demos/frame", "/omega_vision/api/v1/demos/expectations"):
         try:
             demos = DemoCatalog(data_root)

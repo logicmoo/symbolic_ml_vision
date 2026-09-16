@@ -217,6 +217,11 @@
             <p class="hint">Persistent e# identities accumulated across the frames you have viewed; a reappearing object re-binds to its remembered (occluded) entity instead of being called new.</p>
             <div id="tracker-body"></div>
           </div>
+          <div class="interframe-sub" id="induction-sub" hidden>
+            <h4>Induction (whole recording)</h4>
+            <p class="hint">Inductive guesses generalised across every processed frame of this recording (crawler induction.json). Same stable e# identities as above. Guesses, never facts.</p>
+            <div id="induction-body"></div>
+          </div>
           <details class="interframe-sub" id="frame-diff-sub">
             <summary class="subfold">Frame diff (pixel-level) \u2014 low-level, click to expand</summary>
             <p class="hint">A pixel-level diff against the previous frame, before entity binding. Grey = stable, green = appeared, red = disappeared, yellow = changed in place. Regions carry competing hypotheses.</p>

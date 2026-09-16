@@ -179,7 +179,7 @@ def cached_frame_result(payload: dict, data_root: Path) -> dict | None:
     return result
 
 
-def learned_scene(data_root: Path, sequence_id: str) -> dict:
+def learned_scene(data_root: Path, sequence_id: str, upto: int | None = None) -> dict:
     """Compose the whole scene a recording has LEARNED across its frames.
 
     Darkness only OCCLUDES, it never erases. Two evidence modes:
@@ -205,6 +205,10 @@ def learned_scene(data_root: Path, sequence_id: str) -> dict:
     frames = sorted((child for child in recording.iterdir()
                      if child.is_dir() and child.name.isdigit() and (child / "image.png").is_file()),
                     key=lambda path: int(path.name))
+    if upto is not None:
+        # Belief state AS OF a frame: compose only what had been seen up to (and including)
+        # that frame, so stepping through a recording shows the belief evolving.
+        frames = [frame for frame in frames if int(frame.name) <= upto]
     if not frames:
         raise ValueError("The recording has no frames.")
     width = height = None

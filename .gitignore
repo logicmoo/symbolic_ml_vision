@@ -7,6 +7,7 @@ data/omega_vision/recordings/**/geometry.json
 data/omega_vision/recordings/**/recognition.json
 data/omega_vision/recordings/**/deductions.json
 data/omega_vision/recordings/**/induction.json
+data/omega_vision/recordings/**/beliefs.json
 data/omega_vision/.crawler/
 
 # --- Python ---

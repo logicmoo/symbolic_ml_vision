@@ -128,8 +128,13 @@ def _get(path: str, query: str, data_root: Path) -> dict:
         params = _query_params(query)
         if len(params.get("sequence", [])) != 1:
             return _json(422, {"error": "Choose a recording sequence for the learned scene."})
+        upto = None
+        if params.get("upto"):
+            if len(params["upto"]) != 1 or not params["upto"][0].isdigit():
+                return _json(422, {"error": "upto must be a frame number."})
+            upto = int(params["upto"][0])
         try:
-            return _json(200, learned_scene(data_root, params["sequence"][0]))
+            return _json(200, learned_scene(data_root, params["sequence"][0], upto=upto))
         except ValueError as error:
             return _json(422, {"error": str(error)})
     if path == "/omega_vision/api/v1/induction":
@@ -149,12 +154,25 @@ def _get(path: str, query: str, data_root: Path) -> dict:
                         or any(child.is_dir() and child.name.isdigit() and (child / "image.png").is_file()
                                for child in recording.iterdir()))):
             return _json(404, {"error": "Unknown recording."})
+        # Tutorial mode: beliefs AS OF a frame (only evidence that has already happened).
+        upto = params.get("upto", [None])[0]
+        if upto is not None and upto.isdigit():
+            snapshot_path = recording / upto / "beliefs.json"
+            if snapshot_path.is_file():
+                try:
+                    return _json(200, {"sequenceId": sequence, "upto": int(upto),
+                                       "induction": json.loads(snapshot_path.read_text(encoding="utf-8")),
+                                       "scope": "as_of_frame",
+                                       "updated": snapshot_path.stat().st_mtime})
+                except (OSError, ValueError):
+                    pass  # fall through to the whole-recording summary
         induction_path = recording / "induction.json"
         if not induction_path.is_file():
             return _json(404, {"error": "The crawler has not induced this recording yet."})
         try:
             return _json(200, {"sequenceId": sequence,
                                "induction": json.loads(induction_path.read_text(encoding="utf-8")),
+                               "scope": "whole_recording",
                                "updated": induction_path.stat().st_mtime})
         except (OSError, ValueError):
             return _json(422, {"error": "induction.json is unreadable."})

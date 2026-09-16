@@ -196,7 +196,7 @@ def stabilize_result(result: dict, sequence_id: str, order: int) -> dict:
 RESERVED_INPUTS = ("image.png", "image.jpg", "image.jpeg", "state.json")
 
 _GENERATED_NAMES = ("regions.pl", "groups.pl", "acceptance.pl", "turtles.pl", "context.pl",
-                    "geometry.json", "recognition.json", "deductions.pl",
+                    "geometry.json", "recognition.json", "deductions.pl", "beliefs.json",
                     "induction.json", "induction.metta")
 _GENERATED_PATTERNS = (re.compile(r"^frame-[A-Za-z0-9_.-]+\.metta$"),
                        re.compile(r"^(regions|groups|acceptance|turtles|context|deductions)\.metta$"))
@@ -569,6 +569,37 @@ def _induce_implications(transitions: list[dict], priors: dict | None = None) ->
                                  }})
     implications.sort(key=lambda item: (-item["tv"]["strength"] * item["tv"]["confidence"],
                                         item["antecedent"], item["consequent"], item["delay"]))
+    # De-noise: definitional tautologies, duplicate bindings, and mirrored pairs.
+    # 1. A detector-entailed consequent is no discovery (attached is DEFINED as persisting
+    #    contact; bounce is DEFINED over moving entities; formation EMITS member_added).
+    definitional = {
+        "attached": {"contact"}, "carry": {"attached", "contact", "co_move", "moved"},
+        "collision": {"contact"}, "blocked": {"contact"},
+        "group_formed": {"member_added"}, "member_added": {"group_formed"},
+        "group_dissolved": {"member_removed"}, "member_removed": {"group_dissolved"},
+        "scaled": {"area_changed"}, "deformed": {"shape_changed"},
+        "bounce": {"moved"}, "turned": {"moved"}, "continue": {"moved"},
+        "accelerated": {"moved"}, "decelerated": {"moved"}, "start": {"moved"},
+        "entered": {"appeared"},
+    }
+    implications = [imp for imp in implications
+                    if imp["consequent"] not in definitional.get(imp["antecedent"], ())]
+    # 2. The sharper entity-bound rule supersedes its type-level duplicate.
+    entity_keys = {(imp["antecedent"], imp["consequent"], imp["delay"])
+                   for imp in implications if imp.get("binding") == "entity"}
+    implications = [imp for imp in implications if imp.get("binding") == "entity"
+                    or (imp["antecedent"], imp["consequent"], imp["delay"]) not in entity_keys]
+    # 3. Mirrored pairs (A=>B and B=>A) keep only the more informative direction.
+    best: dict = {}
+    for imp in implications:
+        key = (frozenset((imp["antecedent"], imp["consequent"])), imp["delay"], imp.get("binding"))
+        current = best.get(key)
+        rank = ((imp.get("lift") or 0), imp["tv"]["strength"], imp["tv"]["confidence"])
+        if current is None or rank > ((current.get("lift") or 0), current["tv"]["strength"], current["tv"]["confidence"]):
+            best[key] = imp
+    implications = sorted(best.values(),
+                          key=lambda item: (-item["tv"]["strength"] * item["tv"]["confidence"],
+                                            item["antecedent"], item["consequent"], item["delay"]))
     implications = implications[:60]
     # DEDUCTION chains (syllogism): strong A=>B and B=>C derive A=>C with NARS-style
     # composed truth (s = sA*sB, discounted confidence). Derived rules predict but never
@@ -884,6 +915,15 @@ def process_recording(recording: Path, *, pipeline: str = "prolog", stamp_epoch:
                 # Issue next-frame predictions from prior beliefs given what just happened.
                 pending_predictions = _predict_next(priors, deduced.get("events", []),
                                                     set(prev_velocities))
+                # TUTORIAL belief snapshot: what has been induced from the transitions seen
+                # SO FAR (no prior passes pooled in) - a student stepping to this frame sees
+                # only beliefs whose evidence has already happened.
+                snapshot = induce(transitions)
+                snapshot["upto"] = order
+                if _write(frame_dir / "beliefs.json",
+                          json.dumps(snapshot, ensure_ascii=True, indent=2) + "\n"):
+                    produced.append({"recording": recording_id, "frame": frame_id,
+                                     "file": (frame_dir / "beliefs.json").as_posix(), "kind": "json"})
                 if wrote_any or _needs([frame_dir / "deductions.pl", frame_dir / "deductions.metta"]):
                     for artifact in deduced.get("files", []):
                         if _write(frame_dir / artifact["name"], artifact["content"]):

@@ -17,7 +17,7 @@ button, a, select, input, canvas, summary { outline-offset: 4px; }
 .brand strong { font-weight: 650; }
 .local-badge { font-size: 12px; color: #c1cede; border: 1px solid #344154; padding: 8px 12px; border-radius: 20px; }
 .local-badge span { display: inline-block; background: #85d6b3; width: 7px; height: 7px; border-radius: 50%; margin-right: 6px; }
-main { max-width: 1680px; margin: auto; padding: 38px 4% 24px; }
+main { max-width: min(97vw, 2400px); margin: auto; padding: 38px 2% 24px; }
 .intro { display: flex; justify-content: space-between; align-items: center; gap: 24px; margin-bottom: 28px; }
 .eyebrow { font-size: 10px; font-weight: 750; letter-spacing: 2px; color: #5d77a3; margin: 0 0 11px; }
 h1 { margin: 0; color: #18273d; font-size: clamp(24px, 2.5vw, 34px); font-weight: 660; letter-spacing: -.8px; }

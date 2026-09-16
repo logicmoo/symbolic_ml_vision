@@ -1303,6 +1303,8 @@ async function loadDemoFrame() {
       history.replaceState(null, "", url);
       if (test) loadFrameGuide(test.id, sequence.id, frame.frameId, token);
       else clearFrameGuide();
+      void loadLearnedScene();  // belief state is per-frame now
+      void loadInduction();     // beliefs as of this frame (tutorial stepping)
       requestDemoAnalysis();
       void loadPrevPreview(sequence, Number(byId("demo-frame").value), token);
     }
@@ -2635,10 +2637,14 @@ async function loadInduction() {
   if (pageMode !== "demos" || !sequence) { sub.hidden = true; return; }
   const token = ++inductionRequest;
   try {
-    const data = await request(`/omega_vision/api/v1/induction?${new URLSearchParams({ sequence: sequence.id })}`);
+    const upto = String(Number(byId("demo-frame").value) || 0);
+    const data = await request(`/omega_vision/api/v1/induction?${new URLSearchParams({ sequence: sequence.id, upto })}`);
     if (token !== inductionRequest) return;
     const induction = data.induction || {};
     state.induction = induction;  // beliefs feed the live two-frame abduction
+    byId("induction-title").textContent = data.scope === "as_of_frame"
+      ? `Induction \u00b7 beliefs as of frame ${data.upto} (nothing from later frames)`
+      : "Induction \u00b7 whole-recording crawler knowledge (frame snapshots not built yet)";
     const body = byId("induction-body");
     body.replaceChildren();
     const line = (strong, rest) => {
@@ -2734,7 +2740,8 @@ async function loadLearnedScene() {
   if (pageMode !== "demos" || !sequence) { cell.hidden = true; return; }
   const token = ++sceneRequest;
   try {
-    const scene = await request(`/omega_vision/api/v1/scene?${new URLSearchParams({ sequence: sequence.id })}`);
+    const upto = String(Number(byId("demo-frame").value) || 0);
+    const scene = await request(`/omega_vision/api/v1/scene?${new URLSearchParams({ sequence: sequence.id, upto })}`);
     if (token !== sceneRequest) return;
     const image = await decodeDataImage(scene.scene);
     if (token !== sceneRequest) return;
@@ -2749,7 +2756,7 @@ async function loadLearnedScene() {
     const awaiting = scene.framesAwaitingReprocess?.length ? ` \u00b7 ${scene.framesAwaitingReprocess.length} awaiting reprocess` : "";
     const stale = scene.framesStale.length ? ` \u00b7 ${scene.framesStale.length} frames not cached yet` : "";
     const mode = scene.mode === "aperture" ? "union of everything the aperture revealed" : "last known position of every entity";
-    byId("scene-tag").textContent = `Scene memory \u00b7 ${scene.framesUsed.length} frames \u00b7 ${pct}% ever seen${awaiting}${stale}`;
+    byId("scene-tag").textContent = `Scene memory as of frame ${upto} \u00b7 ${scene.framesUsed.length} frames seen \u00b7 ${pct}% ever seen${awaiting}${stale}`;
     byId("scene-tag").title = `What the system currently believes the scene looks like after ${scene.framesUsed.length} frames (${mode}). ` +
       "Occlusion/darkness hides but never erases; areas never observed stay dark.";
     cell.hidden = false;

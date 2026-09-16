@@ -2611,29 +2611,32 @@ async function loadInduction() {
       return p;
     };
     const guesses = induction.guesses || [];
+    const tv = (g) => g.tv ? ` \u00b7 tv ${g.tv.strength.toFixed(2)}/${g.tv.confidence.toFixed(2)}` : "";
     const statics = guesses.filter((g) => g.kind === "static");
     const constant = guesses.filter((g) => g.kind === "constant_velocity");
     const variable = guesses.filter((g) => g.kind === "variable_motion");
     if (statics.length) {
       body.append(line(`static (${statics.length}):`,
-        statics.map((g) => `${g.entity} (${g.support}f)`).join(", ")));
+        statics.map((g) => `${g.entity} (${g.support}f${tv(g)}${g.exceptions?.length ? ` \u00b7 ${g.exceptions.length} exceptions` : ""})`).join(", ")));
     }
     for (const g of constant) {
-      body.append(line("constant velocity:", `${g.entity} moves (${g.dx}, ${g.dy}) px per frame \u00b7 ${g.support} frames`));
+      body.append(line("constant velocity:", `${g.entity} moves (${g.dx}, ${g.dy}) px per frame \u00b7 ${g.support} frames${tv(g)}`));
     }
     for (const g of variable) {
-      body.append(line("variable motion:", `${g.entity} \u00b7 ${g.vectors.length} distinct vectors over ${g.support} frames \u00b7 ` +
+      const dom = g.dominant ? ` dominant (${g.dominant[0]},${g.dominant[1]})` : "";
+      body.append(line("variable motion:", `${g.entity} \u00b7${dom} \u00b7 ${g.vectors.length} distinct vectors over ${g.support} frames${tv(g)} \u00b7 ` +
         g.vectors.slice(0, 4).map(([dx, dy]) => `(${dx},${dy})`).join(" ") + (g.vectors.length > 4 ? " \u2026" : "")));
     }
     for (const event of induction.recurring || []) {
-      body.append(line("recurring event:", `${event.event} \u00d7${event.count}`));
+      body.append(line("recurring event:", `${event.event} \u00d7${event.count}${tv(event)}`));
     }
     if (!body.children.length) {
       body.append(line("no inductive guesses yet.", `${induction.transitions ?? 0} transitions examined.`));
     } else {
       const note = document.createElement("p");
       note.className = "hint";
-      note.textContent = `${guesses.length} guesses from ${induction.transitions ?? "?"} transitions across the whole recording.`;
+      const history = induction.history?.length ? ` \u00b7 ${induction.history.length} earlier revisions kept` : "";
+      note.textContent = `${guesses.length} guesses from ${induction.transitions ?? "?"} transitions \u00b7 tv = strength/confidence from counted evidence${history}.`;
       body.append(note);
     }
     sub.hidden = false;

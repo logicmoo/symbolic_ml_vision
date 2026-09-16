@@ -8,6 +8,7 @@ induced across the whole sequence.
 """
 
 import base64
+from datetime import datetime, timezone
 import json
 import re
 from pathlib import Path
@@ -273,13 +274,23 @@ def _trim_result(result: dict) -> dict:
 
 # --- inductive guesses ---------------------------------------------------------------------
 
+def _tv(positives: int, total: int) -> dict:
+    """NARS/PLN-style truth value from counted evidence: strength is the positive-evidence
+    ratio, confidence grows with total evidence (evidential horizon k = 1)."""
+    strength = positives / total if total else 0.0
+    return {"strength": round(strength, 4), "confidence": round(total / (total + 1), 4),
+            "positives": positives, "negatives": total - positives}
+
+
 def induce(transitions: list[dict]) -> dict:
     """Generalise per-transition observations into inductive hypotheses about the sequence.
 
-    Guesses (not certainties): entities with a single consistent motion vector across every
-    transition they appear in, entities that never move, and events that recur.
+    Every guess carries counted evidence and a truth value: strength = share of
+    observations supporting the pattern, confidence = evidence volume n/(n+1).
+    Contradicting observations lower strength instead of silently discarding the guess.
     """
-    vectors: dict[str, set] = {}
+    from collections import Counter
+    vectors: dict[str, Counter] = {}
     seen: dict[str, int] = {}
     events: dict[str, int] = {}
     for step in transitions:
@@ -288,7 +299,7 @@ def induce(transitions: list[dict]) -> dict:
             if entity is None:
                 continue
             seen[entity] = seen.get(entity, 0) + 1
-            vectors.setdefault(entity, set()).add((match.get("dx", 0), match.get("dy", 0)))
+            vectors.setdefault(entity, Counter())[(match.get("dx", 0), match.get("dy", 0))] += 1
         for appeared in step.get("appeared", []):
             events["appeared"] = events.get("appeared", 0) + 1
             if appeared.get("revealedFrom"):
@@ -300,53 +311,115 @@ def induce(transitions: list[dict]) -> dict:
 
     guesses = []
     for entity in sorted(vectors):
-        vecs = vectors[entity]
-        if len(vecs) == 1:
-            dx, dy = next(iter(vecs))
-            if dx == 0 and dy == 0:
-                guesses.append({"kind": "static", "entity": entity, "support": seen[entity]})
-            else:
-                guesses.append({"kind": "constant_velocity", "entity": entity,
-                                "dx": dx, "dy": dy, "support": seen[entity]})
+        counts = vectors[entity]
+        total = sum(counts.values())
+        (dom_vec, dom_count), = counts.most_common(1)
+        tv = _tv(dom_count, total)
+        if dom_vec == (0, 0):
+            guesses.append({"kind": "static", "entity": entity, "support": total, "tv": tv,
+                            **({"exceptions": sorted(v for v in counts if v != (0, 0))}
+                               if len(counts) > 1 else {})})
+        elif len(counts) == 1:
+            guesses.append({"kind": "constant_velocity", "entity": entity,
+                            "dx": dom_vec[0], "dy": dom_vec[1], "support": total, "tv": tv})
         else:
             guesses.append({"kind": "variable_motion", "entity": entity,
-                            "vectors": sorted(vecs), "support": seen[entity]})
-    recurring = [{"kind": "recurring_event", "event": name, "count": count}
+                            "dominant": list(dom_vec), "vectors": sorted(counts),
+                            "vectorCounts": {f"{dx},{dy}": count for (dx, dy), count in sorted(counts.items())},
+                            "support": total, "tv": tv})
+    total_transitions = len(transitions)
+    recurring = [{"kind": "recurring_event", "event": name, "count": count,
+                  "tv": _tv(min(count, total_transitions), total_transitions)}
                  for name, count in sorted(events.items()) if count >= 2]
-    return {"guesses": guesses, "recurring": recurring, "transitions": len(transitions)}
+    return {"guesses": guesses, "recurring": recurring, "transitions": total_transitions}
 
 
-def _render_induction(recording_id: str, induction: dict, sources: list[str]) -> dict:
-    """Render the inductive summary as MeTTa, Prolog, and JSON (all guesses, never facts)."""
+def _render_induction(recording_id: str, induction: dict, sources: list[str],
+                      history: list | None = None) -> dict:
+    """Render the inductive summary as MeTTa, Prolog, and JSON (all guesses, never facts).
+
+    Every guess carries tv(Strength, Confidence) from counted evidence. Prior induction
+    revisions are preserved in the JSON history so beliefs stay historical, never erased.
+    """
+    def tv_of(item):
+        tv = item.get("tv") or {}
+        return tv.get("strength", 0.0), tv.get("confidence", 0.0)
+
     mt = ["; Inductive guesses across the whole sequence (predictions, not facts).",
+          "; Every guess carries (tv strength confidence) from counted evidence.",
           f"; sequence: {recording_id}"]
     for source in sources:  # aggregation provenance per the include-from/into convention
         mt.append(f";;; (did (include-from {source}))")
     pl = ["% Inductive guesses across the whole sequence (predictions, not facts).",
+          "% Every guess carries tv(Strength, Confidence) from counted evidence.",
           f"% sequence: {recording_id}"]
     for guess in induction["guesses"]:
+        s, c = tv_of(guess)
         if guess["kind"] == "constant_velocity":
-            e, dx, dy, s = guess["entity"], guess["dx"], guess["dy"], guess["support"]
-            mt.append(f"(guess (constant-velocity {e} (dxy {dx} {dy})) (support {s}))")
-            pl.append(f"guess(constant_velocity({e}, {dx}, {dy}), support({s})).")
+            e, dx, dy, n = guess["entity"], guess["dx"], guess["dy"], guess["support"]
+            mt.append(f"(guess (constant-velocity {e} (dxy {dx} {dy})) (tv {s} {c}) (support {n}))")
+            pl.append(f"guess(constant_velocity({e}, {dx}, {dy}), tv({s}, {c}), support({n})).")
         elif guess["kind"] == "static":
-            e, s = guess["entity"], guess["support"]
-            mt.append(f"(guess (static {e}) (support {s}))")
-            pl.append(f"guess(static({e}), support({s})).")
+            e, n = guess["entity"], guess["support"]
+            mt.append(f"(guess (static {e}) (tv {s} {c}) (support {n}))")
+            pl.append(f"guess(static({e}), tv({s}, {c}), support({n})).")
         else:
-            e, s = guess["entity"], guess["support"]
+            e, n = guess["entity"], guess["support"]
+            dom = guess.get("dominant") or [0, 0]
             vecs = " ".join(f"(dxy {dx} {dy})" for dx, dy in guess["vectors"])
-            mt.append(f"(guess (variable-motion {e} ({vecs})) (support {s}))")
-            pl.append(f"guess(variable_motion({e}), support({s})).")
+            mt.append(f"(guess (variable-motion {e} (dominant (dxy {dom[0]} {dom[1]})) ({vecs})) (tv {s} {c}) (support {n}))")
+            pl.append(f"guess(variable_motion({e}, dominant({dom[0]}, {dom[1]})), tv({s}, {c}), support({n})).")
     for item in induction["recurring"]:
-        mt.append(f"(guess (recurring-event {item['event']} (count {item['count']})))")
-        pl.append(f"guess(recurring_event({item['event']}, {item['count']})).")
-    payload = {"sequence": recording_id, **induction, "includeFrom": sources}
+        s, c = tv_of(item)
+        mt.append(f"(guess (recurring-event {item['event']} (count {item['count']})) (tv {s} {c}))")
+        pl.append(f"guess(recurring_event({item['event']}, {item['count']}), tv({s}, {c})).")
+    if history:
+        mt.append(f"; {len(history)} earlier induction revisions kept in induction.json")
+        pl.append(f"% {len(history)} earlier induction revisions kept in induction.json")
+    payload = {"sequence": recording_id, **induction, "includeFrom": sources,
+               "history": history or []}
     return {
         "induction.metta": "\n".join(mt) + "\n",
         "induction.pl": "\n".join(pl) + "\n",
         "induction.json": json.dumps(payload, ensure_ascii=True, indent=2) + "\n",
     }
+
+
+def _induction_history(recording: Path, induction: dict) -> list:
+    """Prior induction revisions, kept historical: the previous file's beliefs are appended
+    as a compact revision (entity/kind/tv/support) whenever the new beliefs differ. Bounded
+    to the most recent 12 revisions; nothing is ever silently rewritten away."""
+    previous_path = recording / "induction.json"
+    if not previous_path.is_file():
+        return []
+    try:
+        previous = json.loads(previous_path.read_text(encoding="utf-8"))
+    except (OSError, ValueError):
+        return []
+    if not isinstance(previous, dict):
+        return []
+    history = previous.get("history") if isinstance(previous.get("history"), list) else []
+
+    def digest(block: dict) -> list:
+        entries = []
+        for guess in block.get("guesses") or []:
+            tv = guess.get("tv") or {}
+            entries.append({"kind": guess.get("kind"), "entity": guess.get("entity"),
+                            "support": guess.get("support"),
+                            "tv": [tv.get("strength"), tv.get("confidence")]})
+        for item in block.get("recurring") or []:
+            tv = item.get("tv") or {}
+            entries.append({"kind": "recurring_event", "event": item.get("event"),
+                            "count": item.get("count"),
+                            "tv": [tv.get("strength"), tv.get("confidence")]})
+        return entries
+
+    if digest(previous) == digest(induction):
+        return history
+    revision = {"inducedAt": previous.get("inducedAt"),
+                "transitions": previous.get("transitions"),
+                "beliefs": digest(previous)}
+    return (history + [revision])[-12:]
 
 
 INCLUDE_INTO_PREFIX = ";;; (did (include-into "
@@ -484,9 +557,12 @@ def process_recording(recording: Path, *, pipeline: str = "prolog", stamp_epoch:
                 errors.append({"frame": frame_id, "stage": "metta-sidecar",
                                "file": pl_path.name, "error": str(error)})
 
-    # Inductive guesses across the whole sequence.
+    # Inductive guesses across the whole sequence, with counted-evidence truth values and
+    # the prior revision preserved in the historical record.
     induction = induce(transitions)
-    rendered = _render_induction(recording_id, induction, sorted(set(metta_sources)))
+    induction["inducedAt"] = datetime.now(timezone.utc).isoformat(timespec="seconds")
+    history = _induction_history(recording, induction)
+    rendered = _render_induction(recording_id, induction, sorted(set(metta_sources)), history)
     for name, text in rendered.items():
         path = recording / name
         if _write(path, text):

@@ -2630,6 +2630,10 @@ async function loadInduction() {
     for (const event of induction.recurring || []) {
       body.append(line("recurring event:", `${event.event} \u00d7${event.count}${tv(event)}`));
     }
+    for (const imp of induction.implications || []) {
+      const when = imp.delay === 0 ? "same frame" : "next frame";
+      body.append(line("implication:", `${imp.antecedent} \u21d2 ${imp.consequent} (${when})${tv(imp)} \u00b7 ${imp.support} obs`));
+    }
     if (!body.children.length) {
       body.append(line("no inductive guesses yet.", `${induction.transitions ?? 0} transitions examined.`));
     } else {

@@ -243,7 +243,7 @@ def _group_deductions(current_groups, previous_groups, move_by, occluded_e):
     return results
 
 
-def _emit_files(matches, appeared, disappeared, current_order, previous_order, groups=None, suggestions=None, explanations=None, user_action=None) -> list:
+def _emit_files(matches, appeared, disappeared, current_order, previous_order, groups=None, suggestions=None, explanations=None, user_action=None, events=None) -> list:
     """Emit the cross-frame deductions as MeTTa and Prolog files, using ONLY stable e#
     identities (r# never appears). Hypotheses are written as hypothesis/typed facts with
     confidences so consumers keep them as predictions, not certainties."""
@@ -345,17 +345,212 @@ def _emit_files(matches, appeared, disappeared, current_order, previous_order, g
         mt.append(f"(= (apparent-move-explained {mover} {pivot} {co}) (and (rotated {pivot} (degrees {deg}) (frame {co})) (moved {mover} (frame {co})) (near {mover} {pivot} (frame {co}))))")
         mt.append(f"(near {mover} {pivot} (frame {co}))")
         mt.append(f"(implies (apparent-move-explained {mover} {pivot} {co}) (not (independent-motion {mover} (frame {co}))))")
+    if events:
+        pl.append("% Event-vocabulary detections for this transition (evidence, not authored answers).")
+        mt.append("; Event-vocabulary detections for this transition.")
+        for ev in events:
+            args = ", ".join(ev["args"])
+            head = f"{ev['type']}({args})" if args else ev["type"]
+            pl.append(f"{ev['category']}({head}, frame({co})).")
+            matom = ev["type"].replace("_", "-")
+            margs = " ".join(ev["args"])
+            mt.append(f"({ev['category']} ({matom}{' ' + margs if margs else ''}) (frame {co}))")
     return [
         {"name": "deductions.metta", "content": "\n".join(mt) + "\n", "media_type": "text/plain; charset=utf-8"},
         {"name": "deductions.pl", "content": "\n".join(pl) + "\n", "media_type": "text/plain; charset=utf-8"},
     ]
 
 
+def _touches_border(bounds, width, height) -> bool:
+    if not bounds or type(width) not in (int, float) or type(height) not in (int, float):
+        return False
+    x, y, w, h = bounds
+    return x <= 0 or y <= 0 or x + w >= width or y + h >= height
+
+
+def _detect_events(curr, prev, matches, appeared, disappeared, groups, raw_curr, raw_prev,
+                   history, user_action, width, height):
+    """Detect every event/relation/state type in the shared event vocabulary that the
+    two-frame evidence supports. Each item: {category, type, args} (args pre-rendered).
+    Cross-transition kinds (bounce, start/end/continue, accelerated, blocked, reappeared)
+    use the caller-provided history of the PREVIOUS transition; without it they stay silent
+    rather than guessing."""
+    history = history if isinstance(history, dict) else {}
+    known = set(history.get("knownEntities") or [])
+    prev_vel = {k: tuple(v) for k, v in (history.get("previousVelocities") or {}).items()
+                if isinstance(v, (list, tuple)) and len(v) == 2}
+    events = []
+
+    def add(category, kind, *args):
+        events.append({"category": category, "type": kind, "args": [str(a) for a in args]})
+
+    curr_by_id = {c["id"]: c for c in curr}
+    prev_by_id = {p["id"]: p for p in prev}
+
+    # Current/previous frame contacts from the pipeline's pixel adjacency (foreground only).
+    def contact_pairs(raw, ids):
+        pairs = set()
+        for identifier, obj in raw.items():
+            for other in obj.get("adjacent_to") or []:
+                if other in ids and identifier in ids and other != identifier:
+                    pairs.add(tuple(sorted((identifier, other))))
+        return pairs
+    curr_contacts = contact_pairs(raw_curr, set(curr_by_id))
+    prev_contacts = contact_pairs(raw_prev, set(prev_by_id))
+
+    move_of = {}
+    for m in matches:
+        e = m["current"]
+        v = (m["dx"], m["dy"])
+        move_of[e] = v
+        moved_now = bool(v[0] or v[1])
+        raw_c, raw_p = raw_curr.get(e, {}), raw_prev.get(m["previous"], {})
+        occluded = bool(m.get("occludedBy"))
+        ratio = m.get("areaRatio")
+        same_shape = bool(m.get("sameShape"))
+        if moved_now:
+            add("event", "moved", e)
+        else:
+            add("state", "stationary", e)
+        add("state", "visible", e)
+        if m.get("rotationDeg") is not None and "rotated" in (m.get("transform") or ""):
+            add("event", "rotated", e)
+        if occluded:
+            add("relation", "occlude", m["occludedBy"], e)
+        c_color = curr_by_id[e]["color"] if e in curr_by_id else None
+        p_color = prev_by_id.get(m["previous"], {}).get("color")
+        if c_color and p_color and c_color != p_color:
+            add("event", "color_changed", e)
+        if not occluded and type(ratio) in (int, float) and ratio and not (0.9 <= ratio <= 1.1):
+            add("event", "area_changed", e)
+            if same_shape:
+                add("event", "scaled", e)
+        if not occluded and not same_shape and m.get("rotationDeg") is None:
+            add("event", "shape_changed", e)
+            if type(ratio) in (int, float) and 0.9 <= ratio <= 1.1:
+                add("event", "deformed", e)
+        holes_c, holes_p = raw_c.get("hole_count"), raw_p.get("hole_count")
+        if type(holes_c) is int and type(holes_p) is int and holes_c != holes_p:
+            add("event", "hole_opened" if holes_c > holes_p else "hole_closed", e)
+        # Cross-transition kinematics against the PREVIOUS transition's velocity.
+        v1 = prev_vel.get(e)
+        if v1 is not None:
+            was_moving = bool(v1[0] or v1[1])
+            if not was_moving and moved_now:
+                add("event", "start", e)
+            elif was_moving and not moved_now:
+                add("event", "end", e)
+            elif was_moving and moved_now:
+                reversal = (v1[0] * v[0] < 0) or (v1[1] * v[1] < 0)
+                dot = v1[0] * v[0] + v1[1] * v[1]
+                mag1 = (v1[0] ** 2 + v1[1] ** 2) ** 0.5
+                mag2 = (v[0] ** 2 + v[1] ** 2) ** 0.5
+                if reversal:
+                    add("event", "bounce", e)
+                else:
+                    cos = dot / (mag1 * mag2) if mag1 and mag2 else 1.0
+                    if cos >= 0.82:
+                        add("event", "continue", e)
+                    else:
+                        add("event", "turned", e)
+                if mag1 and mag2 / mag1 >= 1.5:
+                    add("event", "accelerated", e)
+                elif mag1 and mag2 / mag1 <= 0.67:
+                    add("event", "decelerated", e)
+        # blocked: was moving, stopped, and is now in contact with something.
+        if v1 and (v1[0] or v1[1]) and not moved_now:
+            for a, b in curr_contacts:
+                if e == a:
+                    add("relation", "blocked", e, b)
+                elif e == b:
+                    add("relation", "blocked", e, a)
+
+    for a, b in sorted(curr_contacts):
+        add("relation", "contact", a, b)
+        if (a, b) in prev_contacts:
+            add("relation", "attached", a, b)
+            va, vb = move_of.get(a), move_of.get(b)
+            if va and vb and va == vb and (va[0] or va[1]):
+                add("relation", "carry", a, b)
+        else:
+            va, vb = move_of.get(a), move_of.get(b)
+            if (va and (va[0] or va[1])) or (vb and (vb[0] or vb[1])):
+                add("event", "collision", a, b)
+    # co_move: same nonzero vector this transition.
+    co_moved = {}
+    for e, v in move_of.items():
+        if v[0] or v[1]:
+            co_moved.setdefault(v, []).append(e)
+    for members in co_moved.values():
+        members = sorted(members)
+        for i, a in enumerate(members):
+            for b in members[i + 1:]:
+                add("relation", "co_move", a, b)
+    # follow: an entity moved into the spot another vacated this transition.
+    for m in matches:
+        va = move_of.get(m["current"])
+        if not va or not (va[0] or va[1]):
+            continue
+        for other in matches:
+            if other is m:
+                continue
+            vb = move_of.get(other["current"])
+            if not vb or not (vb[0] or vb[1]):
+                continue
+            prev_other = prev_by_id.get(other["previous"])
+            if not prev_other:
+                continue
+            pox, poy = _centroid(prev_other)
+            if ((m["cx"] - pox) ** 2 + (m["cy"] - poy) ** 2) ** 0.5 <= 6:
+                add("relation", "follow", m["current"], other["current"])
+
+    for a in appeared:
+        e = a["current"]
+        add("event", "reappeared" if e in known else "appeared", e)
+        add("state", "visible", e)
+        bounds = curr_by_id.get(e, {}).get("bounds")
+        if _touches_border(bounds, width, height):
+            add("event", "entered", e)
+        # split heuristic: revealed from a shrinking entity.
+        revealer = a.get("revealedFrom")
+        if revealer:
+            source = next((m for m in matches if m["current"] == revealer), None)
+            if source and type(source.get("areaRatio")) in (int, float) and source["areaRatio"] < 0.9:
+                add("event", "split", revealer, revealer, e)
+    for d in disappeared:
+        e = d["previous"]
+        add("state", "absent", e)
+        bounds = prev_by_id.get(e, {}).get("bounds")
+        occluder = d.get("occludedBy")
+        if _touches_border(bounds, width, height) and not occluder:
+            add("event", "exited", e)
+        elif not occluder:
+            add("event", "missing", e)
+        # merged heuristic: swallowed by a growing occluder.
+        if occluder:
+            sink = next((m for m in matches if m["current"] == occluder), None)
+            if sink and type(sink.get("areaRatio")) in (int, float) and sink["areaRatio"] > 1.1:
+                add("event", "merged", e, occluder, occluder)
+    for g in (groups or []):
+        gid = g["id"]
+        if g.get("new"):
+            add("event", "group_formed", gid)
+        if g.get("gone"):
+            add("event", "group_dissolved", gid)
+        for e in g.get("gained", []):
+            add("event", "member_added", gid, e)
+        for e in g.get("lost", []):
+            add("event", "member_removed", gid, e)
+    if user_action:
+        add("action", "user_input", json.dumps(user_action, ensure_ascii=False))
+    return events
+
+
 def deduce_two_frames(current: object, previous: object, *, width: object = None,
                       height: object = None, current_order: object = None,
                       previous_order: object = None, current_groups: object = None,
                       previous_groups: object = None, min_score: float = 1.5,
-                      user_action: object = None) -> dict:
+                      user_action: object = None, history: object = None) -> dict:
     if user_action is not None and (not isinstance(user_action, str) or not user_action
                                     or len(user_action) > 128):
         raise ValueError("user_action must be a nonempty string when provided.")
@@ -537,5 +732,11 @@ def deduce_two_frames(current: object, previous: object, *, width: object = None
     result["suggestedGroups"] = suggestions
     if user_action:
         result["userAction"] = user_action
-    result["files"] = _emit_files(matches, appeared, disappeared, current_order, previous_order, groups, suggestions, explanations, user_action)
+    # Vocabulary-wide event/relation/state detection over the same evidence.
+    raw_curr = {o.get("id"): o for o in (current or {}).get("objects", []) if isinstance(o, dict)}
+    raw_prev = {o.get("id"): o for o in (previous or {}).get("objects", []) if isinstance(o, dict)}
+    events = _detect_events(curr, prev, matches, appeared, disappeared, groups,
+                            raw_curr, raw_prev, history, user_action, width, height)
+    result["events"] = events
+    result["files"] = _emit_files(matches, appeared, disappeared, current_order, previous_order, groups, suggestions, explanations, user_action, events)
     return result

@@ -50,6 +50,7 @@ def deduce2_from_payload(payload: object) -> dict:
     current_order = payload.get("currentOrder")
     previous_order = payload.get("previousOrder")
     user_action = payload.get("userAction")
+    history = payload.get("history") if isinstance(payload.get("history"), dict) else None
     if (isinstance(sequence_id, str) and sequence_id and type(current_order) is int
             and type(previous_order) is int and isinstance(current, dict) and isinstance(previous, dict)):
         width, height = payload.get("width"), payload.get("height")
@@ -61,7 +62,9 @@ def deduce2_from_payload(payload: object) -> dict:
         track_frame(sequence_id, current_order, current.get("objects") or [], width, height)
         cmap = tracker_mapping(sequence_id, current_order)
         pmap = {} if virtual_previous else tracker_mapping(sequence_id, previous_order)
-        relabel = lambda objs, m: [{**o, "id": m.get(o.get("id"), o.get("id")), "nativeId": o.get("id")} for o in objs]
+        relabel = lambda objs, m: [{**o, "id": m.get(o.get("id"), o.get("id")), "nativeId": o.get("id"),
+                                    "adjacent_to": [m.get(x, x) for x in (o.get("adjacent_to") or [])]}
+                                   for o in objs]
         current = {"objects": relabel(current.get("objects") or [], cmap)}
         previous = {"objects": relabel(previous.get("objects") or [], pmap)}
         map_groups = lambda gs, m: {layer: [sorted({m.get(r, r) for r in members})
@@ -84,8 +87,8 @@ def deduce2_from_payload(payload: object) -> dict:
                                  current_order=current_order, previous_order=previous_order,
                                  current_groups=_with_ids(cur_groups, cur_gids),
                                  previous_groups=_with_ids(prev_groups, prev_gids),
-                                 user_action=user_action)
-    return deduce_two_frames(current, previous, user_action=user_action)
+                                 user_action=user_action, history=history)
+    return deduce_two_frames(current, previous, user_action=user_action, history=history)
 
 
 # --- recording discovery -------------------------------------------------------------------
@@ -331,7 +334,59 @@ def induce(transitions: list[dict]) -> dict:
     recurring = [{"kind": "recurring_event", "event": name, "count": count,
                   "tv": _tv(min(count, total_transitions), total_transitions)}
                  for name, count in sorted(events.items()) if count >= 2]
-    return {"guesses": guesses, "recurring": recurring, "transitions": total_transitions}
+    implications = _induce_implications(transitions)
+    return {"guesses": guesses, "recurring": recurring, "implications": implications,
+            "transitions": total_transitions}
+
+
+def _induce_implications(transitions: list[dict]) -> list[dict]:
+    """Induce implications BETWEEN event types from their co-occurrence across transitions.
+
+    For every pair of observed event/relation/action types: same-transition implication
+    A => B and next-transition implication A => B(t+1), each with a counted-evidence truth
+    value (strength = P(B|A), confidence = n/(n+1) over occurrences of A). States are
+    excluded (too common to be informative). Bounded to the strongest 40.
+    """
+    def type_key(event):
+        if event.get("category") == "action":
+            return f"user_input({(event.get('args') or ['?'])[0].strip(chr(34))})"
+        return event.get("type")
+
+    frames = []
+    for step in transitions:
+        kinds = {type_key(ev) for ev in step.get("events", [])
+                 if ev.get("category") in ("event", "relation", "action")}
+        frames.append(kinds)
+    if len(frames) < 2:
+        return []
+    from collections import Counter
+    occur: Counter = Counter()
+    together: Counter = Counter()
+    successive: Counter = Counter()
+    for index, kinds in enumerate(frames):
+        for a in kinds:
+            occur[a] += 1
+            for b in kinds:
+                if a != b:
+                    together[(a, b)] += 1
+            if index + 1 < len(frames):
+                for b in frames[index + 1]:
+                    if a != b:
+                        successive[(a, b)] += 1
+    implications = []
+    for (counter, delay) in ((together, 0), (successive, 1)):
+        for (a, b), count in counter.items():
+            n = occur[a]
+            if n < 2:
+                continue
+            tv = _tv(count, n)
+            if tv["strength"] < 0.5:
+                continue
+            implications.append({"kind": "implication", "antecedent": a, "consequent": b,
+                                 "delay": delay, "support": n, "tv": tv})
+    implications.sort(key=lambda item: (-item["tv"]["strength"] * item["tv"]["confidence"],
+                                        item["antecedent"], item["consequent"], item["delay"]))
+    return implications[:40]
 
 
 def _render_induction(recording_id: str, induction: dict, sources: list[str],
@@ -373,6 +428,13 @@ def _render_induction(recording_id: str, induction: dict, sources: list[str],
         s, c = tv_of(item)
         mt.append(f"(guess (recurring-event {item['event']} (count {item['count']})) (tv {s} {c}))")
         pl.append(f"guess(recurring_event({item['event']}, {item['count']}), tv({s}, {c})).")
+    for imp in induction.get("implications", []):
+        s, c = tv_of(imp)
+        a, b, delay, n = imp["antecedent"], imp["consequent"], imp["delay"], imp["support"]
+        when = "same_frame" if delay == 0 else "next_frame"
+        mt.append(f"(guess (implies {a.replace('_', '-').replace('(', ' ').replace(')', '')} "
+                  f"{b.replace('_', '-').replace('(', ' ').replace(')', '')} ({when.replace('_', '-')})) (tv {s} {c}) (support {n}))")
+        pl.append(f"guess(implies({a}, {b}, {when}), tv({s}, {c}), support({n})).")
     if history:
         mt.append(f"; {len(history)} earlier induction revisions kept in induction.json")
         pl.append(f"% {len(history)} earlier induction revisions kept in induction.json")
@@ -411,6 +473,12 @@ def _induction_history(recording: Path, induction: dict) -> list:
             tv = item.get("tv") or {}
             entries.append({"kind": "recurring_event", "event": item.get("event"),
                             "count": item.get("count"),
+                            "tv": [tv.get("strength"), tv.get("confidence")]})
+        for imp in block.get("implications") or []:
+            tv = imp.get("tv") or {}
+            entries.append({"kind": "implication", "antecedent": imp.get("antecedent"),
+                            "consequent": imp.get("consequent"), "delay": imp.get("delay"),
+                            "support": imp.get("support"),
                             "tv": [tv.get("strength"), tv.get("confidence")]})
         return entries
 
@@ -458,6 +526,8 @@ def process_recording(recording: Path, *, pipeline: str = "prolog", stamp_epoch:
     prev_result = None
     prev_order = None
     prev_raw = None
+    known_entities: set = set()
+    prev_velocities: dict = {}
     metta_sources: list[str] = []
 
     def _needs(paths: list[Path]) -> bool:
@@ -530,8 +600,15 @@ def process_recording(recording: Path, *, pipeline: str = "prolog", stamp_epoch:
                     "currentOrder": order, "previousOrder": previous_order,
                     "width": result["width"], "height": result["height"],
                     "userAction": context.get("incoming_action"),
+                    "history": {"knownEntities": sorted(known_entities),
+                                "previousVelocities": prev_velocities},
                 })
                 transitions.append(deduced)
+                # Feed the next transition's cross-frame detectors (bounce, start/end,
+                # reappeared): current velocities and every stable entity seen so far.
+                prev_velocities = {m["current"]: [m["dx"], m["dy"]] for m in deduced.get("matches", [])}
+                known_entities.update(prev_velocities)
+                known_entities.update(a["current"] for a in deduced.get("appeared", []))
                 if wrote_any or _needs([frame_dir / "deductions.pl", frame_dir / "deductions.metta"]):
                     for artifact in deduced.get("files", []):
                         if _write(frame_dir / artifact["name"], artifact["content"]):

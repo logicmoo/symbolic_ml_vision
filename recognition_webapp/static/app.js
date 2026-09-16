@@ -2668,10 +2668,36 @@ async function loadInduction() {
     for (const event of induction.recurring || []) {
       body.append(line("recurring event:", `${event.event} \u00d7${event.count}${tv(event)}`));
     }
-    for (const imp of induction.implications || []) {
+    const imps = induction.implications || [];
+    const whyText = (imp) => {
+      const why = imp.evidence || {};
+      if (imp.derived) return `Deduced from [${why.premise1}] and [${why.premise2}] (${why.rule}).`;
+      const hits = why.supportFrames || [];
+      let text = `${imp.antecedent} observed at transitions [${(why.antecedentFrames || []).join(",")}]; ` +
+        `${imp.consequent} followed at [${hits.join(",")}] (${hits.length} hits, ${why.misses ?? "?"} misses). ` +
+        `Base rate of ${imp.consequent} = ${why.consequentBaseRate}; lift ${imp.lift}. ` +
+        `Prior evidence pooled: ${JSON.stringify(why.priorEvidence)}.`;
+      if (why.witnesses?.length) text += ` Witnessed by ${why.witnesses.join(", ")}.`;
+      return text;
+    };
+    for (const imp of imps.slice(0, 12)) {
       const when = imp.delay === 0 ? "same frame" : "next frame";
-      const extras = `${imp.binding === "entity" ? " \u00b7 entity-bound" : ""}${imp.derived ? ` \u00b7 deduced via ${imp.via}` : ""}`;
-      body.append(line("implication:", `${imp.antecedent} \u21d2 ${imp.consequent} (${when})${extras}${tv(imp)} \u00b7 ${imp.support} obs`));
+      const extras = `${imp.binding === "entity" ? " \u00b7 entity-bound" : ""}${imp.derived ? ` \u00b7 deduced via ${imp.via}` : ""}${imp.lift ? ` \u00b7 lift ${imp.lift}` : ""}`;
+      const row = line("implication:", `${imp.antecedent} \u21d2 ${imp.consequent} (${when})${extras}${tv(imp)} \u00b7 ${imp.support} obs`);
+      body.append(row);
+      // The why is always visible, indented under its implication.
+      const detail = document.createElement("p");
+      detail.className = "hint why-detail";
+      detail.style.margin = "0 0 6px 18px";
+      detail.style.opacity = "0.8";
+      detail.textContent = `why: ${whyText(imp)}`;
+      body.append(detail);
+    }
+    if (imps.length > 12) {
+      const more = document.createElement("p");
+      more.className = "hint";
+      more.textContent = `+ ${imps.length - 12} weaker implications in induction.json.`;
+      body.append(more);
     }
     for (const h of induction.abductions || []) {
       body.append(line("abduced:", `${h.hypothesis} would explain ${h.explains} (${h.when.replaceAll("_", " ")})${tv(h)} \u00d7${h.count}`));

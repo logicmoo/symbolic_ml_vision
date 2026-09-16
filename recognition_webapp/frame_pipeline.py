@@ -454,16 +454,22 @@ def _induce_implications(transitions: list[dict], priors: dict | None = None) ->
     occur: Counter = Counter()
     together: Counter = Counter()
     successive: Counter = Counter()
+    occur_frames: dict = {}
+    together_frames: dict = {}
+    successive_frames: dict = {}
     for index, kinds in enumerate(frames):
         for a in kinds:
             occur[a] += 1
+            occur_frames.setdefault(a, []).append(index)
             for b in kinds:
                 if a != b:
                     together[(a, b)] += 1
+                    together_frames.setdefault((a, b), []).append(index)
             if index + 1 < len(frames):
                 for b in frames[index + 1]:
                     if a != b:
                         successive[(a, b)] += 1
+                        successive_frames.setdefault((a, b), []).append(index)
     # Prior evidence pooling: the previous pass's counted evidence joins this pass's,
     # capped per pair so no single history dominates forever. Derived (deduced) rules
     # never pool as observational evidence.
@@ -478,17 +484,33 @@ def _induce_implications(transitions: list[dict], priors: dict | None = None) ->
                    imp.get("binding"))
             prior_evidence[key] = (min(pos, 100), min(pos + neg, 100))
     implications = []
-    for (counter, delay) in ((together, 0), (successive, 1)):
+    total_frames = len(frames)
+    for (counter, count_frames, delay) in ((together, together_frames, 0),
+                                           (successive, successive_frames, 1)):
         for (a, b), count in counter.items():
             n = occur[a]
             if n < 2:
                 continue
+            base_rate = occur[b] / total_frames
             prior_pos, prior_n = prior_evidence.get((a, b, delay, None), (0, 0))
             tv = _tv(count + prior_pos, n + prior_n)
-            if tv["strength"] < 0.5:
+            # Informativeness gates: the consequent must not be near-universal (base rate),
+            # knowing A must actually raise the odds of B (lift), and user input is never a
+            # consequent (it is exogenous; the interesting direction is user_input => effect).
+            if (tv["strength"] < 0.5 or base_rate >= 0.95 or tv["strength"] < base_rate * 1.2
+                    or b.startswith("user_input(")):
                 continue
             implications.append({"kind": "implication", "antecedent": a, "consequent": b,
-                                 "delay": delay, "support": n + prior_n, "tv": tv})
+                                 "delay": delay, "support": n + prior_n,
+                                 "lift": round(tv["strength"] / base_rate, 2) if base_rate else None,
+                                 "tv": tv,
+                                 "evidence": {
+                                     "antecedentFrames": sorted(set(occur_frames.get(a, [])))[:20],
+                                     "supportFrames": sorted(set(count_frames.get((a, b), [])))[:20],
+                                     "misses": n - count,
+                                     "consequentBaseRate": round(base_rate, 4),
+                                     "priorEvidence": [prior_pos, prior_n],
+                                 }})
     # ENTITY-BOUND induction: A(e) => B(e) for the same entity, a sharper causal rule than
     # type-level co-occurrence (e.g. collision(e) => bounce(e), not just collision => bounce).
     entity_frames = []
@@ -501,28 +523,50 @@ def _induce_implications(transitions: list[dict], priors: dict | None = None) ->
     e_occur: Counter = Counter()
     e_together: Counter = Counter()
     e_successive: Counter = Counter()
+    e_occur_frames: dict = {}
+    e_together_frames: dict = {}
+    e_successive_frames: dict = {}
+    e_witnesses: dict = {}
     for index, bound in enumerate(entity_frames):
         for (ta, ea) in bound:
             e_occur[ta] += 1
+            e_occur_frames.setdefault(ta, []).append(index)
             for (tb, eb) in bound:
                 if ea == eb and ta != tb:
                     e_together[(ta, tb)] += 1
+                    e_together_frames.setdefault((ta, tb), []).append(index)
+                    e_witnesses.setdefault((ta, tb, 0), set()).add(ea)
             if index + 1 < len(entity_frames):
                 for (tb, eb) in entity_frames[index + 1]:
                     if ea == eb and ta != tb:
                         e_successive[(ta, tb)] += 1
-    for (counter, delay) in ((e_together, 0), (e_successive, 1)):
+                        e_successive_frames.setdefault((ta, tb), []).append(index)
+                        e_witnesses.setdefault((ta, tb, 1), set()).add(ea)
+    for (counter, count_frames, delay) in ((e_together, e_together_frames, 0),
+                                           (e_successive, e_successive_frames, 1)):
         for (a, b), count in counter.items():
             n = e_occur[a]
             if n < 2:
                 continue
+            base_rate = occur.get(b, 0) / total_frames
             prior_pos, prior_n = prior_evidence.get((a, b, delay, "entity"), (0, 0))
             tv = _tv(count + prior_pos, n + prior_n)
-            if tv["strength"] < 0.5:
+            if (tv["strength"] < 0.5 or base_rate >= 0.95 or tv["strength"] < base_rate * 1.2
+                    or b.startswith("user_input(")):
                 continue
             implications.append({"kind": "implication", "antecedent": a, "consequent": b,
                                  "delay": delay, "binding": "entity",
-                                 "support": n + prior_n, "tv": tv})
+                                 "support": n + prior_n,
+                                 "lift": round(tv["strength"] / base_rate, 2) if base_rate else None,
+                                 "tv": tv,
+                                 "evidence": {
+                                     "antecedentFrames": sorted(set(e_occur_frames.get(a, [])))[:20],
+                                     "supportFrames": sorted(set(count_frames.get((a, b), [])))[:20],
+                                     "misses": n - count,
+                                     "consequentBaseRate": round(base_rate, 4),
+                                     "priorEvidence": [prior_pos, prior_n],
+                                     "witnesses": sorted(e_witnesses.get((a, b, delay), set()))[:8],
+                                 }})
     implications.sort(key=lambda item: (-item["tv"]["strength"] * item["tv"]["confidence"],
                                         item["antecedent"], item["consequent"], item["delay"]))
     implications = implications[:60]
@@ -556,6 +600,11 @@ def _derive_chains(implications: list[dict]) -> list[dict]:
                             "delay": delay, "support": min(first["support"], second["support"]),
                             "derived": "deduction",
                             "via": first["consequent"],
+                            "evidence": {
+                                "premise1": f"{first['antecedent']}=>{first['consequent']} (delay {first['delay']}) tv {tv1['strength']}/{tv1['confidence']}",
+                                "premise2": f"{second['antecedent']}=>{second['consequent']} (delay {second['delay']}) tv {tv2['strength']}/{tv2['confidence']}",
+                                "rule": "NARS deduction: s=s1*s2, c=c1*c2*0.9",
+                            },
                             "tv": {"strength": strength, "confidence": confidence,
                                    "positives": 0, "negatives": 0}})
             existing.add((a, c, delay))
@@ -613,6 +662,20 @@ def _render_induction(recording_id: str, induction: dict, sources: list[str],
                   f"{' entity-bound' if imp.get('binding') == 'entity' else ''}"
                   f"{' derived' if imp.get('derived') else ''})) (tv {s} {c}) (support {n}))")
         pl.append(f"guess(implies({a}, {b}, {when}{binding}{derived}), tv({s}, {c}), support({n})).")
+        why = imp.get("evidence") or {}
+        if imp.get("derived"):
+            reason = f"deduced from [{why.get('premise1')}] and [{why.get('premise2')}] by {why.get('rule')}"
+        else:
+            hits = why.get("supportFrames", [])
+            reason = (f"{a} observed at transitions {why.get('antecedentFrames', [])}; "
+                      f"{b} followed at {hits} ({len(hits)} hits, {why.get('misses', 0)} misses); "
+                      f"base rate of {b} = {why.get('consequentBaseRate')}, lift {imp.get('lift')}; "
+                      f"prior evidence {why.get('priorEvidence')}")
+            witnesses = why.get("witnesses")
+            if witnesses:
+                reason += f"; witnessed by entities {witnesses}"
+        pl.append(f"%   why: {reason}")
+        mt.append(f"; why: {reason}")
     for h in induction.get("abductions", []):
         s, c = tv_of(h)
         mt.append(f"(guess (abducible {h['hypothesis'].replace('_', '-')} (explains {h['explains'].replace('_', '-')}) "

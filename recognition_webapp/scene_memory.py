@@ -258,9 +258,17 @@ def learned_scene(data_root: Path, sequence_id: str) -> dict:
             if rid in background:
                 continue  # darkness occludes; it never erases scene memory
             rgb = _hex_rgb(color)
+            # A mover VACATES its previous cells: erase this entity's old pixels first so
+            # motion leaves no smeared trail (the wall stays; the box shows only where it
+            # is now known to be). Other entities' remembered pixels are untouched.
+            for y in range(height):
+                row = scene[y]
+                for x in range(width):
+                    if row[x] is not None and row[x][1] == rid:
+                        row[x] = None
             for x, y in cells:
                 if 0 <= x < width and 0 <= y < height:
-                    scene[y][x] = rgb
+                    scene[y][x] = (rgb, rid)
         frames_used.append(frame_dir.name)
     if scene is None:
         raise ValueError("No fresh cached recognition for this recording yet; the crawler "
@@ -273,8 +281,10 @@ def learned_scene(data_root: Path, sequence_id: str) -> dict:
     for y in range(height):
         row = scene[y]
         for x in range(width):
-            if row[x] is not None:
-                px[x, y] = row[x]
+            value = row[x]
+            if value is not None:
+                # symbolic cells carry (rgb, owner-id); aperture cells carry plain rgb
+                px[x, y] = value[0] if len(value) == 2 and isinstance(value[1], str) else value
                 revealed += 1
     buffer = BytesIO()
     image.save(buffer, format="PNG")

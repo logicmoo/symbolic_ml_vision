@@ -1,0 +1,456 @@
+{
+  "description": "Action-bearing observation sequence; recognition has not run and evaluator information is separate.",
+  "fixture_suite": "action-mechanism-recordings-v1",
+  "game_directory": "events_tests",
+  "game_id": "events_tests",
+  "kind": "arc3_play_recording",
+  "last_event": "fixture_created",
+  "level": "1",
+  "level_directory": "data/recordings/events_tests/teleporter_train_delayed_lines_v2",
+  "moves": [
+    {
+      "action": null,
+      "at_seconds": 0.0,
+      "data": {},
+      "directory": "data/recordings/events_tests/teleporter_train_delayed_lines_v2/0",
+      "index": 0,
+      "level": "1",
+      "recorded_at": "2000-01-01T00:00:00Z",
+      "state": "NOT_FINISHED"
+    },
+    {
+      "action": "RIGHT",
+      "at_seconds": 0.25,
+      "data": {},
+      "directory": "data/recordings/events_tests/teleporter_train_delayed_lines_v2/1",
+      "index": 1,
+      "level": "1",
+      "recorded_at": "2000-01-01T00:00:00Z",
+      "state": "NOT_FINISHED"
+    },
+    {
+      "action": "RIGHT",
+      "at_seconds": 0.5,
+      "data": {},
+      "directory": "data/recordings/events_tests/teleporter_train_delayed_lines_v2/2",
+      "index": 2,
+      "level": "1",
+      "recorded_at": "2000-01-01T00:00:00Z",
+      "state": "NOT_FINISHED"
+    },
+    {
+      "action": "RIGHT",
+      "at_seconds": 0.75,
+      "data": {},
+      "directory": "data/recordings/events_tests/teleporter_train_delayed_lines_v2/3",
+      "index": 3,
+      "level": "1",
+      "recorded_at": "2000-01-01T00:00:00Z",
+      "state": "NOT_FINISHED"
+    },
+    {
+      "action": "RIGHT",
+      "at_seconds": 1.0,
+      "data": {},
+      "directory": "data/recordings/events_tests/teleporter_train_delayed_lines_v2/4",
+      "index": 4,
+      "level": "1",
+      "recorded_at": "2000-01-01T00:00:00Z",
+      "state": "NOT_FINISHED"
+    },
+    {
+      "action": "RIGHT",
+      "at_seconds": 1.25,
+      "data": {},
+      "directory": "data/recordings/events_tests/teleporter_train_delayed_lines_v2/5",
+      "index": 5,
+      "level": "1",
+      "recorded_at": "2000-01-01T00:00:00Z",
+      "state": "NOT_FINISHED"
+    },
+    {
+      "action": "RIGHT",
+      "at_seconds": 1.5,
+      "data": {},
+      "directory": "data/recordings/events_tests/teleporter_train_delayed_lines_v2/6",
+      "index": 6,
+      "level": "1",
+      "recorded_at": "2000-01-01T00:00:00Z",
+      "state": "NOT_FINISHED"
+    },
+    {
+      "action": "RIGHT",
+      "at_seconds": 1.75,
+      "data": {},
+      "directory": "data/recordings/events_tests/teleporter_train_delayed_lines_v2/7",
+      "index": 7,
+      "level": "1",
+      "recorded_at": "2000-01-01T00:00:00Z",
+      "state": "NOT_FINISHED"
+    },
+    {
+      "action": "RIGHT",
+      "at_seconds": 2.0,
+      "data": {},
+      "directory": "data/recordings/events_tests/teleporter_train_delayed_lines_v2/8",
+      "index": 8,
+      "level": "1",
+      "recorded_at": "2000-01-01T00:00:00Z",
+      "state": "NOT_FINISHED"
+    },
+    {
+      "action": "RIGHT",
+      "at_seconds": 2.25,
+      "data": {},
+      "directory": "data/recordings/events_tests/teleporter_train_delayed_lines_v2/9",
+      "index": 9,
+      "level": "1",
+      "recorded_at": "2000-01-01T00:00:00Z",
+      "state": "NOT_FINISHED"
+    },
+    {
+      "action": "RIGHT",
+      "at_seconds": 2.5,
+      "data": {},
+      "directory": "data/recordings/events_tests/teleporter_train_delayed_lines_v2/10",
+      "index": 10,
+      "level": "1",
+      "recorded_at": "2000-01-01T00:00:00Z",
+      "state": "NOT_FINISHED"
+    },
+    {
+      "action": "RIGHT",
+      "at_seconds": 2.75,
+      "data": {},
+      "directory": "data/recordings/events_tests/teleporter_train_delayed_lines_v2/11",
+      "index": 11,
+      "level": "1",
+      "recorded_at": "2000-01-01T00:00:00Z",
+      "state": "NOT_FINISHED"
+    },
+    {
+      "action": "RIGHT",
+      "at_seconds": 3.0,
+      "data": {},
+      "directory": "data/recordings/events_tests/teleporter_train_delayed_lines_v2/12",
+      "index": 12,
+      "level": "1",
+      "recorded_at": "2000-01-01T00:00:00Z",
+      "state": "NOT_FINISHED"
+    },
+    {
+      "action": "RIGHT",
+      "at_seconds": 3.25,
+      "data": {},
+      "directory": "data/recordings/events_tests/teleporter_train_delayed_lines_v2/13",
+      "index": 13,
+      "level": "1",
+      "recorded_at": "2000-01-01T00:00:00Z",
+      "state": "NOT_FINISHED"
+    },
+    {
+      "action": "RIGHT",
+      "at_seconds": 3.5,
+      "data": {},
+      "directory": "data/recordings/events_tests/teleporter_train_delayed_lines_v2/14",
+      "index": 14,
+      "level": "1",
+      "recorded_at": "2000-01-01T00:00:00Z",
+      "state": "NOT_FINISHED"
+    },
+    {
+      "action": "RIGHT",
+      "at_seconds": 3.75,
+      "data": {},
+      "directory": "data/recordings/events_tests/teleporter_train_delayed_lines_v2/15",
+      "index": 15,
+      "level": "1",
+      "recorded_at": "2000-01-01T00:00:00Z",
+      "state": "NOT_FINISHED"
+    },
+    {
+      "action": "RIGHT",
+      "at_seconds": 4.0,
+      "data": {},
+      "directory": "data/recordings/events_tests/teleporter_train_delayed_lines_v2/16",
+      "index": 16,
+      "level": "1",
+      "recorded_at": "2000-01-01T00:00:00Z",
+      "state": "NOT_FINISHED"
+    },
+    {
+      "action": "RIGHT",
+      "at_seconds": 4.25,
+      "data": {},
+      "directory": "data/recordings/events_tests/teleporter_train_delayed_lines_v2/17",
+      "index": 17,
+      "level": "1",
+      "recorded_at": "2000-01-01T00:00:00Z",
+      "state": "NOT_FINISHED"
+    },
+    {
+      "action": "RIGHT",
+      "at_seconds": 4.5,
+      "data": {},
+      "directory": "data/recordings/events_tests/teleporter_train_delayed_lines_v2/18",
+      "index": 18,
+      "level": "1",
+      "recorded_at": "2000-01-01T00:00:00Z",
+      "state": "NOT_FINISHED"
+    },
+    {
+      "action": "RIGHT",
+      "at_seconds": 4.75,
+      "data": {},
+      "directory": "data/recordings/events_tests/teleporter_train_delayed_lines_v2/19",
+      "index": 19,
+      "level": "1",
+      "recorded_at": "2000-01-01T00:00:00Z",
+      "state": "NOT_FINISHED"
+    },
+    {
+      "action": null,
+      "at_seconds": 5.0,
+      "data": {},
+      "directory": "data/recordings/events_tests/teleporter_train_delayed_lines_v2/20",
+      "index": 20,
+      "level": "1",
+      "recorded_at": "2000-01-01T00:00:00Z",
+      "state": "NOT_FINISHED"
+    },
+    {
+      "action": null,
+      "at_seconds": 5.25,
+      "data": {},
+      "directory": "data/recordings/events_tests/teleporter_train_delayed_lines_v2/21",
+      "index": 21,
+      "level": "1",
+      "recorded_at": "2000-01-01T00:00:00Z",
+      "state": "NOT_FINISHED"
+    },
+    {
+      "action": null,
+      "at_seconds": 5.5,
+      "data": {},
+      "directory": "data/recordings/events_tests/teleporter_train_delayed_lines_v2/22",
+      "index": 22,
+      "level": "1",
+      "recorded_at": "2000-01-01T00:00:00Z",
+      "state": "NOT_FINISHED"
+    },
+    {
+      "action": null,
+      "at_seconds": 5.75,
+      "data": {},
+      "directory": "data/recordings/events_tests/teleporter_train_delayed_lines_v2/23",
+      "index": 23,
+      "level": "1",
+      "recorded_at": "2000-01-01T00:00:00Z",
+      "state": "NOT_FINISHED"
+    },
+    {
+      "action": "RIGHT",
+      "at_seconds": 6.0,
+      "data": {},
+      "directory": "data/recordings/events_tests/teleporter_train_delayed_lines_v2/24",
+      "index": 24,
+      "level": "1",
+      "recorded_at": "2000-01-01T00:00:00Z",
+      "state": "NOT_FINISHED"
+    },
+    {
+      "action": "LEFT",
+      "at_seconds": 6.25,
+      "data": {},
+      "directory": "data/recordings/events_tests/teleporter_train_delayed_lines_v2/25",
+      "index": 25,
+      "level": "1",
+      "recorded_at": "2000-01-01T00:00:00Z",
+      "state": "NOT_FINISHED"
+    },
+    {
+      "action": "LEFT",
+      "at_seconds": 6.5,
+      "data": {},
+      "directory": "data/recordings/events_tests/teleporter_train_delayed_lines_v2/26",
+      "index": 26,
+      "level": "1",
+      "recorded_at": "2000-01-01T00:00:00Z",
+      "state": "NOT_FINISHED"
+    },
+    {
+      "action": "LEFT",
+      "at_seconds": 6.75,
+      "data": {},
+      "directory": "data/recordings/events_tests/teleporter_train_delayed_lines_v2/27",
+      "index": 27,
+      "level": "1",
+      "recorded_at": "2000-01-01T00:00:00Z",
+      "state": "NOT_FINISHED"
+    },
+    {
+      "action": "LEFT",
+      "at_seconds": 7.0,
+      "data": {},
+      "directory": "data/recordings/events_tests/teleporter_train_delayed_lines_v2/28",
+      "index": 28,
+      "level": "1",
+      "recorded_at": "2000-01-01T00:00:00Z",
+      "state": "NOT_FINISHED"
+    },
+    {
+      "action": "LEFT",
+      "at_seconds": 7.25,
+      "data": {},
+      "directory": "data/recordings/events_tests/teleporter_train_delayed_lines_v2/29",
+      "index": 29,
+      "level": "1",
+      "recorded_at": "2000-01-01T00:00:00Z",
+      "state": "NOT_FINISHED"
+    },
+    {
+      "action": null,
+      "at_seconds": 7.5,
+      "data": {},
+      "directory": "data/recordings/events_tests/teleporter_train_delayed_lines_v2/30",
+      "index": 30,
+      "level": "1",
+      "recorded_at": "2000-01-01T00:00:00Z",
+      "state": "NOT_FINISHED"
+    },
+    {
+      "action": null,
+      "at_seconds": 7.75,
+      "data": {},
+      "directory": "data/recordings/events_tests/teleporter_train_delayed_lines_v2/31",
+      "index": 31,
+      "level": "1",
+      "recorded_at": "2000-01-01T00:00:00Z",
+      "state": "NOT_FINISHED"
+    },
+    {
+      "action": null,
+      "at_seconds": 8.0,
+      "data": {},
+      "directory": "data/recordings/events_tests/teleporter_train_delayed_lines_v2/32",
+      "index": 32,
+      "level": "1",
+      "recorded_at": "2000-01-01T00:00:00Z",
+      "state": "NOT_FINISHED"
+    },
+    {
+      "action": null,
+      "at_seconds": 8.25,
+      "data": {},
+      "directory": "data/recordings/events_tests/teleporter_train_delayed_lines_v2/33",
+      "index": 33,
+      "level": "1",
+      "recorded_at": "2000-01-01T00:00:00Z",
+      "state": "NOT_FINISHED"
+    },
+    {
+      "action": "RIGHT",
+      "at_seconds": 8.5,
+      "data": {},
+      "directory": "data/recordings/events_tests/teleporter_train_delayed_lines_v2/34",
+      "index": 34,
+      "level": "1",
+      "recorded_at": "2000-01-01T00:00:00Z",
+      "state": "NOT_FINISHED"
+    },
+    {
+      "action": "RIGHT",
+      "at_seconds": 8.75,
+      "data": {},
+      "directory": "data/recordings/events_tests/teleporter_train_delayed_lines_v2/35",
+      "index": 35,
+      "level": "1",
+      "recorded_at": "2000-01-01T00:00:00Z",
+      "state": "NOT_FINISHED"
+    },
+    {
+      "action": "RIGHT",
+      "at_seconds": 9.0,
+      "data": {},
+      "directory": "data/recordings/events_tests/teleporter_train_delayed_lines_v2/36",
+      "index": 36,
+      "level": "1",
+      "recorded_at": "2000-01-01T00:00:00Z",
+      "state": "NOT_FINISHED"
+    },
+    {
+      "action": "RIGHT",
+      "at_seconds": 9.25,
+      "data": {},
+      "directory": "data/recordings/events_tests/teleporter_train_delayed_lines_v2/37",
+      "index": 37,
+      "level": "1",
+      "recorded_at": "2000-01-01T00:00:00Z",
+      "state": "NOT_FINISHED"
+    },
+    {
+      "action": null,
+      "at_seconds": 9.5,
+      "data": {},
+      "directory": "data/recordings/events_tests/teleporter_train_delayed_lines_v2/38",
+      "index": 38,
+      "level": "1",
+      "recorded_at": "2000-01-01T00:00:00Z",
+      "state": "NOT_FINISHED"
+    },
+    {
+      "action": null,
+      "at_seconds": 9.75,
+      "data": {},
+      "directory": "data/recordings/events_tests/teleporter_train_delayed_lines_v2/39",
+      "index": 39,
+      "level": "1",
+      "recorded_at": "2000-01-01T00:00:00Z",
+      "state": "NOT_FINISHED"
+    },
+    {
+      "action": null,
+      "at_seconds": 10.0,
+      "data": {},
+      "directory": "data/recordings/events_tests/teleporter_train_delayed_lines_v2/40",
+      "index": 40,
+      "level": "1",
+      "recorded_at": "2000-01-01T00:00:00Z",
+      "state": "NOT_FINISHED"
+    },
+    {
+      "action": null,
+      "at_seconds": 10.25,
+      "data": {},
+      "directory": "data/recordings/events_tests/teleporter_train_delayed_lines_v2/41",
+      "index": 41,
+      "level": "1",
+      "recorded_at": "2000-01-01T00:00:00Z",
+      "state": "NOT_FINISHED"
+    },
+    {
+      "action": "RIGHT",
+      "at_seconds": 10.5,
+      "data": {},
+      "directory": "data/recordings/events_tests/teleporter_train_delayed_lines_v2/42",
+      "index": 42,
+      "level": "1",
+      "recorded_at": "2000-01-01T00:00:00Z",
+      "state": "NOT_FINISHED"
+    },
+    {
+      "action": "RIGHT",
+      "at_seconds": 10.75,
+      "data": {},
+      "directory": "data/recordings/events_tests/teleporter_train_delayed_lines_v2/43",
+      "index": 43,
+      "level": "1",
+      "recorded_at": "2000-01-01T00:00:00Z",
+      "state": "NOT_FINISHED"
+    }
+  ],
+  "session_id": null,
+  "source": "synthetic_action_mechanism_tests",
+  "started_at": "2000-01-01T00:00:00Z",
+  "updated_at": "2000-01-01T00:00:00Z"
+}

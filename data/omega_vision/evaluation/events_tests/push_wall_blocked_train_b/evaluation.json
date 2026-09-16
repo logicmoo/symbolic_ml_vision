@@ -1,0 +1,477 @@
+{
+  "authoredWorld": {
+    "doorCells": {},
+    "immovable": [],
+    "inertia": false,
+    "mechanism": "none",
+    "plateCells": {},
+    "removableWalls": [
+      [
+        6,
+        3
+      ]
+    ],
+    "responseDelaySeconds": 1.5,
+    "timerSeconds": 4.0,
+    "wiring": {}
+  },
+  "controlInterpretation": "Training example. Push up to the wall and repeat blocked attempts, click the actual barrier, then push through the now-clear destination. Trace: plate occupancy=not applicable; crate movement=present; door changes=not applicable; wall removal=present.",
+  "expectedAssessment": "requires_evaluation",
+  "fixtureConventions": {
+    "canvas": {
+      "cellPixels": 8,
+      "height": 64,
+      "width": 96
+    },
+    "delayedResponse": "transport_delay_for_each_occupancy_edge",
+    "doors": "filled_red_closed_or_green_hollow_open",
+    "inertia": "three_post_impulse_steps_at_0.5_1.5_3.0_seconds_unless_blocked",
+    "motion": "one_grid_cell_per_directional_attempt_when_clear",
+    "occupancy": "actor_or_crate_cell_equals_plate_cell",
+    "status": "evaluator_only_not_a_runtime_predicate_schema"
+  },
+  "frames": [
+    {
+      "actor": [
+        10,
+        3
+      ],
+      "atSeconds": 0.0,
+      "crates": {
+        "crate": [
+          8,
+          3
+        ]
+      },
+      "doorOpen": {},
+      "frameId": "0",
+      "momentum": {},
+      "pendingEffects": [],
+      "plateOccupancy": {},
+      "sha256": "ffac6be789e9adf77def20bfb9c5c68710dc2b30b6b630b96cdd769caffeb472",
+      "walls": [
+        [
+          6,
+          3
+        ]
+      ]
+    },
+    {
+      "actor": [
+        10,
+        3
+      ],
+      "atSeconds": 1.0,
+      "crates": {
+        "crate": [
+          8,
+          3
+        ]
+      },
+      "doorOpen": {},
+      "frameId": "1",
+      "momentum": {},
+      "pendingEffects": [],
+      "plateOccupancy": {},
+      "sha256": "ffac6be789e9adf77def20bfb9c5c68710dc2b30b6b630b96cdd769caffeb472",
+      "walls": [
+        [
+          6,
+          3
+        ]
+      ]
+    },
+    {
+      "actor": [
+        10,
+        3
+      ],
+      "atSeconds": 2.0,
+      "crates": {
+        "crate": [
+          8,
+          3
+        ]
+      },
+      "doorOpen": {},
+      "frameId": "2",
+      "momentum": {},
+      "pendingEffects": [],
+      "plateOccupancy": {},
+      "sha256": "ffac6be789e9adf77def20bfb9c5c68710dc2b30b6b630b96cdd769caffeb472",
+      "walls": [
+        [
+          6,
+          3
+        ]
+      ]
+    },
+    {
+      "actor": [
+        9,
+        3
+      ],
+      "atSeconds": 3.0,
+      "crates": {
+        "crate": [
+          8,
+          3
+        ]
+      },
+      "doorOpen": {},
+      "frameId": "3",
+      "momentum": {},
+      "pendingEffects": [],
+      "plateOccupancy": {},
+      "sha256": "37397530cdf087ed57b0a430703944c24f057326cfe2d6d7839f947cba94ee2b",
+      "walls": [
+        [
+          6,
+          3
+        ]
+      ]
+    },
+    {
+      "actor": [
+        8,
+        3
+      ],
+      "atSeconds": 4.0,
+      "crates": {
+        "crate": [
+          7,
+          3
+        ]
+      },
+      "doorOpen": {},
+      "frameId": "4",
+      "momentum": {},
+      "pendingEffects": [],
+      "plateOccupancy": {},
+      "sha256": "ec0e1abccf5175e84605d8d236b4159dd2f50cc154aa5d3f262d710175412752",
+      "walls": [
+        [
+          6,
+          3
+        ]
+      ]
+    },
+    {
+      "actor": [
+        8,
+        3
+      ],
+      "atSeconds": 5.0,
+      "crates": {
+        "crate": [
+          7,
+          3
+        ]
+      },
+      "doorOpen": {},
+      "frameId": "5",
+      "momentum": {},
+      "pendingEffects": [],
+      "plateOccupancy": {},
+      "sha256": "ec0e1abccf5175e84605d8d236b4159dd2f50cc154aa5d3f262d710175412752",
+      "walls": [
+        [
+          6,
+          3
+        ]
+      ]
+    },
+    {
+      "actor": [
+        8,
+        3
+      ],
+      "atSeconds": 6.0,
+      "crates": {
+        "crate": [
+          7,
+          3
+        ]
+      },
+      "doorOpen": {},
+      "frameId": "6",
+      "momentum": {},
+      "pendingEffects": [],
+      "plateOccupancy": {},
+      "sha256": "ec0e1abccf5175e84605d8d236b4159dd2f50cc154aa5d3f262d710175412752",
+      "walls": [
+        [
+          6,
+          3
+        ]
+      ]
+    },
+    {
+      "actor": [
+        8,
+        3
+      ],
+      "atSeconds": 7.0,
+      "crates": {
+        "crate": [
+          7,
+          3
+        ]
+      },
+      "doorOpen": {},
+      "frameId": "7",
+      "momentum": {},
+      "pendingEffects": [],
+      "plateOccupancy": {},
+      "sha256": "ec0e1abccf5175e84605d8d236b4159dd2f50cc154aa5d3f262d710175412752",
+      "walls": [
+        [
+          6,
+          3
+        ]
+      ]
+    },
+    {
+      "actor": [
+        8,
+        3
+      ],
+      "atSeconds": 8.0,
+      "crates": {
+        "crate": [
+          7,
+          3
+        ]
+      },
+      "doorOpen": {},
+      "frameId": "8",
+      "momentum": {},
+      "pendingEffects": [],
+      "plateOccupancy": {},
+      "sha256": "ec0e1abccf5175e84605d8d236b4159dd2f50cc154aa5d3f262d710175412752",
+      "walls": [
+        [
+          6,
+          3
+        ]
+      ]
+    },
+    {
+      "actor": [
+        8,
+        3
+      ],
+      "atSeconds": 9.0,
+      "crates": {
+        "crate": [
+          7,
+          3
+        ]
+      },
+      "doorOpen": {},
+      "frameId": "9",
+      "momentum": {},
+      "pendingEffects": [],
+      "plateOccupancy": {},
+      "sha256": "ec0e1abccf5175e84605d8d236b4159dd2f50cc154aa5d3f262d710175412752",
+      "walls": [
+        [
+          6,
+          3
+        ]
+      ]
+    },
+    {
+      "actor": [
+        8,
+        3
+      ],
+      "atSeconds": 10.0,
+      "crates": {
+        "crate": [
+          7,
+          3
+        ]
+      },
+      "doorOpen": {},
+      "frameId": "10",
+      "momentum": {},
+      "pendingEffects": [],
+      "plateOccupancy": {},
+      "sha256": "ec0e1abccf5175e84605d8d236b4159dd2f50cc154aa5d3f262d710175412752",
+      "walls": [
+        [
+          6,
+          3
+        ]
+      ]
+    },
+    {
+      "actor": [
+        8,
+        3
+      ],
+      "atSeconds": 11.0,
+      "crates": {
+        "crate": [
+          7,
+          3
+        ]
+      },
+      "doorOpen": {},
+      "frameId": "11",
+      "momentum": {},
+      "pendingEffects": [],
+      "plateOccupancy": {},
+      "sha256": "c9c33260fe3b50ae5b1a57b220a44a64d7ef732ddbf22c40abadd797c93360cb",
+      "walls": []
+    },
+    {
+      "actor": [
+        7,
+        3
+      ],
+      "atSeconds": 12.0,
+      "crates": {
+        "crate": [
+          6,
+          3
+        ]
+      },
+      "doorOpen": {},
+      "frameId": "12",
+      "momentum": {},
+      "pendingEffects": [],
+      "plateOccupancy": {},
+      "sha256": "69c874365e770f6ce26dc357ea29c8b2e270d514101d03d52aa37197d92056fd",
+      "walls": []
+    },
+    {
+      "actor": [
+        6,
+        3
+      ],
+      "atSeconds": 13.0,
+      "crates": {
+        "crate": [
+          5,
+          3
+        ]
+      },
+      "doorOpen": {},
+      "frameId": "13",
+      "momentum": {},
+      "pendingEffects": [],
+      "plateOccupancy": {},
+      "sha256": "8876848349ef8f13617af0eb1941797bf0d3eecf4f7fe0dfbb07f8bb45d50fd5",
+      "walls": []
+    },
+    {
+      "actor": [
+        7,
+        3
+      ],
+      "atSeconds": 14.0,
+      "crates": {
+        "crate": [
+          5,
+          3
+        ]
+      },
+      "doorOpen": {},
+      "frameId": "14",
+      "momentum": {},
+      "pendingEffects": [],
+      "plateOccupancy": {},
+      "sha256": "68b925a709f8c92230f56cfe9c9819f71ea5ebb60593a548479f0e30550e736e",
+      "walls": []
+    },
+    {
+      "actor": [
+        7,
+        3
+      ],
+      "atSeconds": 15.0,
+      "crates": {
+        "crate": [
+          5,
+          3
+        ]
+      },
+      "doorOpen": {},
+      "frameId": "15",
+      "momentum": {},
+      "pendingEffects": [],
+      "plateOccupancy": {},
+      "sha256": "68b925a709f8c92230f56cfe9c9819f71ea5ebb60593a548479f0e30550e736e",
+      "walls": []
+    },
+    {
+      "actor": [
+        7,
+        3
+      ],
+      "atSeconds": 16.0,
+      "crates": {
+        "crate": [
+          5,
+          3
+        ]
+      },
+      "doorOpen": {},
+      "frameId": "16",
+      "momentum": {},
+      "pendingEffects": [],
+      "plateOccupancy": {},
+      "sha256": "68b925a709f8c92230f56cfe9c9819f71ea5ebb60593a548479f0e30550e736e",
+      "walls": []
+    },
+    {
+      "actor": [
+        7,
+        3
+      ],
+      "atSeconds": 17.0,
+      "crates": {
+        "crate": [
+          5,
+          3
+        ]
+      },
+      "doorOpen": {},
+      "frameId": "17",
+      "momentum": {},
+      "pendingEffects": [],
+      "plateOccupancy": {},
+      "sha256": "68b925a709f8c92230f56cfe9c9819f71ea5ebb60593a548479f0e30550e736e",
+      "walls": []
+    },
+    {
+      "actor": [
+        7,
+        3
+      ],
+      "atSeconds": 18.0,
+      "crates": {
+        "crate": [
+          5,
+          3
+        ]
+      },
+      "doorOpen": {},
+      "frameId": "18",
+      "momentum": {},
+      "pendingEffects": [],
+      "plateOccupancy": {},
+      "sha256": "68b925a709f8c92230f56cfe9c9819f71ea5ebb60593a548479f0e30550e736e",
+      "walls": []
+    }
+  ],
+  "groundTruthIsRecognizerInput": false,
+  "origin": "synthetic_world_step_evaluator",
+  "partition": "training",
+  "recognizerStatus": "not_run",
+  "schemaVersion": 1,
+  "suiteId": "documented-recording-tests-v1",
+  "testId": "push_wall_blocked"
+}

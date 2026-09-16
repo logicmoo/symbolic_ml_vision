@@ -1,0 +1,131 @@
+{
+  "canvas": {
+    "background": [
+      0,
+      0,
+      0
+    ],
+    "height": 48,
+    "width": 64
+  },
+  "caseId": "moved",
+  "comparisonPolicy": {
+    "eventMatching": "required_subset_after_independent_entity_alignment",
+    "groundTruthIsRecognizerInput": false,
+    "incidentalEventsAllowed": true,
+    "initialFrame": "baseline_only"
+  },
+  "description": "One translation, with no intended shape or color change.",
+  "entityIds": [
+    "actor"
+  ],
+  "expectedAssessment": null,
+  "expectedEvents": [
+    {
+      "display": "moved(actor)",
+      "fromFrameId": "0",
+      "target": "moved",
+      "term": {
+        "args": [
+          "actor"
+        ],
+        "predicate": "moved"
+      },
+      "toFrameId": "1"
+    }
+  ],
+  "fixtureArgumentConventions": {
+    "group_member": [
+      "member",
+      "group"
+    ],
+    "member_added": [
+      "member",
+      "group"
+    ],
+    "member_removed": [
+      "member",
+      "group"
+    ],
+    "merged": [
+      "source_a",
+      "source_b",
+      "result"
+    ],
+    "split": [
+      "source",
+      "child_a",
+      "child_b"
+    ],
+    "status": "fixture_conventions_not_a_new_runtime_schema"
+  },
+  "frames": [
+    {
+      "atSeconds": 0,
+      "authoredAnnotations": [],
+      "authoredObjects": [
+        {
+          "color": [
+            0,
+            116,
+            217
+          ],
+          "entity": "actor",
+          "mask": [
+            "111111",
+            "111111",
+            "111111",
+            "111111",
+            "111111",
+            "111111"
+          ],
+          "x": 12,
+          "y": 20
+        }
+      ],
+      "caption": "Actor at reference position.",
+      "frameId": "0",
+      "frameOrder": 0,
+      "image": "data/recordings/events_tests/moved/0/image.png",
+      "sha256": "f22d75a4f02aea8de982bb402e6a034383d0019622ec6966c2e79d1c64bc8862"
+    },
+    {
+      "atSeconds": 1,
+      "authoredAnnotations": [],
+      "authoredObjects": [
+        {
+          "color": [
+            0,
+            116,
+            217
+          ],
+          "entity": "actor",
+          "mask": [
+            "111111",
+            "111111",
+            "111111",
+            "111111",
+            "111111",
+            "111111"
+          ],
+          "x": 16,
+          "y": 20
+        }
+      ],
+      "caption": "Actor translated four pixels right.",
+      "frameId": "1",
+      "frameOrder": 1,
+      "image": "data/recordings/events_tests/moved/1/image.png",
+      "sha256": "3b15030a44d8c538adfee2225a2305e0c73e9db0c28e8cc567bdc95ef0245f5e"
+    }
+  ],
+  "origin": "authored_synthetic_test_oracle",
+  "recognizerStatus": "not_run",
+  "requirements": [
+    "Stable identity is an authored oracle; the tracker must establish its own correspondence."
+  ],
+  "sampleIntervalSeconds": 1,
+  "schemaVersion": 1,
+  "sequenceId": "data/recordings/events_tests/moved",
+  "suiteId": "event-mini-recordings-v1"
+}

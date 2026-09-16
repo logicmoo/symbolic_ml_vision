@@ -1,0 +1,71 @@
+{
+  "description": "A third piece joins an existing two-member assembly. Includes independent observations before the membership change.",
+  "expected_events_file": "expected_events.json",
+  "fixture_suite": "event-mini-recordings-v1",
+  "game_directory": "events_tests",
+  "game_id": "events_tests",
+  "kind": "arc3_play_recording",
+  "last_event": "fixture_created",
+  "level": "1",
+  "level_directory": "data/recordings/events_tests/member_added_history_v2",
+  "moves": [
+    {
+      "action": null,
+      "data": {},
+      "directory": "data/recordings/events_tests/member_added_history_v2/0",
+      "index": 0,
+      "level": "1",
+      "recorded_at": "2000-01-01T00:00:00Z",
+      "state": "NOT_FINISHED"
+    },
+    {
+      "action": "FRAME",
+      "data": {},
+      "directory": "data/recordings/events_tests/member_added_history_v2/1",
+      "index": 1,
+      "level": "1",
+      "recorded_at": "2000-01-01T00:00:00Z",
+      "state": "NOT_FINISHED"
+    },
+    {
+      "action": "FRAME",
+      "data": {},
+      "directory": "data/recordings/events_tests/member_added_history_v2/2",
+      "index": 2,
+      "level": "1",
+      "recorded_at": "2000-01-01T00:00:00Z",
+      "state": "NOT_FINISHED"
+    },
+    {
+      "action": "FRAME",
+      "data": {},
+      "directory": "data/recordings/events_tests/member_added_history_v2/3",
+      "index": 3,
+      "level": "1",
+      "recorded_at": "2000-01-01T00:00:00Z",
+      "state": "NOT_FINISHED"
+    },
+    {
+      "action": "FRAME",
+      "data": {},
+      "directory": "data/recordings/events_tests/member_added_history_v2/4",
+      "index": 4,
+      "level": "1",
+      "recorded_at": "2000-01-01T00:00:00Z",
+      "state": "NOT_FINISHED"
+    },
+    {
+      "action": "FRAME",
+      "data": {},
+      "directory": "data/recordings/events_tests/member_added_history_v2/5",
+      "index": 5,
+      "level": "1",
+      "recorded_at": "2000-01-01T00:00:00Z",
+      "state": "NOT_FINISHED"
+    }
+  ],
+  "session_id": null,
+  "source": "synthetic_event_tests",
+  "started_at": "2000-01-01T00:00:00Z",
+  "updated_at": "2000-01-01T00:00:00Z"
+}

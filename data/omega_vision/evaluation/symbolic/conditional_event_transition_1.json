@@ -1,0 +1,23 @@
+{
+  "output": {
+    "events": [],
+    "predictions": [
+      {
+        "authoritative": false,
+        "due_order": {
+          "max": 11,
+          "min": 11
+        },
+        "proofs": [
+          "conditional-rule"
+        ],
+        "term": {
+          "args": [
+            "actor"
+          ],
+          "predicate": "rotated"
+        }
+      }
+    ]
+  }
+}

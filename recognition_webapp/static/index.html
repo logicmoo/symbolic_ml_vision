@@ -1,0 +1,279 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#101725">
+  <title>Vision demos</title>
+  <link rel="stylesheet" href="/style.css">
+  <link rel="stylesheet" href="/clause_explorer.css">
+  <script src="/clause_explorer.js" defer></script>
+  <script src="/app.js" defer></script>
+</head>
+<body data-page="demos">
+  <header class="topbar">
+    <a class="brand" href="/" aria-label="Recognition Studio home"><span class="brand-mark" aria-hidden="true">&#9638;</span> Recognition <strong>Studio</strong></a>
+    <nav aria-label="Pages"><a class="demos-link" href="/">Demos</a><a class="shapes-link" href="/shapes">Shapes</a></nav>
+    <span class="local-badge"><span></span> Local &middot; no cloud</span>
+  </header>
+  <main>
+    <section class="intro">
+      <div><p class="eyebrow" id="page-eyebrow">OMEGA VISION / RECORDED DEMOS</p><h1 id="page-title">Explore your demo tests.</h1>
+        <p id="page-description">Step through recorded frames, inspect the pipeline output, and compare the authored expectations.</p></div>
+      <button id="download" class="secondary" disabled>Export result JSON <span aria-hidden="true">&#8599;</span></button>
+    </section>
+    <div class="studio">
+      <nav id="section-nav" class="section-nav only-demos" aria-label="Section navigation"></nav>
+      <div class="studio-content" id="studio-content">
+      <details class="input-panel panel" id="config-panel" open>
+        <summary class="panel-collapse-summary"><span class="section-label"><span class="step">01</span><h2>Input &amp; configuration</h2></span><span class="collapse-caret" aria-hidden="true">&#9662;</span></summary>
+        <div class="config-body">
+        <div id="task-control" class="field only-demos">
+          <label for="demo-test">Task</label>
+          <select id="demo-test" disabled><option>Loading recorded demos...</option></select>
+          <p id="demo-description" class="hint"></p>
+        </div>
+        <label class="upload-zone only-shapes" id="drop-zone" for="image-file">
+          <span class="upload-icon" aria-hidden="true">&#8593;</span>
+          <strong>Drop an image here</strong>
+          <span>or choose a file</span>
+          <small>PNG, JPEG, WebP &middot; up to 10 MB</small>
+        </label>
+        <input id="image-file" type="file" accept="image/png,image/jpeg,image/webp" class="file-input only-shapes">
+        <div class="field only-shapes">
+          <label for="example">Or use a quick shape example</label>
+          <select id="example" disabled><option>Loading examples...</option></select>
+          <p id="example-description" class="hint"></p>
+        </div>
+        <div class="divider only-shapes"></div>
+        <div id="pipeline-control" class="field">
+          <label for="pipeline">Recognition pipeline</label>
+          <select id="pipeline">
+            <option value="opencv">OpenCV + Prolog groups / turtles</option>
+            <option value="prolog">Prolog shapes + groups / turtles</option>
+            <option value="geometry">Geometry only (fast grid)</option>
+          </select>
+          <p id="pipeline-availability" class="hint">Checking OpenCV and SWI-Prolog...</p>
+        </div>
+        <div class="field" id="tolerance-field"><label for="tolerance">OpenCV color tolerance</label><input id="tolerance" type="number" min="1" max="64" value="24"></div>
+        <div class="field" id="strong-edge-field"><label for="strong-edge-min">W shared-edge floor (% of smaller perimeter)</label><input id="strong-edge-min" type="number" min="1" max="100" value="1"></div>
+        <div class="field" id="old-edge-field"><label for="old-edge-pct">G consensus: old-engine floor (%)</label><input id="old-edge-pct" type="number" min="1" max="100" value="25"></div>
+        <div class="field" id="crack-angle-field"><label for="crack-angle-tol">Crack angle tolerance (&deg; from 180)</label><input id="crack-angle-tol" type="number" min="0" max="90" value="40"></div>
+        <div class="field" id="upscale-field"><label for="upscale">Region upscale (turtle detail)</label>
+          <select id="upscale">
+            <option value="1">1&times; (off)</option>
+            <option value="2">2&times;</option>
+            <option value="3">3&times;</option>
+            <option value="4">4&times;</option>
+          </select>
+        </div>
+        <div class="field" id="w-engine-field">
+          <label for="w-engine">W grouping engine</label>
+          <select id="w-engine">
+            <option value="crack" selected>Crack continuity (~180&deg; junction)</option>
+            <option value="new">Solo cutout &rarr; own W</option>
+            <option value="old">Original group_regions.pl</option>
+          </select>
+        </div>
+        <div class="field only-shapes"><label for="background">Background to ignore</label><select id="background"></select></div>
+        <div class="field only-shapes">
+          <label>Paint a color</label>
+          <div id="palette" class="swatches" role="group" aria-label="Paint colors"></div>
+          <p class="hint">Click or drag across the grid to edit. Background acts as an eraser.</p>
+        </div>
+        <button id="recognize" class="primary" disabled><span id="recognize-label">Run again</span><span aria-hidden="true">&#8594;</span></button>
+        <p class="privacy-note only-shapes">Images and pipeline artifacts stay in memory. No directories or files are saved automatically.</p>
+        </div>
+      </details>
+      <section class="image-panel panel" id="frame-panel" aria-labelledby="image-heading">
+        <div class="panel-heading only-shapes">
+          <div class="section-label"><span class="step">02</span><h2 id="image-heading">Recorded frame</h2></div>
+          <span id="dimensions" class="tag">Ready for an image</span>
+        </div>
+        <div class="view-controls">
+          <button class="view-button only-demos" id="view-prev" aria-pressed="false">Prev</button>
+          <button class="view-button active" id="view-input" aria-pressed="true">Input</button>
+          <button class="view-button only-demos" id="view-groups" aria-pressed="false">Prolog groups</button>
+          <button class="view-button only-shapes" id="view-regions" aria-pressed="false">Regions</button>
+          <button class="view-button only-shapes" id="view-reconstruction" aria-pressed="false">Reconstruction</button>
+          <button class="view-button only-shapes" id="edit-grid" hidden>Edit grid</button>
+          <label class="grid-toggle only-shapes"><input id="grid-lines" type="checkbox" checked> Grid</label>
+          <label class="grid-toggle only-demos" title="Show the previous frame's original image beside this one as read-only context"><input id="show-prev" type="checkbox" checked> Show Prev Frame Multiframe Pipeline</label>
+        </div>
+        <div class="frame-controls" id="demo-frame-controls" hidden>
+          <button id="previous-frame" class="secondary" aria-label="Previous demo frame" disabled>&larr;</button>
+          <label for="demo-frame" id="demo-frame-label">Frame</label>
+          <input id="demo-frame" type="range" min="0" max="0" value="0" aria-label="Demo frame">
+          <button id="next-frame" class="secondary" aria-label="Next demo frame" disabled>&rarr;</button>
+        </div>
+        <details id="frame-images" class="frame-images-collapse only-demos" open aria-labelledby="frame-images-title">
+          <summary class="panel-collapse-summary"><span class="section-label"><h3 id="frame-images-title">Frame Images</h3></span><span class="collapse-caret" aria-hidden="true">&#9662;</span></summary>
+          <div class="canvas-wrap">
+            <div class="frame-pairs">
+              <div class="pair-cell only-demos" id="prev-cell" hidden><span class="pair-tag">Previous</span><canvas id="prev-canvas" aria-label="Previous frame original image, read-only context"></canvas></div>
+              <div class="pair-cell companion-cell only-demos" id="prev-companion-cell" hidden><span class="pair-tag" id="prev-companion-tag">Prev companion</span><canvas id="prev-companion-canvas" aria-label="Companion derived image for the previous frame"></canvas></div>
+              <div class="pair-cell" id="current-cell"><span class="pair-tag only-demos">Original</span><canvas id="image-canvas" width="640" height="480" tabindex="0" role="img" aria-label="Analysis grid. Use arrow keys to move the drawing cursor, Space to paint."></canvas></div>
+              <div class="pair-cell companion-cell only-demos" id="companion-cell" hidden><span class="pair-tag" id="companion-tag">Companion</span><canvas id="companion-canvas" aria-label="Companion derived image for the current frame"></canvas></div>
+            </div>
+          </div>
+        </details>
+        <details id="layer-images" class="frame-images-collapse only-demos" hidden aria-labelledby="layer-images-title">
+          <summary class="panel-collapse-summary"><span class="section-label"><h3 id="layer-images-title">Layer Images</h3></span><span class="collapse-caret" aria-hidden="true">&#9662;</span></summary>
+          <div class="canvas-wrap only-demos" id="deduction-wrap">
+            <div class="frame-pairs">
+              <div class="pair-cell" id="same-cell"><span class="pair-tag">Layer 0 &middot; complete background</span><canvas id="same-canvas" aria-label="Layer 0: complete reconstructed background with the figure removed"></canvas></div>
+              <div class="pair-cell companion-cell" id="layer0-companion-cell" hidden><span class="pair-tag" id="layer0-companion-tag">Layer 0 companion</span><canvas id="layer0-companion-canvas" aria-label="Companion analysis of the reconstructed background layer"></canvas></div>
+              <div class="pair-cell" id="moved-cell"><span class="pair-tag">Layer 1 &middot; movement (above)</span><canvas id="moved-canvas" aria-label="Layer 1: moving objects composited above the background"></canvas></div>
+              <div class="pair-cell companion-cell" id="layer1-companion-cell" hidden><span class="pair-tag" id="layer1-companion-tag">Layer 1 companion</span><canvas id="layer1-companion-canvas" aria-label="Companion analysis of the movement layer"></canvas></div>
+            </div>
+          </div>
+        </details>
+        <details id="layer0-parts" class="frame-analysis only-demos" hidden aria-labelledby="layer0-parts-title">
+          <summary class="analysis-heading"><h3 id="layer0-parts-title">Layer0 Parts</h3><span>reconstructed background analysis</span></summary>
+          <p class="hint">Parts, V/W/G group and turtle thumbnails from running recognition on the reconstructed Layer 0 background.</p>
+          <div id="layer0-analysis-images" class="analysis-images"></div>
+        </details>
+        <details id="layer0-grouping" class="frame-analysis only-demos" hidden aria-labelledby="layer0-grouping-title">
+          <summary class="analysis-heading"><h3 id="layer0-grouping-title">Layer0 Grouping</h3><span>group tree (read-only)</span></summary>
+          <p class="hint">Accepted groups and their member parts from the Layer 0 background recognition.</p>
+          <div id="layer0-grouping-host" class="group-tree"></div>
+        </details>
+        <details id="layer1-parts" class="frame-analysis only-demos" hidden aria-labelledby="layer1-parts-title">
+          <summary class="analysis-heading"><h3 id="layer1-parts-title">Layer1 Parts</h3><span>movement layer analysis</span></summary>
+          <p class="hint">Parts, V/W/G group and turtle thumbnails from running recognition on the Layer 1 movers.</p>
+          <div id="layer1-analysis-images" class="analysis-images"></div>
+        </details>
+        <details id="layer1-grouping" class="frame-analysis only-demos" hidden aria-labelledby="layer1-grouping-title">
+          <summary class="analysis-heading"><h3 id="layer1-grouping-title">Layer1 Grouping</h3><span>group tree (read-only)</span></summary>
+          <p class="hint">Accepted groups and their member parts from the Layer 1 movement recognition.</p>
+          <div id="layer1-grouping-host" class="group-tree"></div>
+        </details>
+        <details id="frame-analysis" class="frame-analysis only-demos" open hidden aria-labelledby="frame-analysis-title">
+          <summary class="analysis-heading"><h3 id="frame-analysis-title">Frame Parts</h3><span>Click an image to use it as the companion beside the frame</span></summary>
+          <p id="analysis-status" class="analysis-status" role="status" aria-live="polite"></p>
+          <div id="analysis-images" class="analysis-images"></div>
+          <div class="companion-control" id="companion-control" hidden>
+            <span id="companion-status">Click an image above to show it as the companion beside the frame.</span>
+            <button type="button" id="clear-companion" class="secondary">Clear companion</button>
+            <label class="overlay-slider" title="Blend the original frame under the 5 derived images">Original overlay
+              <input id="overlay-opacity" type="range" min="0" max="100" value="25" aria-label="Original overlay opacity">
+              <span id="overlay-opacity-val">25%</span>
+            </label>
+          </div>
+          <div class="turtle-layers" role="group" aria-label="Turtle image layers">
+            <span>Turtle layers:</span>
+            <label><input id="turtle-outer" type="checkbox" checked> Outer edges</label>
+            <label><input id="turtle-holes" type="checkbox" checked> Inner edges</label>
+            <label><input id="turtle-medials" type="checkbox" checked> Medials</label>
+          </div>
+          <section id="parts-grouping" class="parts-grouping" aria-labelledby="parts-grouping-panel-title">
+            <div class="grouping-heading">
+              <label class="sort-control">Sort 1
+                <select id="group-sort1">
+                  <option value="consensus">Consensus</option>
+                  <option value="parts">Part count</option>
+                  <option value="area">Area</option>
+                  <option value="layer">Layer (G, W, V)</option>
+                </select>
+              </label>
+              <label class="sort-control">Sort 2
+                <select id="group-sort2">
+                  <option value="parts">Part count</option>
+                  <option value="consensus">Consensus</option>
+                  <option value="area">Area</option>
+                  <option value="layer">Layer (G, W, V)</option>
+                </select>
+              </label>
+              <button id="select-all-parts" class="secondary">Select all</button>
+              <button id="clear-parts" class="secondary">Unselect all</button></div>
+            <div class="group-layers" role="group" aria-label="Group layers">
+              <label title="Accepted current-frame groups"><input id="group-layer-G" type="checkbox" checked> G <span id="group-count-G"></span></label>
+              <label title="Prolog working groups"><input id="group-layer-W" type="checkbox"> W <span id="group-count-W"></span></label>
+              <label title="Visual proposals"><input id="group-layer-V" type="checkbox"> V <span id="group-count-V"></span></label>
+              <span class="layers-note hint">G accepted &middot; W working &middot; V visual. Preview priority: G, then W, then V. Group colors match the preview; part swatches show original colors.</span>
+            </div>
+            <p id="part-selection-status" class="hint">No parts selected: turtle draws all parts.</p>
+            <div class="grouping-layout">
+              <div id="group-tree" class="group-tree" aria-label="Groups and their member parts"></div>
+              <canvas id="group-preview" aria-label="Preview of the selected parts and groups"></canvas>
+            </div>
+          </section>
+        </details>
+        <details id="parts-grouping-panel" class="frame-analysis only-demos" open hidden aria-labelledby="parts-grouping-panel-title">
+          <summary class="analysis-heading"><h3 id="parts-grouping-panel-title">Frame Grouping</h3><span>Group tree, layers and selection preview</span></summary>
+          <div id="parts-grouping-host"></div>
+        </details>
+        <div class="image-caption"><span id="image-note">Choose an example or open a local image.</span><span id="cursor-label"></span></div>
+        <details id="interframe" class="frame-guide only-demos" hidden aria-labelledby="interframe-title">
+          <summary class="guide-heading"><h3 id="interframe-title">Interframe deductions</h3><span class="tag">prev \u2192 current + clip memory</span></summary>
+          <div class="interframe-sub" id="two-frame-sub">
+            <h4>Two-frame (prev \u2192 current)</h4>
+            <p class="hint">Each current object matched to its previous-frame self by colour, area, and proximity; reports movement, rotation, occlusion. Stable e# ids. Inferences, not certainties.</p>
+            <div id="two-frame-body"></div>
+          </div>
+          <div class="interframe-sub" id="tracker-sub">
+            <h4>Tracked layers (clip memory)</h4>
+            <p class="hint">Persistent e# identities accumulated across the frames you have viewed; a reappearing object re-binds to its remembered (occluded) entity instead of being called new.</p>
+            <div id="tracker-body"></div>
+          </div>
+          <details class="interframe-sub" id="frame-diff-sub">
+            <summary class="subfold">Frame diff (pixel-level) \u2014 low-level, click to expand</summary>
+            <p class="hint">A pixel-level diff against the previous frame, before entity binding. Grey = stable, green = appeared, red = disappeared, yellow = changed in place. Regions carry competing hypotheses.</p>
+            <div id="frame-diff-body"></div>
+          </details>
+        </details>
+        <details id="frame-metta" class="frame-guide only-demos" hidden aria-labelledby="frame-metta-title">
+          <summary class="guide-heading"><h3 id="frame-metta-title">Current-frame MeTTa / Prolog output</h3><span class="tag">Frame files</span></summary>
+          <p class="hint">Only this frame's process outputs. Part selection affects drawing, not the full-frame output. Draft edits stay in browser memory and are never executed.</p>
+          <div id="output-tabs" class="output-tabs" role="group" aria-label="Frame output files"></div>
+          <div class="output-editor-toolbar"><span id="output-editor-status">Generated output</span><label class="output-sort">Syntax <select id="output-syntax"><option value="native">native</option><option value="prolog">Prolog</option><option value="metta">MeTTa</option></select></label><label class="output-sort">Sort <select id="output-sort"><option value="count">By count</option><option value="occurrence">By occurrence</option><option value="name">Alphabetical</option></select></label><button id="restore-output" class="secondary" disabled>Restore generated</button><button id="download-metta" class="secondary" disabled>Download file</button></div>
+          <div class="output-split">
+            <div class="output-tree-col">
+              <input id="output-tree-filter" type="search" class="output-tree-filter" placeholder="Filter predicates / clauses&#8230;" aria-label="Filter output predicates or clauses">
+              <div id="output-tree" class="output-tree" role="tree" aria-label="Output data tree"><p class="hint">No output parsed yet.</p></div>
+            </div>
+            <textarea id="frame-metta-text" class="frame-code-editor" aria-label="Current frame MeTTa or Prolog file editor" spellcheck="false" wrap="off"></textarea>
+          </div>
+          <details id="clause-explorer-fold" class="subfold-details">
+            <summary class="subfold">Clause Explorer (all output files)</summary>
+            <div id="clause-explorer"></div>
+          </details>
+        </details>
+        <details id="frame-guide" class="frame-guide only-demos" hidden aria-labelledby="frame-guide-title">
+          <summary class="guide-heading"><h3 id="frame-guide-title">Expected interpretation</h3><span class="tag">Reference only</span></summary>
+          <div id="frame-guide-body"></div>
+        </details>
+        <div class="status-line" id="status" role="status" aria-live="polite">Starting the local recognizer...</div>
+        <div id="error" role="alert" hidden></div>
+      </section>
+      <section class="results-panel panel only-shapes" aria-labelledby="results-heading">
+        <div class="panel-heading"><div class="section-label"><span class="step">03</span><h2 id="results-heading">Recognition</h2></div><span id="result-state" class="tag">Not run</span></div>
+        <div class="metrics">
+          <div><strong id="object-count">&mdash;</strong><span>regions</span></div>
+          <div><strong id="shape-count">&mdash;</strong><span>shape types</span></div>
+          <div><strong id="hole-count">&mdash;</strong><span>holes</span></div>
+        </div>
+        <div id="empty-result" class="empty-result"><span aria-hidden="true">&#9671;</span><h3>Pixels first. Structure next.</h3><p>Run recognition to inspect connected regions and compare their shapes.</p></div>
+        <div id="object-list" class="object-list" aria-label="Recognized regions"></div>
+        <div id="object-detail" hidden></div>
+        <div id="pipeline-summary" class="pipeline-summary" hidden></div>
+      </section>
+      <details class="json-panel only-shapes">
+        <summary>Other process files for this frame</summary>
+        <div class="output-file-controls">
+          <select id="artifact" aria-label="Generated pipeline file" disabled><option>Run a pipeline first</option></select>
+          <button id="download-artifact" class="secondary" disabled>Download selected file</button>
+        </div>
+      </details>
+      </div>
+    </div>
+    <section class="footnotes">
+      <p><strong>Real pipelines.</strong> OpenCV extracts contours, holes, medials, and fill points. SWI-Prolog runs shape finding, grouping, and turtle rules. This is not a semantic photo classifier.</p>
+      <p class="only-demos"><strong>Reference is not inference.</strong> Expected descriptions are for the reader, never supplied to the pipelines. A full event test can require history beyond this frame's recognition.</p>
+      <p class="only-shapes"><strong>Same shape, different look.</strong> Shape identities ignore color, position, rotation, reflection, and exact integer scale. They do not establish persistent object identity.</p>
+    </section>
+    <details class="json-panel" id="result-json"><summary>Result JSON</summary><pre id="json-output">No result yet.</pre></details>
+  </main>
+  <footer>Omega Vision recognition &middot; OpenCV + SWI-Prolog &middot; No workspace or directory setup</footer>
+</body>
+</html>

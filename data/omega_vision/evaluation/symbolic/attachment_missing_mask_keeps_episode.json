@@ -1,0 +1,23 @@
+{
+  "output": {
+    "baseline": false,
+    "events": [
+      {
+        "order": 1,
+        "term": {
+          "args": [
+            {
+              "args": [
+                "left",
+                "right"
+              ],
+              "predicate": "attached"
+            }
+          ],
+          "predicate": "start"
+        }
+      }
+    ],
+    "open": true
+  }
+}

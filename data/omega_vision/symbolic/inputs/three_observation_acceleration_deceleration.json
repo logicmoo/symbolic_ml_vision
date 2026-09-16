@@ -1,0 +1,49 @@
+{
+  "entity": "actor",
+  "heading_tolerance": 5,
+  "image_changed": [
+    true,
+    true,
+    true
+  ],
+  "motion_tolerance": 0.5,
+  "observations": [
+    {
+      "clock": "sensor-clock",
+      "coordinates": "fixed-camera",
+      "position": [
+        10,
+        0
+      ],
+      "seconds": 0
+    },
+    {
+      "clock": "sensor-clock",
+      "coordinates": "fixed-camera",
+      "position": [
+        12,
+        0
+      ],
+      "seconds": 1
+    },
+    {
+      "clock": "sensor-clock",
+      "coordinates": "fixed-camera",
+      "position": [
+        16,
+        0
+      ],
+      "seconds": 2
+    },
+    {
+      "clock": "sensor-clock",
+      "coordinates": "fixed-camera",
+      "position": [
+        18,
+        0
+      ],
+      "seconds": 3
+    }
+  ],
+  "speed_tolerance": 0.5
+}

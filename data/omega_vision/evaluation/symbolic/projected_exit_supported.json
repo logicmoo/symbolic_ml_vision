@@ -1,0 +1,13 @@
+{
+  "output": {
+    "comparison_complete": true,
+    "events": [
+      {
+        "args": [
+          "hidden"
+        ],
+        "predicate": "exited"
+      }
+    ]
+  }
+}

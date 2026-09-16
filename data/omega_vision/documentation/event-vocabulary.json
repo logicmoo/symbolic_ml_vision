@@ -1,0 +1,707 @@
+{
+  "absent": {
+    "arguments": [
+      "entity"
+    ],
+    "category": "state",
+    "symmetric": false
+  },
+  "accelerated": {
+    "arguments": [
+      "entity"
+    ],
+    "category": "event",
+    "symmetric": false
+  },
+  "action_direction": {
+    "arguments": [
+      "entity",
+      "number",
+      "number"
+    ],
+    "category": "evidence",
+    "symmetric": false
+  },
+  "affine_iou": {
+    "arguments": [
+      "entity",
+      "number"
+    ],
+    "category": "evidence",
+    "symmetric": false
+  },
+  "appearance_transition": {
+    "arguments": [
+      "entity",
+      "atom",
+      "atom"
+    ],
+    "category": "evidence",
+    "symmetric": false
+  },
+  "appeared": {
+    "arguments": [
+      "entity"
+    ],
+    "category": "event",
+    "symmetric": false
+  },
+  "area_changed": {
+    "arguments": [
+      "entity"
+    ],
+    "category": "event",
+    "symmetric": false
+  },
+  "area_delta": {
+    "arguments": [
+      "entity",
+      "number"
+    ],
+    "category": "evidence",
+    "symmetric": false
+  },
+  "attached": {
+    "arguments": [
+      "entity",
+      "entity"
+    ],
+    "category": "relation",
+    "symmetric": true
+  },
+  "blocked": {
+    "arguments": [
+      "entity",
+      "entity"
+    ],
+    "category": "relation",
+    "symmetric": false
+  },
+  "border_crossed": {
+    "arguments": [
+      "entity",
+      "atom"
+    ],
+    "category": "evidence",
+    "symmetric": false
+  },
+  "bounce": {
+    "arguments": [
+      "entity"
+    ],
+    "category": "event",
+    "symmetric": false
+  },
+  "carry": {
+    "arguments": [
+      "entity",
+      "entity"
+    ],
+    "category": "relation",
+    "symmetric": false
+  },
+  "co_motion_score": {
+    "arguments": [
+      "entity",
+      "entity",
+      "number"
+    ],
+    "category": "evidence",
+    "symmetric": true
+  },
+  "co_move": {
+    "arguments": [
+      "entity",
+      "entity"
+    ],
+    "category": "relation",
+    "symmetric": true
+  },
+  "collision": {
+    "arguments": [
+      "entity",
+      "entity"
+    ],
+    "category": "event",
+    "symmetric": true
+  },
+  "color_changed": {
+    "arguments": [
+      "entity"
+    ],
+    "category": "event",
+    "symmetric": false
+  },
+  "confidence": {
+    "arguments": [
+      "entity",
+      "number"
+    ],
+    "category": "evidence",
+    "symmetric": false
+  },
+  "contact": {
+    "arguments": [
+      "entity",
+      "entity"
+    ],
+    "category": "relation",
+    "symmetric": true
+  },
+  "contact_delta": {
+    "arguments": [
+      "entity",
+      "entity",
+      "number"
+    ],
+    "category": "evidence",
+    "symmetric": false
+  },
+  "contain": {
+    "arguments": [
+      "entity",
+      "entity"
+    ],
+    "category": "relation",
+    "symmetric": false
+  },
+  "contain_delta": {
+    "arguments": [
+      "entity",
+      "entity",
+      "number"
+    ],
+    "category": "evidence",
+    "symmetric": false
+  },
+  "continue": {
+    "arguments": [
+      "relation"
+    ],
+    "category": "event",
+    "symmetric": false
+  },
+  "decelerated": {
+    "arguments": [
+      "entity"
+    ],
+    "category": "event",
+    "symmetric": false
+  },
+  "deformed": {
+    "arguments": [
+      "entity"
+    ],
+    "category": "event",
+    "symmetric": false
+  },
+  "directed_contact_pixels": {
+    "arguments": [
+      "entity",
+      "entity",
+      "number"
+    ],
+    "category": "evidence",
+    "symmetric": false
+  },
+  "directional_contact": {
+    "arguments": [
+      "entity",
+      "entity",
+      "number",
+      "number",
+      "number"
+    ],
+    "category": "evidence",
+    "symmetric": false
+  },
+  "displacement": {
+    "arguments": [
+      "entity",
+      "number",
+      "number"
+    ],
+    "category": "evidence",
+    "symmetric": false
+  },
+  "displacement_magnitude": {
+    "arguments": [
+      "entity",
+      "number"
+    ],
+    "category": "evidence",
+    "symmetric": false
+  },
+  "distance": {
+    "arguments": [
+      "entity",
+      "entity",
+      "number"
+    ],
+    "category": "evidence",
+    "symmetric": true
+  },
+  "end": {
+    "arguments": [
+      "relation"
+    ],
+    "category": "event",
+    "symmetric": false
+  },
+  "entered": {
+    "arguments": [
+      "entity"
+    ],
+    "category": "event",
+    "symmetric": false
+  },
+  "equal": {
+    "arguments": [
+      "number",
+      "number"
+    ],
+    "category": "evidence",
+    "symmetric": false
+  },
+  "exited": {
+    "arguments": [
+      "entity"
+    ],
+    "category": "event",
+    "symmetric": false
+  },
+  "failed_attempts": {
+    "arguments": [
+      "entity",
+      "entity",
+      "number"
+    ],
+    "category": "evidence",
+    "symmetric": false
+  },
+  "follow": {
+    "arguments": [
+      "entity",
+      "entity"
+    ],
+    "category": "relation",
+    "symmetric": false
+  },
+  "frame_displacement_delta": {
+    "arguments": [
+      "entity",
+      "number"
+    ],
+    "category": "evidence",
+    "symmetric": false
+  },
+  "greater_equal": {
+    "arguments": [
+      "number",
+      "number"
+    ],
+    "category": "evidence",
+    "symmetric": false
+  },
+  "greater_than": {
+    "arguments": [
+      "number",
+      "number"
+    ],
+    "category": "evidence",
+    "symmetric": false
+  },
+  "group_dissolved": {
+    "arguments": [
+      "entity"
+    ],
+    "category": "event",
+    "symmetric": false
+  },
+  "group_formed": {
+    "arguments": [
+      "entity"
+    ],
+    "category": "event",
+    "symmetric": false
+  },
+  "group_member": {
+    "arguments": [
+      "entity",
+      "entity"
+    ],
+    "category": "grouping",
+    "symmetric": false
+  },
+  "grouping_template_candidate": {
+    "arguments": [
+      "entity",
+      "entity"
+    ],
+    "category": "grouping",
+    "symmetric": false
+  },
+  "heading_delta": {
+    "arguments": [
+      "entity",
+      "number"
+    ],
+    "category": "evidence",
+    "symmetric": false
+  },
+  "hole_closed": {
+    "arguments": [
+      "entity"
+    ],
+    "category": "event",
+    "symmetric": false
+  },
+  "hole_count_delta": {
+    "arguments": [
+      "entity",
+      "number"
+    ],
+    "category": "evidence",
+    "symmetric": false
+  },
+  "hole_opened": {
+    "arguments": [
+      "entity"
+    ],
+    "category": "event",
+    "symmetric": false
+  },
+  "image_down_contact_delta": {
+    "arguments": [
+      "entity",
+      "entity",
+      "number"
+    ],
+    "category": "evidence",
+    "symmetric": false
+  },
+  "independent_group_support": {
+    "arguments": [
+      "entity"
+    ],
+    "category": "evidence",
+    "symmetric": false
+  },
+  "inside": {
+    "arguments": [
+      "entity",
+      "entity"
+    ],
+    "category": "relation",
+    "symmetric": false
+  },
+  "lagged_path_distance": {
+    "arguments": [
+      "entity",
+      "entity",
+      "number"
+    ],
+    "category": "evidence",
+    "symmetric": false
+  },
+  "lagged_path_matches": {
+    "arguments": [
+      "entity",
+      "entity",
+      "number"
+    ],
+    "category": "evidence",
+    "symmetric": false
+  },
+  "less_equal": {
+    "arguments": [
+      "number",
+      "number"
+    ],
+    "category": "evidence",
+    "symmetric": false
+  },
+  "less_than": {
+    "arguments": [
+      "number",
+      "number"
+    ],
+    "category": "evidence",
+    "symmetric": false
+  },
+  "measured_interval": {
+    "arguments": [
+      "number",
+      "atom"
+    ],
+    "category": "evidence",
+    "symmetric": false
+  },
+  "member_added": {
+    "arguments": [
+      "entity",
+      "entity"
+    ],
+    "category": "event",
+    "symmetric": false
+  },
+  "member_removed": {
+    "arguments": [
+      "entity",
+      "entity"
+    ],
+    "category": "event",
+    "symmetric": false
+  },
+  "merged": {
+    "arguments": [
+      "entity",
+      "entity",
+      "entity"
+    ],
+    "category": "event",
+    "symmetric": false
+  },
+  "missing": {
+    "arguments": [
+      "entity"
+    ],
+    "category": "event",
+    "symmetric": false
+  },
+  "missing_match": {
+    "arguments": [
+      "entity"
+    ],
+    "category": "evidence",
+    "symmetric": false
+  },
+  "move": {
+    "arguments": [
+      "entity"
+    ],
+    "category": "relation",
+    "symmetric": false
+  },
+  "moved": {
+    "arguments": [
+      "entity"
+    ],
+    "category": "event",
+    "symmetric": false
+  },
+  "observed_mask_similarity": {
+    "arguments": [
+      "entity",
+      "entity",
+      "number"
+    ],
+    "category": "evidence",
+    "symmetric": false
+  },
+  "occlude": {
+    "arguments": [
+      "entity",
+      "entity"
+    ],
+    "category": "relation",
+    "symmetric": false
+  },
+  "occlusion_overlap": {
+    "arguments": [
+      "entity",
+      "entity",
+      "number"
+    ],
+    "category": "evidence",
+    "symmetric": false
+  },
+  "overlap": {
+    "arguments": [
+      "entity",
+      "entity"
+    ],
+    "category": "relation",
+    "symmetric": true
+  },
+  "overlap_delta": {
+    "arguments": [
+      "entity",
+      "entity",
+      "number"
+    ],
+    "category": "evidence",
+    "symmetric": false
+  },
+  "overlap_ratio": {
+    "arguments": [
+      "entity",
+      "entity",
+      "number"
+    ],
+    "category": "evidence",
+    "symmetric": true
+  },
+  "present": {
+    "arguments": [
+      "entity"
+    ],
+    "category": "evidence",
+    "symmetric": false
+  },
+  "projected_exit_fraction": {
+    "arguments": [
+      "entity",
+      "number"
+    ],
+    "category": "evidence",
+    "symmetric": false
+  },
+  "reappeared": {
+    "arguments": [
+      "entity"
+    ],
+    "category": "event",
+    "symmetric": false
+  },
+  "rotated": {
+    "arguments": [
+      "entity"
+    ],
+    "category": "event",
+    "symmetric": false
+  },
+  "rotation_delta": {
+    "arguments": [
+      "entity",
+      "number"
+    ],
+    "category": "evidence",
+    "symmetric": false
+  },
+  "same_color": {
+    "arguments": [
+      "entity",
+      "entity"
+    ],
+    "category": "evidence",
+    "symmetric": true
+  },
+  "same_object": {
+    "arguments": [
+      "entity",
+      "entity"
+    ],
+    "category": "grouping",
+    "symmetric": true
+  },
+  "scale_axes": {
+    "arguments": [
+      "entity",
+      "number",
+      "number"
+    ],
+    "category": "evidence",
+    "symmetric": false
+  },
+  "scale_ratio": {
+    "arguments": [
+      "entity",
+      "number"
+    ],
+    "category": "evidence",
+    "symmetric": false
+  },
+  "scaled": {
+    "arguments": [
+      "entity"
+    ],
+    "category": "event",
+    "symmetric": false
+  },
+  "shape_changed": {
+    "arguments": [
+      "entity"
+    ],
+    "category": "event",
+    "symmetric": false
+  },
+  "shape_iou": {
+    "arguments": [
+      "entity",
+      "number"
+    ],
+    "category": "evidence",
+    "symmetric": false
+  },
+  "shape_matches": {
+    "arguments": [
+      "entity",
+      "entity"
+    ],
+    "category": "evidence",
+    "symmetric": true
+  },
+  "shared_edge": {
+    "arguments": [
+      "entity",
+      "entity",
+      "number"
+    ],
+    "category": "evidence",
+    "symmetric": true
+  },
+  "speed_delta": {
+    "arguments": [
+      "entity",
+      "number"
+    ],
+    "category": "evidence",
+    "symmetric": false
+  },
+  "split": {
+    "arguments": [
+      "entity",
+      "entity",
+      "entity"
+    ],
+    "category": "event",
+    "symmetric": false
+  },
+  "start": {
+    "arguments": [
+      "relation"
+    ],
+    "category": "event",
+    "symmetric": false
+  },
+  "stationary": {
+    "arguments": [
+      "entity"
+    ],
+    "category": "state",
+    "symmetric": false
+  },
+  "turned": {
+    "arguments": [
+      "entity"
+    ],
+    "category": "event",
+    "symmetric": false
+  },
+  "user_input": {
+    "arguments": [
+      "entity",
+      "atom"
+    ],
+    "category": "action",
+    "symmetric": false
+  },
+  "visible": {
+    "arguments": [
+      "entity"
+    ],
+    "category": "state",
+    "symmetric": false
+  }
+}

@@ -1,0 +1,48 @@
+{
+  "complete_predicates": [],
+  "facts": [
+    {
+      "args": [
+        "actor"
+      ],
+      "predicate": "moved"
+    }
+  ],
+  "kind": "event_transition",
+  "known_absent": [],
+  "rules": [
+    {
+      "proof": "conditional-rule",
+      "rule": {
+        "body": [
+          {
+            "args": [
+              {
+                "var": "X"
+              }
+            ],
+            "predicate": "moved"
+          }
+        ],
+        "delay": {
+          "max": 3,
+          "min": 1
+        },
+        "exceptions": [],
+        "head": {
+          "args": [
+            {
+              "var": "X"
+            }
+          ],
+          "predicate": "rotated"
+        }
+      },
+      "scope": {}
+    }
+  ],
+  "scope_context": {
+    "domain": "test"
+  },
+  "source_order": 10
+}

@@ -1,0 +1,50 @@
+{
+  "actions": {
+    "DOWN": {
+      "kind": "directional",
+      "vector": [
+        0,
+        1
+      ]
+    },
+    "LEFT": {
+      "kind": "directional",
+      "vector": [
+        -1,
+        0
+      ]
+    },
+    "RIGHT": {
+      "kind": "directional",
+      "vector": [
+        1,
+        0
+      ]
+    },
+    "UP": {
+      "kind": "directional",
+      "vector": [
+        0,
+        -1
+      ]
+    },
+    "WAIT": {
+      "kind": "no_input"
+    }
+  },
+  "calibrationEndFrameId": "6",
+  "controlScopeId": "recordings/events_tests/control_actor_calibration_ambiguous:keypad",
+  "protocolId": "cardinal-discrete-input-v1",
+  "schemaVersion": 1,
+  "testStartFrameId": "7",
+  "trainingTargetFrameIds": [
+    "1",
+    "2",
+    "3",
+    "4"
+  ],
+  "validationTargetFrameIds": [
+    "5",
+    "6"
+  ]
+}

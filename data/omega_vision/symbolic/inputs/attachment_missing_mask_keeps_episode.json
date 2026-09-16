@@ -1,0 +1,15 @@
+{
+  "continuations": true,
+  "relation": {
+    "args": [
+      "left",
+      "right"
+    ],
+    "predicate": "attached"
+  },
+  "truth": [
+    false,
+    true,
+    null
+  ]
+}

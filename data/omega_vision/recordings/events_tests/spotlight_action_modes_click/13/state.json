@@ -1,0 +1,33 @@
+{
+  "action_data": {
+    "x": 0,
+    "y": 8
+  },
+  "action_directory": "13",
+  "action_path": [
+    "1",
+    "2",
+    "3",
+    "4",
+    "5",
+    "6",
+    "7",
+    "8",
+    "9",
+    "10",
+    "11",
+    "12",
+    "13"
+  ],
+  "at_seconds": 3.25,
+  "game_directory": "events_tests",
+  "game_id": "events_tests",
+  "image_hash": "5282255adb1a3074",
+  "incoming_action": "CLICK",
+  "kind": "synthetic_visual_memory_frame",
+  "level": "1",
+  "parent_node": "../12",
+  "recorded_at": "2000-01-01T00:00:00Z",
+  "state": "NOT_FINISHED",
+  "step_count": 13
+}

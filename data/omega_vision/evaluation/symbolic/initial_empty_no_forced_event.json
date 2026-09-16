@@ -1,0 +1,13 @@
+{
+  "output": {
+    "frames": [
+      {
+        "assessment": "initial_observation",
+        "events": [],
+        "heading_delta": null,
+        "speed_delta": null,
+        "states": []
+      }
+    ]
+  }
+}

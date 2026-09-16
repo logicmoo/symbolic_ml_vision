@@ -1,0 +1,541 @@
+{
+  "testId": "synthetic_gradual_occlusion",
+  "caseId": "synthetic_gradual_occlusion",
+  "description": "A red bar sweeps across a stationary green box over several frames, gradually occluding then revealing it. The green box is never created or destroyed; it is only hidden and shown again.",
+  "frames": [
+    {
+      "frameId": "0",
+      "sha256": "49d4d6ebf9900b0a2f192d11ae93c174ebd8b5272651037056851e4c07027054",
+      "caption": "Frame 0: green_box fully visible. red_bar left edge at x=160.",
+      "authoredObjects": [
+        {
+          "entity": "blue_marker",
+          "color": [
+            30,
+            90,
+            180
+          ],
+          "position": [
+            18,
+            20
+          ],
+          "size": [
+            44,
+            44
+          ],
+          "visible": true
+        },
+        {
+          "entity": "green_box",
+          "color": [
+            70,
+            170,
+            60
+          ],
+          "position": [
+            92,
+            100
+          ],
+          "size": [
+            56,
+            56
+          ],
+          "visible": true
+        },
+        {
+          "entity": "red_bar",
+          "color": [
+            200,
+            48,
+            48
+          ],
+          "position": [
+            160,
+            52
+          ],
+          "size": [
+            80,
+            150
+          ],
+          "visible": true
+        }
+      ],
+      "visibleTargetPixels": 3136
+    },
+    {
+      "frameId": "1",
+      "sha256": "57554560c85732f3f121204163380dd79677ded9edc9ebeb5f8a54f88fe61e50",
+      "caption": "Frame 1: green_box fully visible. red_bar left edge at x=150.",
+      "authoredObjects": [
+        {
+          "entity": "blue_marker",
+          "color": [
+            30,
+            90,
+            180
+          ],
+          "position": [
+            18,
+            20
+          ],
+          "size": [
+            44,
+            44
+          ],
+          "visible": true
+        },
+        {
+          "entity": "green_box",
+          "color": [
+            70,
+            170,
+            60
+          ],
+          "position": [
+            92,
+            100
+          ],
+          "size": [
+            56,
+            56
+          ],
+          "visible": true
+        },
+        {
+          "entity": "red_bar",
+          "color": [
+            200,
+            48,
+            48
+          ],
+          "position": [
+            150,
+            52
+          ],
+          "size": [
+            80,
+            150
+          ],
+          "visible": true
+        }
+      ],
+      "visibleTargetPixels": 3136
+    },
+    {
+      "frameId": "2",
+      "sha256": "968a52727f1de21e0649ae7f8c43fbed9d725e7fd8fd5057cc7008444abe7ea0",
+      "caption": "Frame 2: green_box partly occluded by red_bar. red_bar left edge at x=128.",
+      "authoredObjects": [
+        {
+          "entity": "blue_marker",
+          "color": [
+            30,
+            90,
+            180
+          ],
+          "position": [
+            18,
+            20
+          ],
+          "size": [
+            44,
+            44
+          ],
+          "visible": true
+        },
+        {
+          "entity": "green_box",
+          "color": [
+            70,
+            170,
+            60
+          ],
+          "position": [
+            92,
+            100
+          ],
+          "size": [
+            56,
+            56
+          ],
+          "visible": true
+        },
+        {
+          "entity": "red_bar",
+          "color": [
+            200,
+            48,
+            48
+          ],
+          "position": [
+            128,
+            52
+          ],
+          "size": [
+            80,
+            150
+          ],
+          "visible": true
+        }
+      ],
+      "visibleTargetPixels": 2016
+    },
+    {
+      "frameId": "3",
+      "sha256": "e8b5a2fd588f4fbf1b2088d79aa03e507cbc2e7dbb4e8719631abebb11c31307",
+      "caption": "Frame 3: green_box mostly occluded by red_bar. red_bar left edge at x=106.",
+      "authoredObjects": [
+        {
+          "entity": "blue_marker",
+          "color": [
+            30,
+            90,
+            180
+          ],
+          "position": [
+            18,
+            20
+          ],
+          "size": [
+            44,
+            44
+          ],
+          "visible": true
+        },
+        {
+          "entity": "green_box",
+          "color": [
+            70,
+            170,
+            60
+          ],
+          "position": [
+            92,
+            100
+          ],
+          "size": [
+            56,
+            56
+          ],
+          "visible": true
+        },
+        {
+          "entity": "red_bar",
+          "color": [
+            200,
+            48,
+            48
+          ],
+          "position": [
+            106,
+            52
+          ],
+          "size": [
+            80,
+            150
+          ],
+          "visible": true
+        }
+      ],
+      "visibleTargetPixels": 784
+    },
+    {
+      "frameId": "4",
+      "sha256": "46c3b76c688642190569cd9e36dcbff6fd1d426c352f5d7058505c16928c475c",
+      "caption": "Frame 4: green_box fully occluded behind red_bar. red_bar left edge at x=88.",
+      "authoredObjects": [
+        {
+          "entity": "blue_marker",
+          "color": [
+            30,
+            90,
+            180
+          ],
+          "position": [
+            18,
+            20
+          ],
+          "size": [
+            44,
+            44
+          ],
+          "visible": true
+        },
+        {
+          "entity": "green_box",
+          "color": [
+            70,
+            170,
+            60
+          ],
+          "position": [
+            92,
+            100
+          ],
+          "size": [
+            56,
+            56
+          ],
+          "visible": false
+        },
+        {
+          "entity": "red_bar",
+          "color": [
+            200,
+            48,
+            48
+          ],
+          "position": [
+            88,
+            52
+          ],
+          "size": [
+            80,
+            150
+          ],
+          "visible": true
+        }
+      ],
+      "visibleTargetPixels": 0
+    },
+    {
+      "frameId": "5",
+      "sha256": "46c3b76c688642190569cd9e36dcbff6fd1d426c352f5d7058505c16928c475c",
+      "caption": "Frame 5: green_box fully occluded behind red_bar. red_bar left edge at x=88.",
+      "authoredObjects": [
+        {
+          "entity": "blue_marker",
+          "color": [
+            30,
+            90,
+            180
+          ],
+          "position": [
+            18,
+            20
+          ],
+          "size": [
+            44,
+            44
+          ],
+          "visible": true
+        },
+        {
+          "entity": "green_box",
+          "color": [
+            70,
+            170,
+            60
+          ],
+          "position": [
+            92,
+            100
+          ],
+          "size": [
+            56,
+            56
+          ],
+          "visible": false
+        },
+        {
+          "entity": "red_bar",
+          "color": [
+            200,
+            48,
+            48
+          ],
+          "position": [
+            88,
+            52
+          ],
+          "size": [
+            80,
+            150
+          ],
+          "visible": true
+        }
+      ],
+      "visibleTargetPixels": 0
+    },
+    {
+      "frameId": "6",
+      "sha256": "2ffbc839df01ff7421b1111b47560e0f730d879cbd24aed9bfc5224fa9264c70",
+      "caption": "Frame 6: green_box partly occluded by red_bar. red_bar left edge at x=120.",
+      "authoredObjects": [
+        {
+          "entity": "blue_marker",
+          "color": [
+            30,
+            90,
+            180
+          ],
+          "position": [
+            18,
+            20
+          ],
+          "size": [
+            44,
+            44
+          ],
+          "visible": true
+        },
+        {
+          "entity": "green_box",
+          "color": [
+            70,
+            170,
+            60
+          ],
+          "position": [
+            92,
+            100
+          ],
+          "size": [
+            56,
+            56
+          ],
+          "visible": true
+        },
+        {
+          "entity": "red_bar",
+          "color": [
+            200,
+            48,
+            48
+          ],
+          "position": [
+            120,
+            52
+          ],
+          "size": [
+            80,
+            150
+          ],
+          "visible": true
+        }
+      ],
+      "visibleTargetPixels": 1568
+    },
+    {
+      "frameId": "7",
+      "sha256": "49d4d6ebf9900b0a2f192d11ae93c174ebd8b5272651037056851e4c07027054",
+      "caption": "Frame 7: green_box fully visible. red_bar left edge at x=160.",
+      "authoredObjects": [
+        {
+          "entity": "blue_marker",
+          "color": [
+            30,
+            90,
+            180
+          ],
+          "position": [
+            18,
+            20
+          ],
+          "size": [
+            44,
+            44
+          ],
+          "visible": true
+        },
+        {
+          "entity": "green_box",
+          "color": [
+            70,
+            170,
+            60
+          ],
+          "position": [
+            92,
+            100
+          ],
+          "size": [
+            56,
+            56
+          ],
+          "visible": true
+        },
+        {
+          "entity": "red_bar",
+          "color": [
+            200,
+            48,
+            48
+          ],
+          "position": [
+            160,
+            52
+          ],
+          "size": [
+            80,
+            150
+          ],
+          "visible": true
+        }
+      ],
+      "visibleTargetPixels": 3136
+    }
+  ],
+  "expectedEvents": [
+    {
+      "fromFrameId": "1",
+      "toFrameId": "2",
+      "term": {
+        "predicate": "occlusion_change",
+        "args": [
+          "green_box",
+          "red_bar"
+        ]
+      },
+      "display": "red_bar covers more of green_box (increasing occlusion)"
+    },
+    {
+      "fromFrameId": "2",
+      "toFrameId": "3",
+      "term": {
+        "predicate": "occlusion_change",
+        "args": [
+          "green_box",
+          "red_bar"
+        ]
+      },
+      "display": "red_bar covers more of green_box (increasing occlusion)"
+    },
+    {
+      "fromFrameId": "3",
+      "toFrameId": "4",
+      "term": {
+        "predicate": "occlusion_change",
+        "args": [
+          "green_box",
+          "red_bar"
+        ]
+      },
+      "display": "green_box becomes fully occluded behind red_bar (gone, not destroyed)"
+    },
+    {
+      "fromFrameId": "5",
+      "toFrameId": "6",
+      "term": {
+        "predicate": "occlusion_change",
+        "args": [
+          "green_box",
+          "red_bar"
+        ]
+      },
+      "display": "green_box is revealed again as red_bar moves off (reappears, not created)"
+    },
+    {
+      "fromFrameId": "6",
+      "toFrameId": "7",
+      "term": {
+        "predicate": "occlusion_change",
+        "args": [
+          "green_box",
+          "red_bar"
+        ]
+      },
+      "display": "red_bar uncovers part of green_box (decreasing occlusion)"
+    }
+  ]
+}

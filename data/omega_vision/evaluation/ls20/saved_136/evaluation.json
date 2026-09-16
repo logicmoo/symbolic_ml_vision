@@ -1,0 +1,190 @@
+{
+  "schemaVersion": 1,
+  "suiteId": "ls20-play-recordings-v1",
+  "testId": "ls20_occlusion",
+  "caseId": "ls20_occlusion",
+  "partition": "recording",
+  "groundTruthIsRecognizerInput": false,
+  "recognizerStatus": "not_run",
+  "baselineStatus": "authored_expectation_only_not_workbench_execution",
+  "description": "LS20 saved_136: a single dark-red figure moves across a static yellow scene containing a green object. The authored expectation is that the figure occludes the background it passes over; the reader must not treat newly revealed background as created, nor treat the partly hidden green object as two separate objects.",
+  "expectedAssessment": "unknown_not_workbench_graded",
+  "requirements": [
+    "Treat the dark-red figure as one persistent moving entity across all 14 frames.",
+    "Explain disappearing/reappearing background as occlusion by the figure, not creation or destruction.",
+    "When the figure overlaps the green object, prefer a single partly-occluded green object over two objects.",
+    "Do not certify a pass from a single frame; occlusion is a cross-frame inference with uncertainty."
+  ],
+  "teacher": {
+    "source": "authored_expectation_only_never_baseline_input",
+    "bindingMustStayUnresolved": false,
+    "note": "No workbench oracle was executed for this real recording; this file carries authored expectations and real image hashes only."
+  },
+  "expectedEvents": [
+    {
+      "fromFrameId": "0",
+      "toFrameId": "1",
+      "display": "Moving figure occludes part of the static background; regions it uncovers are revealed, not created or destroyed."
+    },
+    {
+      "fromFrameId": "1",
+      "toFrameId": "2",
+      "display": "Moving figure occludes part of the static background; regions it uncovers are revealed, not created or destroyed."
+    },
+    {
+      "fromFrameId": "2",
+      "toFrameId": "3",
+      "display": "Moving figure occludes part of the static background; regions it uncovers are revealed, not created or destroyed."
+    },
+    {
+      "fromFrameId": "3",
+      "toFrameId": "4",
+      "display": "Moving figure occludes part of the static background; regions it uncovers are revealed, not created or destroyed."
+    },
+    {
+      "fromFrameId": "4",
+      "toFrameId": "5",
+      "display": "Moving figure occludes part of the static background; regions it uncovers are revealed, not created or destroyed."
+    },
+    {
+      "fromFrameId": "5",
+      "toFrameId": "6",
+      "display": "Moving figure occludes part of the static background; regions it uncovers are revealed, not created or destroyed."
+    },
+    {
+      "fromFrameId": "6",
+      "toFrameId": "7",
+      "display": "Moving figure occludes part of the static background; regions it uncovers are revealed, not created or destroyed."
+    },
+    {
+      "fromFrameId": "7",
+      "toFrameId": "8",
+      "display": "Moving figure occludes part of the static background; regions it uncovers are revealed, not created or destroyed."
+    },
+    {
+      "fromFrameId": "8",
+      "toFrameId": "9",
+      "display": "Moving figure occludes part of the static background; regions it uncovers are revealed, not created or destroyed."
+    },
+    {
+      "fromFrameId": "9",
+      "toFrameId": "10",
+      "display": "Moving figure occludes part of the static background; regions it uncovers are revealed, not created or destroyed."
+    },
+    {
+      "fromFrameId": "10",
+      "toFrameId": "11",
+      "display": "Moving figure occludes part of the static background; regions it uncovers are revealed, not created or destroyed."
+    },
+    {
+      "fromFrameId": "11",
+      "toFrameId": "12",
+      "display": "Moving figure occludes part of the static background; regions it uncovers are revealed, not created or destroyed."
+    },
+    {
+      "fromFrameId": "12",
+      "toFrameId": "13",
+      "display": "Moving figure occludes part of the static background; regions it uncovers are revealed, not created or destroyed."
+    }
+  ],
+  "frames": [
+    {
+      "frameId": "0",
+      "atSeconds": 0.0,
+      "sha256": "9c879087889c0adeabaaf8b3371ab58168d9a14bc1dd1758fcfa95ff9cad2dfd",
+      "incomingAction": null,
+      "caption": "Initial view before any move: the dark-red figure rests on the yellow background. Establish a baseline; one frame cannot prove motion, velocity, or an occlusion relation."
+    },
+    {
+      "frameId": "1",
+      "atSeconds": 0.478,
+      "sha256": "c8aac72598f024fd4d8127195cb331500457a836281732d4436082b3d8436723",
+      "incomingAction": "ACTION3",
+      "caption": "After input ACTION3 (move up): the figure has shifted. Decide whether background revealed behind it was already there (occlusion), not newly created, and whether apparent extra objects are one green object partly hidden by the figure."
+    },
+    {
+      "frameId": "2",
+      "atSeconds": 1.586,
+      "sha256": "256a4d182c9894fb113925a373b99b11b15a556fc1fa0fefdb761153a203337e",
+      "incomingAction": "ACTION3",
+      "caption": "After input ACTION3 (move up): the figure has shifted. Decide whether background revealed behind it was already there (occlusion), not newly created, and whether apparent extra objects are one green object partly hidden by the figure."
+    },
+    {
+      "frameId": "3",
+      "atSeconds": 3.141,
+      "sha256": "dc12b25accade37f8f934f557c198c43705a849eb7bffb7a9f5dcb65c8a76605",
+      "incomingAction": "ACTION3",
+      "caption": "After input ACTION3 (move up): the figure has shifted. Decide whether background revealed behind it was already there (occlusion), not newly created, and whether apparent extra objects are one green object partly hidden by the figure."
+    },
+    {
+      "frameId": "4",
+      "atSeconds": 4.177,
+      "sha256": "fd2cac41b56dccd8a9738bdea9e6920b2675cf518843d303496cec399657b35c",
+      "incomingAction": "ACTION1",
+      "caption": "After input ACTION1 (move left): the figure has shifted. Decide whether background revealed behind it was already there (occlusion), not newly created, and whether apparent extra objects are one green object partly hidden by the figure."
+    },
+    {
+      "frameId": "5",
+      "atSeconds": 4.992,
+      "sha256": "122995df0b8cad0e0bd0bf0c25cebf5d23be99954ec5e05895c254b2ede0708c",
+      "incomingAction": "ACTION1",
+      "caption": "After input ACTION1 (move left): the figure has shifted. Decide whether background revealed behind it was already there (occlusion), not newly created, and whether apparent extra objects are one green object partly hidden by the figure."
+    },
+    {
+      "frameId": "6",
+      "atSeconds": 5.698,
+      "sha256": "87526fc406bb7d588114a40010add67e3e12047fffbe0cda5540cd7c015c5b18",
+      "incomingAction": "ACTION1",
+      "caption": "After input ACTION1 (move left): the figure has shifted. Decide whether background revealed behind it was already there (occlusion), not newly created, and whether apparent extra objects are one green object partly hidden by the figure."
+    },
+    {
+      "frameId": "7",
+      "atSeconds": 6.476,
+      "sha256": "0d5412a203a67d7107b2cc5f4bdb9ea3d88c912071eca3e5c91b5a1d57e3377b",
+      "incomingAction": "ACTION1",
+      "caption": "After input ACTION1 (move left): the figure has shifted. Decide whether background revealed behind it was already there (occlusion), not newly created, and whether apparent extra objects are one green object partly hidden by the figure."
+    },
+    {
+      "frameId": "8",
+      "atSeconds": 7.115,
+      "sha256": "4bbb0fc7ed53c5fcd7cd75a053711130dd4acb1ee48e7df105f984c7ab3744c0",
+      "incomingAction": "ACTION4",
+      "caption": "After input ACTION4 (move down): the figure has shifted. Decide whether background revealed behind it was already there (occlusion), not newly created, and whether apparent extra objects are one green object partly hidden by the figure."
+    },
+    {
+      "frameId": "9",
+      "atSeconds": 7.836,
+      "sha256": "f3043394224ee773266588bb14c6a878fe48d82cdaf5ccb01104ced8be69f420",
+      "incomingAction": "ACTION4",
+      "caption": "After input ACTION4 (move down): the figure has shifted. Decide whether background revealed behind it was already there (occlusion), not newly created, and whether apparent extra objects are one green object partly hidden by the figure."
+    },
+    {
+      "frameId": "10",
+      "atSeconds": 8.543,
+      "sha256": "845263b79b90fcd75c63eafb7e5ca7328068757a11ed477c63e56d45c29ffcc9",
+      "incomingAction": "ACTION4",
+      "caption": "After input ACTION4 (move down): the figure has shifted. Decide whether background revealed behind it was already there (occlusion), not newly created, and whether apparent extra objects are one green object partly hidden by the figure."
+    },
+    {
+      "frameId": "11",
+      "atSeconds": 9.3,
+      "sha256": "7659d86a8094da7044c54817be86836ca26c0d93e13090de1a75e69c4187bcad",
+      "incomingAction": "ACTION1",
+      "caption": "After input ACTION1 (move left): the figure has shifted. Decide whether background revealed behind it was already there (occlusion), not newly created, and whether apparent extra objects are one green object partly hidden by the figure."
+    },
+    {
+      "frameId": "12",
+      "atSeconds": 10.165,
+      "sha256": "081cfa65124f604b2b468f0cd6ec763269bac77ebc5bfdf7af7abe44ed5fa145",
+      "incomingAction": "ACTION1",
+      "caption": "After input ACTION1 (move left): the figure has shifted. Decide whether background revealed behind it was already there (occlusion), not newly created, and whether apparent extra objects are one green object partly hidden by the figure."
+    },
+    {
+      "frameId": "13",
+      "atSeconds": 11.029,
+      "sha256": "7e264c1b99b773f1673193c1d9b58a42697a7c2a0bdf704aa93950bd327c01a6",
+      "incomingAction": "ACTION1",
+      "caption": "After input ACTION1 (move left): the figure has shifted. Decide whether background revealed behind it was already there (occlusion), not newly created, and whether apparent extra objects are one green object partly hidden by the figure. Level advances to 2 here (level_complete)."
+    }
+  ]
+}

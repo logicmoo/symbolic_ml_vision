@@ -1,0 +1,13 @@
+{
+  "action_data": {},
+  "at_seconds": 0.478,
+  "game_directory": "ls20",
+  "game_id": "ls20-9607627b",
+  "image_hash": "c8aac72598f024fd",
+  "incoming_action": "ACTION3",
+  "kind": "arc3_play_frame",
+  "level": "1",
+  "recorded_at": "2026-09-07T11:10:06.456952Z",
+  "state": "NOT_FINISHED",
+  "step_count": 1
+}

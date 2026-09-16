@@ -1,0 +1,21 @@
+{
+  "action_data": {},
+  "action_directory": "4",
+  "action_path": [
+    "1",
+    "2",
+    "3",
+    "4"
+  ],
+  "at_seconds": 2.0,
+  "game_directory": "events_tests",
+  "game_id": "events_tests",
+  "image_hash": "647355e6a913dd9f",
+  "incoming_action": "RIGHT",
+  "kind": "synthetic_action_test_frame",
+  "level": "1",
+  "parent_node": "../3",
+  "recorded_at": "2000-01-01T00:00:00Z",
+  "state": "NOT_FINISHED",
+  "step_count": 4
+}

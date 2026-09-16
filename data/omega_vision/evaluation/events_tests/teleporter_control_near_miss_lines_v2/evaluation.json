@@ -1,0 +1,682 @@
+{
+  "description": "Move below both visible gate apertures without entering; the actor traverses intervening pixels normally. Both devices have paired colored rails and three contrasting diagonal stripe strokes; decorative controls retain those same visible cues without a working link.",
+  "frames": [
+    {
+      "actorId": "teacher_same_actor",
+      "atSeconds": 0.0,
+      "authoredActorPosition": [
+        4,
+        48
+      ],
+      "frameId": "0",
+      "mechanismEvent": null,
+      "pendingDestination": null,
+      "remainingTransitTicks": 0,
+      "sha256": "7ee4d14aa99b5ece80781410b410c38e7d4fb081e19d51189ab64901489b80a5",
+      "transitCount": 0,
+      "visibleActorPixels": 24
+    },
+    {
+      "actorId": "teacher_same_actor",
+      "atSeconds": 0.25,
+      "authoredActorPosition": [
+        6,
+        48
+      ],
+      "frameId": "1",
+      "mechanismEvent": null,
+      "pendingDestination": null,
+      "remainingTransitTicks": 0,
+      "sha256": "29de10a02fc1ab7e7f62adea1f3b1ef65a07c10f36d5e5cb3a38dde2d075d5b6",
+      "transitCount": 0,
+      "visibleActorPixels": 24
+    },
+    {
+      "actorId": "teacher_same_actor",
+      "atSeconds": 0.5,
+      "authoredActorPosition": [
+        8,
+        48
+      ],
+      "frameId": "2",
+      "mechanismEvent": null,
+      "pendingDestination": null,
+      "remainingTransitTicks": 0,
+      "sha256": "9723a1d839f52bcb17cccaaf284e427ab57df773f7695b653ca2d1f3c72f0c46",
+      "transitCount": 0,
+      "visibleActorPixels": 24
+    },
+    {
+      "actorId": "teacher_same_actor",
+      "atSeconds": 0.75,
+      "authoredActorPosition": [
+        10,
+        48
+      ],
+      "frameId": "3",
+      "mechanismEvent": null,
+      "pendingDestination": null,
+      "remainingTransitTicks": 0,
+      "sha256": "3299e38899f6024775c75833ff8ec0877e7a0313d03119eb92ec147fd679d76c",
+      "transitCount": 0,
+      "visibleActorPixels": 24
+    },
+    {
+      "actorId": "teacher_same_actor",
+      "atSeconds": 1.0,
+      "authoredActorPosition": [
+        12,
+        48
+      ],
+      "frameId": "4",
+      "mechanismEvent": null,
+      "pendingDestination": null,
+      "remainingTransitTicks": 0,
+      "sha256": "556fe416e801d374e11fa4b201ab481ee73571fbd2a0197d8f7603f3f4e40cb9",
+      "transitCount": 0,
+      "visibleActorPixels": 24
+    },
+    {
+      "actorId": "teacher_same_actor",
+      "atSeconds": 1.25,
+      "authoredActorPosition": [
+        14,
+        48
+      ],
+      "frameId": "5",
+      "mechanismEvent": null,
+      "pendingDestination": null,
+      "remainingTransitTicks": 0,
+      "sha256": "32a53fd6584b84b41423a3ab7bc1dae2d372529f56457d5350b0451c07350ecd",
+      "transitCount": 0,
+      "visibleActorPixels": 24
+    },
+    {
+      "actorId": "teacher_same_actor",
+      "atSeconds": 1.5,
+      "authoredActorPosition": [
+        16,
+        48
+      ],
+      "frameId": "6",
+      "mechanismEvent": null,
+      "pendingDestination": null,
+      "remainingTransitTicks": 0,
+      "sha256": "097e77c290abd27f128897543c6b3194649d27c9d073e5fa9aafa4ca87efcad1",
+      "transitCount": 0,
+      "visibleActorPixels": 24
+    },
+    {
+      "actorId": "teacher_same_actor",
+      "atSeconds": 1.75,
+      "authoredActorPosition": [
+        18,
+        48
+      ],
+      "frameId": "7",
+      "mechanismEvent": null,
+      "pendingDestination": null,
+      "remainingTransitTicks": 0,
+      "sha256": "dd7d099cbbe23899b23dcda38cf7394f085da2b51199e336ae03e84b5cd7b301",
+      "transitCount": 0,
+      "visibleActorPixels": 24
+    },
+    {
+      "actorId": "teacher_same_actor",
+      "atSeconds": 2.0,
+      "authoredActorPosition": [
+        20,
+        48
+      ],
+      "frameId": "8",
+      "mechanismEvent": null,
+      "pendingDestination": null,
+      "remainingTransitTicks": 0,
+      "sha256": "059a4c22decd4bad65b372130e4891ca5bdef9dd23e995ed3d8c1ef831d32c12",
+      "transitCount": 0,
+      "visibleActorPixels": 24
+    },
+    {
+      "actorId": "teacher_same_actor",
+      "atSeconds": 2.25,
+      "authoredActorPosition": [
+        22,
+        48
+      ],
+      "frameId": "9",
+      "mechanismEvent": null,
+      "pendingDestination": null,
+      "remainingTransitTicks": 0,
+      "sha256": "7b188056a63c83f5b06a771a24e119a1e7b13525b18315d8863c18e65d235775",
+      "transitCount": 0,
+      "visibleActorPixels": 24
+    },
+    {
+      "actorId": "teacher_same_actor",
+      "atSeconds": 2.5,
+      "authoredActorPosition": [
+        24,
+        48
+      ],
+      "frameId": "10",
+      "mechanismEvent": null,
+      "pendingDestination": null,
+      "remainingTransitTicks": 0,
+      "sha256": "500b9ab5d18a8ea17785734dba8a375a472327e2774fbab3eb435cd5dd32d9d3",
+      "transitCount": 0,
+      "visibleActorPixels": 24
+    },
+    {
+      "actorId": "teacher_same_actor",
+      "atSeconds": 2.75,
+      "authoredActorPosition": [
+        26,
+        48
+      ],
+      "frameId": "11",
+      "mechanismEvent": null,
+      "pendingDestination": null,
+      "remainingTransitTicks": 0,
+      "sha256": "eeec56aabc768f2b6f98045badd62fe723301531486c19023ad3055837effd83",
+      "transitCount": 0,
+      "visibleActorPixels": 24
+    },
+    {
+      "actorId": "teacher_same_actor",
+      "atSeconds": 3.0,
+      "authoredActorPosition": [
+        28,
+        48
+      ],
+      "frameId": "12",
+      "mechanismEvent": null,
+      "pendingDestination": null,
+      "remainingTransitTicks": 0,
+      "sha256": "1fad8a89bc7d897f3639361146a7465275ada625ab147438335b9150bf721f18",
+      "transitCount": 0,
+      "visibleActorPixels": 24
+    },
+    {
+      "actorId": "teacher_same_actor",
+      "atSeconds": 3.25,
+      "authoredActorPosition": [
+        30,
+        48
+      ],
+      "frameId": "13",
+      "mechanismEvent": null,
+      "pendingDestination": null,
+      "remainingTransitTicks": 0,
+      "sha256": "682b178452bbf3354d45f9c540eacf9111d5e4f4ed563c3815d7a90a7cfaf658",
+      "transitCount": 0,
+      "visibleActorPixels": 24
+    },
+    {
+      "actorId": "teacher_same_actor",
+      "atSeconds": 3.5,
+      "authoredActorPosition": [
+        32,
+        48
+      ],
+      "frameId": "14",
+      "mechanismEvent": null,
+      "pendingDestination": null,
+      "remainingTransitTicks": 0,
+      "sha256": "a18b1dd346755ea2049545a3e3ca4270b8b2fa25abc7846496be3c27ac9fc121",
+      "transitCount": 0,
+      "visibleActorPixels": 24
+    },
+    {
+      "actorId": "teacher_same_actor",
+      "atSeconds": 3.75,
+      "authoredActorPosition": [
+        34,
+        48
+      ],
+      "frameId": "15",
+      "mechanismEvent": null,
+      "pendingDestination": null,
+      "remainingTransitTicks": 0,
+      "sha256": "fa58bd1ad4a322ca4ffd654a69f8b3da12148686512afc755f8eb968578949e9",
+      "transitCount": 0,
+      "visibleActorPixels": 24
+    },
+    {
+      "actorId": "teacher_same_actor",
+      "atSeconds": 4.0,
+      "authoredActorPosition": [
+        36,
+        48
+      ],
+      "frameId": "16",
+      "mechanismEvent": null,
+      "pendingDestination": null,
+      "remainingTransitTicks": 0,
+      "sha256": "b7700253f64c7b9598ec0323485a8bcdacfea8daa0348034ddd277ee7b2ba03c",
+      "transitCount": 0,
+      "visibleActorPixels": 24
+    },
+    {
+      "actorId": "teacher_same_actor",
+      "atSeconds": 4.25,
+      "authoredActorPosition": [
+        38,
+        48
+      ],
+      "frameId": "17",
+      "mechanismEvent": null,
+      "pendingDestination": null,
+      "remainingTransitTicks": 0,
+      "sha256": "747b5569e4f7429be375a8ad5a0247f0e885d89b4491db84596b994839c21b38",
+      "transitCount": 0,
+      "visibleActorPixels": 24
+    },
+    {
+      "actorId": "teacher_same_actor",
+      "atSeconds": 4.5,
+      "authoredActorPosition": [
+        40,
+        48
+      ],
+      "frameId": "18",
+      "mechanismEvent": null,
+      "pendingDestination": null,
+      "remainingTransitTicks": 0,
+      "sha256": "115248256b34ea8ae26abfccb85f3debd6255ec3a850d8fd22894d03323e3983",
+      "transitCount": 0,
+      "visibleActorPixels": 24
+    },
+    {
+      "actorId": "teacher_same_actor",
+      "atSeconds": 4.75,
+      "authoredActorPosition": [
+        42,
+        48
+      ],
+      "frameId": "19",
+      "mechanismEvent": null,
+      "pendingDestination": null,
+      "remainingTransitTicks": 0,
+      "sha256": "d436cb790bd173a9c76eead8fb954c113b4d8dc6b11508425aee93ab1267733e",
+      "transitCount": 0,
+      "visibleActorPixels": 24
+    },
+    {
+      "actorId": "teacher_same_actor",
+      "atSeconds": 5.0,
+      "authoredActorPosition": [
+        44,
+        48
+      ],
+      "frameId": "20",
+      "mechanismEvent": null,
+      "pendingDestination": null,
+      "remainingTransitTicks": 0,
+      "sha256": "90899932708566058924eaceb15bfd4d5c2a9af89858b17ec86f52698af82b17",
+      "transitCount": 0,
+      "visibleActorPixels": 24
+    },
+    {
+      "actorId": "teacher_same_actor",
+      "atSeconds": 5.25,
+      "authoredActorPosition": [
+        46,
+        48
+      ],
+      "frameId": "21",
+      "mechanismEvent": null,
+      "pendingDestination": null,
+      "remainingTransitTicks": 0,
+      "sha256": "0656e6c679a7fb1899ed684275bdbd39f3c1cde4b759cac050c4eb64367f7f18",
+      "transitCount": 0,
+      "visibleActorPixels": 24
+    },
+    {
+      "actorId": "teacher_same_actor",
+      "atSeconds": 5.5,
+      "authoredActorPosition": [
+        48,
+        48
+      ],
+      "frameId": "22",
+      "mechanismEvent": null,
+      "pendingDestination": null,
+      "remainingTransitTicks": 0,
+      "sha256": "cfb8554e0ec3e70d4ec6e949ce27245caf932d13dc85c362e15fe4b9b5ae6c31",
+      "transitCount": 0,
+      "visibleActorPixels": 24
+    },
+    {
+      "actorId": "teacher_same_actor",
+      "atSeconds": 5.75,
+      "authoredActorPosition": [
+        50,
+        48
+      ],
+      "frameId": "23",
+      "mechanismEvent": null,
+      "pendingDestination": null,
+      "remainingTransitTicks": 0,
+      "sha256": "5f30a68ea438e2650478e72aca7e3bef5df56128c717db40ec4d425b2dc17051",
+      "transitCount": 0,
+      "visibleActorPixels": 24
+    },
+    {
+      "actorId": "teacher_same_actor",
+      "atSeconds": 6.0,
+      "authoredActorPosition": [
+        52,
+        48
+      ],
+      "frameId": "24",
+      "mechanismEvent": null,
+      "pendingDestination": null,
+      "remainingTransitTicks": 0,
+      "sha256": "ecba9d384b949d248e9b07423fa12ac8bd1d4e158c55b26e678b7ab663b72a22",
+      "transitCount": 0,
+      "visibleActorPixels": 24
+    },
+    {
+      "actorId": "teacher_same_actor",
+      "atSeconds": 6.25,
+      "authoredActorPosition": [
+        54,
+        48
+      ],
+      "frameId": "25",
+      "mechanismEvent": null,
+      "pendingDestination": null,
+      "remainingTransitTicks": 0,
+      "sha256": "f5f368861288e4ff55abb9cab364f5f086f61c141d199eac86769c62f6229a5c",
+      "transitCount": 0,
+      "visibleActorPixels": 24
+    },
+    {
+      "actorId": "teacher_same_actor",
+      "atSeconds": 6.5,
+      "authoredActorPosition": [
+        56,
+        48
+      ],
+      "frameId": "26",
+      "mechanismEvent": null,
+      "pendingDestination": null,
+      "remainingTransitTicks": 0,
+      "sha256": "b9009e2c066c9d6301fc7cf54c6f762bd00e14412f979c487a21016cfa09bdab",
+      "transitCount": 0,
+      "visibleActorPixels": 24
+    },
+    {
+      "actorId": "teacher_same_actor",
+      "atSeconds": 6.75,
+      "authoredActorPosition": [
+        58,
+        48
+      ],
+      "frameId": "27",
+      "mechanismEvent": null,
+      "pendingDestination": null,
+      "remainingTransitTicks": 0,
+      "sha256": "d5c506575971037157707548cc2274e6d0c7058823cb8d265a2d4051614056e1",
+      "transitCount": 0,
+      "visibleActorPixels": 24
+    },
+    {
+      "actorId": "teacher_same_actor",
+      "atSeconds": 7.0,
+      "authoredActorPosition": [
+        60,
+        48
+      ],
+      "frameId": "28",
+      "mechanismEvent": null,
+      "pendingDestination": null,
+      "remainingTransitTicks": 0,
+      "sha256": "35ac036704f90526e19789903c3533779250bc687f2cf89118699a2156cb2fb7",
+      "transitCount": 0,
+      "visibleActorPixels": 24
+    },
+    {
+      "actorId": "teacher_same_actor",
+      "atSeconds": 7.25,
+      "authoredActorPosition": [
+        62,
+        48
+      ],
+      "frameId": "29",
+      "mechanismEvent": null,
+      "pendingDestination": null,
+      "remainingTransitTicks": 0,
+      "sha256": "e2b6048d5cdece37a1d2ca0564bb4bd78efd4287a73c208a2d86cfca59a14354",
+      "transitCount": 0,
+      "visibleActorPixels": 24
+    },
+    {
+      "actorId": "teacher_same_actor",
+      "atSeconds": 7.5,
+      "authoredActorPosition": [
+        64,
+        48
+      ],
+      "frameId": "30",
+      "mechanismEvent": null,
+      "pendingDestination": null,
+      "remainingTransitTicks": 0,
+      "sha256": "b99938f2a5f69d46a130dbd011005e1dec029bf3a374201ef5c7b5f4d5f99967",
+      "transitCount": 0,
+      "visibleActorPixels": 24
+    },
+    {
+      "actorId": "teacher_same_actor",
+      "atSeconds": 7.75,
+      "authoredActorPosition": [
+        66,
+        48
+      ],
+      "frameId": "31",
+      "mechanismEvent": null,
+      "pendingDestination": null,
+      "remainingTransitTicks": 0,
+      "sha256": "0615ea8d908d1275b3aae693207650b6fb00213f1c207c7d145b451c56d5e787",
+      "transitCount": 0,
+      "visibleActorPixels": 24
+    },
+    {
+      "actorId": "teacher_same_actor",
+      "atSeconds": 8.0,
+      "authoredActorPosition": [
+        68,
+        48
+      ],
+      "frameId": "32",
+      "mechanismEvent": null,
+      "pendingDestination": null,
+      "remainingTransitTicks": 0,
+      "sha256": "4c7de75deb7b0aea0b2104bb71c23c6e58fd4282ac69e1925fa72eb8d522ae62",
+      "transitCount": 0,
+      "visibleActorPixels": 24
+    },
+    {
+      "actorId": "teacher_same_actor",
+      "atSeconds": 8.25,
+      "authoredActorPosition": [
+        70,
+        48
+      ],
+      "frameId": "33",
+      "mechanismEvent": null,
+      "pendingDestination": null,
+      "remainingTransitTicks": 0,
+      "sha256": "983c554a49959ec2103af4fce589820fb94f47747b324c1776cdccce93c55f47",
+      "transitCount": 0,
+      "visibleActorPixels": 24
+    },
+    {
+      "actorId": "teacher_same_actor",
+      "atSeconds": 8.5,
+      "authoredActorPosition": [
+        72,
+        48
+      ],
+      "frameId": "34",
+      "mechanismEvent": null,
+      "pendingDestination": null,
+      "remainingTransitTicks": 0,
+      "sha256": "e702e68e83c456568956d9b32c7949271425c21390244fb26cf64a1e9d28b793",
+      "transitCount": 0,
+      "visibleActorPixels": 24
+    },
+    {
+      "actorId": "teacher_same_actor",
+      "atSeconds": 8.75,
+      "authoredActorPosition": [
+        74,
+        48
+      ],
+      "frameId": "35",
+      "mechanismEvent": null,
+      "pendingDestination": null,
+      "remainingTransitTicks": 0,
+      "sha256": "96666d743bab527dbec060b81620e57f392c3ae955d405d86155fd8cd9bb3361",
+      "transitCount": 0,
+      "visibleActorPixels": 24
+    },
+    {
+      "actorId": "teacher_same_actor",
+      "atSeconds": 9.0,
+      "authoredActorPosition": [
+        76,
+        48
+      ],
+      "frameId": "36",
+      "mechanismEvent": null,
+      "pendingDestination": null,
+      "remainingTransitTicks": 0,
+      "sha256": "c9674a6c280748c5ba06fd9181fd381f27a15e269d8c21334fd1e090d2448788",
+      "transitCount": 0,
+      "visibleActorPixels": 24
+    },
+    {
+      "actorId": "teacher_same_actor",
+      "atSeconds": 9.25,
+      "authoredActorPosition": [
+        78,
+        48
+      ],
+      "frameId": "37",
+      "mechanismEvent": null,
+      "pendingDestination": null,
+      "remainingTransitTicks": 0,
+      "sha256": "1ae9d2d27fb7f81465fb2327d5a9b5615b5a1ca740dc3ebf0a9edb672ee0f4a4",
+      "transitCount": 0,
+      "visibleActorPixels": 24
+    },
+    {
+      "actorId": "teacher_same_actor",
+      "atSeconds": 9.5,
+      "authoredActorPosition": [
+        80,
+        48
+      ],
+      "frameId": "38",
+      "mechanismEvent": null,
+      "pendingDestination": null,
+      "remainingTransitTicks": 0,
+      "sha256": "f4062257018fcdeff41a44a4e69f162e1079c237a4ac78fc92f505d995570bc9",
+      "transitCount": 0,
+      "visibleActorPixels": 24
+    },
+    {
+      "actorId": "teacher_same_actor",
+      "atSeconds": 9.75,
+      "authoredActorPosition": [
+        82,
+        48
+      ],
+      "frameId": "39",
+      "mechanismEvent": null,
+      "pendingDestination": null,
+      "remainingTransitTicks": 0,
+      "sha256": "160ccadcc7ab8a27559c42a556420a9f7e6e6d38f05c5bee4bfe469b4061c871",
+      "transitCount": 0,
+      "visibleActorPixels": 24
+    },
+    {
+      "actorId": "teacher_same_actor",
+      "atSeconds": 10.0,
+      "authoredActorPosition": [
+        84,
+        48
+      ],
+      "frameId": "40",
+      "mechanismEvent": null,
+      "pendingDestination": null,
+      "remainingTransitTicks": 0,
+      "sha256": "4e704519799acaa8c4dcaaab7b892f7cd29b388e3a44a86c0b70123c04e26b3a",
+      "transitCount": 0,
+      "visibleActorPixels": 24
+    }
+  ],
+  "groundTruthIsRecognizerInput": false,
+  "partition": "training_control",
+  "recognizerStatus": "not_run",
+  "schemaVersion": 1,
+  "suiteId": "action-mechanism-recordings-v1",
+  "teacher": {
+    "actorColor": [
+      145,
+      125,
+      235
+    ],
+    "actorId": "teacher_same_actor",
+    "actorMask": [
+      "110000",
+      "110000",
+      "110000",
+      "110000",
+      "110000",
+      "110000",
+      "111111",
+      "111111"
+    ],
+    "fixtureRevision": 2,
+    "gateStyle": "striped_double_lines_v2",
+    "gates": {
+      "a": [
+        44,
+        28,
+        [
+          210,
+          70,
+          210
+        ]
+      ],
+      "b": [
+        78,
+        28,
+        [
+          55,
+          215,
+          220
+        ]
+      ]
+    },
+    "initialPosition": [
+      4,
+      48
+    ],
+    "occluderBounds": [
+      18,
+      16,
+      30,
+      42
+    ],
+    "portalLinks": {
+      "a": "b",
+      "b": "a"
+    },
+    "source": "teacher_only_links_destinations_and_hidden_state",
+    "transitHiddenFrames": 0
+  },
+  "testId": "teleporter"
+}

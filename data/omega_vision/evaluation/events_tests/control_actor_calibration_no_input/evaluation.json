@@ -1,0 +1,861 @@
+{
+  "baselineStatus": "fixture_unit_baseline_only_not_workbench_execution",
+  "description": "Valid earlier calibration followed by three WAIT samples at contact, not three failed RIGHT inputs.",
+  "frames": [
+    {
+      "atSeconds": 0.0,
+      "authoredObjects": [
+        {
+          "color": [
+            35,
+            110,
+            235
+          ],
+          "entity": "controlled",
+          "position": [
+            34,
+            20
+          ],
+          "size": [
+            6,
+            6
+          ],
+          "visible": true
+        },
+        {
+          "color": [
+            235,
+            65,
+            50
+          ],
+          "entity": "distractor",
+          "position": [
+            8,
+            6
+          ],
+          "size": [
+            5,
+            5
+          ],
+          "visible": true
+        },
+        {
+          "color": [
+            160,
+            165,
+            170
+          ],
+          "entity": "barrier",
+          "position": [
+            48,
+            16
+          ],
+          "size": [
+            3,
+            20
+          ],
+          "visible": true
+        }
+      ],
+      "frameId": "0",
+      "frameOrder": 0,
+      "sha256": "c0022351ec15ab244c7ec93d7278c4bfd9d6439365f6f9761e7e0671f69ea61f"
+    },
+    {
+      "atSeconds": 1.0,
+      "authoredObjects": [
+        {
+          "color": [
+            35,
+            110,
+            235
+          ],
+          "entity": "controlled",
+          "position": [
+            36,
+            20
+          ],
+          "size": [
+            6,
+            6
+          ],
+          "visible": true
+        },
+        {
+          "color": [
+            235,
+            65,
+            50
+          ],
+          "entity": "distractor",
+          "position": [
+            9,
+            6
+          ],
+          "size": [
+            5,
+            5
+          ],
+          "visible": true
+        },
+        {
+          "color": [
+            160,
+            165,
+            170
+          ],
+          "entity": "barrier",
+          "position": [
+            48,
+            16
+          ],
+          "size": [
+            3,
+            20
+          ],
+          "visible": true
+        }
+      ],
+      "frameId": "1",
+      "frameOrder": 1,
+      "sha256": "b662d8981ce2b87c50bd1788f5cfc5f6ba8fcbbd9070a56e80139568f597181f"
+    },
+    {
+      "atSeconds": 2.0,
+      "authoredObjects": [
+        {
+          "color": [
+            35,
+            110,
+            235
+          ],
+          "entity": "controlled",
+          "position": [
+            36,
+            20
+          ],
+          "size": [
+            6,
+            6
+          ],
+          "visible": true
+        },
+        {
+          "color": [
+            235,
+            65,
+            50
+          ],
+          "entity": "distractor",
+          "position": [
+            10,
+            6
+          ],
+          "size": [
+            5,
+            5
+          ],
+          "visible": true
+        },
+        {
+          "color": [
+            160,
+            165,
+            170
+          ],
+          "entity": "barrier",
+          "position": [
+            48,
+            16
+          ],
+          "size": [
+            3,
+            20
+          ],
+          "visible": true
+        }
+      ],
+      "frameId": "2",
+      "frameOrder": 2,
+      "sha256": "09400030ad302f3165f55521d046d9eb058beceffcf8863d0720637c2f66c236"
+    },
+    {
+      "atSeconds": 3.0,
+      "authoredObjects": [
+        {
+          "color": [
+            35,
+            110,
+            235
+          ],
+          "entity": "controlled",
+          "position": [
+            34,
+            20
+          ],
+          "size": [
+            6,
+            6
+          ],
+          "visible": true
+        },
+        {
+          "color": [
+            235,
+            65,
+            50
+          ],
+          "entity": "distractor",
+          "position": [
+            11,
+            6
+          ],
+          "size": [
+            5,
+            5
+          ],
+          "visible": true
+        },
+        {
+          "color": [
+            160,
+            165,
+            170
+          ],
+          "entity": "barrier",
+          "position": [
+            48,
+            16
+          ],
+          "size": [
+            3,
+            20
+          ],
+          "visible": true
+        }
+      ],
+      "frameId": "3",
+      "frameOrder": 3,
+      "sha256": "084a065e0a4e4cc7e23bf60ff94ed2a9eedab83162a4d8659e1e2c138dff722c"
+    },
+    {
+      "atSeconds": 4.0,
+      "authoredObjects": [
+        {
+          "color": [
+            35,
+            110,
+            235
+          ],
+          "entity": "controlled",
+          "position": [
+            34,
+            18
+          ],
+          "size": [
+            6,
+            6
+          ],
+          "visible": true
+        },
+        {
+          "color": [
+            235,
+            65,
+            50
+          ],
+          "entity": "distractor",
+          "position": [
+            12,
+            6
+          ],
+          "size": [
+            5,
+            5
+          ],
+          "visible": true
+        },
+        {
+          "color": [
+            160,
+            165,
+            170
+          ],
+          "entity": "barrier",
+          "position": [
+            48,
+            16
+          ],
+          "size": [
+            3,
+            20
+          ],
+          "visible": true
+        }
+      ],
+      "frameId": "4",
+      "frameOrder": 4,
+      "sha256": "a7e6dc8d5420971f0ce9f6bf3ee9a7e7ad18def2c413490ebd08e356112deedd"
+    },
+    {
+      "atSeconds": 5.0,
+      "authoredObjects": [
+        {
+          "color": [
+            35,
+            110,
+            235
+          ],
+          "entity": "controlled",
+          "position": [
+            34,
+            20
+          ],
+          "size": [
+            6,
+            6
+          ],
+          "visible": true
+        },
+        {
+          "color": [
+            235,
+            65,
+            50
+          ],
+          "entity": "distractor",
+          "position": [
+            13,
+            6
+          ],
+          "size": [
+            5,
+            5
+          ],
+          "visible": true
+        },
+        {
+          "color": [
+            160,
+            165,
+            170
+          ],
+          "entity": "barrier",
+          "position": [
+            48,
+            16
+          ],
+          "size": [
+            3,
+            20
+          ],
+          "visible": true
+        }
+      ],
+      "frameId": "5",
+      "frameOrder": 5,
+      "sha256": "cbaeed5fbe2cf8c8b9b27f89fcd0544e55f2ca3797526226609cd34dd0436250"
+    },
+    {
+      "atSeconds": 6.0,
+      "authoredObjects": [
+        {
+          "color": [
+            35,
+            110,
+            235
+          ],
+          "entity": "controlled",
+          "position": [
+            34,
+            20
+          ],
+          "size": [
+            6,
+            6
+          ],
+          "visible": true
+        },
+        {
+          "color": [
+            235,
+            65,
+            50
+          ],
+          "entity": "distractor",
+          "position": [
+            14,
+            6
+          ],
+          "size": [
+            5,
+            5
+          ],
+          "visible": true
+        },
+        {
+          "color": [
+            160,
+            165,
+            170
+          ],
+          "entity": "barrier",
+          "position": [
+            48,
+            16
+          ],
+          "size": [
+            3,
+            20
+          ],
+          "visible": true
+        }
+      ],
+      "frameId": "6",
+      "frameOrder": 6,
+      "sha256": "148248c9dc5dd7076fdfd7776f2d7c1af665f93b5dc70e56a06aa546d95f927d"
+    },
+    {
+      "atSeconds": 7.0,
+      "authoredObjects": [
+        {
+          "color": [
+            35,
+            110,
+            235
+          ],
+          "entity": "controlled",
+          "position": [
+            36,
+            20
+          ],
+          "size": [
+            6,
+            6
+          ],
+          "visible": true
+        },
+        {
+          "color": [
+            235,
+            65,
+            50
+          ],
+          "entity": "distractor",
+          "position": [
+            15,
+            6
+          ],
+          "size": [
+            5,
+            5
+          ],
+          "visible": true
+        },
+        {
+          "color": [
+            160,
+            165,
+            170
+          ],
+          "entity": "barrier",
+          "position": [
+            48,
+            16
+          ],
+          "size": [
+            3,
+            20
+          ],
+          "visible": true
+        }
+      ],
+      "frameId": "7",
+      "frameOrder": 7,
+      "sha256": "258b40df04b1005031e64283d0401f13849558e2484e10e0ed3721d301575708"
+    },
+    {
+      "atSeconds": 8.0,
+      "authoredObjects": [
+        {
+          "color": [
+            35,
+            110,
+            235
+          ],
+          "entity": "controlled",
+          "position": [
+            38,
+            20
+          ],
+          "size": [
+            6,
+            6
+          ],
+          "visible": true
+        },
+        {
+          "color": [
+            235,
+            65,
+            50
+          ],
+          "entity": "distractor",
+          "position": [
+            16,
+            6
+          ],
+          "size": [
+            5,
+            5
+          ],
+          "visible": true
+        },
+        {
+          "color": [
+            160,
+            165,
+            170
+          ],
+          "entity": "barrier",
+          "position": [
+            48,
+            16
+          ],
+          "size": [
+            3,
+            20
+          ],
+          "visible": true
+        }
+      ],
+      "frameId": "8",
+      "frameOrder": 8,
+      "sha256": "84c1e4ec639f1f7c9128a12705a9184f2d457e045b08328d4d68de03829a70b9"
+    },
+    {
+      "atSeconds": 9.0,
+      "authoredObjects": [
+        {
+          "color": [
+            35,
+            110,
+            235
+          ],
+          "entity": "controlled",
+          "position": [
+            40,
+            20
+          ],
+          "size": [
+            6,
+            6
+          ],
+          "visible": true
+        },
+        {
+          "color": [
+            235,
+            65,
+            50
+          ],
+          "entity": "distractor",
+          "position": [
+            17,
+            6
+          ],
+          "size": [
+            5,
+            5
+          ],
+          "visible": true
+        },
+        {
+          "color": [
+            160,
+            165,
+            170
+          ],
+          "entity": "barrier",
+          "position": [
+            48,
+            16
+          ],
+          "size": [
+            3,
+            20
+          ],
+          "visible": true
+        }
+      ],
+      "frameId": "9",
+      "frameOrder": 9,
+      "sha256": "8c50735ff97813da8e1982289cb9432f6b65d09e876627ebf6f9a3ab0bcfda91"
+    },
+    {
+      "atSeconds": 10.0,
+      "authoredObjects": [
+        {
+          "color": [
+            35,
+            110,
+            235
+          ],
+          "entity": "controlled",
+          "position": [
+            42,
+            20
+          ],
+          "size": [
+            6,
+            6
+          ],
+          "visible": true
+        },
+        {
+          "color": [
+            235,
+            65,
+            50
+          ],
+          "entity": "distractor",
+          "position": [
+            18,
+            6
+          ],
+          "size": [
+            5,
+            5
+          ],
+          "visible": true
+        },
+        {
+          "color": [
+            160,
+            165,
+            170
+          ],
+          "entity": "barrier",
+          "position": [
+            48,
+            16
+          ],
+          "size": [
+            3,
+            20
+          ],
+          "visible": true
+        }
+      ],
+      "frameId": "10",
+      "frameOrder": 10,
+      "sha256": "4cbe9f249a703220874b5135f72a87e4e5e1cfb50170852b5eb9ded7a22ddb9e"
+    },
+    {
+      "atSeconds": 11.0,
+      "authoredObjects": [
+        {
+          "color": [
+            35,
+            110,
+            235
+          ],
+          "entity": "controlled",
+          "position": [
+            42,
+            20
+          ],
+          "size": [
+            6,
+            6
+          ],
+          "visible": true
+        },
+        {
+          "color": [
+            235,
+            65,
+            50
+          ],
+          "entity": "distractor",
+          "position": [
+            19,
+            6
+          ],
+          "size": [
+            5,
+            5
+          ],
+          "visible": true
+        },
+        {
+          "color": [
+            160,
+            165,
+            170
+          ],
+          "entity": "barrier",
+          "position": [
+            48,
+            16
+          ],
+          "size": [
+            3,
+            20
+          ],
+          "visible": true
+        }
+      ],
+      "frameId": "11",
+      "frameOrder": 11,
+      "sha256": "536a410c16ea17222f0c9df6e086d3a8e2b547bba82b648cf2e48d2fb25bb6ef"
+    },
+    {
+      "atSeconds": 12.0,
+      "authoredObjects": [
+        {
+          "color": [
+            35,
+            110,
+            235
+          ],
+          "entity": "controlled",
+          "position": [
+            42,
+            20
+          ],
+          "size": [
+            6,
+            6
+          ],
+          "visible": true
+        },
+        {
+          "color": [
+            235,
+            65,
+            50
+          ],
+          "entity": "distractor",
+          "position": [
+            20,
+            6
+          ],
+          "size": [
+            5,
+            5
+          ],
+          "visible": true
+        },
+        {
+          "color": [
+            160,
+            165,
+            170
+          ],
+          "entity": "barrier",
+          "position": [
+            48,
+            16
+          ],
+          "size": [
+            3,
+            20
+          ],
+          "visible": true
+        }
+      ],
+      "frameId": "12",
+      "frameOrder": 12,
+      "sha256": "e4d951fe5964004786e6a466ced1bd2edb43f800f1c532aee30169a2c7ac3b41"
+    },
+    {
+      "atSeconds": 13.0,
+      "authoredObjects": [
+        {
+          "color": [
+            35,
+            110,
+            235
+          ],
+          "entity": "controlled",
+          "position": [
+            42,
+            20
+          ],
+          "size": [
+            6,
+            6
+          ],
+          "visible": true
+        },
+        {
+          "color": [
+            235,
+            65,
+            50
+          ],
+          "entity": "distractor",
+          "position": [
+            21,
+            6
+          ],
+          "size": [
+            5,
+            5
+          ],
+          "visible": true
+        },
+        {
+          "color": [
+            160,
+            165,
+            170
+          ],
+          "entity": "barrier",
+          "position": [
+            48,
+            16
+          ],
+          "size": [
+            3,
+            20
+          ],
+          "visible": true
+        }
+      ],
+      "frameId": "13",
+      "frameOrder": 13,
+      "sha256": "5de0bfeeced02fd979f9ac3f7232cb32d9c86dc2bcd01ea27f394ffd546d1df5"
+    }
+  ],
+  "groundTruthIsRecognizerInput": false,
+  "partition": "training_control",
+  "recognizerStatus": "not_run",
+  "schemaVersion": 1,
+  "suiteId": "control-actor-calibration-recordings-v1",
+  "teacher": {
+    "bindingExpectedAtFrame": 6,
+    "bindingMustStayUnresolved": false,
+    "calibrationCandidates": [
+      "controlled"
+    ],
+    "controlledEntity": "controlled",
+    "expectedBlockedStartFrame": null,
+    "givenControlVectorsAreNotGivenActorIdentity": true,
+    "physicalUniversalControlCause": "not_established",
+    "schema": "control-actor-calibration-oracle-v1",
+    "testFrameIds": [
+      "7",
+      "8",
+      "9",
+      "10",
+      "11",
+      "12",
+      "13"
+    ],
+    "testResponsesMayTrainBinding": false,
+    "unavailableSourceFrames": []
+  },
+  "testId": "control_actor_calibration"
+}

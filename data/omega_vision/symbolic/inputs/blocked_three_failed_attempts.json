@@ -1,0 +1,37 @@
+{
+  "actor": "actor",
+  "attempts": [
+    {
+      "clear": true,
+      "directed_contact": false,
+      "input": true,
+      "progress": true
+    },
+    {
+      "clear": false,
+      "directed_contact": true,
+      "input": true,
+      "progress": false
+    },
+    {
+      "clear": false,
+      "directed_contact": true,
+      "input": true,
+      "progress": false
+    },
+    {
+      "clear": false,
+      "directed_contact": true,
+      "input": true,
+      "progress": false
+    },
+    {
+      "clear": false,
+      "directed_contact": true,
+      "input": true,
+      "progress": false
+    }
+  ],
+  "barrier": "wall",
+  "continuations": true
+}

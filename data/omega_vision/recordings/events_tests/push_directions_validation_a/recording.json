@@ -1,0 +1,126 @@
+{
+  "description": "Synthetic action-bearing visual sequence; evaluation is separate and has not run.",
+  "fixture_suite": "documented-recording-tests-v1",
+  "game_directory": "events_tests",
+  "game_id": "events_tests",
+  "kind": "arc3_play_recording",
+  "last_event": "fixture_created",
+  "level": "1",
+  "level_directory": "data/recordings/events_tests/push_directions_validation_a",
+  "moves": [
+    {
+      "action": null,
+      "at_seconds": 0.0,
+      "data": {},
+      "directory": "data/recordings/events_tests/push_directions_validation_a/0",
+      "index": 0,
+      "level": "1",
+      "recorded_at": "2000-01-01T00:00:00Z",
+      "state": "NOT_FINISHED"
+    },
+    {
+      "action": "WAIT",
+      "at_seconds": 1.0,
+      "data": {},
+      "directory": "data/recordings/events_tests/push_directions_validation_a/1",
+      "index": 1,
+      "level": "1",
+      "recorded_at": "2000-01-01T00:00:00Z",
+      "state": "NOT_FINISHED"
+    },
+    {
+      "action": "DOWN",
+      "at_seconds": 2.0,
+      "data": {},
+      "directory": "data/recordings/events_tests/push_directions_validation_a/2",
+      "index": 2,
+      "level": "1",
+      "recorded_at": "2000-01-01T00:00:00Z",
+      "state": "NOT_FINISHED"
+    },
+    {
+      "action": "DOWN",
+      "at_seconds": 3.0,
+      "data": {},
+      "directory": "data/recordings/events_tests/push_directions_validation_a/3",
+      "index": 3,
+      "level": "1",
+      "recorded_at": "2000-01-01T00:00:00Z",
+      "state": "NOT_FINISHED"
+    },
+    {
+      "action": "WAIT",
+      "at_seconds": 4.0,
+      "data": {},
+      "directory": "data/recordings/events_tests/push_directions_validation_a/4",
+      "index": 4,
+      "level": "1",
+      "recorded_at": "2000-01-01T00:00:00Z",
+      "state": "NOT_FINISHED"
+    },
+    {
+      "action": "DOWN",
+      "at_seconds": 5.0,
+      "data": {},
+      "directory": "data/recordings/events_tests/push_directions_validation_a/5",
+      "index": 5,
+      "level": "1",
+      "recorded_at": "2000-01-01T00:00:00Z",
+      "state": "NOT_FINISHED"
+    },
+    {
+      "action": "UP",
+      "at_seconds": 6.0,
+      "data": {},
+      "directory": "data/recordings/events_tests/push_directions_validation_a/6",
+      "index": 6,
+      "level": "1",
+      "recorded_at": "2000-01-01T00:00:00Z",
+      "state": "NOT_FINISHED"
+    },
+    {
+      "action": "LEFT",
+      "at_seconds": 7.0,
+      "data": {},
+      "directory": "data/recordings/events_tests/push_directions_validation_a/7",
+      "index": 7,
+      "level": "1",
+      "recorded_at": "2000-01-01T00:00:00Z",
+      "state": "NOT_FINISHED"
+    },
+    {
+      "action": "WAIT",
+      "at_seconds": 8.0,
+      "data": {},
+      "directory": "data/recordings/events_tests/push_directions_validation_a/8",
+      "index": 8,
+      "level": "1",
+      "recorded_at": "2000-01-01T00:00:00Z",
+      "state": "NOT_FINISHED"
+    },
+    {
+      "action": "WAIT",
+      "at_seconds": 9.0,
+      "data": {},
+      "directory": "data/recordings/events_tests/push_directions_validation_a/9",
+      "index": 9,
+      "level": "1",
+      "recorded_at": "2000-01-01T00:00:00Z",
+      "state": "NOT_FINISHED"
+    },
+    {
+      "action": "WAIT",
+      "at_seconds": 10.0,
+      "data": {},
+      "directory": "data/recordings/events_tests/push_directions_validation_a/10",
+      "index": 10,
+      "level": "1",
+      "recorded_at": "2000-01-01T00:00:00Z",
+      "state": "NOT_FINISHED"
+    }
+  ],
+  "session_id": null,
+  "source": "synthetic_action_tests",
+  "started_at": "2000-01-01T00:00:00Z",
+  "updated_at": "2000-01-01T00:00:00Z"
+}

@@ -1,0 +1,10 @@
+{
+  "output": {
+    "counterexamples": 0,
+    "distinct_sequences": 0,
+    "eligible": false,
+    "excluded": 3,
+    "held_out_positive": 0,
+    "independent_positive": 0
+  }
+}

@@ -1,0 +1,45 @@
+{
+  "probes": [
+    {
+      "complete_predicates": [],
+      "facts": [
+        {
+          "args": [
+            "novel",
+            "up"
+          ],
+          "predicate": "user_input"
+        }
+      ],
+      "known_absent": [],
+      "predictions": [
+        {
+          "delay": {
+            "max": 0,
+            "min": 0
+          },
+          "term": {
+            "args": [
+              "novel"
+            ],
+            "predicate": "moved"
+          }
+        }
+      ]
+    },
+    {
+      "complete_predicates": [],
+      "facts": [
+        {
+          "args": [
+            "novel"
+          ],
+          "predicate": "moved"
+        }
+      ],
+      "known_absent": [],
+      "predictions": []
+    }
+  ],
+  "rule_count": 1
+}

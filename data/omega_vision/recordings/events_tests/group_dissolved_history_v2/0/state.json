@@ -1,0 +1,16 @@
+{
+  "action_data": {},
+  "action_directory": null,
+  "action_path": [],
+  "at_seconds": 0,
+  "game_directory": "events_tests",
+  "game_id": "events_tests",
+  "image_hash": "e470f57ef42f2894",
+  "incoming_action": null,
+  "kind": "synthetic_event_test_frame",
+  "level": "1",
+  "parent_node": null,
+  "recorded_at": "2000-01-01T00:00:00Z",
+  "state": "NOT_FINISHED",
+  "step_count": 0
+}

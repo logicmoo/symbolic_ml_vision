@@ -1,0 +1,29 @@
+{
+  "action_data": {
+    "x": 52,
+    "y": 28
+  },
+  "action_directory": "9",
+  "action_path": [
+    "1",
+    "2",
+    "3",
+    "4",
+    "5",
+    "6",
+    "7",
+    "8",
+    "9"
+  ],
+  "at_seconds": 9.0,
+  "game_directory": "events_tests",
+  "game_id": "events_tests",
+  "image_hash": "6142b7df7532ed81",
+  "incoming_action": "CLICK",
+  "kind": "synthetic_action_test_frame",
+  "level": "1",
+  "parent_node": "../8",
+  "recorded_at": "2000-01-01T00:00:00Z",
+  "state": "NOT_FINISHED",
+  "step_count": 9
+}

@@ -1,0 +1,99 @@
+{
+  "count": 2,
+  "schemaVersion": 1,
+  "suiteId": "action-mechanism-recordings-v1",
+  "tests": [
+    {
+      "documentationFile": "documentation/teleporter.md",
+      "executionStatus": "not_run",
+      "group": "Events",
+      "id": "teleporter",
+      "recordings": [
+        {
+          "frameCount": 32,
+          "label": "train a",
+          "partition": "training",
+          "visualSequenceId": "recordings/events_tests/teleporter_train_a_lines_v2"
+        },
+        {
+          "frameCount": 44,
+          "label": "train delayed",
+          "partition": "training",
+          "visualSequenceId": "recordings/events_tests/teleporter_train_delayed_lines_v2"
+        },
+        {
+          "frameCount": 44,
+          "label": "validation reverse",
+          "partition": "validation",
+          "visualSequenceId": "recordings/events_tests/teleporter_validation_reverse_lines_v2"
+        },
+        {
+          "frameCount": 34,
+          "label": "test layout",
+          "partition": "test",
+          "visualSequenceId": "recordings/events_tests/teleporter_test_layout_lines_v2"
+        },
+        {
+          "frameCount": 41,
+          "label": "control near miss",
+          "partition": "training_control",
+          "visualSequenceId": "recordings/events_tests/teleporter_control_near_miss_lines_v2"
+        },
+        {
+          "frameCount": 41,
+          "label": "control decorative",
+          "partition": "test_control",
+          "visualSequenceId": "recordings/events_tests/teleporter_control_decorative_lines_v2"
+        }
+      ],
+      "summary": "Learn a source/arrival association from witnessed remote reappearances, not from line colors or hidden portal wiring.",
+      "title": "Observed portal association versus ordinary occlusion"
+    },
+    {
+      "documentationFile": "documentation/stairs_gravity.md",
+      "executionStatus": "not_run",
+      "group": "Events",
+      "id": "stairs_gravity",
+      "recordings": [
+        {
+          "frameCount": 41,
+          "label": "train a",
+          "partition": "training",
+          "visualSequenceId": "recordings/events_tests/stairs_gravity_train_a"
+        },
+        {
+          "frameCount": 43,
+          "label": "train b",
+          "partition": "training",
+          "visualSequenceId": "recordings/events_tests/stairs_gravity_train_b"
+        },
+        {
+          "frameCount": 44,
+          "label": "validation pattern",
+          "partition": "validation",
+          "visualSequenceId": "recordings/events_tests/stairs_gravity_validation_pattern"
+        },
+        {
+          "frameCount": 43,
+          "label": "test drops",
+          "partition": "test",
+          "visualSequenceId": "recordings/events_tests/stairs_gravity_test_drops"
+        },
+        {
+          "frameCount": 25,
+          "label": "control flat",
+          "partition": "training_control",
+          "visualSequenceId": "recordings/events_tests/stairs_gravity_control_flat"
+        },
+        {
+          "frameCount": 10,
+          "label": "control pause fall",
+          "partition": "test_control",
+          "visualSequenceId": "recordings/events_tests/stairs_gravity_control_pause_fall"
+        }
+      ],
+      "summary": "Traverse two/three-cell stair treads using RIGHT only; distinguish commanded horizontal motion, falling and final obstruction.",
+      "title": "Right-arrow stair descent with gravity and blocked-right evidence"
+    }
+  ]
+}

@@ -125,6 +125,61 @@ def _group_members(result: dict, layer: str) -> list[list[str]]:
     return [group["members"] for group in result.get("group_layers", {}).get(layer, [])]
 
 
+# --- stable identities (r# -> e#) ------------------------------------------------------------
+# Persisted artifacts and the UI mostly show clip-stable e# entity ids instead of per-frame
+# OpenCV r# region ids. Foreground regions are relabelled through the tracker; regions the
+# tracker does not follow (background) keep their r# — hence "mostly".
+
+_REGION_TOKEN = re.compile(r"\br(\d+)\b")
+
+
+def _relabel_text(text: str, mapping: dict) -> str:
+    return _REGION_TOKEN.sub(lambda match: mapping.get(match.group(0), match.group(0)), text)
+
+
+def _relabel_value(value, mapping: dict):
+    if isinstance(value, str):
+        return mapping.get(value, value)
+    if isinstance(value, list):
+        return [_relabel_value(item, mapping) for item in value]
+    if isinstance(value, dict):
+        return {(mapping.get(key, key) if isinstance(key, str) else key): _relabel_value(item, mapping)
+                for key, item in value.items()}
+    return value
+
+
+def stabilize_result(result: dict, sequence_id: str, order: int) -> dict:
+    """Relabel a pipeline result's per-frame r# ids with clip-stable e# ids, in place.
+
+    Tracks the frame (idempotent for identical input), then rewrites the structured views
+    and the textual artifacts. Each object keeps its per-frame id as nativeId; the applied
+    map is exposed as stable_ids. Unmapped regions (background) keep their r#.
+    """
+    track_frame(sequence_id, order, result.get("objects") or [],
+                result.get("width"), result.get("height"))
+    mapping = tracker_mapping(sequence_id, order)
+    if not mapping:
+        return result
+    native_of = {stable: native for native, stable in mapping.items()}
+    for key in ("objects", "prolog", "group_layers", "opencv", "repeated_shapes"):
+        if result.get(key) is not None:
+            result[key] = _relabel_value(result[key], mapping)
+    for obj in result.get("objects") or []:
+        obj["nativeId"] = native_of.get(obj["id"], obj["id"])
+    for artifact in result.get("artifacts") or []:
+        if isinstance(artifact.get("content"), str):
+            artifact["content"] = _relabel_text(artifact["content"], mapping)
+    if isinstance(result.get("metta"), dict) and isinstance(result["metta"].get("content"), str):
+        result["metta"]["content"] = _relabel_text(result["metta"]["content"], mapping)
+    prolog = result.get("prolog")
+    if isinstance(prolog, dict):
+        for key in ("facts", "group_facts", "turtle_facts"):
+            if isinstance(prolog.get(key), str):
+                prolog[key] = _relabel_text(prolog[key], mapping)
+    result["stable_ids"] = mapping
+    return result
+
+
 # --- input/output contract -------------------------------------------------------------------
 # RESERVED INPUTS are the recording's source evidence. The pipeline NEVER writes or deletes
 # them. GENERATED names are the only files this pipeline creates; any cleanup must remove
@@ -329,6 +384,7 @@ def process_recording(recording: Path, *, pipeline: str = "prolog", stamp_epoch:
     transitions: list[dict] = []
     prev_result = None
     prev_order = None
+    prev_raw = None
     metta_sources: list[str] = []
 
     def _needs(paths: list[Path]) -> bool:
@@ -355,8 +411,17 @@ def process_recording(recording: Path, *, pipeline: str = "prolog", stamp_epoch:
                                    "context": context})
         except Exception as error:  # keep crawling the rest of the sequence
             errors.append({"frame": frame_id, "stage": "recognize", "error": str(error)})
-            prev_result, prev_order = None, None
+            prev_result, prev_order, prev_raw = None, None, None
             continue
+
+        # Keep the raw per-frame view for the deducer (it applies the tracker map itself),
+        # then persist and display clip-stable e# identities everywhere else.
+        raw = {"objects": [dict(obj) for obj in result["objects"]],
+               "G": _group_members(result, "G"), "W": _group_members(result, "W")}
+        try:
+            stabilize_result(result, recording_id, order)
+        except Exception as error:
+            errors.append({"frame": frame_id, "stage": "stabilize", "error": str(error)})
 
         wrote_any = _needs(expected)
         if wrote_any:
@@ -375,8 +440,8 @@ def process_recording(recording: Path, *, pipeline: str = "prolog", stamp_epoch:
         # object in the first frame is deduced as an appearance.
         if prev_result is not None or order == 0:
             if prev_result is not None:
-                previous_payload = {"objects": prev_result["objects"]}
-                previous_groups = {"G": _group_members(prev_result, "G"), "W": _group_members(prev_result, "W")}
+                previous_payload = {"objects": prev_raw["objects"]}
+                previous_groups = {"G": prev_raw["G"], "W": prev_raw["W"]}
                 previous_order = prev_order
             else:
                 previous_payload = {"objects": []}
@@ -385,9 +450,9 @@ def process_recording(recording: Path, *, pipeline: str = "prolog", stamp_epoch:
             try:
                 deduced = deduce2_from_payload({
                     "sequenceId": recording_id,
-                    "current": {"objects": result["objects"]},
+                    "current": {"objects": raw["objects"]},
                     "previous": previous_payload,
-                    "currentGroups": {"G": _group_members(result, "G"), "W": _group_members(result, "W")},
+                    "currentGroups": {"G": raw["G"], "W": raw["W"]},
                     "previousGroups": previous_groups,
                     "currentOrder": order, "previousOrder": previous_order,
                     "width": result["width"], "height": result["height"],
@@ -403,7 +468,7 @@ def process_recording(recording: Path, *, pipeline: str = "prolog", stamp_epoch:
             except Exception as error:
                 errors.append({"frame": frame_id, "stage": "deduce", "error": str(error)})
 
-        prev_result, prev_order = result, order
+        prev_result, prev_order, prev_raw = result, order, raw
 
         # Guarantee a .metta sidecar for every .pl in this frame directory.
         for pl_path in sorted(frame_dir.glob("*.pl")):

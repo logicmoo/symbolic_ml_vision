@@ -19,7 +19,8 @@ from recognition import examples, recognize
 from pipelines import PipelineError, capabilities, run_pipeline
 from demos import DemoCatalog
 from expectations import frame_expectations
-from frame_pipeline import deduce2_from_payload, process_recording, find_recordings, source_epoch
+from frame_pipeline import (deduce2_from_payload, process_recording, find_recordings,
+                            source_epoch, stabilize_result)
 from scene_memory import cached_frame_result, learned_scene
 from tracker import track_frame
 from diff_frames import diff_frames
@@ -224,6 +225,16 @@ def _post(path: str, body: bytes, content_type: str, transfer_encoding: str | No
             # Prefer the crawler's cached symbolic artifacts; stale caches (older than the
             # source stamp or the reserved inputs) are invalid and fall through to a live run.
             result = cached_frame_result(payload, data_root) or run_pipeline(payload)
+            frame = payload.get("frame") if isinstance(payload, dict) else None
+            if (not result.get("cached") and "stable_ids" not in result
+                    and isinstance(frame, dict) and isinstance(frame.get("frameId"), str)
+                    and frame["frameId"].isdigit() and isinstance(frame.get("sequenceId"), str)
+                    and frame["sequenceId"].split("/", 1)[0] in ("recordings", "curated")):
+                try:
+                    # Live recorded-frame runs also show clip-stable e# identities.
+                    stabilize_result(result, frame["sequenceId"], int(frame["frameId"]))
+                except ValueError:
+                    pass
         elif isinstance(payload, dict) and payload.get("pipeline", "geometry") == "geometry":
             result = recognize(payload)
         else:

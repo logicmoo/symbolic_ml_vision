@@ -929,9 +929,10 @@ async function recognize(forceEvent) {
     if (revision === state.revision) showResult(result);
     else if (pageMode !== "demos") status("Input changed while recognition was running. Run again for the new input.");
     if (revision === state.revision && result.cached) {
-      showAnalysisStatus(result.cached.needsReprocess
-        ? "Served from the disk cache \u00b7 Prolog rules changed since it was written \u2014 Run again reprocesses live."
-        : "Served from the crawler's disk cache (up to date with the Prolog rules).");
+      // Non-destructive note: never touch showAnalysisStatus here, it resets the panels.
+      status(byId("status").textContent + (result.cached.needsReprocess
+        ? " Served from the disk cache; Prolog rules changed since it was written \u2014 Run again reprocesses live."
+        : " Served from the crawler's disk cache (up to date with the Prolog rules)."));
     }
   } catch (problem) {
     if (revision === state.revision) {

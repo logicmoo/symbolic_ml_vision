@@ -749,10 +749,36 @@ function onLayerChange() {
   refreshPartSelection();
 }
 
+function redrawLayerCompanions() {
+  // Re-render the layer companion canvases from cached layer results (e.g. after the
+  // turtle outer/inner/medials toggles change what the turtle companion draws).
+  for (const prefix of ["layer0", "layer1"]) {
+    const result = state[`${prefix}Result`];
+    const cell = byId(`${prefix}-companion-cell`);
+    if (!cell || !result) continue;
+    const mode = state.companion;
+    if (mode === "none" || mode === "original") {
+      cell.hidden = true;
+      continue;
+    }
+    const label = prefix === "layer0" ? "Layer 0" : "Layer 1";
+    const ok = companionDraw(byId(`${prefix}-companion-canvas`), mode,
+      { result, preview: state[`${prefix}Preview`], debug: state[`${prefix}Debug`],
+        parts: null, original: state[`${prefix}Source`], overlay: true }, true);
+    cell.hidden = !ok;
+    if (ok) byId(`${prefix}-companion-tag`).textContent = `${label} companion: ${COMPANION_LABELS[mode]}`;
+  }
+}
+
 for (const id of ["turtle-outer", "turtle-holes", "turtle-medials"]) {
   byId(id).addEventListener("change", () => {
     renderFrameAnalysis();
     if (state.view === "analysis" && state.analysisMode === "turtles") renderGrid();
+    // Turtle programs must know which layers to draw EVERYWHERE they render:
+    // the frame companion, the previous-frame companion, and the layer companions.
+    renderCompanion();
+    renderPrevPair();
+    redrawLayerCompanions();
   });
 }
 

@@ -27,6 +27,26 @@ class PipelineError(RuntimeError):
     pass
 
 
+# Content fingerprint of the Prolog rule pack: disk caches are considered in need of
+# reprocessing ONLY when this actually changes (a real rules update), never because a
+# Python/JS/webapp file was touched. Revalidated cheaply via stat before rehashing.
+_RULES_CACHE = {"stat_key": None, "fingerprint": None}
+
+
+def rules_fingerprint() -> str:
+    paths = sorted(PROLOG_DIR.glob("*.pl"))
+    stat_key = tuple((path.name, path.stat().st_mtime_ns, path.stat().st_size) for path in paths)
+    if _RULES_CACHE["stat_key"] != stat_key:
+        digest = sha256()
+        for path in paths:
+            digest.update(path.name.encode("utf-8"))
+            digest.update(b"\0")
+            digest.update(path.read_bytes().replace(b"\r\n", b"\n"))
+        _RULES_CACHE["stat_key"] = stat_key
+        _RULES_CACHE["fingerprint"] = digest.hexdigest()
+    return _RULES_CACHE["fingerprint"]
+
+
 def capabilities() -> dict:
     import importlib.util
 
@@ -325,6 +345,7 @@ def run_pipeline(payload: object) -> dict:
                              "content": _render_context_facts(context)})
     return {
         "schema_version": 1, "native": True, "pipeline": mode, "stages": stages,
+        "rules_fingerprint": rules_fingerprint(),
         "source": source, "frame": frame, "width": image.width, "height": image.height,
         "context": context,
         "metta": {"name": metta_name, "content": metta},

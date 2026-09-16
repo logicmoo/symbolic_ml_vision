@@ -19,6 +19,7 @@ from hashlib import sha256
 from pathlib import Path
 
 from frame_pipeline import source_epoch
+from pipelines import rules_fingerprint
 
 SEQUENCE_FAMILIES = ("recordings", "curated")
 
@@ -43,11 +44,14 @@ def resolve_frame_dir(data_root: Path, sequence_id: str, frame_id: str) -> Path 
     return frame_dir
 
 
-def cached_recognition(frame_dir: Path) -> tuple[dict, float] | None:
-    """The frame's cached recognition.json, but only while it is FRESH.
+def cached_recognition(frame_dir: Path) -> tuple[dict, float, bool] | None:
+    """The frame's cached recognition.json. Caches are NEVER destroyed or refused for age.
 
-    Stale means older than the source stamp or older than the reserved inputs; then the
-    cache (and every image derived from it) is invalid and None is returned.
+    Returns (result, mtime, needs_reprocess). A cache is unusable (None) only when it is
+    missing, unreadable, or older than the frame's reserved inputs (image.png/state.json
+    changed — it no longer describes the input). needs_reprocess is ADVISORY: it is True
+    only when the Prolog rule pack content has actually changed since the cache was
+    written; consumers keep serving the cache and merely offer reprocessing.
     """
     cache = frame_dir / "recognition.json"
     if not cache.is_file():
@@ -55,8 +59,6 @@ def cached_recognition(frame_dir: Path) -> tuple[dict, float] | None:
     try:
         mtime = cache.stat().st_mtime
     except OSError:
-        return None
-    if mtime < source_epoch():
         return None
     for name in ("image.png", "state.json"):
         source = frame_dir / name
@@ -68,7 +70,13 @@ def cached_recognition(frame_dir: Path) -> tuple[dict, float] | None:
         return None
     if not isinstance(result, dict) or result.get("schema_version") != 1:
         return None
-    return result, mtime
+    recorded = result.get("rules_fingerprint")
+    if isinstance(recorded, str):
+        needs_reprocess = recorded != rules_fingerprint()
+    else:
+        # Legacy cache without a fingerprint: advise reprocessing so it gains one.
+        needs_reprocess = True
+    return result, mtime, needs_reprocess
 
 
 def _hex_rgb(color: str) -> tuple[int, int, int]:
@@ -140,6 +148,8 @@ def cached_frame_result(payload: dict, data_root: Path) -> dict | None:
     frame = payload.get("frame")
     if not isinstance(frame, dict):
         return None
+    if payload.get("force_live"):
+        return None  # explicit user re-run: bypass the cache, never delete it
     for key, default in CRAWLER_DEFAULTS.items():
         if payload.get(key, default) != default:
             return None
@@ -149,7 +159,7 @@ def cached_frame_result(payload: dict, data_root: Path) -> dict | None:
     cached = cached_recognition(frame_dir)
     if cached is None:
         return None
-    result, mtime = cached
+    result, mtime, needs_reprocess = cached
     if result.get("pipeline") != payload.get("pipeline"):
         return None
     image = payload.get("image")
@@ -164,7 +174,8 @@ def cached_frame_result(payload: dict, data_root: Path) -> dict | None:
     if images is None:
         return None
     result.update(images)
-    result["cached"] = {"file": "recognition.json", "mtime": mtime}
+    result["cached"] = {"file": "recognition.json", "mtime": mtime,
+                        "needsReprocess": needs_reprocess}
     return result
 
 
@@ -179,8 +190,10 @@ def learned_scene(data_root: Path, sequence_id: str) -> dict:
     * Opaque recordings: the cached recognition's foreground regions are painted into
       scene memory; the detected background acts as the occluding darkness.
 
-    Frame freshness is still governed by the cached artifacts: frames whose cached
-    recognition is stale or missing are reported in framesStale, never recomputed here.
+    Caches are never destroyed: frames whose cached recognition was written under older
+    Prolog rules are still composed and listed in framesAwaitingReprocess (advisory);
+    only unusable caches (missing/unreadable/older than reserved inputs) are skipped and
+    reported in framesStale. Nothing is recomputed here.
     """
     from PIL import Image
     if not isinstance(sequence_id, str) or sequence_id.split("/", 1)[0] not in SEQUENCE_FAMILIES:
@@ -198,13 +211,17 @@ def learned_scene(data_root: Path, sequence_id: str) -> dict:
     scene = None
     darkness = (13, 17, 26)
     aperture_mode = False
-    frames_used, frames_stale = [], []
+    frames_used, frames_stale, frames_awaiting = [], [], []
     for frame_dir in frames:
         cached = cached_recognition(frame_dir)
         if cached is None:
             frames_stale.append(frame_dir.name)
             continue
-        result, _ = cached
+        result, _, awaiting = cached
+        if awaiting:
+            # Processed artifacts are KEPT: an advanced source stamp only means the
+            # crawler will reprocess; the learned scene never goes dark meanwhile.
+            frames_awaiting.append(frame_dir.name)
         with Image.open(frame_dir / "image.png") as png:
             has_alpha = png.mode in ("RGBA", "LA", "PA")
             rgba = png.convert("RGBA") if has_alpha else None
@@ -273,6 +290,7 @@ def learned_scene(data_root: Path, sequence_id: str) -> dict:
         "mode": "aperture" if aperture_mode else "symbolic",
         "scene": base64.b64encode(buffer.getvalue()).decode("ascii"),
         "framesUsed": frames_used, "framesStale": frames_stale,
+        "framesAwaitingReprocess": frames_awaiting,
         "revealedPixels": revealed, "coverage": round(revealed / (width * height), 4),
         "stillOccluded": width * height - revealed,
         "induction": induction, "sourceEpoch": source_epoch(),

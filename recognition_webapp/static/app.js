@@ -889,8 +889,10 @@ function showResult(result) {
   byId("studio-content")?.classList.remove("stale");
 }
 
-async function recognize() {
+async function recognize(forceEvent) {
   if (state.busy || state.loadingDemo || !state.grid.length) return;
+  // A real click on Run again passes the event: bypass the disk cache for a live run.
+  const forceLive = Boolean(forceEvent);
   autoAnalysisPending = false;
   const revision = state.revision;
   state.busy = true;
@@ -908,6 +910,7 @@ async function recognize() {
       body: JSON.stringify({
         pipeline, grid: state.grid, palette: state.palette, background: state.background,
         tolerance: Number(byId("tolerance").value), w_engine: state.wEngine, strong_edge_pct: state.strongEdgePct, old_strong_edge_pct: state.oldEdgePct, upscale: state.upscale, crack_angle_tol: state.crackAngleTol,
+        ...(forceLive ? { force_live: true } : {}),
         ...(state.demoFrame ? {frame: {sequenceId: state.demoFrame.sequenceId, frameId: state.demoFrame.frameId}} : {}),
         ...(pipeline !== "geometry" && state.imageData ? {image: {base64: state.imageData}} : {}),
       }),
@@ -925,6 +928,11 @@ async function recognize() {
     }
     if (revision === state.revision) showResult(result);
     else if (pageMode !== "demos") status("Input changed while recognition was running. Run again for the new input.");
+    if (revision === state.revision && result.cached) {
+      showAnalysisStatus(result.cached.needsReprocess
+        ? "Served from the disk cache \u00b7 Prolog rules changed since it was written \u2014 Run again reprocesses live."
+        : "Served from the crawler's disk cache (up to date with the Prolog rules).");
+    }
   } catch (problem) {
     if (revision === state.revision) {
       invalidate();
@@ -1248,7 +1256,7 @@ async function loadDemoFrame() {
     const blob = await response.blob();
     if (token !== demoRequest) return;
     const loaded = await importImage(new File([blob], `frame-${frame.frameId}.png`, { type: "image/png" }), {
-      label, testId: test.id, sequenceId: sequence.id, frameId: frame.frameId,
+      label, testId: test?.id ?? null, sequenceId: sequence.id, frameId: frame.frameId,
     });
     if (token !== demoRequest) return;
     state.loadingDemo = !loaded;
@@ -2573,8 +2581,9 @@ async function loadLearnedScene() {
     brush.imageSmoothingEnabled = false;
     brush.drawImage(image, 0, 0, canvasEl.width, canvasEl.height);
     const pct = Math.round(scene.coverage * 100);
+    const awaiting = scene.framesAwaitingReprocess?.length ? ` \u00b7 ${scene.framesAwaitingReprocess.length} awaiting reprocess` : "";
     const stale = scene.framesStale.length ? ` \u00b7 ${scene.framesStale.length} frames not cached yet` : "";
-    byId("scene-tag").textContent = `Learned scene \u00b7 ${scene.framesUsed.length} frames \u00b7 ${pct}% revealed${stale}`;
+    byId("scene-tag").textContent = `Learned scene \u00b7 ${scene.framesUsed.length} frames \u00b7 ${pct}% revealed${awaiting}${stale}`;
     cell.hidden = false;
   } catch {
     if (token === sceneRequest) cell.hidden = true; // no fresh cache yet; the crawler will produce it

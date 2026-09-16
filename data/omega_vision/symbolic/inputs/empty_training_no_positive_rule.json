@@ -1,9 +1,0 @@
-{
-  "feature_predicates": [
-    "displacement_magnitude"
-  ],
-  "scope": {
-    "domain": "test"
-  },
-  "training": []
-}

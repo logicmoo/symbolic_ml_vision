@@ -1,89 +1,109 @@
-# Symbolic Vision Events
+# Symbolic ML Vision (Omega Vision)
 
-A small, local dataset starter for programs that infer events and connections.
-It includes **raw PNG/action sequences** and **structured symbolic inputs**, not
-the Omega Vision Workbench or a replacement grader. Use any language or reasoner;
-Python 3.12+ is needed only for the supplied readers. No installation is needed.
+Symbolic recognition, cross-frame deduction, and **inductive** reasoning over pixel/action
+frame sequences. Each frame is turned into symbolic facts, consecutive frames are compared to
+deduce movement / grouping / events, and whole sequences are generalised into inductive guesses —
+all emitted as **Prolog (`.pl`)**, **MeTTa (`.metta`)**, and **JSON (`.json`)** files that you can
+browse in the built-in **AtomSpace Explorer**.
 
-For the separate recognition-only webapp, see
-[`recognition_webapp\README.md`](recognition_webapp/README.md). Run
-`python -B .\recognition_webapp\app.py` and open `http://127.0.0.1:8765`.
-The app is independent of Workbench. Its Demos page reads this dataset; its
-separate Shapes page supports independent uploads and drawing.
+Everything symbolic is produced by **Python + SWI-Prolog only** — no JavaScript is involved in
+recognition, deduction, induction, or the `.pl`⇄`.metta`⇄`.json` conversion. The browser UI is an
+optional viewer.
 
-Use `list` for the current inventory of tests, sequences, frames, and symbolic
-examples.
+## Architecture
 
-## Quickstart
+- **SWI-Prolog is the top-level host.** It embeds Python in-process via **Janus**, serves the app
+  with `library(http)`, and runs the Prolog rule pack with full RAM.
+- **Shared core.** `recognition_webapp/frame_pipeline.py` (recognition → deduction → per-frame
+  `.pl`/`.metta`/`.json` → `.metta` sidecar for every `.pl` → inductive guesses) is used identically
+  by the web server and the standalone crawler.
+- **One request handler.** `recognition_webapp/web_api.py` (`dispatch`) is shared by the swipl host
+  and a thin Python `http.server` fallback (`app.py`), so behaviour never forks.
+- **Installable SWI pack** at `prolog/omega_vision/` (`pack_install/1`) that **self-provisions** a
+  dedicated Python venv on first run.
 
-Run these PowerShell commands from this repository. These are existing, small
-examples; use `list` to discover the rest:
+### Paths
+
+| Surface | Path |
+|---|---|
+| Web UI | `/omega_vision/ui/` (`/` and `/shapes` redirect here) |
+| JSON API | `/omega_vision/api/v1/…` |
+
+Both are served from a single port per host.
+
+## Install
+
+Two installers, both pointing at the same dedicated `.venv`:
+
+```prolog
+% SWI-Prolog pack (rules + swipl entry points)
+?- pack_install('prolog/omega_vision').
+```
+
+```bash
+# Python core (recognition / deduction / induction)
+pip install .
+```
+
+SWI-Prolog 9.2+ (with `library(janus)`) and Python 3.11+ are required. On first launch the pack
+creates `./.venv` and installs `numpy scipy Pillow opencv-contrib-python-headless scikit-image`
+itself — no manual venv or `PYTHONPATH` needed.
+
+## Run
+
+**swipl-hosted web service** (production target):
+
+```bash
+swipl -g "use_module(library(omega_vision)), run_main(omega_vision/web_service, ['--port','8765'])"
+```
+
+**Standalone Python host** (test / fallback):
+
+```bash
+python -B recognition_webapp/app.py --port 8765
+```
+
+Open <http://127.0.0.1:8765/> → redirects to the UI.
+
+**Crawler** — walk every recording, writing `.pl`/`.metta`/`.json` next to each frame and inducing
+guesses per sequence. It self-relaunches when source changes and idles until it does:
+
+```bash
+# swipl entry
+swipl -g "use_module(library(omega_vision)), run_main(omega_vision/learn_movie, [])"
+# or the Python host
+python -B recognition_webapp/crawler.py
+```
+
+## Dataset helpers
 
 ```powershell
 python .\dataset.py verify
-$catalog = python .\dataset.py list | ConvertFrom-Json
-$catalog.inventory
-$sequence = "recordings/events_tests/accelerated"
-python .\dataset.py stream --sequence $sequence | python .\examples\consume_frames.py
-$symbolic = "contact_full_lifecycle"
-python .\dataset.py symbolic --id $symbolic
+python .\dataset.py list | ConvertFrom-Json
+python .\dataset.py stream --sequence recordings/events_tests/accelerated | python .\examples\consume_frames.py
 ```
 
-Replace the consumer with your program to receive one chronological JSON object
-per frame. It includes PNG base64, the recorded action, time, and source hashes.
-`consume_frames.py` reads the actual PNG header and compares PNG-byte hashes; it
-does **not** decode pixels, recognize objects, infer events, or look up answers.
-Your vision program needs its own RGB/RGBA PNG decoder.
+The runtime data root (`data/omega_vision/…`: recordings + generated output + crawler control
+files) lives outside the code repo and is git-ignored.
 
-To work from any directory, use the full path to the scripts. `dataset.py` always
-locates data next to its own source, not under the current working directory.
-All commands are read-only, write results to stdout, and report failures to
-stderr with a nonzero exit status. Streaming failures can leave a valid prefix
-on stdout; check the reader's exit status before treating a run as complete.
+## Layout
 
-## What's where
-
-| Location | Purpose |
-| --- | --- |
-| `data\omega_vision\dataset.json` | Inventory, sequence/example IDs, provenance, file hashes |
-| `data\omega_vision\recordings` | Raw image/state sequences; `curated` is the other allowed sequence family |
-| `data\omega_vision\symbolic\inputs` | Public structured examples |
-| `data\omega_vision\evaluation` | Separate expected results/oracles, never default frame inputs |
-| `docs\DATA_FORMAT.md` | Manifest, JSONL, integrity checks, shared-storage contract |
-| `docs\USING_YOUR_SYSTEM.md` | Feeding your system, event outputs, and honest evaluation |
-
-The catalogue spans movement, contact, attachment and groups; occlusion/fog;
-controls; pressure plates/pushing; calibration and counterexamples. See each
-test's linked documentation and the manifest for the actual inventory.
-
-The contact example supplies two entities and four successive observations of
-whether they touch: false, true, true, false. Your system can deduce when contact
-begins, continues, and ends. `motion_stationary_start_continue_end` supplies
-observed positions for a similar movement exercise. Neither requires a rule
-parser, a particular output syntax, or a native engine/database.
-
-The legacy demo catalogue, private live recordings, native source-code copies,
-and old internal UI/memory behavior are not included. Malformed-rule and
-parser-security fixtures remain excluded. A well-formed proposed rule is not
-supporting evidence: that distinction belongs in the reasoning examples, without
-requiring the source system's parser or promotion machinery.
-The same applies to uncertainty, circular or duplicated evidence, counterexamples,
-context-sensitive rules, and generalization to unseen observations. These are
-reasoning cases; parser/security checks and product-specific output or approval
-settings are not.
-No private recordings, preferences, secrets, caches, or native execution history
-are included. Some original cases have insufficient evidence or unimplemented
-grading; this export does not claim those cases passed.
-
-Evaluation is an explicit opt-in:
-
-```powershell
-python .\dataset.py symbolic --id $symbolic --expected
+```
+prolog/omega_vision/          SWI pack (pack.pl + prolog/omega_vision/*.pl)
+  web_service.pl              swipl HTTP server (library(http) + Janus)
+  learn_movie.pl              swipl crawler entry
+  venv_boot.pl                self-provisioning venv
+  pipeline_bridge.pl + rules  shape_finder / group_regions / turtle_programs / group_acceptance
+recognition_webapp/           Python core (pip-installable)
+  frame_pipeline.py           shared recognition→deduction→induction engine
+  web_api.py                  shared HTTP dispatch
+  app.py                      thin http.server host
+  crawler.py                  standalone crawler
+  source_syntax.py            Prolog⇄MeTTa⇄JSON conversion (Python only)
+  static/ + clause_explorer/  AtomSpace Explorer UI
+docs/                         design + usage docs
 ```
 
-That command returns the expected result **instead of** the public input. Keep it
-away from your reasoner's input. Expected JSON describes the example's intended
-result; it does not require you to implement the original parser or engine.
-This public local dataset is not an OS sandbox: developers can inspect the gold
-files, but they must not feed them to a system whose results are being judged.
-See `LICENSE` for the source data's licensing.
+## License
+
+MIT — see [LICENSE](LICENSE).

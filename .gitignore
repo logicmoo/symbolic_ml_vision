@@ -1,14 +1,25 @@
-data/omega_vision/recordings/*/*/*.metta
-data/omega_vision/recordings/*/*/*.pl
-data/omega_vision/recordings/*/*/*/*.pl
-data/omega_vision/recordings/*/*/*/*.metta
-data/omega_vision/recordings/*/*/*/*.json
-data/omega_vision/recordings/*/*/*/*/
-data/omega_vision/recordings/**
-data/omega_vision/.crawler/crawler.out
-data/omega_vision/.crawler/crawler.out.err
-data/omega_vision/.crawler/produced.jsonl
-data/omega_vision/.crawler/serve_8799.pl
-data/omega_vision/.crawler/source.stamp
-data/omega_vision/.crawler/webservice.out
-data/omega_vision/.crawler/webservice.out.err
+# --- Runtime data root (recordings, generated .pl/.metta/.json, crawler control files) ---
+# The dataset and all generated symbolic output live outside the code repo.
+/data/
+
+# --- Python ---
+.venv/
+venv/
+__pycache__/
+*.py[cod]
+*.egg-info/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+build/
+dist/
+
+# --- Node / frontend build tooling ---
+node_modules/
+.vite/
+
+# --- OS / editor cruft ---
+.DS_Store
+Thumbs.db
+*.swp
+

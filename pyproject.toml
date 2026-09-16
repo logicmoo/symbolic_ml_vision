@@ -1,0 +1,28 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "omega-vision-recognition"
+version = "0.1.0"
+description = "Omega Vision recognition / cross-frame deduction / induction core. Runs standalone, and is embedded in-process by the swipl `omega_vision` pack via Janus."
+readme = "README.md"
+requires-python = ">=3.11"
+license = { text = "MIT" }
+dependencies = [
+    "numpy>=1.26",
+    "scipy>=1.11",
+    "Pillow>=10",
+    "opencv-contrib-python-headless>=4.9",
+    "scikit-image>=0.24",
+]
+
+[project.scripts]
+# Transitional Python HTTP host (the production server is the swipl omega_vision/web_service).
+omega-vision-webapp = "recognition_webapp.app:main"
+
+[tool.setuptools]
+packages = ["recognition_webapp"]
+
+[tool.setuptools.package-data]
+recognition_webapp = ["static/*", "clause_explorer/*"]

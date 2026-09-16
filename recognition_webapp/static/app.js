@@ -100,10 +100,6 @@ function invalidate(soft = false) {
     byId("parts-grouping-panel").hidden = true;
     byId("group-tree").replaceChildren();
     byId("frame-metta").hidden = true;
-    byId("frame-metta-text").value = "";
-    byId("output-tabs").replaceChildren();
-    byId("output-tree").replaceChildren();
-    byId("download-metta").disabled = true;
     byId("frame-analysis").hidden = true;
     byId("analysis-images").replaceChildren();
     byId("object-list").replaceChildren();
@@ -614,6 +610,8 @@ function renderPartsGrouping() {
       : `${orderedLayers.map((layer) => group.byLayer[layer].id).join(" + ")} \u00b7 ${group.members.length} ${group.members.length === 1 ? "part" : "parts"} \u00b7 ${group.area} px`;
     label.append(checkbox, colorSwatch(group.other ? "#8b9db4" : colors.get(group.key)), text);
     summary.append(label);
+    summary.addEventListener("mouseenter", () => highlightGroupMembers(group.members));
+    summary.addEventListener("mouseleave", clearHighlight);
     details.append(summary);
     if (!group.other) {
       if (group.layers.length > 1) {
@@ -681,6 +679,8 @@ function renderPartsGrouping() {
       const shown = eid || id;
       memberLabel.title = eid ? `${eid} (region ${id})` : id;
       memberLabel.append(input, colorSwatch(part.color), document.createTextNode(`${shown} \u00b7 ${part.color} \u00b7 ${part.area} px`));
+      memberLabel.addEventListener("mouseenter", () => highlightGroupMembers([id]));
+      memberLabel.addEventListener("mouseleave", clearHighlight);
       details.append(memberLabel);
     }
     return details;
@@ -847,7 +847,7 @@ function showResult(result) {
     const validParts = new Set(result.prolog.parts.map((part) => part.id));
     state.selectedParts = new Set([...state.selectedParts].filter((id) => validParts.has(id)));
     byId("frame-metta").hidden = false;
-    byId("frame-metta-title").textContent = `MeTTa / Prolog output \u00b7 frame ${result.frame.frameId}`;
+    byId("frame-metta-title").textContent = `AtomSpace \u00b7 frame ${result.frame.frameId}`;
     renderOutputEditor();
     byId("dimensions").textContent = `${result.width} \u00d7 ${result.height}`;
     const sourceLabel = state.demoFrame ? `${state.demoFrame.label} / frame ${state.demoFrame.frameId}` : result.source.kind === "original_image" ? "Original image bytes" : "Edited grid";
@@ -876,7 +876,7 @@ function showResult(result) {
       ? "No foreground regions. Draw a shape or change the background selection."
       : `${result.object_count} regions recognized. Reconstruction matches the analysis grid exactly.`);
     byId("frame-metta").hidden = false;
-    byId("frame-metta-title").textContent = "Generated output files";
+    byId("frame-metta-title").textContent = "AtomSpace output";
     renderOutputEditor();
   }
   renderFrameAnalysis();
@@ -1658,6 +1658,19 @@ function clearHighlight() {
   document.querySelectorAll(".entity-highlight-layer").forEach((l) => (l.hidden = true));
   const box = byId("entity-highlight"); if (box) box.hidden = true;
   const pop = byId("entity-popup"); if (pop) pop.hidden = true;
+}
+
+// Grouping tree hover: outline the hovered group's/member's regions (g/v/w/e) directly on the
+// group preview canvas to the right of the tree, so hovering a node shows exactly what it covers.
+function highlightGroupMembers(memberIds) {
+  const preview = byId("group-preview");
+  const cell = preview?.parentElement;
+  if (!preview || !cell || !state.result) return;
+  const map = new Map((state.result.objects || []).map((obj) => [obj.id, obj.bounds]));
+  const bounds = memberIds.map((id) => map.get(id)).filter(Boolean);
+  clearHighlight();
+  if (!bounds.length) return;
+  drawInlineBoxes({ canvas: preview, cell, w: state.result.width, h: state.result.height }, bounds);
 }
 
 // Track the Ctrl key so hovering a token can always pop up a locating frame while it is held.
@@ -2746,198 +2759,6 @@ function renderClauseExplorer() {
   }
 }
 
-function outputLanguage(artifact) {
-  return artifact.name.endsWith(".metta") ? "MeTTa" : artifact.name.endsWith(".pl") ? "Prolog" : "JSON";
-}
-
-// Build a search matcher supporting token-AND plus wildcards. Either "_" or "?" matches one term,
-// matched in order. A haystack matches if the ordered wildcard regex matches OR every literal
-// (non-wildcard) token is present. Shared shape with the Clause Explorer's matcher.
-function buildTreeMatcher(query) {
-  const q = query.trim().toLowerCase();
-  if (!q) return () => true;
-  const literalTokens = q.split(/\s+/).filter((t) => t && !/[_?]/.test(t));
-  let re = null;
-  if (/[_?]/.test(q)) {
-    // Escape regex-specials, then turn the (now escaped) "_"/"?" wildcards into a term matcher.
-    const pattern = q.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")
-      .replace(/\\\?/g, "\u0001").replace(/_/g, "\u0001")  // both wildcards -> placeholder
-      .replace(/\u0001/g, "[^\\s()]+")
-      .replace(/\s+/g, "\\s+");
-    try { re = new RegExp(pattern, "i"); } catch { re = null; }
-  }
-  return (hay) => {
-    const h = hay.toLowerCase();
-    if (re && re.test(h)) return true;
-    if (!literalTokens.length) return false;
-    return literalTokens.every((t) => h.includes(t));
-  };
-}
-
-function renderOutputTree() {
-  if (state.result && !window.ClauseExplorer.hasSources(clauseExplorerSources())) {
-    renderOutputEditor();
-    return;
-  }
-  const tree = byId("output-tree");
-  const allFiles = state.activeOutput === ALL_FILES;
-  let nodes, language;
-  if (allFiles) {
-    nodes = state.allFilesView?.nodes || [];
-  } else {
-    const artifact = editorArtifact();
-    if (!artifact) { tree.replaceChildren(); return; }
-    language = outputLanguage(artifact);
-    const dialect = language === "JSON" ? "json" : language === "MeTTa" ? "metta" : "prolog";
-    const choice = byId("output-syntax")?.value || "native";
-    nodes = window.ClauseExplorer.sourceNodes({
-      name: artifact.name, text: state.outputDrafts.get(outputDraftKey(artifact)) ?? artifact.content, dialect,
-    }, choice === "native" ? dialect : choice);
-  }
-  if (!nodes.length) {
-    const note = document.createElement("p");
-    note.className = "hint";
-    note.textContent = allFiles ? "No clauses parsed from any file." : "No clauses parsed from this file.";
-    tree.replaceChildren(note);
-    return;
-  }
-  // Filter by the box above the tree. Supports two things at once:
-  //  - token-AND: space-separated terms each must appear (unordered), so "(frame 1)" matches
-  //    "(Frame <path> 1)".
-  //  - wildcard pattern: "_"/"?" matches any single term, matched in order, so "(frame _ _)"
-  //    matches "(Frame <path> 1)".
-  const allNodes = nodes;
-  // Total unique clause texts per predicate (before filtering) so a filtered summary can read
-  // "matched of total possible".
-  const totalUniqueByKey = new Map();
-  for (const [key, seen] of (() => {
-    const m = new Map();
-    for (const n of allNodes) { if (!m.has(n.key)) m.set(n.key, new Set()); m.get(n.key).add(n.text); }
-    return m;
-  })()) totalUniqueByKey.set(key, seen.size);
-  const filterRaw = (byId("output-tree-filter")?.value || "").trim();
-  const filtering = Boolean(filterRaw);
-  if (filtering) {
-    const match = buildTreeMatcher(filterRaw);
-    nodes = nodes.filter((n) => match(`${n.key} ${n.text}`));
-  }
-  if (!nodes.length) {
-    const note = document.createElement("p");
-    note.className = "hint";
-    note.textContent = "No predicates or clauses match the filter.";
-    tree.replaceChildren(note);
-    return;
-  }
-  const groups = new Map();
-  for (const node of nodes) {
-    if (!groups.has(node.key)) groups.set(node.key, []);
-    groups.get(node.key).push(node);
-  }
-  // Sort modes: By count (clause frequency, descending), By occurrence (first appearance in the
-  // file), or Alphabetical.
-  const sortMode = byId("output-sort")?.value || "count";
-  const fileOrder = [...groups.keys()];
-  const entries = [...groups].sort((a, b) =>
-    sortMode === "name" ? a[0].localeCompare(b[0])
-    : sortMode === "occurrence" ? (fileOrder.indexOf(a[0]) - fileOrder.indexOf(b[0]))
-    : (b[1].length - a[1].length) || a[0].localeCompare(b[0]));
-  const fragment = document.createDocumentFragment();
-  // Preserve each predicate's open/closed state across re-renders (clicking a leaf re-renders the
-  // tree; without this the details would collapse back to the default every time).
-  if (!state.outputOpenPreds) state.outputOpenPreds = null;  // null = not yet initialized
-  const openSet = state.outputOpenPreds;
-  const defaultOpen = entries.length <= 6;
-  for (const [key, items] of entries) {
-    const details = document.createElement("details");
-    details.className = "tree-pred";
-    details.open = openSet ? openSet.has(key) : defaultOpen;
-    details.addEventListener("toggle", () => {
-      if (!state.outputOpenPreds) {
-        // First interaction: seed the set from the current default so other predicates keep state.
-        state.outputOpenPreds = new Set(entries.filter(([, its]) => defaultOpen).map(([k]) => k));
-      }
-      if (details.open) state.outputOpenPreds.add(key); else state.outputOpenPreds.delete(key);
-    });
-    const summary = document.createElement("summary");
-    // Fully drop duplicate clause texts: only unique clauses enter the tree, and the count is the
-    // unique count.
-    const unique = [];
-    const seen = new Set();
-    for (const node of items) {
-      if (seen.has(node.text)) continue;
-      seen.add(node.text);
-      unique.push(node);
-    }
-    summary.textContent = `${key} (${filtering && unique.length < (totalUniqueByKey.get(key) || unique.length)
-      ? `${unique.length} of ${totalUniqueByKey.get(key)}` : unique.length})`;
-    details.append(summary);
-    for (const node of unique) {
-      const leaf = document.createElement("button");
-      leaf.type = "button";
-      leaf.className = "tree-leaf";
-      const shown = node.text;
-      leaf.textContent = shown.length > 84 ? `${shown.slice(0, 81)}\u2026` : shown;
-      leaf.title = allFiles ? `${node.file}\n${shown}` : shown;  // filename kept only in the tooltip
-      leaf.addEventListener("click", () => {
-        if (allFiles) {
-          // Aggregated tree: open the clause's own file and jump to it there.
-          state.allFilesLastFile = node.file;
-          openOutputFileAt(node.file, node.start, node.end);
-          return;
-        }
-        const editor = byId("frame-metta-text");
-        editor.focus();
-        editor.setSelectionRange(node.start, node.end);
-        const linesBefore = editor.value.slice(0, node.start).split("\n").length - 1;
-        const lineHeight = editor.scrollHeight / Math.max(1, editor.value.split("\n").length);
-        editor.scrollTop = Math.max(0, linesBefore * lineHeight - editor.clientHeight / 2);
-      });
-      details.append(leaf);
-    }
-    fragment.append(details);
-  }
-  tree.replaceChildren(fragment);
-}
-
-byId("frame-metta-text").addEventListener("input", () => {
-  const artifact = editorArtifact();
-  if (!artifact) return;
-  const key = outputDraftKey(artifact);
-  const value = byId("frame-metta-text").value;
-  if (value === artifact.content) state.outputDrafts.delete(key);
-  else state.outputDrafts.set(key, value);
-  renderOutputEditor();
-});
-byId("restore-output").addEventListener("click", () => {
-  const artifact = editorArtifact();
-  if (!artifact) return;
-  state.outputDrafts.delete(outputDraftKey(artifact));
-  renderOutputEditor();
-});
-byId("download-metta").addEventListener("click", () => {
-  const artifact = editorArtifact();
-  if (artifact) {
-    const syntax = byId("output-syntax")?.value || "native";
-    const extension = syntax === "prolog" ? "pl" : syntax;
-    const name = syntax === "native" ? artifact.name : artifact.name.replace(/\.(pl|prolog|metta|json)$/i, "." + extension);
-    download(byId("frame-metta-text").value, name, artifact.media_type);
-  }
-});
-byId("frame-metta-text").addEventListener("keydown", (event) => {
-  if (event.currentTarget.readOnly) return;  // all-files aggregate view is read-only
-  if (event.key === "Tab") {
-    event.preventDefault();
-    const editor = event.currentTarget;
-    editor.setRangeText("    ", editor.selectionStart, editor.selectionEnd, "end");
-    editor.dispatchEvent(new Event("input"));
-  } else if ((event.ctrlKey || event.metaKey) && event.key.toLowerCase() === "s") {
-    event.preventDefault();
-    byId("download-metta").click();
-  }
-});
-byId("output-sort")?.addEventListener("change", renderOutputTree);
-byId("output-syntax")?.addEventListener("change", () => renderOutputEditor());
-byId("output-tree-filter")?.addEventListener("input", renderOutputTree);
 
 // ---- Section navigation + accordion (UI only; no inference here) ----
 const NAV_SECTIONS = [
@@ -2980,7 +2801,10 @@ const DEFAULT_NAV_ORDER = [
   "frame-guide",          // Expected
   "result-json",          // Result JSON
 ];
-const DEFAULT_PINS = new Set(["frame-metta", "frame-images", "interframe"]);
+const DEFAULT_PINS = new Set(["frame-images", "interframe", "layer-images"]);
+// Section the left rail highlights (and opens) on startup, before any user interaction.
+const DEFAULT_ACTIVE_SECTION = "layer-images";
+let defaultActiveApplied = false;
 const pinOverrides = new Map();  // id -> explicit user choice, overrides the default
 function navDetails() {
   return NAV_SECTIONS.map(([id]) => byId(id)).filter((el) => el && el.tagName === "DETAILS");
@@ -3114,6 +2938,7 @@ function initSectionNav() {
     btn.addEventListener("mouseenter", () => byId(id)?.classList.add("nav-target-highlight"));
     btn.addEventListener("mouseleave", () => byId(id)?.classList.remove("nav-target-highlight"));
     btn.addEventListener("click", () => {
+      defaultActiveApplied = true;  // user took over; stop auto-selecting the default section
       const target = byId(id);
       if (!target) return;
       if (target.tagName === "DETAILS") {
@@ -3139,6 +2964,7 @@ function initSectionNav() {
       pin.textContent = "\u{1F4CC}";
       pin.addEventListener("click", (event) => {
         event.stopPropagation();
+        defaultActiveApplied = true;  // user took over the rail
         const on = !pinnedSections.has(id);
         pinOverrides.set(id, on);  // remember the user's explicit choice so it sticks
         togglePin(id, on);
@@ -3241,6 +3067,15 @@ function refreshSectionNav() {
     if (pin) {
       const desired = pinOverrides.has(id) ? pinOverrides.get(id) : DEFAULT_PINS.has(id);
       if (desired !== pinnedSections.has(id)) togglePin(id, desired);
+    }
+  }
+  // On startup (before the user touches the rail), highlight and open the default section.
+  if (!defaultActiveApplied) {
+    const target = byId(DEFAULT_ACTIVE_SECTION);
+    if (target && !target.hidden) {
+      if (target.tagName === "DETAILS") target.open = true;
+      setActiveNav(DEFAULT_ACTIVE_SECTION);
+      defaultActiveApplied = true;
     }
   }
 }

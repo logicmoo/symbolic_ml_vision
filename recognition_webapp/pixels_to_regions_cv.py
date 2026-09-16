@@ -699,7 +699,7 @@ def _attachment_evidence(info, kept, polygons, fillpoints, *, opaque: bool, poli
     }
     producer_files = (
         Path(__file__), Path(__file__).with_name("pixels_to_regions.py"),
-        Path(__file__).with_name("group_regions.pl"),
+        Path(__file__).resolve().parent.parent / "prolog" / "omega_vision" / "prolog" / "omega_vision" / "group_regions.pl",
     )
     policy = {
         "schema": "canonical-cv-attachment-coverage-v1", **policy,

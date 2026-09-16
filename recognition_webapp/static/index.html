@@ -223,21 +223,9 @@
           </details>
         </details>
         <details id="frame-metta" class="frame-guide only-demos" hidden aria-labelledby="frame-metta-title">
-          <summary class="guide-heading"><h3 id="frame-metta-title">Current-frame MeTTa / Prolog output</h3><span class="tag">Frame files</span></summary>
-          <p class="hint">Only this frame's process outputs. Part selection affects drawing, not the full-frame output. Draft edits stay in browser memory and are never executed.</p>
-          <div id="output-tabs" class="output-tabs" role="group" aria-label="Frame output files"></div>
-          <div class="output-editor-toolbar"><span id="output-editor-status">Generated output</span><label class="output-sort">Syntax <select id="output-syntax"><option value="native">native</option><option value="prolog">Prolog</option><option value="metta">MeTTa</option></select></label><label class="output-sort">Sort <select id="output-sort"><option value="count">By count</option><option value="occurrence">By occurrence</option><option value="name">Alphabetical</option></select></label><button id="restore-output" class="secondary" disabled>Restore generated</button><button id="download-metta" class="secondary" disabled>Download file</button></div>
-          <div class="output-split">
-            <div class="output-tree-col">
-              <input id="output-tree-filter" type="search" class="output-tree-filter" placeholder="Filter predicates / clauses&#8230;" aria-label="Filter output predicates or clauses">
-              <div id="output-tree" class="output-tree" role="tree" aria-label="Output data tree"><p class="hint">No output parsed yet.</p></div>
-            </div>
-            <textarea id="frame-metta-text" class="frame-code-editor" aria-label="Current frame MeTTa or Prolog file editor" spellcheck="false" wrap="off"></textarea>
-          </div>
-          <details id="clause-explorer-fold" class="subfold-details">
-            <summary class="subfold">Clause Explorer (all output files)</summary>
-            <div id="clause-explorer"></div>
-          </details>
+          <summary class="guide-heading"><h3 id="frame-metta-title">AtomSpace output</h3><span class="tag">Frame files</span></summary>
+          <p class="hint">Every file this frame produces (.pl / .metta / .json), explored in MeTTa syntax. Draft edits stay in browser memory and are never executed.</p>
+          <div id="clause-explorer" class="atomspace-explorer-host"></div>
         </details>
         <details id="frame-guide" class="frame-guide only-demos" hidden aria-labelledby="frame-guide-title">
           <summary class="guide-heading"><h3 id="frame-guide-title">Expected interpretation</h3><span class="tag">Reference only</span></summary>

@@ -215,7 +215,7 @@ class WebTests(unittest.TestCase):
             {"name": "deductions-2.pl", "text": "group(g7, members(['e4']))."},
             {"name": "geometry.json", "text": '{"regions":[]}'},
         ]
-        with patch("app.run_pipeline", side_effect=AssertionError("Source views must not run inference")):
+        with patch("web_api.run_pipeline", side_effect=AssertionError("Source views must not run inference")):
             status, raw, cache = self.request("POST", "/api/source-syntax",
                                             json.dumps({"sources": sources}), {"Content-Type": "application/json"})
         result = json.loads(raw)
@@ -252,6 +252,31 @@ class WebTests(unittest.TestCase):
         )
         self.assertEqual(status, 200)
         self.assertEqual(json.loads(body)["object_count"], 2)
+
+    def test_recognition_serves_concurrent_requests_without_a_busy_lock(self):
+        # Recognition must never reject a request as "busy": overlapping frame requests are served
+        # concurrently by the threading server, so several in-flight recognitions all succeed.
+        payload = json.dumps(examples()[0])
+        results, errors = [], []
+
+        def hit():
+            try:
+                status, body, _ = self.request(
+                    "POST", "/api/recognize", payload, {"Content-Type": "application/json"},
+                )
+                results.append((status, json.loads(body).get("object_count")))
+            except Exception as error:  # pragma: no cover - surfaced via errors assertion
+                errors.append(error)
+
+        threads = [threading.Thread(target=hit) for _ in range(8)]
+        for thread in threads:
+            thread.start()
+        for thread in threads:
+            thread.join(timeout=45)
+        self.assertEqual(errors, [])
+        self.assertEqual(len(results), 8)
+        self.assertTrue(all(status == 200 for status, _ in results), results)
+        self.assertTrue(all(count == 2 for _, count in results), results)
 
     def test_recorded_sequence_pipelines_api(self):
         frames = recorded_frames()

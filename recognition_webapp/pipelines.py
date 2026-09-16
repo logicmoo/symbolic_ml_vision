@@ -17,6 +17,9 @@ from shape_core import _canon_key, _identity_name, _proportional_cells
 
 
 ROOT = Path(__file__).resolve().parent
+# Prolog rules now live in the installable SWI pack (prolog/omega_vision). pipeline_bridge.pl
+# ensure_loads its co-located rule files relative to its own directory, so they move together.
+PROLOG_DIR = ROOT.parent / "prolog" / "omega_vision" / "prolog" / "omega_vision"
 MAX_IMAGE_BYTES = 10 * 1024 * 1024
 
 
@@ -74,9 +77,9 @@ def _run_prolog(payload: dict) -> dict:
         raise PipelineError("SWI-Prolog is missing. Install it and put swipl on PATH; no substitute pipeline was run.")
     try:
         result = subprocess.run(
-            [executable, "-q", "-f", "none", "-s", str(ROOT / "pipeline_bridge.pl"), "-g", "main", "-t", "halt"],
+            [executable, "-q", "-f", "none", "-s", str(PROLOG_DIR / "pipeline_bridge.pl"), "-g", "main", "-t", "halt"],
             input=json.dumps(payload, allow_nan=False), text=True, encoding="utf-8",
-            capture_output=True, timeout=30, cwd=ROOT,
+            capture_output=True, timeout=30, cwd=PROLOG_DIR,
         )
     except subprocess.TimeoutExpired as error:
         raise PipelineError("SWI-Prolog exceeded 30 seconds. Try a smaller image.") from error

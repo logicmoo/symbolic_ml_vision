@@ -40,3 +40,59 @@
   color: #8d9b91;
   font: 11px/1.4 Consolas, monospace;
 }
+
+/* ---- Theme override: match the recognition app's dark-blue code palette ---- */
+/* Loaded after explorer.css with the same #clause-explorer scoping, so later + equal
+   specificity wins. Only recolours; layout/behaviour untouched. */
+.pce {
+  --pce-bg: #0d1522;
+  --pce-panel: #101b2b;
+  --pce-panel-strong: #0c1420;
+  --pce-line: #283d59;
+  --pce-line-soft: #345f94;
+  --pce-text: #c8def7;
+  --pce-muted: #8fa3c0;
+  --pce-accent: #6ea8ff;
+  --pce-accent-dim: #a9c9ff;
+  font-family: Inter, "Segoe UI", system-ui, sans-serif;
+}
+.video-import-prolog-inspector { border-color: #283d59; background: #0d1522; }
+.pce-titlebar { background: #101b2b; }
+.pce-terminal-icon { border-color: #345f94; background: #16273c; color: var(--pce-accent); }
+.pce-titlebar .pce-primary-action,
+.pce-editor-dialog-actions .pce-primary-action {
+  border-color: #345f94; background: #345f94; color: #eaf2ff;
+}
+.pce-tree-toolbar button:hover:not(:disabled) { border-color: #345f94; background: #16273c; }
+.pce-tree-toolbar button.active,
+.pce-source-toolbar > button.active { border-color: #345f94; background: #16273c; color: #a9c9ff; }
+.pce-filter:focus-within { border-color: #345f94; }
+.pce-filterbar { background: #0d1522; }
+.pce-source-toolbar { background: #101b2b; }
+.pce-divider:hover { background: #345f94; }
+.pce-tree { scrollbar-color: #3a5578 #0d1522; }
+/* Clause/tree text: shift the terminal-green ink to the app's light-blue code ink. */
+.pce-chevron { color: #7f93b0; }
+.pce-chevron.leaf { color: #47597a; }
+.pce-predicate > code { color: #a9c9ff; }
+.pce-predicate-metadata b { background: #16273c; color: #c8def7; }
+.pce-predicate-metadata em { color: #8fa3c0; }
+.pce-children > button { color: #c8def7; border-left-color: #223550; }
+.pce-children > button > span { color: #6e86a8; }
+.pce-children > button > code { color: #aac6e6; }
+.pce-children > button:hover,
+.pce-children > button.selected { background: rgba(110,168,255,0.08); }
+.pce-tabs button { color: #8fa3c0; }
+.pce-tabs button:hover { background: rgba(110,168,255,0.06); }
+.pce-tabs button.active { color: #a9c9ff; }
+.pce-source-heading { background: #101b2b; }
+.pce-source-heading b { color: #aac6e6; }
+.pce-source-heading span { color: #8fa3c0; }
+.pce-matches > button:hover { border-color: #345f94; background: rgba(110,168,255,0.08); }
+.pce-matches > button code { color: #c8def7; }
+.pce-matches > button em { color: #8fa3c0; }
+.pce-selection { background: #0c1420; }
+.pce-selection-detail > b { color: #a9c9ff; }
+.pce-selection-stat b { color: #dbe8fb; }
+.pce-footer { background: #0c1420; color: #8fa3c0; }
+.pce-footer em { color: #93b6dd; }

@@ -37,16 +37,15 @@ def control_dir(data_root: Path) -> Path:
 
 def write_stamp(data_root, epoch: float) -> None:
     data_root = Path(data_root)
-    (control_dir(data_root) / "source.stamp").write_text(
-        json.dumps({"epoch": epoch, "iso": time.strftime("%Y-%m-%dT%H:%M:%S", time.localtime(epoch))}) + "\n",
-        encoding="utf-8")
+    (control_dir(data_root) / "source.stamp").write_bytes(
+        (json.dumps({"epoch": epoch, "iso": time.strftime("%Y-%m-%dT%H:%M:%S", time.localtime(epoch))}) + "\n").encode("utf-8"))
 
 
 def log_produced(data_root, records: list[dict]) -> None:
     if not records:
         return
     data_root = Path(data_root)
-    with (control_dir(data_root) / "produced.jsonl").open("a", encoding="utf-8") as handle:
+    with (control_dir(data_root) / "produced.jsonl").open("a", encoding="utf-8", newline="\n") as handle:
         for record in records:
             handle.write(json.dumps({"ts": time.time(), **record}, ensure_ascii=True) + "\n")
 

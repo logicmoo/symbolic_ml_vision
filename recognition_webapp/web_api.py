@@ -27,16 +27,17 @@ from source_syntax import analyze_sources
 ROOT = Path(__file__).resolve().parent
 DEFAULT_DATA_ROOT = ROOT.parent / "data" / "omega_vision"
 MAX_BODY = 14 * 1024 * 1024
+WEB_PREFIX = "/omega_vision/ui"
 STATIC = {
-    "/": ("index.html", "text/html; charset=utf-8"),
-    "/shapes": ("index.html", "text/html; charset=utf-8"),
-    "/app.js": ("app.js", "text/javascript; charset=utf-8"),
-    "/clause_explorer.js": ("clause_explorer.js", "text/javascript; charset=utf-8"),
-    "/clause_explorer.css": ("clause_explorer.css", "text/css; charset=utf-8"),
-    "/style.css": ("style.css", "text/css; charset=utf-8"),
+    f"{WEB_PREFIX}/": ("index.html", "text/html; charset=utf-8"),
+    f"{WEB_PREFIX}/shapes": ("index.html", "text/html; charset=utf-8"),
+    f"{WEB_PREFIX}/app.js": ("app.js", "text/javascript; charset=utf-8"),
+    f"{WEB_PREFIX}/clause_explorer.js": ("clause_explorer.js", "text/javascript; charset=utf-8"),
+    f"{WEB_PREFIX}/clause_explorer.css": ("clause_explorer.css", "text/css; charset=utf-8"),
+    f"{WEB_PREFIX}/style.css": ("style.css", "text/css; charset=utf-8"),
 }
-POST_ROUTES = ("/api/recognize", "/api/deduce2", "/api/track", "/api/diff",
-               "/api/source-syntax", "/api/process")
+POST_ROUTES = ("/omega_vision/api/v1/recognize", "/omega_vision/api/v1/deduce2", "/omega_vision/api/v1/track", "/omega_vision/api/v1/diff",
+               "/omega_vision/api/v1/source-syntax", "/omega_vision/api/v1/process")
 
 
 def _response(status: int, body: bytes, content_type: str) -> dict:
@@ -66,6 +67,11 @@ def _json(status: int, value: object) -> dict:
     return _response(status, json.dumps(value, allow_nan=False).encode("utf-8"), "application/json")
 
 
+def _redirect(location: str) -> dict:
+    return {"status": 302, "headers": {"Location": location, "Content-Length": "0",
+                                       "Cache-Control": "no-store"}, "body_b64": ""}
+
+
 def _authorized(host: str | None, origin: str | None, port: int) -> bool:
     hosts = {f"127.0.0.1:{port}", f"localhost:{port}"}
     if host not in hosts or (origin is not None and origin not in {f"http://{h}" for h in hosts}):
@@ -82,23 +88,28 @@ def _static(path: str) -> dict:
     filename, content_type = STATIC[path]
     content = (ROOT / "static" / filename).read_bytes()
     if filename == "index.html":
-        if path == "/shapes":
+        if path == f"{WEB_PREFIX}/shapes":
             content = content.replace(b'data-page="demos"', b'data-page="shapes"').replace(
                 b"<title>Vision demos</title>", b"<title>Shape explorer</title>")
         for asset in ("app.js", "clause_explorer.js", "clause_explorer.css", "style.css"):
             version = int((ROOT / "static" / asset).stat().st_mtime)
-            content = content.replace(f'/{asset}"'.encode(), f'/{asset}?v={version}"'.encode())
+            content = content.replace(f'{WEB_PREFIX}/{asset}"'.encode(), f'{WEB_PREFIX}/{asset}?v={version}"'.encode())
     return _response(200, content, content_type)
 
 
 def _get(path: str, query: str, data_root: Path) -> dict:
-    if path == "/api/health":
+    # Redirect the bare root (and the pre-move UI paths) to the namespaced UI.
+    if path in ("/", "", WEB_PREFIX):
+        return _redirect(f"{WEB_PREFIX}/")
+    if path == "/shapes":
+        return _redirect(f"{WEB_PREFIX}/shapes")
+    if path == "/omega_vision/api/v1/health":
         return _json(200, {"ok": True, "app": "recognition", "persistent_storage": False})
-    if path == "/api/capabilities":
+    if path == "/omega_vision/api/v1/capabilities":
         return _json(200, capabilities())
-    if path == "/api/examples":
+    if path == "/omega_vision/api/v1/examples":
         return _json(200, examples())
-    if path == "/api/recordings":
+    if path == "/omega_vision/api/v1/recordings":
         root = data_root / "recordings"
         listing = []
         for recording in find_recordings(root):
@@ -111,15 +122,15 @@ def _get(path: str, query: str, data_root: Path) -> dict:
                             "frames": frames, "processed": processed,
                             "outputsUpdated": marker.stat().st_mtime if processed else 0})
         return _json(200, {"recordings": listing, "sourceEpoch": source_epoch()})
-    if path in ("/api/demos", "/api/demos/frame", "/api/demos/expectations"):
+    if path in ("/omega_vision/api/v1/demos", "/omega_vision/api/v1/demos/frame", "/omega_vision/api/v1/demos/expectations"):
         try:
             demos = DemoCatalog(data_root)
-            if path == "/api/demos":
+            if path == "/omega_vision/api/v1/demos":
                 return _json(200, demos.listing())
             params = _query_params(query)
             if any(len(params.get(key, [])) != 1 for key in ("sequence", "frame")):
                 raise ValueError("Choose a demo recording and frame.")
-            if path == "/api/demos/expectations":
+            if path == "/omega_vision/api/v1/demos/expectations":
                 if len(params.get("test", [])) != 1:
                     raise ValueError("Choose a linked test for the frame expectations.")
                 return _json(200, frame_expectations(demos, params["test"][0], params["sequence"][0], params["frame"][0]))
@@ -157,14 +168,14 @@ def _post(path: str, body: bytes, content_type: str, transfer_encoding: str | No
     except (UnicodeDecodeError, ValueError):
         return _json(400, {"error": "Invalid JSON."})
 
-    if path == "/api/source-syntax":
+    if path == "/omega_vision/api/v1/source-syntax":
         try:
             if not isinstance(payload, dict) or set(payload) != {"sources"}:
                 raise ValueError("A sources array is required.")
             return _json(200, analyze_sources(payload["sources"]))
         except (ValueError, TypeError, RecursionError) as error:
             return _json(422, {"error": str(error)})
-    if path == "/api/process":
+    if path == "/omega_vision/api/v1/process":
         try:
             if not isinstance(payload, dict) or not isinstance(payload.get("recording"), str):
                 raise ValueError("A recording id (e.g. recordings/events_tests/bounce) is required.")
@@ -177,12 +188,12 @@ def _post(path: str, body: bytes, content_type: str, transfer_encoding: str | No
                                                 force=bool(payload.get("force"))))
         except ValueError as error:
             return _json(422, {"error": str(error)})
-    if path == "/api/deduce2":
+    if path == "/omega_vision/api/v1/deduce2":
         try:
             return _json(200, deduce2_from_payload(payload))
         except ValueError as error:
             return _json(422, {"error": str(error)})
-    if path == "/api/track":
+    if path == "/omega_vision/api/v1/track":
         try:
             if not isinstance(payload, dict):
                 raise ValueError("A JSON object with sequenceId, order, and objects is required.")
@@ -191,7 +202,7 @@ def _post(path: str, body: bytes, content_type: str, transfer_encoding: str | No
                                           payload.get("height"), payload.get("channel", "frame")))
         except ValueError as error:
             return _json(422, {"error": str(error)})
-    if path == "/api/diff":
+    if path == "/omega_vision/api/v1/diff":
         try:
             if not isinstance(payload, dict):
                 raise ValueError("A JSON object with current and previous frame images is required.")

@@ -35,7 +35,7 @@ def source_epoch(root: Path = ROOT) -> float:
 
 
 def deduce2_from_payload(payload: object) -> dict:
-    """Cross-frame deduction with clip-stable e# identities. Shared by /api/deduce2 and the crawler.
+    """Cross-frame deduction with clip-stable e# identities. Shared by /omega_vision/api/v1/deduce2 and the crawler.
 
     Relabels both frames' objects with the tracker's stable ids before deducing, so matches,
     occluders, and reveals all reference stable ids (the per-frame r# is kept as nativeId).
@@ -120,11 +120,21 @@ def _group_members(result: dict, layer: str) -> list[list[str]]:
 
 # --- output writing ------------------------------------------------------------------------
 
+def _lf(text: str) -> bytes:
+    """Normalise any line endings to LF and encode as UTF-8 bytes (never CRLF, on any platform)."""
+    return text.replace("\r\n", "\n").replace("\r", "\n").encode("utf-8")
+
+
 def _write(path: Path, text: str) -> bool:
-    """Write text only when it changed; return True when the file was (re)written."""
-    if path.exists() and path.read_text(encoding="utf-8") == text:
+    """Write LF-normalised bytes only when the on-disk bytes differ; return True when (re)written.
+
+    Byte comparison (not text) so a file that is currently CRLF is rewritten as LF even when its
+    decoded text is unchanged -- this heals any pre-existing CRLF outputs on the next pass.
+    """
+    data = _lf(text)
+    if path.exists() and path.read_bytes() == data:
         return False
-    path.write_text(text, encoding="utf-8")
+    path.write_bytes(data)
     return True
 
 
@@ -228,7 +238,7 @@ def _mark_included_into(path: Path, target_rel: str) -> None:
     text = path.read_text(encoding="utf-8")
     if marker in text:
         return
-    path.write_text(marker + "\n" + text, encoding="utf-8")
+    path.write_bytes(_lf(marker + "\n" + text))
 
 
 # --- per-recording processing --------------------------------------------------------------

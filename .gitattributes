@@ -7,6 +7,8 @@
 # *.cmd text eol=crlf
 *.bat text eol=lf
 *.cmd text eol=lf
+*.py text eol=lf
+*.pl text eol=lf
 
 # Binary files must never be line-ending normalized.
 *.gif binary
@@ -17,4 +19,9 @@
 *.png binary
 *.webp binary
 *.zip binary
+*.gz binary
+*.qlf binary
+*.woff binary
+*.woff2 binary
+*.ttf binary
 *.ipynb text eol=lf

@@ -133,12 +133,21 @@ emit_response(Resp) :-
     B64 = Resp.body_b64,
     base64_encoded(PlainString, B64, [encoding(octet), padding(true)]),
     string_codes(PlainString, Bytes),
-    dict_pairs(Headers, _, Pairs),
-    format("Status: ~d~n", [Status]),
-    forall(member(Name-Value, Pairs), format("~w: ~w~n", [Name, Value])),
-    format("~n"),
-    set_stream(current_output, encoding(octet)),
-    format("~s", [Bytes]).
+    dict_pairs(Headers, _, Pairs0),
+    % Let SWI's CGI wrapper compute Content-Length; emitting our own duplicates it and breaks
+    % keep-alive framing.
+    exclude(is_content_length, Pairs0, Pairs),
+    stream_property(current_output, encoding(Enc0)),
+    setup_call_cleanup(
+        true,
+        ( format("Status: ~d~n", [Status]),
+          forall(member(Name-Value, Pairs), format("~w: ~w~n", [Name, Value])),
+          format("~n"),
+          set_stream(current_output, encoding(octet)),
+          format("~s", [Bytes]) ),
+        set_stream(current_output, encoding(Enc0))).
+
+is_content_length(Name-_) :- downcase_atom(Name, 'content-length').
 
 :- multifile prolog:message//1.
 prolog:message(web_service(serving(Port, DataRoot))) -->

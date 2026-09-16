@@ -173,7 +173,7 @@ edits are browser-only drafts, never executed or saved to the dataset.
 | `shape_finder.pl`, `group_regions.pl`, `turtle_programs.pl` | Actual Prolog recognition rules |
 | `pipeline_bridge.pl` | In-memory fact loading and JSON/artifact output |
 
-`POST /api/recognize` accepts a `pipeline` (`opencv`, `prolog`, or `geometry`)
+`POST /omega_vision/api/v1/recognize` accepts a `pipeline` (`opencv`, `prolog`, or `geometry`)
 and either `image: {"base64": "..."}` for a native pipeline or
 `grid`, `palette`, and `background` as shown below:
 
@@ -187,10 +187,10 @@ artifact contents. Invalid requests return JSON errors with non-success status.
 The optional `frame: {"sequenceId":"...","frameId":"..."}` supplies the current
 frame's provenance reference for its MeTTa output; original image bytes retain
 their measured source hash.
-`GET /api/examples` supplies examples; `/api/capabilities` reports dependencies.
-`GET /api/demos` supplies the recorded-test catalogue and frame IDs.
-`GET /api/demos/frame?sequence=ID&frame=ID` returns a hash-checked original PNG.
-`GET /api/demos/expectations?test=ID&sequence=ID&frame=ID` returns separate,
+`GET /omega_vision/api/v1/examples` supplies examples; `/omega_vision/api/v1/capabilities` reports dependencies.
+`GET /omega_vision/api/v1/demos` supplies the recorded-test catalogue and frame IDs.
+`GET /omega_vision/api/v1/demos/frame?sequence=ID&frame=ID` returns a hash-checked original PNG.
+`GET /omega_vision/api/v1/demos/expectations?test=ID&sequence=ID&frame=ID` returns separate,
 hash-bound human reference guidance, only for a declared test-recording link.
 
 **No automatic directory or file creation.** Images, grids, and generated outputs

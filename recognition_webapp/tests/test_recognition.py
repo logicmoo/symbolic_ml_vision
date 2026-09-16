@@ -170,12 +170,26 @@ class WebTests(unittest.TestCase):
             connection.close()
 
     def test_ui_and_health(self):
-        for path in ("/", "/shapes", "/app.js", "/style.css", "/clause_explorer.js",
-                     "/clause_explorer.css", "/api/health", "/api/examples", "/api/capabilities"):
+        for path in ("/omega_vision/ui/", "/omega_vision/ui/shapes", "/omega_vision/ui/app.js",
+                     "/omega_vision/ui/style.css", "/omega_vision/ui/clause_explorer.js",
+                     "/omega_vision/ui/clause_explorer.css", "/omega_vision/api/v1/health",
+                     "/omega_vision/api/v1/examples", "/omega_vision/api/v1/capabilities"):
             status, body, cache = self.request("GET", path)
             self.assertEqual(status, 200)
             self.assertTrue(body)
             self.assertEqual(cache, "no-store")
+
+    def test_root_redirects_to_namespaced_ui(self):
+        for path, target in (("/", "/omega_vision/ui/"), ("/shapes", "/omega_vision/ui/shapes")):
+            connection = http.client.HTTPConnection("127.0.0.1", self.port, timeout=10)
+            try:
+                connection.request("GET", path)
+                response = connection.getresponse()
+                response.read()
+                self.assertEqual(response.status, 302)
+                self.assertEqual(response.getheader("Location"), target)
+            finally:
+                connection.close()
 
     def test_original_explorer_is_hash_bound_and_source_routes_are_allowlisted(self):
         root = Path(__file__).resolve().parents[1] / "clause_explorer"
@@ -195,7 +209,7 @@ class WebTests(unittest.TestCase):
         for _ in range(2):
             connection = http.client.HTTPConnection("127.0.0.1", self.port)
             try:
-                connection.request("GET", "/shapes")
+                connection.request("GET", "/omega_vision/ui/shapes")
                 response = connection.getresponse()
                 page = response.read().decode()
                 nonce = re.search(r'name="clause-explorer-style-nonce" content="([^"]+)"', page).group(1)
@@ -216,39 +230,39 @@ class WebTests(unittest.TestCase):
             {"name": "geometry.json", "text": '{"regions":[]}'},
         ]
         with patch("web_api.run_pipeline", side_effect=AssertionError("Source views must not run inference")):
-            status, raw, cache = self.request("POST", "/api/source-syntax",
+            status, raw, cache = self.request("POST", "/omega_vision/api/v1/source-syntax",
                                             json.dumps({"sources": sources}), {"Content-Type": "application/json"})
         result = json.loads(raw)
         self.assertEqual(status, 200)
         self.assertEqual(cache, "no-store")
         self.assertEqual(len(result["sources"]), 3)
         self.assertEqual(result["sources"][1]["formats"]["metta"], "(group g7 (members ([] e4)))")
-        status, _, _ = self.request("POST", "/api/source-syntax", '{"path":"../private"}',
+        status, _, _ = self.request("POST", "/omega_vision/api/v1/source-syntax", '{"path":"../private"}',
                                     {"Content-Type": "application/json"})
         self.assertEqual(status, 422)
 
     def test_demos_and_shapes_have_distinct_page_modes(self):
-        _, demos, _ = self.request("GET", "/")
-        _, shapes, _ = self.request("GET", "/shapes")
+        _, demos, _ = self.request("GET", "/omega_vision/ui/")
+        _, shapes, _ = self.request("GET", "/omega_vision/ui/shapes")
         self.assertIn(b'data-page="demos"', demos)
         self.assertIn(b'data-page="shapes"', shapes)
         self.assertNotIn(b'id="demo-recording"', demos)
 
     def test_frame_expectations_are_a_separate_read_only_endpoint(self):
         query = urlencode({"test": "deformed", "sequence": "recordings/events_tests/deformed", "frame": "1"})
-        status, body, cache = self.request("GET", "/api/demos/expectations?" + query)
+        status, body, cache = self.request("GET", "/omega_vision/api/v1/demos/expectations?" + query)
         self.assertEqual(status, 200)
         guide = json.loads(body)
         self.assertIn("36", guide["caption"])
         self.assertEqual(guide["events"][0]["description"], "deformed(actor)")
         self.assertEqual(cache, "no-store")
         invalid = urlencode({"test": "carry", "sequence": "recordings/events_tests/deformed", "frame": "1"})
-        status, _, _ = self.request("GET", "/api/demos/expectations?" + invalid)
+        status, _, _ = self.request("GET", "/omega_vision/api/v1/demos/expectations?" + invalid)
         self.assertEqual(status, 404)
 
     def test_geometry_api(self):
         status, body, _ = self.request(
-            "POST", "/api/recognize", json.dumps(examples()[0]), {"Content-Type": "application/json"},
+            "POST", "/omega_vision/api/v1/recognize", json.dumps(examples()[0]), {"Content-Type": "application/json"},
         )
         self.assertEqual(status, 200)
         self.assertEqual(json.loads(body)["object_count"], 2)
@@ -262,7 +276,7 @@ class WebTests(unittest.TestCase):
         def hit():
             try:
                 status, body, _ = self.request(
-                    "POST", "/api/recognize", payload, {"Content-Type": "application/json"},
+                    "POST", "/omega_vision/api/v1/recognize", payload, {"Content-Type": "application/json"},
                 )
                 results.append((status, json.loads(body).get("object_count")))
             except Exception as error:  # pragma: no cover - surfaced via errors assertion
@@ -287,7 +301,7 @@ class WebTests(unittest.TestCase):
             for pipeline in ("opencv", "prolog"):
                 with self.subTest(pipeline=pipeline, sequence=first_sequence, frame=frame["frame_id"]):
                     status, body, _ = self.request(
-                        "POST", "/api/recognize", json.dumps(recorded_payload(frame, pipeline)),
+                        "POST", "/omega_vision/api/v1/recognize", json.dumps(recorded_payload(frame, pipeline)),
                         {"Content-Type": "application/json"},
                     )
                     self.assertEqual(status, 200, body.decode("utf-8"))
@@ -297,7 +311,7 @@ class WebTests(unittest.TestCase):
                     self.assertEqual(result["pipeline"], pipeline)
 
     def test_demo_dropdown_contains_real_tests_and_numeric_frame_order(self):
-        status, body, _ = self.request("GET", "/api/demos")
+        status, body, _ = self.request("GET", "/omega_vision/api/v1/demos")
         self.assertEqual(status, 200)
         listed = json.loads(body)
         manifest = json.loads((DATA_ROOT / "dataset.json").read_bytes())
@@ -312,7 +326,7 @@ class WebTests(unittest.TestCase):
     def test_demo_frame_endpoint_returns_original_png(self):
         frame = recorded_frames()[0]
         query = urlencode({"sequence": frame["sequence"], "frame": frame["frame_id"]})
-        status, body, cache = self.request("GET", "/api/demos/frame?" + query)
+        status, body, cache = self.request("GET", "/omega_vision/api/v1/demos/frame?" + query)
         self.assertEqual(status, 200)
         self.assertEqual(sha256(body).hexdigest(), frame["sha256"])
         self.assertEqual(body, frame["path"].read_bytes())
@@ -321,18 +335,18 @@ class WebTests(unittest.TestCase):
             urlencode({"sequence": "../evaluation", "frame": "0"}),
             urlencode({"sequence": frame["sequence"], "frame": "not-a-frame"}),
         ):
-            status, body, _ = self.request("GET", "/api/demos/frame?" + query)
+            status, body, _ = self.request("GET", "/omega_vision/api/v1/demos/frame?" + query)
             self.assertEqual(status, 404)
             self.assertIn("error", json.loads(body))
 
     def test_invalid_and_cross_origin_requests(self):
         for method, path, body, headers, expected in [
             ("GET", "/../app.py", None, {}, 404),
-            ("GET", "/api/health", None, {"Host": "attacker.invalid"}, 403),
-            ("POST", "/api/recognize", "{}", {"Content-Type": "application/json", "Origin": "https://attacker.invalid"}, 403),
-            ("POST", "/api/recognize", "{}", {"Content-Type": "text/plain"}, 415),
-            ("POST", "/api/recognize", "{", {"Content-Type": "application/json"}, 400),
-            ("POST", "/api/recognize", "{}", {"Content-Type": "application/json"}, 422),
+            ("GET", "/omega_vision/api/v1/health", None, {"Host": "attacker.invalid"}, 403),
+            ("POST", "/omega_vision/api/v1/recognize", "{}", {"Content-Type": "application/json", "Origin": "https://attacker.invalid"}, 403),
+            ("POST", "/omega_vision/api/v1/recognize", "{}", {"Content-Type": "text/plain"}, 415),
+            ("POST", "/omega_vision/api/v1/recognize", "{", {"Content-Type": "application/json"}, 400),
+            ("POST", "/omega_vision/api/v1/recognize", "{}", {"Content-Type": "application/json"}, 422),
         ]:
             with self.subTest(path=path, expected=expected):
                 status, response, _ = self.request(method, path, body, headers)

@@ -903,7 +903,7 @@ async function recognize() {
   showAnalysisStatus(`Running ${pipeline === "opencv" ? "OpenCV + SWI-Prolog" : "SWI-Prolog"} for this frame...`);
   status(pipeline === "geometry" ? "Recognizing grid geometry..." : `Running ${pipeline === "opencv" ? "OpenCV and SWI-Prolog" : "SWI-Prolog shape finding and grouping"}...`);
   try {
-    const result = await request("/api/recognize", {
+    const result = await request("/omega_vision/api/v1/recognize", {
       method: "POST", headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
         pipeline, grid: state.grid, palette: state.palette, background: state.background,
@@ -1225,7 +1225,7 @@ async function loadDemoFrame() {
   error();
   try {
     const query = new URLSearchParams({ sequence: sequence.id, frame: frame.frameId });
-    const response = await fetch(`/api/demos/frame?${query}`);
+    const response = await fetch(`/omega_vision/api/v1/demos/frame?${query}`);
     if (!response.ok) {
       const problem = await response.json();
       throw new Error(problem.error || `Could not load frame (${response.status}).`);
@@ -1404,7 +1404,7 @@ async function runPrevPipeline(ref, token) {
   if (!ref) return;
   const pipeline = byId("pipeline").value === "geometry" ? "opencv" : byId("pipeline").value;
   try {
-    const result = await request("/api/recognize", {
+    const result = await request("/omega_vision/api/v1/recognize", {
       method: "POST", headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
         pipeline, tolerance: Number(byId("tolerance").value), w_engine: state.wEngine, strong_edge_pct: state.strongEdgePct, old_strong_edge_pct: state.oldEdgePct, upscale: state.upscale, crack_angle_tol: state.crackAngleTol,
@@ -1452,7 +1452,7 @@ async function loadPrevPreview(sequence, index, token) {
   }
   try {
     const query = new URLSearchParams({ sequence: sequence.id, frame: prev.frameId });
-    const response = await fetch(`/api/demos/frame?${query}`);
+    const response = await fetch(`/omega_vision/api/v1/demos/frame?${query}`);
     if (!response.ok || token !== demoRequest) return;
     const blob = await response.blob();
     if (token !== demoRequest) return;
@@ -1531,11 +1531,11 @@ async function recognizeOrder(sequence, order) {
   // Recognize one earlier frame so it can be fed to the tracker during catch-up. Uses
   // the same engine params as the live pipeline so identities line up with the current frame.
   const frame = sequence.frames[order];
-  const resp = await fetch(`/api/demos/frame?${new URLSearchParams({ sequence: sequence.id, frame: frame.frameId })}`);
+  const resp = await fetch(`/omega_vision/api/v1/demos/frame?${new URLSearchParams({ sequence: sequence.id, frame: frame.frameId })}`);
   if (!resp.ok) throw new Error(`frame ${frame.frameId} unavailable`);
   const base64 = await blobToBase64(await resp.blob());
   const pipeline = byId("pipeline").value === "geometry" ? "opencv" : byId("pipeline").value;
-  const result = await request("/api/recognize", {
+  const result = await request("/omega_vision/api/v1/recognize", {
     method: "POST", headers: { "Content-Type": "application/json" },
     body: JSON.stringify({
       pipeline, tolerance: Number(byId("tolerance").value), w_engine: state.wEngine,
@@ -1765,7 +1765,7 @@ async function renderTracker() {
           try {
             const r = await recognizeOrder(sequence, k);
             if (token !== trackerRequest) return;
-            await request("/api/track", {
+            await request("/omega_vision/api/v1/track", {
               method: "POST", headers: { "Content-Type": "application/json" },
               body: JSON.stringify({ sequenceId: clip, order: k, width: r.width, height: r.height, objects: r.objects }),
             });
@@ -1774,7 +1774,7 @@ async function renderTracker() {
         }
       }
     }
-    const tracking = await request("/api/track", {
+    const tracking = await request("/omega_vision/api/v1/track", {
       method: "POST", headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
         sequenceId: clip, order,
@@ -1844,7 +1844,7 @@ async function renderFrameDiff() {
   loading.textContent = "Diffing against the previous frame\u2026";
   body.append(loading);
   try {
-    const diff = await request("/api/diff", {
+    const diff = await request("/omega_vision/api/v1/diff", {
       method: "POST", headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ current: state.imageData, previous: state.prevRef.base64 }),
     });
@@ -1982,7 +1982,7 @@ async function renderTwoFrame() {
   });
   const hypText = (h) => (h && h.length) ? " \u2014 maybe " + h.map((x) => `${x.label} (${Math.round(x.confidence * 100)}%)`).join(" / ") : "";
   try {
-    const deduction = await request("/api/deduce2", {
+    const deduction = await request("/omega_vision/api/v1/deduce2", {
       method: "POST", headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
         current: pick(state.result), previous: pick(state.prevResult),
@@ -2293,7 +2293,7 @@ async function ensureLayerPipeline(prefix, sourceCanvas) {
   const token = (layerRequests[prefix] = (layerRequests[prefix] || 0) + 1);
   const label = prefix === "layer0" ? "Layer 0" : "Layer 1";
   try {
-    const result = await request("/api/recognize", {
+    const result = await request("/omega_vision/api/v1/recognize", {
       method: "POST", headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
         pipeline: byId("pipeline").value === "geometry" ? "opencv" : byId("pipeline").value,
@@ -2441,7 +2441,7 @@ async function renderLayerMemory(prefix, label) {
   const token = (layerMemoryRequests[prefix] = (layerMemoryRequests[prefix] || 0) + 1);
   const objects = result.objects.map((obj) => ({ id: obj.id, shape_id: obj.shape_id, color: obj.color, area: obj.area, bounds: obj.bounds }));
   try {
-    const tracking = await request("/api/track", {
+    const tracking = await request("/omega_vision/api/v1/track", {
       method: "POST", headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
         sequenceId: state.demoFrame.sequenceId, channel: prefix, order: Number(byId("demo-frame").value),
@@ -2478,7 +2478,7 @@ async function loadFrameGuide(testId, sequenceId, frameId, token) {
   body.textContent = "Loading the authored frame description...";
   try {
     const query = new URLSearchParams({ test: testId, sequence: sequenceId, frame: frameId });
-    const guide = await request(`/api/demos/expectations?${query}`);
+    const guide = await request(`/omega_vision/api/v1/demos/expectations?${query}`);
     if (token !== demoRequest) return;
     body.replaceChildren();
     const caption = document.createElement("p");
@@ -2560,7 +2560,7 @@ function renderDemos(catalog) {
 
 async function loadDemos() {
   try {
-    renderDemos(await request("/api/demos"));
+    renderDemos(await request("/omega_vision/api/v1/demos"));
     return true;
   } catch (problem) {
     byId("demo-test").replaceChildren(new Option("Recorded demos unavailable", ""));
@@ -3083,7 +3083,7 @@ function refreshSectionNav() {
 (async () => {
   try {
     initSectionNav();
-    const availability = await request("/api/capabilities");
+    const availability = await request("/omega_vision/api/v1/capabilities");
     byId("pipeline-availability").textContent = `OpenCV: ${availability.opencv ? "available" : "missing dependencies"}. SWI-Prolog: ${availability.prolog ? "available" : "not on PATH"}. Failures are reported, not replaced with geometry-only results.`;
     pipelineControls();
     if (pageMode === "demos") {
@@ -3116,7 +3116,7 @@ function refreshSectionNav() {
       byId("page-description").textContent = "Upload an image, draw a grid, or try a quick shape example.";
       byId("image-heading").textContent = "Analysis grid";
       byId("recognize-label").textContent = "Recognize shapes";
-      presets = await request("/api/examples");
+      presets = await request("/omega_vision/api/v1/examples");
       byId("example").replaceChildren(...presets.map((item) => new Option(item.title, item.id)));
       byId("example").disabled = false;
       loadGrid(presets[0], "Original Omega Vision grid example \u00b7 edit any cell to experiment.");

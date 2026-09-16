@@ -41,7 +41,7 @@ export function prepareSources(sources: SourceFile[]): Promise<void> {
   const existing = pending.get(requestKey);
   if (existing) return existing;
   const request = (async () => {
-    const response = await fetch("/api/source-syntax", {
+    const response = await fetch("/omega_vision/api/v1/source-syntax", {
       method: "POST", headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ sources: missing }), cache: "no-store",
     });
@@ -98,7 +98,7 @@ export function sourceTextForSyntax(source: SourceFile, _clauses: Clause[], synt
   return analysisFor(source).formats[syntax];
 }
 export function aggregateClauseArguments(clauses: Clause[], syntax?: ExplorerSyntax): string[] {
-  return originalAggregate(clauses).map((value, index) => !syntax || value === "_" || value === "…" ? value
+  return originalAggregate(clauses).map((value, index) => !syntax || value === "_" || value === "â€¦" ? value
     : formatTerm(clauses[0].argTerms[index], syntax));
 }
 export function formatPredicate(value: string, syntax: ExplorerSyntax): string {

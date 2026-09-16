@@ -43,7 +43,7 @@ test("the browser displays server representations without converting or excludin
     assert.equal(sourceTextForSyntax(sources[2], [], "prolog"), "python-prolog-2");
     await prepareSources(sources);
     assert.equal(calls.length, 1);
-    assert.equal(calls[0].url, "/api/source-syntax");
+    assert.equal(calls[0].url, "/omega_vision/api/v1/source-syntax");
     assert.deepEqual(calls[0].body.sources, sources);
     assert.throws(() => formatTerm({ kind: "atom", source: "r2" }, "metta"), /Python-produced/);
   } finally {

@@ -1216,6 +1216,7 @@ function clearDemoSelection() {
   byId("scene-cell").hidden = true;
   inductionRequest++;
   byId("induction-sub").hidden = true;
+  state.induction = null;
   byId("recognize").disabled = state.busy || !state.grid.length;
 }
 
@@ -2045,6 +2046,8 @@ async function renderTwoFrame() {
         currentOrder: Number(byId("demo-frame").value),
         previousOrder: Number(byId("demo-frame").value) - 1,
         width: state.result.width, height: state.result.height,
+        beliefs: (state.induction?.implications || [])
+          .filter((i) => !i.binding && !i.derived && (i.tv?.strength ?? 0) >= 0.7).slice(0, 30),
       }),
     });
     if (token !== twoFrameRequest) return;
@@ -2207,6 +2210,40 @@ async function renderTwoFrame() {
         document.createTextNode("rotated("), eidTokens([x.by]),
         document.createTextNode(`, ${x.degrees}\u00b0) \u21d2 \u00ac independent_motion(`), eidTokens([x.entity]),
         document.createTextNode(")"));
+      body.append(line);
+    }
+    // Vocabulary events detected on this transition (compact: type with entities or count).
+    const vocab = (deduction.events || []).filter((ev) => ev.category === "event" || ev.category === "relation");
+    if (vocab.length) {
+      const byType = new Map();
+      for (const ev of vocab) {
+        if (!byType.has(ev.type)) byType.set(ev.type, []);
+        byType.get(ev.type).push(ev.args);
+      }
+      const line = document.createElement("p");
+      line.className = "hint deduction-line";
+      const strong = document.createElement("strong");
+      strong.textContent = `events (${byType.size} types): `;
+      line.append(strong);
+      const skip = new Set(["moved", "contact", "attached", "visible"]);  // already shown / too dense
+      const parts = [];
+      for (const [type, argLists] of [...byType.entries()].sort()) {
+        if (skip.has(type) || argLists.length > 4) parts.push(`${type} \u00d7${argLists.length}`);
+        else parts.push(`${type} ${argLists.map((a) => a.join("+")).join(", ")}`);
+      }
+      line.append(document.createTextNode(parts.join(" \u00b7 ")));
+      body.append(line);
+    }
+    // Abduced explanations from prior beliefs (hypotheses, never observations).
+    for (const h of (deduction.abductions || [])) {
+      const line = document.createElement("p");
+      line.className = "hint deduction-line";
+      const flag = document.createElement("span");
+      flag.className = "no-group-flag";
+      flag.textContent = "abduced: ";
+      const tv = h.tv ? ` \u00b7 tv ${h.tv.strength.toFixed(2)}/${h.tv.confidence.toFixed(2)}` : "";
+      line.append(flag, document.createTextNode(
+        `${h.hypothesis} would explain ${h.explains} (${h.when.replaceAll("_", " ")})${tv}`));
       body.append(line);
     }
     renderDeductionImages();
@@ -2601,6 +2638,7 @@ async function loadInduction() {
     const data = await request(`/omega_vision/api/v1/induction?${new URLSearchParams({ sequence: sequence.id })}`);
     if (token !== inductionRequest) return;
     const induction = data.induction || {};
+    state.induction = induction;  // beliefs feed the live two-frame abduction
     const body = byId("induction-body");
     body.replaceChildren();
     const line = (strong, rest) => {

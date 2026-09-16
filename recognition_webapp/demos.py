@@ -1,8 +1,16 @@
-"""Read-only access to the exported visual demo catalogue and original PNGs."""
+"""Read-only access to the exported visual demo catalogue and original PNGs.
+
+The catalogue is the union of the authored dataset.json manifest and EVERY recording
+present on disk under the two canonical sequence families (recordings/ and curated/):
+selecting a task must be able to use all possible selections, not only manifest-linked
+ones. Disk-discovered sequences are marked onDisk and carry no authored expectations.
+"""
 
 from hashlib import sha256
 import json
 from pathlib import Path
+
+from frame_pipeline import find_recordings
 
 
 class DemoCatalog:
@@ -23,6 +31,53 @@ class DemoCatalog:
             if sequence["id"] in self.sequences:
                 raise ValueError("Duplicate demo sequence ID.")
             self.sequences[sequence["id"]] = sequence
+        self._discover_disk_sequences()
+
+    def _discover_disk_sequences(self) -> None:
+        """Add every on-disk recording under recordings/ and curated/ not in the manifest."""
+        for family in ("recordings", "curated"):
+            for recording in find_recordings(self.root / family):
+                identifier = recording.relative_to(self.root).as_posix()
+                if identifier in self.sequences:
+                    continue
+                frames = sorted((child for child in recording.iterdir()
+                                 if child.is_dir() and child.name.isdigit()
+                                 and (child / "image.png").is_file()),
+                                key=lambda path: int(path.name))
+                if not frames:
+                    continue
+                self.sequences[identifier] = {
+                    "id": identifier,
+                    "label": identifier.split("/")[-1].replace("_", " "),
+                    "partition": "unlinked",
+                    "frameCount": len(frames),
+                    "frames": [{"frameId": frame.name, "order": order,
+                                "image": f"{identifier}/{frame.name}/image.png"}
+                               for order, frame in enumerate(frames)],
+                    "onDisk": True,
+                }
+
+    def _sequence_properties(self, identifier: str, sequence: dict) -> dict:
+        """Frame count and other live properties shown beside every selectable sequence."""
+        recording = self.root.joinpath(*identifier.split("/"))
+        frames = sequence.get("frames") or []
+        properties = {
+            "family": identifier.split("/", 1)[0],
+            "frameCount": sequence.get("frameCount") or len(frames),
+            "processed": (recording / "induction.json").is_file(),
+            "onDisk": bool(sequence.get("onDisk")),
+        }
+        first = frames[0]["frameId"] if frames else "0"
+        try:
+            state = json.loads((recording / first / "state.json").read_bytes())
+            if isinstance(state, dict):
+                for key, name in (("game_directory", "game"), ("level", "level"),
+                                  ("kind", "frameKind")):
+                    if isinstance(state.get(key), (str, int)):
+                        properties[name] = state[key]
+        except (OSError, ValueError):
+            pass
+        return properties
 
     def path(self, name: str) -> Path:
         if not isinstance(name, str) or not name or any(char in name for char in '\\:<>\"|?*'):
@@ -75,6 +130,7 @@ class DemoCatalog:
                 "id": identifier, "testIds": memberships[identifier], "label": sequence["label"],
                 "partition": sequence["partition"],
                 "frames": [{"frameId": frame["frameId"], "order": frame["order"]} for frame in self.frames(identifier)],
+                **self._sequence_properties(identifier, sequence),
             })
         return {"tests": tests, "sequences": sequences}
 
@@ -94,7 +150,11 @@ class DemoCatalog:
         name = frame.get("image")
         if not isinstance(name, str) or name.split("/")[0] not in ("recordings", "curated"):
             raise ValueError("Demo images must be in recordings or curated.")
-        image = self.read_file(name)
+        if self.sequences[identifier].get("onDisk"):
+            # Disk-discovered sequence: reserved input read directly (no manifest hash exists).
+            image = self.path(name).read_bytes()
+        else:
+            image = self.read_file(name)
         if not image.startswith(b"\x89PNG\r\n\x1a\n"):
             raise ValueError("Demo frame is not a PNG.")
         return image

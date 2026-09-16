@@ -1184,23 +1184,36 @@ function clearDemoSelection() {
 
 function selectedDemo() {
   const option = byId("demo-test").selectedOptions[0];
-  const test = demoCatalog?.tests.find((item) => item.id === option?.dataset.testId);
   const sequence = demoCatalog?.sequences.find((item) => item.id === option?.dataset.sequenceId);
-  return test && sequence && test.recordings.includes(sequence.id) ? { test, sequence } : null;
+  if (!sequence) return null;
+  if (option.dataset.testId) {
+    const test = demoCatalog?.tests.find((item) => item.id === option.dataset.testId);
+    return test && test.recordings.includes(sequence.id) ? { test, sequence } : null;
+  }
+  return { test: null, sequence };  // on-disk recording without an authored test
 }
 
 function selectedRecording() {
   return selectedDemo()?.sequence;
 }
 
+function sequenceProperties(sequence) {
+  const parts = [`${sequence.frameCount ?? sequence.frames.length} frames`];
+  if (sequence.game && sequence.game !== "events_tests") parts.push(String(sequence.game));
+  if (sequence.level && String(sequence.level) !== "1") parts.push(`level ${sequence.level}`);
+  parts.push(sequence.processed ? "processed" : "unprocessed");
+  return parts.join(" \u00b7 ");
+}
+
 function demoLabel(test, sequence) {
-  if (test.recordings.length === 1) return test.title;
+  if (!test) return `${sequence.id.split("/").at(-1).replaceAll("_", " ")} \u00b7 ${sequenceProperties(sequence)}`;
+  if (test.recordings.length === 1) return `${test.title} \u00b7 ${sequenceProperties(sequence)}`;
   const ambiguous = test.recordings.filter((id) => {
     const other = demoCatalog.sequences.find((item) => item.id === id);
     return other.label === sequence.label && other.partition === sequence.partition;
   }).length > 1;
   const variant = ambiguous ? sequence.id.split("/").at(-1).replaceAll("_", " ") : sequence.label;
-  return `${test.title} \u2014 ${variant} (${sequence.partition.replaceAll("_", " ")})`;
+  return `${test.title} \u2014 ${variant} (${sequence.partition.replaceAll("_", " ")}) \u00b7 ${sequenceProperties(sequence)}`;
 }
 
 function frameControls() {
@@ -1245,11 +1258,13 @@ async function loadDemoFrame() {
       byId("example-description").textContent = "Using a recorded demo, not a generated shape example.";
       status("Recorded frame loaded. Analysis starts automatically.");
       const url = new URL(location.href);
-      url.searchParams.set("test", test.id);
+      if (test) url.searchParams.set("test", test.id);
+      else url.searchParams.delete("test");
       url.searchParams.set("recording", sequence.id);
       url.searchParams.set("frame", frame.frameId);
       history.replaceState(null, "", url);
-      loadFrameGuide(test.id, sequence.id, frame.frameId, token);
+      if (test) loadFrameGuide(test.id, sequence.id, frame.frameId, token);
+      else clearFrameGuide();
       requestDemoAnalysis();
       void loadPrevPreview(sequence, Number(byId("demo-frame").value), token);
     }
@@ -2572,6 +2587,7 @@ function renderDemos(catalog) {
   select.replaceChildren(new Option("Choose a demo...", ""));
   const groups = new Map();
   let choices = 0;
+  const linked = new Set();
   for (const test of demoCatalog.tests) {
     if (!groups.has(test.group)) {
       const group = document.createElement("optgroup");
@@ -2585,11 +2601,31 @@ function renderDemos(catalog) {
       option.dataset.testId = test.id;
       option.dataset.sequenceId = sequence.id;
       groups.get(test.group).append(option);
+      linked.add(sequence.id);
       choices++;
     }
   }
+  // Every recording on disk (recordings/ and curated/) is selectable, even without a
+  // linked test: grouped by its directory, labelled with frame count and properties.
+  const disk = new Map();
+  for (const sequence of demoCatalog.sequences) {
+    const folder = sequence.id.split("/").slice(0, -1).join("/");
+    const key = linked.has(sequence.id) ? null : folder;
+    if (key === null) continue;
+    if (!disk.has(key)) {
+      const group = document.createElement("optgroup");
+      group.label = `All recordings \u2014 ${key}`;
+      disk.set(key, group);
+      select.append(group);
+    }
+    const option = new Option(demoLabel(null, sequence), JSON.stringify(["", sequence.id]));
+    option.dataset.sequenceId = sequence.id;
+    disk.get(key).append(option);
+    choices++;
+  }
   select.disabled = false;
-  byId("demo-description").textContent = `${choices} demo choices across ${demoCatalog.tests.length} tests. Recordings can be shared between tests.`;
+  byId("demo-description").textContent =
+    `${choices} choices: ${demoCatalog.tests.length} authored tests plus every on-disk recording under recordings/ and curated/.`;
 }
 
 async function loadDemos() {
@@ -2610,7 +2646,8 @@ byId("demo-test").addEventListener("change", () => {
     clearDemoSelection();
     return;
   }
-  byId("demo-description").textContent = choice.test.summary;
+  byId("demo-description").textContent = choice.test ? choice.test.summary :
+    `On-disk recording ${choice.sequence.id} \u00b7 ${sequenceProperties(choice.sequence)}.`;
   selectRecording();
 });
 byId("demo-frame").addEventListener("change", loadDemoFrame);
@@ -3130,14 +3167,17 @@ function refreshSectionNav() {
       const query = new URLSearchParams(location.search);
       const requested = JSON.stringify([query.get("test"), query.get("recording")]);
       const select = byId("demo-test");
-      const option = [...select.options].find((item) => item.value === requested) || select.options[1];
+      const option = [...select.options].find((item) => item.value === requested)
+        || [...select.options].find((item) => item.dataset.sequenceId === query.get("recording"))
+        || select.options[1];
       if (!option) {
         status("No test-recording links are available in this catalogue.");
         return;
       }
       select.value = option.value;
       const choice = selectedDemo();
-      byId("demo-description").textContent = choice.test.summary;
+      byId("demo-description").textContent = choice.test ? choice.test.summary :
+        `On-disk recording ${choice.sequence.id} \u00b7 ${sequenceProperties(choice.sequence)}.`;
       byId("demo-frame-controls").hidden = false;
       byId("demo-frame").max = String(choice.sequence.frames.length - 1);
       const index = choice.sequence.frames.findIndex((frame) => frame.frameId === query.get("frame"));

@@ -316,12 +316,24 @@ class WebTests(unittest.TestCase):
         listed = json.loads(body)
         manifest = json.loads((DATA_ROOT / "dataset.json").read_bytes())
         self.assertEqual({test["id"] for test in listed["tests"]}, {test["id"] for test in manifest["tests"]})
-        self.assertEqual(len(listed["sequences"]), len(manifest["sequences"]))
+        # The listing is the manifest UNION every on-disk recording under the two
+        # canonical families, each carrying frame counts and live properties.
+        manifest_ids = {sequence["id"] for sequence in manifest["sequences"]}
+        listed_ids = {sequence["id"] for sequence in listed["sequences"]}
+        self.assertLessEqual(manifest_ids, listed_ids)
+        self.assertTrue(all(identifier.split("/", 1)[0] in ("recordings", "curated")
+                            for identifier in listed_ids))
         for sequence in listed["sequences"]:
             self.assertEqual([frame["order"] for frame in sequence["frames"]],
                              sorted(frame["order"] for frame in sequence["frames"]))
             self.assertNotIn("evaluation", sequence)
             self.assertNotIn("observerAssessment", sequence)
+            self.assertEqual(sequence["frameCount"], len(sequence["frames"]))
+            self.assertIn("processed", sequence)
+            self.assertIn(sequence["family"], ("recordings", "curated"))
+            if sequence["id"] not in manifest_ids:
+                self.assertTrue(sequence["onDisk"])
+                self.assertEqual(sequence["testIds"], [])
 
     def test_demo_frame_endpoint_returns_original_png(self):
         frame = recorded_frames()[0]

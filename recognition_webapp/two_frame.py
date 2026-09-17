@@ -431,6 +431,13 @@ def _detect_events(curr, prev, matches, appeared, disappeared, groups, raw_curr,
         same_shape = bool(m.get("sameShape"))
         if moved_now:
             add("event", "moved", e)
+            # Direction-qualified movement: lets induction tie a DIRECTIONAL command to the
+            # matching displacement (ACTION4 => moved_right), and abduction pick the right
+            # hidden command for the observed direction. Dominant axis only.
+            if abs(v[0]) >= abs(v[1]):
+                add("event", "moved_right" if v[0] > 0 else "moved_left", e)
+            else:
+                add("event", "moved_down" if v[1] > 0 else "moved_up", e)
         else:
             add("state", "stationary", e)
         add("state", "visible", e)
@@ -562,7 +569,9 @@ def _detect_events(curr, prev, matches, appeared, disappeared, groups, raw_curr,
             add("event", "member_added", gid, e)
         for e in g.get("lost", []):
             add("event", "member_removed", gid, e)
-    if user_action:
+    if user_action and user_action != "FRAME":
+        # FRAME is a passive sampled advance, never a revealed input: only real commands
+        # (ACTION1..4 arrows, clicks, ...) count as exogenous user_input evidence.
         add("action", "user_input", json.dumps(user_action, ensure_ascii=False))
     return events
 
@@ -593,14 +602,23 @@ def _abduce_transition(beliefs, events, history):
         observed_antecedent = a in (kinds_now if delay == 0 else prev_kinds)
         if observed_antecedent:
             continue
+        # A qualified rule (A => B unless X already held) never explains B while X held:
+        # the exception says the effect would have been suppressed, not caused.
+        unless = (belief.get("evidence") or {}).get("unlessPrior") or []
+        if any(condition in prev_kinds for condition in unless):
+            continue
         strength = tv.get("strength", 0)
         confidence = round(tv.get("confidence", 0) * strength * 0.5, 4)
-        abduced.append({"hypothesis": a, "explains": b,
-                        "when": "same_frame" if delay == 0 else "previous_frame",
-                        "tv": {"strength": strength, "confidence": confidence}})
-        if len(abduced) >= 15:
-            break
-    return abduced
+        hypothesis = {"hypothesis": a, "explains": b,
+                      "when": "same_frame" if delay == 0 else "previous_frame",
+                      "tv": {"strength": strength, "confidence": confidence}}
+        if belief.get("fromLesson"):
+            hypothesis["fromLesson"] = belief["fromLesson"]
+        abduced.append(hypothesis)
+    # Rank every candidate BEFORE capping so equal-quality lesson rules are not starved
+    # by iteration order; explanations of specific (directional) events beat generic ones.
+    abduced.sort(key=lambda h: (-h["tv"]["confidence"], -len(h["explains"]), h["hypothesis"]))
+    return abduced[:20]
 
 
 def _score_predictions(predictions, events):

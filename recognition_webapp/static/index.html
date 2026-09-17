@@ -25,14 +25,14 @@
     <div class="studio">
       <nav id="section-nav" class="section-nav only-demos" aria-label="Section navigation"></nav>
       <div class="studio-content" id="studio-content">
+      <div id="task-control" class="field only-demos task-control-top">
+        <label for="demo-test">Task</label>
+        <select id="demo-test" disabled><option>Loading recorded demos...</option></select>
+        <p id="demo-description" class="hint"></p>
+      </div>
       <details class="input-panel panel" id="config-panel" open>
         <summary class="panel-collapse-summary"><span class="section-label"><span class="step">01</span><h2>Input &amp; configuration</h2></span><span class="collapse-caret" aria-hidden="true">&#9662;</span></summary>
         <div class="config-body">
-        <div id="task-control" class="field only-demos">
-          <label for="demo-test">Task</label>
-          <select id="demo-test" disabled><option>Loading recorded demos...</option></select>
-          <p id="demo-description" class="hint"></p>
-        </div>
         <label class="upload-zone only-shapes" id="drop-zone" for="image-file">
           <span class="upload-icon" aria-hidden="true">&#8593;</span>
           <strong>Drop an image here</strong>
@@ -93,7 +93,6 @@
         <div class="view-controls">
           <button class="view-button only-demos" id="view-prev" aria-pressed="false">Prev</button>
           <button class="view-button active" id="view-input" aria-pressed="true">Input</button>
-          <button class="view-button only-demos" id="view-groups" aria-pressed="false">Prolog groups</button>
           <button class="view-button only-shapes" id="view-regions" aria-pressed="false">Regions</button>
           <button class="view-button only-shapes" id="view-reconstruction" aria-pressed="false">Reconstruction</button>
           <button class="view-button only-shapes" id="edit-grid" hidden>Edit grid</button>
@@ -109,12 +108,17 @@
         </div>
         <details id="frame-images" class="frame-images-collapse only-demos" open aria-labelledby="frame-images-title">
           <summary class="panel-collapse-summary"><span class="section-label"><h3 id="frame-images-title">Frame Images</h3></span><span class="collapse-caret" aria-hidden="true">&#9662;</span></summary>
+          <div class="frame-images-tabs only-demos" role="tablist" aria-label="Frame images view">
+            <button class="view-button active" id="frame-images-tab-pair" aria-pressed="true">Current frames</button>
+            <button class="view-button" id="frame-images-tab-sequence" aria-pressed="false" title="All the recording's input frames in order">Sequence</button>
+          </div>
           <div class="canvas-wrap">
-            <div class="frame-pairs">
+            <div class="frame-pairs" id="frame-pairs-current">
               <div class="pair-cell only-demos" id="prev-cell" hidden><span class="pair-tag">Previous</span><canvas id="prev-canvas" aria-label="Previous frame original image, read-only context"></canvas></div>
               <div class="pair-cell command-cell only-demos" id="command-cell" hidden><span class="pair-tag">Command</span><div id="command-badge" class="command-badge" title="The recorded input (from this frame's reserved state.json) that led from the previous frame into this one"></div></div>
               <div class="pair-cell" id="current-cell"><span class="pair-tag only-demos">Original</span><canvas id="image-canvas" width="640" height="480" tabindex="0" role="img" aria-label="Analysis grid. Use arrow keys to move the drawing cursor, Space to paint."></canvas></div>
             </div>
+            <div class="frame-pairs" id="sequence-pairs" hidden></div>
           </div>
         </details>
         <details id="scene-memory" class="frame-images-collapse only-demos" open hidden aria-labelledby="scene-memory-title">
@@ -232,7 +236,7 @@
           </details>
         </details>
         <details id="frame-metta" class="frame-guide only-demos" hidden aria-labelledby="frame-metta-title">
-          <summary class="guide-heading"><h3 id="frame-metta-title">AtomSpace output</h3><span class="tag">Frame files</span></summary>
+          <summary class="guide-heading"><h3 id="frame-metta-title">MeTTa/PeTTa output</h3><span class="tag">Frame files</span></summary>
           <p class="hint">Every file this frame produces (.pl / .metta / .json), explored in MeTTa syntax. Draft edits stay in browser memory and are never executed.</p>
           <div id="clause-explorer" class="atomspace-explorer-host"></div>
         </details>

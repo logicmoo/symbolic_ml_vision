@@ -55,6 +55,9 @@
       "state": "NOT_FINISHED"
     }
   ],
+  "prior_lessons": [
+    "data/recordings/events_tests/blocked"
+  ],
   "session_id": null,
   "source": "synthetic_event_tests",
   "started_at": "2000-01-01T00:00:00Z",

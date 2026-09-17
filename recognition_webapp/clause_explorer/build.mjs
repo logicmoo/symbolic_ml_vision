@@ -105,6 +105,8 @@ mkdirSync(destination, { recursive: true });
 writeFileSync(resolve(destination, "clause_explorer.js"),
   `/* Generated from unchanged Workbench sources. See ../clause_explorer/upstream.json and THIRD_PARTY_LICENSES.txt. */\n${javascript[0].code}`);
 writeFileSync(resolve(destination, "clause_explorer.css"),
-  styles.map(item => String(item.source)).join("\n"));
+  styles.map(item => String(item.source)).join("\n")
+  // LOCAL FIX blocks (tab wrapping, light theme inversion) survive every rebuild.
+  + "\n" + readFileSync(resolve(root, "local-overrides.css"), "utf8"));
 writeFileSync(resolve(root, "THIRD_PARTY_LICENSES.txt"), [...licenses.values()].sort().join("\n\n----------\n\n"));
 console.log(`Bundled original Clause Explorer (${javascript[0].code.length} JS characters); ${Object.keys(provenance.files).length} upstream hashes unchanged.`);

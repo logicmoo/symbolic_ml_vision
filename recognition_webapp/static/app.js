@@ -1,4 +1,4 @@
-"use strict";
+﻿"use strict";
 
 const byId = (id) => document.getElementById(id);
 const pageMode = document.body.dataset.page;
@@ -40,10 +40,10 @@ async function request(url, options) {
 function setView(view) {
   state.editing = false;
   state.view = view;
-  for (const name of ["prev", "input", "groups", "regions", "reconstruction"]) {
+  for (const name of ["prev", "input", "regions", "reconstruction"]) {
     const button = byId(`view-${name}`);
     if (!button) continue;
-    const active = name === view || (name === "groups" && view === "analysis" && state.analysisMode === "groups");
+    const active = name === view;
     button.classList.toggle("active", active);
     button.setAttribute("aria-pressed", String(active));
   }
@@ -51,6 +51,95 @@ function setView(view) {
   for (const button of byId("analysis-images").children) {
     button.classList.toggle("active", state.view === "analysis" && button.dataset.mode === state.analysisMode);
   }
+}
+
+// The Frame Images Sequence tab: EVERY input frame of the selected recording in order
+// (the reserved image.png files), current frame highlighted; clicking a frame steps to it.
+const sequenceImageCache = new Map(); // "sequenceId#frameId" -> decoded image
+let sequenceStripRequest = 0;
+function setFrameImagesMode(mode) {
+  state.frameImagesMode = mode;
+  for (const [id, name] of [["frame-images-tab-pair", "pair"], ["frame-images-tab-sequence", "sequence"]]) {
+    const active = name === mode;
+    byId(id).classList.toggle("active", active);
+    byId(id).setAttribute("aria-pressed", String(active));
+  }
+  byId("frame-pairs-current").hidden = mode !== "pair";
+  byId("sequence-pairs").hidden = mode !== "sequence";
+  if (mode === "sequence") void renderFrameSequence();
+}
+
+async function renderFrameSequence() {
+  const { sequence } = selectedDemo() || {};
+  const host = byId("sequence-pairs");
+  if (!sequence) { host.replaceChildren(); return; }
+  const token = ++sequenceStripRequest;
+  const entries = await Promise.all(sequence.frames.map(async (frame) => {
+    const key = `${sequence.id}#${frame.frameId}`;
+    if (!sequenceImageCache.has(key)) {
+      const query = new URLSearchParams({ sequence: sequence.id, frame: frame.frameId });
+      const [imageResponse, stateResponse] = await Promise.all([
+        fetch(`/omega_vision/api/v1/demos/frame?${query}`),
+        fetch(`/omega_vision/api/v1/demos/state?${query}`),
+      ]);
+      if (!imageResponse.ok) return null;
+      const image = await decodeDataImage(await blobToBase64(await imageResponse.blob()));
+      let command = null;
+      if (stateResponse.ok) {
+        try { command = (await stateResponse.json()).incoming_action || null; } catch { command = null; }
+      }
+      sequenceImageCache.set(key, { image, command });
+    }
+    return sequenceImageCache.get(key);
+  })).catch((problem) => { console.warn("Sequence strip unavailable:", problem); return null; });
+  if (!entries || entries.some((e) => !e) || token !== sequenceStripRequest || state.frameImagesMode !== "sequence") {
+    if (entries && entries.some((e) => !e)) console.warn("Sequence strip: some frames failed to load");
+    return;
+  }
+  const currentIndex = Number(byId("demo-frame").value) || 0;
+  // Stacked transitions: frame 0 stands alone (the baseline); every later frame is a
+  // (command -> frame) pair on its own row.
+  host.replaceChildren(...sequence.frames.map((frame, index) => {
+    const row = document.createElement("div");
+    row.className = "sequence-row";
+    if (index > 0) {
+      const commandCell = document.createElement("div");
+      commandCell.className = "pair-cell command-cell";
+      const commandTag = document.createElement("span");
+      commandTag.className = "pair-tag";
+      commandTag.textContent = "Command";
+      const badge = document.createElement("div");
+      badge.className = "command-badge";
+      badge.textContent = `${entries[index].command || "?"} \u2192`;
+      commandCell.append(commandTag, badge);
+      row.append(commandCell);
+    }
+    const cell = document.createElement("div");
+    cell.className = "pair-cell sequence-cell" + (index === currentIndex ? " sequence-current" : "");
+    const tag = document.createElement("span");
+    tag.className = "pair-tag";
+    tag.textContent = index === 0
+      ? `Frame ${frame.frameId} \u00b7 baseline${index === currentIndex ? " \u00b7 current" : ""}`
+      : `Frame ${frame.frameId}${index === currentIndex ? " \u00b7 current" : ""}`;
+    const canvasEl = document.createElement("canvas");
+    canvasEl.setAttribute("role", "button");
+    canvasEl.setAttribute("aria-label", `Go to frame ${frame.frameId}`);
+    const image = entries[index].image;
+    const scale = Math.max(1, Math.floor(360 / Math.max(image.width, image.height)));
+    canvasEl.width = image.width * scale;
+    canvasEl.height = image.height * scale;
+    const brush = canvasEl.getContext("2d");
+    brush.imageSmoothingEnabled = false;
+    brush.drawImage(image, 0, 0, canvasEl.width, canvasEl.height);
+    canvasEl.style.cursor = "pointer";
+    canvasEl.addEventListener("click", () => {
+      byId("demo-frame").value = String(index);
+      void loadDemoFrame();
+    });
+    cell.append(tag, canvasEl);
+    row.append(cell);
+    return row;
+  }));
 }
 
 function invalidate(soft = false) {
@@ -819,7 +908,7 @@ function showResult(result) {
     const validParts = new Set(result.prolog.parts.map((part) => part.id));
     state.selectedParts = new Set([...state.selectedParts].filter((id) => validParts.has(id)));
     byId("frame-metta").hidden = false;
-    byId("frame-metta-title").textContent = `AtomSpace \u00b7 frame ${result.frame.frameId}`;
+    byId("frame-metta-title").textContent = `MeTTa/PeTTa \u00b7 frame ${result.frame.frameId}`;
     renderOutputEditor();
     byId("dimensions").textContent = `${result.width} \u00d7 ${result.height}`;
     const sourceLabel = state.demoFrame ? `${state.demoFrame.label} / frame ${state.demoFrame.frameId}` : result.source.kind === "original_image" ? "Original image bytes" : "Edited grid";
@@ -848,7 +937,7 @@ function showResult(result) {
       ? "No foreground regions. Draw a shape or change the background selection."
       : `${result.object_count} regions recognized. Reconstruction matches the analysis grid exactly.`);
     byId("frame-metta").hidden = false;
-    byId("frame-metta-title").textContent = "AtomSpace output";
+    byId("frame-metta-title").textContent = "MeTTa/PeTTa output";
     renderOutputEditor();
   }
   renderFrameAnalysis();
@@ -1253,6 +1342,7 @@ async function loadDemoFrame() {
       void loadInduction();     // beliefs as of this frame (tutorial stepping)
       void loadFrameCommand(sequence.id, frame.frameId);
       void loadFrameFiles(sequence.id, frame.frameId);
+      if (state.frameImagesMode === "sequence") void renderFrameSequence(); // refresh highlight
       void renderDeductionImages(); // hides stale layers immediately (e.g. back at frame 0)
       requestDemoAnalysis();
       void loadPrevPreview(sequence, Number(byId("demo-frame").value), token);
@@ -2285,7 +2375,7 @@ async function renderDeductionImages() {
   }
   void ensureLayerPipeline("layer0", byId("same-canvas"));
 
-  // Layer 1: things that NEVER moved but slowly got unoccluded — the accumulated static
+  // Layer 1: things that NEVER moved but slowly got unoccluded â€” the accumulated static
   // scenery composed server-side from the frames seen so far (movers excluded entirely).
   const staticCell = byId("moved-cell");
   try {
@@ -2591,6 +2681,7 @@ async function loadInduction() {
     const tv = (g) => g.tv ? ` \u00b7 tv ${g.tv.strength.toFixed(2)}/${g.tv.confidence.toFixed(2)}` : "";
     const statics = guesses.filter((g) => g.kind === "static");
     const constant = guesses.filter((g) => g.kind === "constant_velocity");
+    const movedOnce = guesses.filter((g) => g.kind === "moved_once");
     const variable = guesses.filter((g) => g.kind === "variable_motion");
     if (statics.length) {
       body.append(line(`static (${statics.length}):`,
@@ -2598,6 +2689,9 @@ async function loadInduction() {
     }
     for (const g of constant) {
       body.append(line("constant velocity:", `${g.entity} moves (${g.dx}, ${g.dy}) px per frame \u00b7 ${g.support} frames${tv(g)}`));
+    }
+    for (const g of movedOnce) {
+      body.append(line("moved once:", `${g.entity} moved (${g.dx}, ${g.dy}) px \u00b7 a single observation, not a velocity claim${tv(g)}`));
     }
     for (const g of variable) {
       const dom = g.dominant ? ` dominant (${g.dominant[0]},${g.dominant[1]})` : "";
@@ -2616,13 +2710,34 @@ async function loadInduction() {
         `${imp.consequent} followed at [${hits.join(",")}] (${hits.length} hits, ${why.misses ?? "?"} misses). ` +
         `Base rate of ${imp.consequent} = ${why.consequentBaseRate}; lift ${imp.lift}. ` +
         `Prior evidence pooled: ${JSON.stringify(why.priorEvidence)}.`;
+      if (why.unlessPrior?.length) {
+        text += ` Every miss is EXCUSED: ${why.unlessPrior.join(" & ")} already held beforehand ` +
+          `(and never before a hit), so the qualified rule keeps its strength.`;
+      }
       if (why.witnesses?.length) text += ` Witnessed by ${why.witnesses.join(", ")}.`;
+      if (imp.fromLesson) text += ` Learned in prior lesson ${imp.fromLesson}.`;
       return text;
     };
-    for (const imp of imps.slice(0, 12)) {
+    // Only the HIGHEST implications are shown: one entry per antecedent=>consequent pair
+    // (best delay/binding variant), ranked by evidence quality; the rest stay in induction.json.
+    const bestByPair = new Map();
+    for (const imp of imps) {
+      const key = `${imp.antecedent}\u21d2${imp.consequent}`;
+      const quality = (imp.tv?.strength ?? 0) * (imp.tv?.confidence ?? 0);
+      const held = bestByPair.get(key);
+      if (!held || quality > held.quality || (quality === held.quality && imp.delay === 0 && held.imp.delay !== 0)) {
+        bestByPair.set(key, { imp, quality });
+      }
+    }
+    const shown = [...bestByPair.values()]
+      .sort((x, y) => y.quality - x.quality || (y.imp.support ?? 0) - (x.imp.support ?? 0))
+      .map((entry) => entry.imp)
+      .slice(0, 6);
+    for (const imp of shown) {
       const when = imp.delay === 0 ? "same frame" : "next frame";
+      const unless = imp.evidence?.unlessPrior?.length ? ` UNLESS ${imp.evidence.unlessPrior.join(" & ")} already held` : "";
       const extras = `${imp.binding === "entity" ? " \u00b7 entity-bound" : ""}${imp.derived ? ` \u00b7 deduced via ${imp.via}` : ""}${imp.lift ? ` \u00b7 lift ${imp.lift}` : ""}`;
-      const row = line("implication:", `${imp.antecedent} \u21d2 ${imp.consequent} (${when})${extras}${tv(imp)} \u00b7 ${imp.support} obs`);
+      const row = line("implication:", `${imp.antecedent} \u21d2 ${imp.consequent} (${when})${unless}${extras}${tv(imp)} \u00b7 ${imp.support} obs`);
       body.append(row);
       // The why is always visible, indented under its implication.
       const detail = document.createElement("p");
@@ -2632,13 +2747,17 @@ async function loadInduction() {
       detail.textContent = `why: ${whyText(imp)}`;
       body.append(detail);
     }
-    if (imps.length > 12) {
+    if (imps.length > shown.length) {
       const more = document.createElement("p");
       more.className = "hint";
-      more.textContent = `+ ${imps.length - 12} weaker implications in induction.json.`;
+      more.textContent = `+ ${imps.length - shown.length} weaker implications in induction.json.`;
       body.append(more);
     }
-    for (const h of induction.abductions || []) {
+    // Abduced explanations: only the highest-ranked few, mirroring the implications.
+    const abduced = [...(induction.abductions || [])]
+      .sort((x, y) => (y.tv?.confidence ?? 0) - (x.tv?.confidence ?? 0))
+      .slice(0, 6);
+    for (const h of abduced) {
       body.append(line("abduced:", `${h.hypothesis} would explain ${h.explains} (${h.when.replaceAll("_", " ")})${tv(h)} \u00d7${h.count}`));
     }
     const outcomes = induction.predictionOutcomes;
@@ -2853,7 +2972,9 @@ for (const name of ["prev", "input", "regions", "reconstruction"]) {
   const button = byId(`view-${name}`);
   if (button) button.addEventListener("click", () => setView(name));
 }
-byId("view-groups")?.addEventListener("click", () => { state.analysisMode = "groups"; setView("analysis"); });
+byId("view-input")?.addEventListener("click", () => setView("input"));
+byId("frame-images-tab-pair")?.addEventListener("click", () => setFrameImagesMode("pair"));
+byId("frame-images-tab-sequence")?.addEventListener("click", () => setFrameImagesMode("sequence"));
 byId("show-prev")?.addEventListener("change", () => { renderPrevPair(); void ensurePrevPipeline(); });
 attachHover(byId("group-preview"), () => state.result);
 attachHover(byId("image-canvas"), () => state.result);
@@ -2922,7 +3043,7 @@ function outputDraftKey(artifact) {
   return JSON.stringify([state.result.frame, state.result.pipeline, artifact.name, artifact.content]);
 }
 
-// Prepare the Python-rendered source views, then (re)mount the AtomSpace Explorer as the sole
+// Prepare the Python-rendered source views, then (re)mount the MeTTa/PeTTa Explorer as the sole
 // output viewer. The explorer owns its own file tabs, predicate tree, syntax selector and editor.
 let sourceViewRequest = 0;
 function renderOutputEditor() {

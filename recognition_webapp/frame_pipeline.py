@@ -291,23 +291,59 @@ def _event_type_key(event: dict) -> str:
 def _load_priors(recording: Path) -> dict:
     """Prior beliefs from the previous pass: the LAST frame's induction.json (induction only
     ever lives under frame dirs). Falls back to legacy locations (frame beliefs.json, then
-    the old recording-root induction.json) so older stores keep working."""
-    frame_dirs_sorted = sorted((child for child in recording.iterdir()
-                                if child.is_dir() and child.name.isdigit()),
-                               key=lambda path: int(path.name), reverse=True)
-    candidates = [frame / name for frame in frame_dirs_sorted
-                  for name in ("induction.json", "beliefs.json")]
-    candidates.append(recording / "induction.json")  # legacy root layout
-    for path in candidates:
-        if not path.is_file():
-            continue
+    the old recording-root induction.json) so older stores keep working.
+
+    AUTHORED prior lessons: when the recording.json declares "prior_lessons" (the fixture
+    says this scenario repeats an earlier watched lesson), those recordings' final beliefs
+    join the priors with fromLesson provenance. This is explicit fixture metadata, never an
+    automatic union across recordings.
+    """
+    def final_beliefs(rec: Path) -> dict:
+        frame_dirs_sorted = sorted((child for child in rec.iterdir()
+                                    if child.is_dir() and child.name.isdigit()),
+                                   key=lambda path: int(path.name), reverse=True)
+        candidates = [frame / name for frame in frame_dirs_sorted
+                      for name in ("induction.json", "beliefs.json")]
+        candidates.append(rec / "induction.json")  # legacy root layout
+        for path in candidates:
+            if not path.is_file():
+                continue
+            try:
+                prior = json.loads(path.read_text(encoding="utf-8"))
+            except (OSError, ValueError):
+                continue
+            if isinstance(prior, dict):
+                return prior
+        return {}
+
+    priors = final_beliefs(recording)
+    lessons = []
+    manifest_path = recording / "recording.json"
+    if manifest_path.is_file():
         try:
-            prior = json.loads(path.read_text(encoding="utf-8"))
+            manifest = json.loads(manifest_path.read_text(encoding="utf-8"))
+            declared = manifest.get("prior_lessons")
+            if isinstance(declared, list):
+                lessons = [entry for entry in declared if isinstance(entry, str)]
         except (OSError, ValueError):
-            continue
-        if isinstance(prior, dict):
-            return prior
-    return {}
+            lessons = []
+    if lessons:
+        # data root = the directory holding recordings/ (recording is <root>/recordings/...).
+        root = recording.resolve()
+        while root.parent != root and root.name != "recordings":
+            root = root.parent
+        root = root.parent
+        merged = list(priors.get("implications") or [])
+        for lesson in lessons[:4]:
+            lesson_rel = lesson[len("data/"):] if lesson.startswith("data/") else lesson
+            lesson_dir = (root / lesson_rel).resolve()
+            if not lesson_dir.is_relative_to(root) or not lesson_dir.is_dir():
+                continue
+            for imp in final_beliefs(lesson_dir).get("implications") or []:
+                if isinstance(imp, dict) and not imp.get("derived"):
+                    merged.append({**imp, "fromLesson": lesson_rel})
+        priors = {**priors, "implications": merged[:120]}
+    return priors
 
 
 def _predict_next(priors: dict, events: list, matched_ids: set) -> list:
@@ -409,8 +445,13 @@ def induce(transitions: list[dict], priors: dict | None = None) -> dict:
             guesses.append({"kind": "static", "entity": entity, "support": total, "tv": tv,
                             **({"exceptions": sorted(v for v in counts if v != (0, 0))}
                                if len(counts) > 1 else {})})
-        elif len(counts) == 1:
+        elif len(counts) == 1 and total >= 2:
             guesses.append({"kind": "constant_velocity", "entity": entity,
+                            "dx": dom_vec[0], "dy": dom_vec[1], "support": total, "tv": tv})
+        elif len(counts) == 1:
+            # ONE observed displacement is an event, never a velocity claim: constant
+            # velocity needs at least two consistent samples.
+            guesses.append({"kind": "moved_once", "entity": entity,
                             "dx": dom_vec[0], "dy": dom_vec[1], "support": total, "tv": tv})
         else:
             guesses.append({"kind": "variable_motion", "entity": entity,
@@ -494,15 +535,43 @@ def _induce_implications(transitions: list[dict], priors: dict | None = None) ->
             prior_evidence[key] = (min(pos, 100), min(pos + neg, 100))
     implications = []
     total_frames = len(frames)
+
+    def _mine_exceptions(a_frames: list, hit_frames: list) -> list:
+        """Pre-existing conditions that hold before EVERY miss but before NO hit.
+
+        The induced 'unless' qualifier: when A => B failed exactly whenever some state
+        already held beforehand (e.g. ACTION4 => moved fails when contact already held,
+        the entity was already pressed against something), name that condition instead
+        of silently lowering the strength.
+        """
+        hits = set(hit_frames)
+        misses = [i for i in a_frames if i not in hits]
+        if not misses or not hits:
+            return []
+
+        def pre(index: int) -> set:
+            return frames[index - 1] if index > 0 else set()
+
+        candidates = set.intersection(*(pre(i) for i in misses))
+        candidates -= {kind for i in hits for kind in pre(i)}
+        return sorted(k for k in candidates if not k.startswith("user_input("))[:4]
+
     for (counter, count_frames, delay) in ((together, together_frames, 0),
                                            (successive, successive_frames, 1)):
         for (a, b), count in counter.items():
             n = occur[a]
-            if n < 2:
+            # User input is an EXOGENOUS cause: a single command followed by an effect
+            # already supports a causal hypothesis (confidence stays low at n/(n+1)).
+            # Everything else still needs repeated evidence before it is worth stating.
+            if n < (1 if a.startswith("user_input(") else 2):
                 continue
             base_rate = occur[b] / total_frames
             prior_pos, prior_n = prior_evidence.get((a, b, delay, None), (0, 0))
-            tv = _tv(count + prior_pos, n + prior_n)
+            exceptions = _mine_exceptions(occur_frames.get(a, []), count_frames.get((a, b), []))
+            misses = n - count
+            # Misses fully explained by an 'unless' precondition are EXCUSED: the qualified
+            # rule (A => B unless X already held) keeps its strength; the exception is shown.
+            tv = _tv(count + prior_pos, n + prior_n - (misses if exceptions else 0))
             # Informativeness gates: the consequent must not be near-universal (base rate),
             # knowing A must actually raise the odds of B (lift), and user input is never a
             # consequent (it is exogenous; the interesting direction is user_input => effect).
@@ -516,7 +585,8 @@ def _induce_implications(transitions: list[dict], priors: dict | None = None) ->
                                  "evidence": {
                                      "antecedentFrames": sorted(set(occur_frames.get(a, [])))[:20],
                                      "supportFrames": sorted(set(count_frames.get((a, b), [])))[:20],
-                                     "misses": n - count,
+                                     "misses": misses,
+                                     "unlessPrior": exceptions,
                                      "consequentBaseRate": round(base_rate, 4),
                                      "priorEvidence": [prior_pos, prior_n],
                                  }})
@@ -559,7 +629,9 @@ def _induce_implications(transitions: list[dict], priors: dict | None = None) ->
                 continue
             base_rate = occur.get(b, 0) / total_frames
             prior_pos, prior_n = prior_evidence.get((a, b, delay, "entity"), (0, 0))
-            tv = _tv(count + prior_pos, n + prior_n)
+            exceptions = _mine_exceptions(e_occur_frames.get(a, []), count_frames.get((a, b), []))
+            misses = n - count
+            tv = _tv(count + prior_pos, n + prior_n - (misses if exceptions else 0))
             if (tv["strength"] < 0.5 or base_rate >= 0.95 or tv["strength"] < base_rate * 1.2
                     or b.startswith("user_input(")):
                 continue
@@ -571,7 +643,8 @@ def _induce_implications(transitions: list[dict], priors: dict | None = None) ->
                                  "evidence": {
                                      "antecedentFrames": sorted(set(e_occur_frames.get(a, [])))[:20],
                                      "supportFrames": sorted(set(count_frames.get((a, b), [])))[:20],
-                                     "misses": n - count,
+                                     "misses": misses,
+                                     "unlessPrior": exceptions,
                                      "consequentBaseRate": round(base_rate, 4),
                                      "priorEvidence": [prior_pos, prior_n],
                                      "witnesses": sorted(e_witnesses.get((a, b, delay), set()))[:8],
@@ -590,6 +663,10 @@ def _induce_implications(transitions: list[dict], priors: dict | None = None) ->
         "bounce": {"moved"}, "turned": {"moved"}, "continue": {"moved"},
         "accelerated": {"moved"}, "decelerated": {"moved"}, "start": {"moved"},
         "entered": {"appeared"},
+        # A direction-qualified movement IS a movement: never a discovery in either direction.
+        "moved_right": {"moved"}, "moved_left": {"moved"},
+        "moved_up": {"moved"}, "moved_down": {"moved"},
+        "moved": {"moved_right", "moved_left", "moved_up", "moved_down"},
     }
     implications = [imp for imp in implications
                     if imp["consequent"] not in definitional.get(imp["antecedent"], ())]
@@ -677,6 +754,10 @@ def _render_induction(recording_id: str, induction: dict, sources: list[str],
             e, dx, dy, n = guess["entity"], guess["dx"], guess["dy"], guess["support"]
             mt.append(f"(guess (constant-velocity {e} (dxy {dx} {dy})) (tv {s} {c}) (support {n}))")
             pl.append(f"guess(constant_velocity({e}, {dx}, {dy}), tv({s}, {c}), support({n})).")
+        elif guess["kind"] == "moved_once":
+            e, dx, dy, n = guess["entity"], guess["dx"], guess["dy"], guess["support"]
+            mt.append(f"(guess (moved-once {e} (dxy {dx} {dy})) (tv {s} {c}) (support {n}))")
+            pl.append(f"guess(moved_once({e}, {dx}, {dy}), tv({s}, {c}), support({n})).")
         elif guess["kind"] == "static":
             e, n = guess["entity"], guess["support"]
             mt.append(f"(guess (static {e}) (tv {s} {c}) (support {n}))")
@@ -711,9 +792,15 @@ def _render_induction(recording_id: str, induction: dict, sources: list[str],
                       f"{b} followed at {hits} ({len(hits)} hits, {why.get('misses', 0)} misses); "
                       f"base rate of {b} = {why.get('consequentBaseRate')}, lift {imp.get('lift')}; "
                       f"prior evidence {why.get('priorEvidence')}")
+            unless = why.get("unlessPrior")
+            if unless:
+                reason += (f"; every miss EXCUSED: {' & '.join(unless)} already held beforehand "
+                           "and never before a hit, so the qualified rule keeps its strength")
             witnesses = why.get("witnesses")
             if witnesses:
                 reason += f"; witnessed by entities {witnesses}"
+            if imp.get("fromLesson"):
+                reason += f"; learned in prior lesson {imp['fromLesson']}"
         pl.append(f"%   why: {reason}")
         mt.append(f"; why: {reason}")
     for h in induction.get("abductions", []):
@@ -833,9 +920,13 @@ def process_recording(recording: Path, *, pipeline: str = "prolog", stamp_epoch:
     pending_predictions: list = []
     prev_event_kinds: list = []
     # Strong observational beliefs feed per-transition abduction inside the deducer.
-    abduction_beliefs = [imp for imp in priors.get("implications") or []
-                         if not imp.get("binding") and not imp.get("derived")
-                         and (imp.get("tv") or {}).get("strength", 0) >= 0.7][:30]
+    # Ranked by evidence quality (never own-history-first) so authored prior-lesson rules
+    # compete fairly, then capped.
+    abduction_beliefs = sorted(
+        (imp for imp in priors.get("implications") or []
+         if not imp.get("binding") and not imp.get("derived")
+         and (imp.get("tv") or {}).get("strength", 0) >= 0.7),
+        key=lambda imp: -(imp["tv"]["strength"] * imp["tv"]["confidence"]))[:60]
     metta_sources: list[str] = []
 
     def _needs(paths: list[Path], frame_dir: Path | None = None) -> bool:

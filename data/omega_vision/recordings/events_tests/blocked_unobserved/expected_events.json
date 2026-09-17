@@ -473,7 +473,8 @@
   "recognizerStatus": "not_run",
   "requirements": [
     "No user_input is revealed anywhere in this case (every advance is an opaque FRAME): attempt evidence must be abduced from the unexplained dwell at the wall followed by redirected movement.",
-    "The wall persists through every frame; blocked ends because movement resumes in a new direction."
+    "The wall persists through every frame; blocked ends because movement resumes in a new direction.",
+    "This recording declares blocked as its prior lesson: beliefs learned there (ACTION4 moves right unless contact already held; ACTION2 moves down) may be reused to abduce the hidden commands."
   ],
   "sampleIntervalSeconds": 1,
   "schemaVersion": 1,

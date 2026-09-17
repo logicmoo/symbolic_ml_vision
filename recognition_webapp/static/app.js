@@ -1454,7 +1454,9 @@ function updateCommandCell() {
 }
 
 function renderPrevPair() {
-  const show = pageMode === "demos" && byId("show-prev").checked && Boolean(state.prevPreview);
+  // Current frames ALWAYS shows previous | command | current once a previous frame
+  // exists; the Show Prev checkbox only gates the heavier multiframe pipeline panels.
+  const show = pageMode === "demos" && Boolean(state.prevPreview);
   byId("prev-cell").hidden = !show;
   if (show) {
     const image = state.prevPreview;

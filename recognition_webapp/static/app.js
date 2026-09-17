@@ -84,6 +84,7 @@ function invalidate(soft = false) {
     byId("prev-cell").hidden = true;
     byId("prev-companion-cell").hidden = true;
     byId("companion-cell").hidden = true;
+    byId("companion-images").hidden = true;
     byId("companion-control").hidden = true;
     byId("interframe").hidden = true;
     byId("two-frame-sub").hidden = true;
@@ -1213,7 +1214,7 @@ function clearDemoSelection() {
   byId("demo-test").value = "";
   byId("demo-frame-controls").hidden = true;
   sceneRequest++;
-  byId("scene-cell").hidden = true;
+  byId("scene-memory").hidden = true;
   inductionRequest++;
   byId("induction-sub").hidden = true;
   state.induction = null;
@@ -1423,7 +1424,19 @@ function drawCompanionCanvas(canvasEl, key, base, isPrev) {
   return companionDraw(canvasEl, key, base, isPrev);
 }
 
+// Companions live in their own collapsible section, never inside the Frame Images strip;
+// the section shows only while at least one companion canvas is drawable.
+function syncCompanionSection() {
+  const section = byId("companion-images");
+  if (section) section.hidden = byId("prev-companion-cell").hidden && byId("companion-cell").hidden;
+}
+
 function renderCompanion() {
+  renderCompanionCell();
+  syncCompanionSection();
+}
+
+function renderCompanionCell() {
   const cell = byId("companion-cell");
   const mode = state.companion;
   if (pageMode !== "demos" || mode === "none") { cell.hidden = true; return; }
@@ -1433,6 +1446,11 @@ function renderCompanion() {
 }
 
 function renderPrevPair() {
+  renderPrevPairCells();
+  syncCompanionSection();
+}
+
+function renderPrevPairCells() {
   const show = pageMode === "demos" && byId("show-prev").checked && Boolean(state.prevPreview);
   byId("prev-cell").hidden = !show;
   if (!show) { byId("prev-companion-cell").hidden = true; return; }
@@ -2737,7 +2755,7 @@ async function loadLearnedScene() {
   // purely from the crawler's cached recognition artifacts. Darkness only occludes:
   // revealed pixels persist; never-revealed pixels stay dark. Stale caches are reported,
   // never silently recomputed.
-  const cell = byId("scene-cell");
+  const cell = byId("scene-memory"); // own collapsible section, not part of the frame-images strip
   const sequence = selectedRecording();
   if (pageMode !== "demos" || !sequence) { cell.hidden = true; return; }
   const token = ++sceneRequest;
@@ -2857,7 +2875,7 @@ byId("clear-recording").addEventListener("click", async () => {
       body: JSON.stringify({ recording: sequence.id }),
     });
     // Reserved inputs remain; drop the derived views and reload the frame live.
-    byId("scene-cell").hidden = true;
+    byId("scene-memory").hidden = true;
     byId("induction-sub").hidden = true;
     state.induction = null;
     status(`Cleared ${result.removed} generated files from ${result.recording}. Reserved inputs kept; the crawler will rebuild.`);
@@ -3043,6 +3061,8 @@ function renderClauseExplorer() {
 const NAV_SECTIONS = [
   ["config-panel", "Config"],
   ["frame-images", "Frame Images"],
+  ["companion-images", "Companions"],
+  ["scene-memory", "Scene Memory"],
   ["frame-analysis", "Frame Parts"],
   ["parts-grouping-panel", "Frame Grouping"],
   ["layer-images", "Layer Images"],
@@ -3057,7 +3077,7 @@ const NAV_SECTIONS = [
 ];
 // Desired top-to-bottom order of the in-panel sections (the matrix layout).
 const SECTION_ORDER = [
-  "frame-images", "frame-analysis", "parts-grouping-panel",
+  "frame-images", "companion-images", "scene-memory", "frame-analysis", "parts-grouping-panel",
   "layer-images", "layer0-parts", "layer0-grouping",
   "layer1-parts", "layer1-grouping",
   "interframe", "frame-metta", "frame-guide",
@@ -3071,6 +3091,8 @@ const DEFAULT_NAV_ORDER = [
   "frame-metta",          // Output
   "config-panel",         // Config
   "frame-images",         // Frame Images
+  "companion-images",     // Companion Views
+  "scene-memory",         // Scene Memory
   "interframe",           // Interframe
   "layer-images",         // Layer Images
   "frame-analysis",       // Frame Parts
@@ -3133,8 +3155,8 @@ function initSectionNav() {
   const grouping = byId("parts-grouping");
   if (groupingHost && grouping) groupingHost.append(grouping);
   // Per-section image size slider for sections that render (potentially large) images.
-  const IMG_SIZE_DEFAULTS = { "frame-images": 200, "layer-images": 200, "interframe": 120 };
-  for (const secId of ["frame-images", "layer-images", "interframe"]) {
+  const IMG_SIZE_DEFAULTS = { "frame-images": 200, "companion-images": 200, "scene-memory": 200, "layer-images": 200, "interframe": 120 };
+  for (const secId of ["frame-images", "companion-images", "scene-memory", "layer-images", "interframe"]) {
     const section = byId(secId);
     if (!section || section.querySelector(":scope > .img-size-control")) continue;
     const def = IMG_SIZE_DEFAULTS[secId] || 200;

@@ -112,10 +112,24 @@
           <div class="canvas-wrap">
             <div class="frame-pairs">
               <div class="pair-cell only-demos" id="prev-cell" hidden><span class="pair-tag">Previous</span><canvas id="prev-canvas" aria-label="Previous frame original image, read-only context"></canvas></div>
-              <div class="pair-cell companion-cell only-demos" id="prev-companion-cell" hidden><span class="pair-tag" id="prev-companion-tag">Prev companion</span><canvas id="prev-companion-canvas" aria-label="Companion derived image for the previous frame"></canvas></div>
               <div class="pair-cell" id="current-cell"><span class="pair-tag only-demos">Original</span><canvas id="image-canvas" width="640" height="480" tabindex="0" role="img" aria-label="Analysis grid. Use arrow keys to move the drawing cursor, Space to paint."></canvas></div>
+            </div>
+          </div>
+        </details>
+        <details id="companion-images" class="frame-images-collapse only-demos" open hidden aria-labelledby="companion-images-title">
+          <summary class="panel-collapse-summary"><span class="section-label"><h3 id="companion-images-title">Companion Views</h3></span><span class="collapse-caret" aria-hidden="true">&#9662;</span></summary>
+          <div class="canvas-wrap">
+            <div class="frame-pairs">
+              <div class="pair-cell companion-cell only-demos" id="prev-companion-cell" hidden><span class="pair-tag" id="prev-companion-tag">Prev companion</span><canvas id="prev-companion-canvas" aria-label="Companion derived image for the previous frame"></canvas></div>
               <div class="pair-cell companion-cell only-demos" id="companion-cell" hidden><span class="pair-tag" id="companion-tag">Companion</span><canvas id="companion-canvas" aria-label="Companion derived image for the current frame"></canvas></div>
-              <div class="pair-cell companion-cell only-demos" id="scene-cell" hidden><span class="pair-tag" id="scene-tag" title="What the system currently BELIEVES the whole scene looks like, accumulated from every frame it has processed: pixels never observed stay dark (occlusion hides, it never erases); previously revealed areas persist; a moving entity is shown at its last known position, not smeared.">Scene memory</span><canvas id="scene-canvas" aria-label="Accumulated scene belief across every processed frame: revealed areas persist, unseen areas stay dark, movers shown at last known position"></canvas></div>
+            </div>
+          </div>
+        </details>
+        <details id="scene-memory" class="frame-images-collapse only-demos" open hidden aria-labelledby="scene-memory-title">
+          <summary class="panel-collapse-summary"><span class="section-label"><h3 id="scene-memory-title">Scene Memory</h3></span><span class="collapse-caret" aria-hidden="true">&#9662;</span></summary>
+          <div class="canvas-wrap">
+            <div class="frame-pairs">
+              <div class="pair-cell companion-cell only-demos" id="scene-cell"><span class="pair-tag" id="scene-tag" title="What the system currently BELIEVES the whole scene looks like, accumulated from every frame it has processed: pixels never observed stay dark (occlusion hides, it never erases); previously revealed areas persist; a moving entity is shown at its last known position, not smeared.">Scene memory</span><canvas id="scene-canvas" aria-label="Accumulated scene belief across every processed frame: revealed areas persist, unseen areas stay dark, movers shown at last known position"></canvas></div>
             </div>
           </div>
         </details>

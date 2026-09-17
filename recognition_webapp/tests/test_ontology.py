@@ -23,7 +23,7 @@ class OmegaVisionMtTests(unittest.TestCase):
             for arg in args:
                 self.assertIn(arg, COLLECTIONS, f"{name} argIsa {arg} must be a declared Collection")
             self.assertGreater(len(comment), 20, f"{name} needs a real comment")
-        for name, (result, comment) in FUNCTIONS.items():
+        for name, (result, comment) in {n: (r, c) for n, (a, r, c) in FUNCTIONS.items()}.items():
             self.assertIn(result, COLLECTIONS, f"{name} resultIsa {result} must be a declared Collection")
             self.assertGreater(len(comment), 20, name)
         for name, (args, comment) in BELIEF_PREDICATES.items():
@@ -44,6 +44,13 @@ class OmegaVisionMtTests(unittest.TestCase):
         self.assertIn("(resultIsa tv TruthValue)", krf)
         self.assertIn("(arg1Isa blocked VisualEntity)", krf)
         self.assertIn("(arg2Isa blocked VisualEntity)", krf)
+        # Arity-typed CycL specialisations of Predicate / Function-Denotational.
+        self.assertIn("(isa moved UnaryPredicate)", krf)
+        self.assertIn("(isa contact BinaryPredicate)", krf)
+        self.assertIn("(isa split TernaryPredicate)", krf)
+        self.assertIn("(isa tv BinaryFunction)", krf)
+        self.assertIn("(isa frame UnaryFunction)", krf)
+        self.assertIn("(ist OmegaVisionMt (isa contact BinaryPredicate))", metta)
 
 
 if __name__ == "__main__":

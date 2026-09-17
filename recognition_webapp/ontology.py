@@ -90,12 +90,27 @@ PREDICATES = {
     "user_input": ("action", [CMD], "An exogenous user command recorded in the frame's reserved state.json (or abduced when hidden). FRAME advances never assert user_input."),
 }
 
-# Function-denotational terms -> (resultIsa, comment)
+# Function-denotational terms -> (arity, resultIsa, comment)
 FUNCTIONS = {
-    "tv": ("TruthValue", "tv(strength, confidence): counted-evidence truth value; contradictions lower strength instead of discarding the belief."),
-    "dxy": ("Vector2D", "dxy(dx, dy): pixel displacement per one-second frame step."),
-    "frame": ("FrameDesignator", "frame(N): the numbered frame a fact is asserted for."),
+    "tv": (2, "TruthValue", "tv(strength, confidence): counted-evidence truth value; contradictions lower strength instead of discarding the belief."),
+    "dxy": (2, "Vector2D", "dxy(dx, dy): pixel displacement per one-second frame step."),
+    "frame": (1, "FrameDesignator", "frame(N): the numbered frame a fact is asserted for."),
 }
+
+PREDICATE_ARITY_ISA = {1: "UnaryPredicate", 2: "BinaryPredicate",
+                       3: "TernaryPredicate", 4: "QuaternaryPredicate", 5: "QuintaryPredicate"}
+FUNCTION_ARITY_ISA = {1: "UnaryFunction", 2: "BinaryFunction",
+                      3: "TernaryFunction", 4: "QuaternaryFunction"}
+
+
+def predicate_isa(arity: int) -> str:
+    """CycL arity-typed specialisation of Predicate (UnaryPredicate, BinaryPredicate, ...)."""
+    return PREDICATE_ARITY_ISA.get(arity, "Predicate")
+
+
+def function_isa(arity: int) -> str:
+    """CycL arity-typed specialisation of Function-Denotational (UnaryFunction, ...)."""
+    return FUNCTION_ARITY_ISA.get(arity, "Function-Denotational")
 
 # Belief/derivation wrapper predicates (induction/deduction layer).
 BELIEF_PREDICATES = {
@@ -155,21 +170,24 @@ def render_krf() -> str:
         for name, (cat, args, comment) in PREDICATES.items():
             if cat != category:
                 continue
-            lines.append(f"(isa {name} Predicate)")
+            lines.append(f"(isa {name} {predicate_isa(len(args))})")
             lines.append(f"(arity {name} {len(args)})")
             for index, arg in enumerate(args, 1):
                 lines.append(f"(arg{index}Isa {name} {arg})")
             lines.append(f'(comment {name} "{comment}")')
         lines.append("")
     lines.append(";; --- Denotational functions ---")
-    for name, (result, comment) in FUNCTIONS.items():
+    for name, (arity, result, comment) in FUNCTIONS.items():
         lines.append(f"(isa {name} Function-Denotational)")
+        lines.append(f"(isa {name} {function_isa(arity)})")
+        lines.append(f"(arity {name} {arity})")
         lines.append(f"(resultIsa {name} {result})")
         lines.append(f'(comment {name} "{comment}")')
     lines.append("")
     lines.append(";; --- Belief / derivation layer ---")
     for name, (args, comment) in BELIEF_PREDICATES.items():
-        lines.append(f"(isa {name} Predicate)")
+        lines.append(f"(isa {name} {predicate_isa(len(args))})")
+        lines.append(f"(arity {name} {len(args)})")
         for index, arg in enumerate(args, 1):
             lines.append(f"(arg{index}Isa {name} {arg})")
         lines.append(f'(comment {name} "{comment}")')
@@ -188,17 +206,20 @@ def render_metta() -> str:
         lines.append(f"(ist {MT} (isa {name} Collection))")
         lines.append(f'(ist {MT} (comment {name} "{comment}"))')
     for name, (cat, args, comment) in PREDICATES.items():
-        lines.append(f"(ist {MT} (isa {name} Predicate))")
+        lines.append(f"(ist {MT} (isa {name} {predicate_isa(len(args))}))")
         lines.append(f"(ist {MT} (arity {name} {len(args)}))")
         for index, arg in enumerate(args, 1):
             lines.append(f"(ist {MT} (arg{index}Isa {name} {arg}))")
         lines.append(f'(ist {MT} (comment {name} "{comment}"))')
-    for name, (result, comment) in FUNCTIONS.items():
+    for name, (arity, result, comment) in FUNCTIONS.items():
         lines.append(f"(ist {MT} (isa {name} Function-Denotational))")
+        lines.append(f"(ist {MT} (isa {name} {function_isa(arity)}))")
+        lines.append(f"(ist {MT} (arity {name} {arity}))")
         lines.append(f"(ist {MT} (resultIsa {name} {result}))")
         lines.append(f'(ist {MT} (comment {name} "{comment}"))')
     for name, (args, comment) in BELIEF_PREDICATES.items():
-        lines.append(f"(ist {MT} (isa {name} Predicate))")
+        lines.append(f"(ist {MT} (isa {name} {predicate_isa(len(args))}))")
+        lines.append(f"(ist {MT} (arity {name} {len(args)}))")
         for index, arg in enumerate(args, 1):
             lines.append(f"(ist {MT} (arg{index}Isa {name} {arg}))")
         lines.append(f'(ist {MT} (comment {name} "{comment}"))')

@@ -2976,6 +2976,26 @@ byId("view-input")?.addEventListener("click", () => setView("input"));
 byId("frame-images-tab-pair")?.addEventListener("click", () => setFrameImagesMode("pair"));
 byId("frame-images-tab-sequence")?.addEventListener("click", () => setFrameImagesMode("sequence"));
 byId("show-prev")?.addEventListener("change", () => { renderPrevPair(); void ensurePrevPipeline(); });
+byId("powder-load")?.addEventListener("click", async () => {
+  // Load this frame's MeTTa output into the POWDER KB browser (openworld_dr) and open it there.
+  const button = byId("powder-load");
+  const note = byId("powder-status");
+  if (!state.demoFrame) { note.textContent = "Choose a recorded frame first."; return; }
+  button.disabled = true;
+  note.textContent = "Loading into POWDER\u2026";
+  try {
+    const result = await request("/omega_vision/api/v1/powder-load", {
+      method: "POST", headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ sequence: state.demoFrame.sequenceId, frame: state.demoFrame.frameId }),
+    });
+    note.textContent = `${result.loaded.length} files loaded into POWDER.`;
+    window.open(result.powderUrl, "_blank");
+  } catch (problem) {
+    note.textContent = `POWDER load failed: ${problem.message}`;
+  } finally {
+    button.disabled = false;
+  }
+});
 attachHover(byId("group-preview"), () => state.result);
 attachHover(byId("image-canvas"), () => state.result);
 const overlaySlider = byId("overlay-opacity");

@@ -39,7 +39,8 @@ STATIC = {
     f"{WEB_PREFIX}/style.css": ("style.css", "text/css; charset=utf-8"),
 }
 POST_ROUTES = ("/omega_vision/api/v1/recognize", "/omega_vision/api/v1/deduce2", "/omega_vision/api/v1/track", "/omega_vision/api/v1/diff",
-               "/omega_vision/api/v1/source-syntax", "/omega_vision/api/v1/process", "/omega_vision/api/v1/clear")
+               "/omega_vision/api/v1/source-syntax", "/omega_vision/api/v1/process", "/omega_vision/api/v1/clear",
+               "/omega_vision/api/v1/powder-load")
 
 
 def _response(status: int, body: bytes, content_type: str) -> dict:
@@ -95,6 +96,81 @@ def _authorized(host: str | None, origin: str | None, port: int) -> bool:
 def _query_params(query: str) -> dict:
     from urllib.parse import parse_qs
     return parse_qs(query or "")
+
+
+# --- POWDER (openworld_dr KB browser) integration -------------------------------------------
+# "Load into POWDER" exports the current frame's MeTTa output into POWDER's KBs tree and
+# queues it into the live store, so the frame's facts can be browsed there immediately.
+
+def _powder_base() -> str:
+    import os
+    return os.environ.get("POWDER_URL", "http://127.0.0.1:3050/swish/openworld_dr").rstrip("/")
+
+
+def _powder_kb_root() -> Path:
+    import os
+    configured = os.environ.get("POWDER_KB_DIR")
+    if configured:
+        return Path(configured)
+    return ROOT.parent.parent / "openworld_dr" / "KBs"
+
+
+def _powder_api(method: str, path: str, payload: dict | None = None) -> dict:
+    import urllib.request
+    url = f"{_powder_base()}{path}"
+    data = None if payload is None else json.dumps(payload).encode("utf-8")
+    request = urllib.request.Request(url, data=data, method=method,
+                                     headers={"Content-Type": "application/json"} if data else {})
+    with urllib.request.urlopen(request, timeout=20) as response:
+        return json.loads(response.read().decode("utf-8"))
+
+
+def powder_load_frame(data_root: Path, sequence: str, frame: str) -> dict:
+    """Copy the frame's .metta output into POWDER's KBs tree, queue-load it into the live
+    store, and return the POWDER browser URL that displays the loaded source."""
+    import time
+    root = data_root.resolve()
+    if sequence.split("/", 1)[0] not in ("recordings", "curated"):
+        raise ValueError("Sequences live under recordings/ or curated/.")
+    frame_dir = (root / sequence / frame).resolve()
+    if not frame_dir.is_relative_to(root) or not frame_dir.is_dir():
+        raise ValueError("Unknown frame.")
+    sources = sorted(frame_dir.glob("*.metta"))
+    if not sources:
+        raise ValueError("This frame has no .metta output yet; let the crawler process it first.")
+    kb_root = _powder_kb_root()
+    if not kb_root.is_dir():
+        raise ValueError(f"POWDER KBs directory not found at {kb_root}; set POWDER_KB_DIR.")
+    case = sequence.rsplit("/", 1)[-1]
+    export_dir = kb_root / "omega_vision" / "frames" / case / frame
+    export_dir.mkdir(parents=True, exist_ok=True)
+    exported = []
+    for source in sources:
+        target = export_dir / source.name
+        data = source.read_bytes().replace(b"\r\n", b"\n")
+        if not target.is_file() or target.read_bytes() != data:
+            target.write_bytes(data)
+        exported.append(f"KBs/omega_vision/frames/{case}/{frame}/{source.name}")
+    try:
+        generation = _powder_api("GET", "/api/status")["generation"]
+        job = _powder_api("POST", "/api/kb/queue", {"files": exported, "generation": generation})
+        job_id = job.get("id")
+        outcome = job
+        for _ in range(60):
+            if not job_id:
+                break
+            outcome = _powder_api("GET", f"/api/tasks/result?id={job_id}")
+            if "result" in outcome or "error" in outcome:
+                break
+            time.sleep(0.5)
+    except OSError as error:
+        raise ValueError(f"POWDER is not reachable at {_powder_base()}: {error}")
+    if isinstance(outcome, dict) and outcome.get("error"):
+        raise ValueError(f"POWDER refused the load: {json.dumps(outcome['error'])[:400]}")
+    primary = next((p for p in exported if p.endswith("induction.metta")), exported[0])
+    return {"sequenceId": sequence, "frame": frame, "loaded": exported,
+            "job": job_id, "result": outcome.get("result") if isinstance(outcome, dict) else None,
+            "powderUrl": f"{_powder_base()}/#/source?path={primary}"}
 
 
 def _static(path: str) -> dict:
@@ -300,6 +376,14 @@ def _post(path: str, body: bytes, content_type: str, transfer_encoding: str | No
                 raise ValueError("Unknown recording.")
             return _json(200, process_recording(recording, pipeline=payload.get("pipeline", "prolog"),
                                                 force=bool(payload.get("force"))))
+        except ValueError as error:
+            return _json(422, {"error": str(error)})
+    if path == "/omega_vision/api/v1/powder-load":
+        try:
+            if not isinstance(payload, dict) or not isinstance(payload.get("sequence"), str) \
+                    or not isinstance(payload.get("frame"), str) or not payload["frame"].isdigit():
+                raise ValueError("A recording sequence and numeric frame are required.")
+            return _json(200, powder_load_frame(data_root, payload["sequence"], payload["frame"]))
         except ValueError as error:
             return _json(422, {"error": str(error)})
     if path == "/omega_vision/api/v1/clear":

@@ -237,7 +237,10 @@
         </details>
         <details id="frame-metta" class="frame-guide only-demos" hidden aria-labelledby="frame-metta-title">
           <summary class="guide-heading"><h3 id="frame-metta-title">MeTTa/PeTTa output</h3><span class="tag">Frame files</span></summary>
-          <p class="hint">Every file this frame produces (.pl / .metta / .json), explored in MeTTa syntax. Draft edits stay in browser memory and are never executed.</p>
+          <p class="hint">Every file this frame produces (.pl / .metta / .json), explored in MeTTa syntax. Draft edits stay in browser memory and are never executed.
+            <button type="button" id="powder-load" class="secondary" title="Copy this frame's .metta output into the openworld_dr KBs tree, load it into the live POWDER store, and open the POWDER KB browser on it">Load into POWDER</button>
+            <span id="powder-status" role="status" aria-live="polite"></span>
+          </p>
           <div id="clause-explorer" class="atomspace-explorer-host"></div>
         </details>
         <details id="frame-guide" class="frame-guide only-demos" hidden aria-labelledby="frame-guide-title">

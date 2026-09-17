@@ -354,7 +354,9 @@ class WebTests(unittest.TestCase):
     def test_invalid_and_cross_origin_requests(self):
         for method, path, body, headers, expected in [
             ("GET", "/../app.py", None, {}, 404),
-            ("GET", "/omega_vision/api/v1/health", None, {"Host": "attacker.invalid"}, 403),
+            # Any Host is welcome (local, LAN, tunnel); only a browser request whose
+            # Origin names a DIFFERENT site than the one addressed is refused.
+            ("GET", "/omega_vision/api/v1/health", None, {"Host": "my-tunnel.trycloudflare.com"}, 200),
             ("POST", "/omega_vision/api/v1/recognize", "{}", {"Content-Type": "application/json", "Origin": "https://attacker.invalid"}, 403),
             ("POST", "/omega_vision/api/v1/recognize", "{}", {"Content-Type": "text/plain"}, 415),
             ("POST", "/omega_vision/api/v1/recognize", "{", {"Content-Type": "application/json"}, 400),
@@ -363,7 +365,8 @@ class WebTests(unittest.TestCase):
             with self.subTest(path=path, expected=expected):
                 status, response, _ = self.request(method, path, body, headers)
                 self.assertEqual(status, expected)
-                self.assertIn("error", json.loads(response))
+                if expected >= 400:
+                    self.assertIn("error", json.loads(response))
 
 
 class DemoCatalogTests(unittest.TestCase):

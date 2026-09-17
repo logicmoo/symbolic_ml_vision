@@ -500,7 +500,7 @@
   "requirements": [
     "Blocked is a causal scenario: intention/attempt evidence is required in addition to stationary contact.",
     "The wall persists through every frame; blocked ends because the actor's attempts change direction, never because the wall disappears.",
-    "Authored input is separate oracle metadata, not injected into recording FRAME actions."
+    "The recording's state.json carries the real ARC3 arrow commands (right, right, right, down); the oracle user_input annotations remain separate evaluator vocabulary."
   ],
   "sampleIntervalSeconds": 1,
   "schemaVersion": 1,

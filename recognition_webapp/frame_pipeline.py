@@ -838,13 +838,22 @@ def process_recording(recording: Path, *, pipeline: str = "prolog", stamp_epoch:
                          and (imp.get("tv") or {}).get("strength", 0) >= 0.7][:30]
     metta_sources: list[str] = []
 
-    def _needs(paths: list[Path]) -> bool:
+    def _needs(paths: list[Path], frame_dir: Path | None = None) -> bool:
         if force:
             return True
+        # Reserved inputs are the evidence: artifacts written BEFORE the newest input
+        # (e.g. a regenerated state.json or image) are stale and must be rebuilt.
+        newest_input = 0.0
+        if frame_dir is not None:
+            inputs = [frame_dir / name for name in RESERVED_INPUTS] + [recording / "recording.json"]
+            newest_input = max((p.stat().st_mtime for p in inputs if p.is_file()), default=0.0)
         for path in paths:
             if not path.exists():
                 return True
-            if stamp_epoch is not None and path.stat().st_mtime < stamp_epoch:
+            mtime = path.stat().st_mtime
+            if stamp_epoch is not None and mtime < stamp_epoch:
+                return True
+            if mtime < newest_input:
                 return True
         return False
 
@@ -874,7 +883,7 @@ def process_recording(recording: Path, *, pipeline: str = "prolog", stamp_epoch:
         except Exception as error:
             errors.append({"frame": frame_id, "stage": "stabilize", "error": str(error)})
 
-        wrote_any = _needs(expected)
+        wrote_any = _needs(expected, frame_dir)
         if wrote_any:
             for artifact in result["artifacts"]:
                 if _write(frame_dir / artifact["name"], artifact["content"]):
@@ -933,7 +942,7 @@ def process_recording(recording: Path, *, pipeline: str = "prolog", stamp_epoch:
                 snapshot["upto"] = order
                 last_snapshot = snapshot
                 pending_snapshot = snapshot
-                if wrote_any or _needs([frame_dir / "deductions.pl", frame_dir / "deductions.metta"]):
+                if wrote_any or _needs([frame_dir / "deductions.pl", frame_dir / "deductions.metta"], frame_dir):
                     for artifact in deduced.get("files", []):
                         if _write(frame_dir / artifact["name"], artifact["content"]):
                             produced.append({"recording": recording_id, "frame": frame_id,

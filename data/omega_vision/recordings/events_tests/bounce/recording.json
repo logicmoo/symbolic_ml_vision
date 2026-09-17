@@ -19,7 +19,7 @@
       "state": "NOT_FINISHED"
     },
     {
-      "action": "FRAME",
+      "action": "ACTION4",
       "data": {},
       "directory": "data/recordings/events_tests/bounce/1",
       "index": 1,

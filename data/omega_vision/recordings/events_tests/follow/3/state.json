@@ -10,7 +10,7 @@
   "game_directory": "events_tests",
   "game_id": "events_tests",
   "image_hash": "fc233252ba85029a",
-  "incoming_action": "FRAME",
+  "incoming_action": "ACTION4",
   "kind": "synthetic_event_test_frame",
   "level": "1",
   "parent_node": "../2",

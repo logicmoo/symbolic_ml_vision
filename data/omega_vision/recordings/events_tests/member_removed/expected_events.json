@@ -1,0 +1,324 @@
+{
+  "canvas": {
+    "background": [
+      0,
+      0,
+      0
+    ],
+    "height": 48,
+    "width": 64
+  },
+  "caseId": "member_removed",
+  "comparisonPolicy": {
+    "eventMatching": "required_subset_after_independent_entity_alignment",
+    "groundTruthIsRecognizerInput": false,
+    "incidentalEventsAllowed": true,
+    "initialFrame": "baseline_only"
+  },
+  "description": "One member leaves while a two-member assembly survives.",
+  "entityIds": [
+    "actor",
+    "group",
+    "other",
+    "third"
+  ],
+  "expectedAssessment": null,
+  "expectedEvents": [
+    {
+      "display": "member_removed(third, group)",
+      "fromFrameId": "0",
+      "target": "member_removed",
+      "term": {
+        "args": [
+          "third",
+          "group"
+        ],
+        "predicate": "member_removed"
+      },
+      "toFrameId": "1"
+    }
+  ],
+  "fixtureArgumentConventions": {
+    "group_member": [
+      "member",
+      "group"
+    ],
+    "member_added": [
+      "member",
+      "group"
+    ],
+    "member_removed": [
+      "member",
+      "group"
+    ],
+    "merged": [
+      "source_a",
+      "source_b",
+      "result"
+    ],
+    "split": [
+      "source",
+      "child_a",
+      "child_b"
+    ],
+    "status": "fixture_conventions_not_a_new_runtime_schema"
+  },
+  "frames": [
+    {
+      "atSeconds": 0,
+      "authoredAnnotations": [
+        {
+          "args": [
+            "actor",
+            "group"
+          ],
+          "predicate": "group_member"
+        },
+        {
+          "args": [
+            "other",
+            "group"
+          ],
+          "predicate": "group_member"
+        },
+        {
+          "args": [
+            "third",
+            "group"
+          ],
+          "predicate": "group_member"
+        }
+      ],
+      "authoredObjects": [
+        {
+          "color": [
+            0,
+            116,
+            217
+          ],
+          "entity": "actor",
+          "mask": [
+            "111111",
+            "111111",
+            "111111",
+            "111111",
+            "111111",
+            "111111"
+          ],
+          "x": 16,
+          "y": 20
+        },
+        {
+          "color": [
+            255,
+            65,
+            54
+          ],
+          "entity": "other",
+          "mask": [
+            "111111",
+            "111111",
+            "111111",
+            "111111",
+            "111111",
+            "111111"
+          ],
+          "x": 22,
+          "y": 20
+        },
+        {
+          "color": [
+            46,
+            204,
+            64
+          ],
+          "entity": "third",
+          "mask": [
+            "111111",
+            "111111",
+            "111111",
+            "111111",
+            "111111",
+            "111111"
+          ],
+          "x": 28,
+          "y": 20
+        }
+      ],
+      "caption": "Three-member assembly.",
+      "frameId": "0",
+      "frameOrder": 0,
+      "image": "data/recordings/events_tests/member_removed/0/image.png",
+      "sha256": "6148eccf1bef3b491ec851c756081d0da5f6bfece0c8a9e747c73011f44f1a4e"
+    },
+    {
+      "atSeconds": 1,
+      "authoredAnnotations": [
+        {
+          "args": [
+            "actor",
+            "group"
+          ],
+          "predicate": "group_member"
+        },
+        {
+          "args": [
+            "other",
+            "group"
+          ],
+          "predicate": "group_member"
+        }
+      ],
+      "authoredObjects": [
+        {
+          "color": [
+            0,
+            116,
+            217
+          ],
+          "entity": "actor",
+          "mask": [
+            "111111",
+            "111111",
+            "111111",
+            "111111",
+            "111111",
+            "111111"
+          ],
+          "x": 16,
+          "y": 20
+        },
+        {
+          "color": [
+            255,
+            65,
+            54
+          ],
+          "entity": "other",
+          "mask": [
+            "111111",
+            "111111",
+            "111111",
+            "111111",
+            "111111",
+            "111111"
+          ],
+          "x": 22,
+          "y": 20
+        },
+        {
+          "color": [
+            46,
+            204,
+            64
+          ],
+          "entity": "third",
+          "mask": [
+            "111111",
+            "111111",
+            "111111",
+            "111111",
+            "111111",
+            "111111"
+          ],
+          "x": 38,
+          "y": 28
+        }
+      ],
+      "caption": "Third member leaves.",
+      "frameId": "1",
+      "frameOrder": 1,
+      "image": "data/recordings/events_tests/member_removed/1/image.png",
+      "sha256": "12da17c395ad4160b94c57b4c2bd57b554d251661a28f88ade599c785129c62e"
+    },
+    {
+      "atSeconds": 2,
+      "authoredAnnotations": [
+        {
+          "args": [
+            "actor",
+            "group"
+          ],
+          "predicate": "group_member"
+        },
+        {
+          "args": [
+            "other",
+            "group"
+          ],
+          "predicate": "group_member"
+        }
+      ],
+      "authoredObjects": [
+        {
+          "color": [
+            0,
+            116,
+            217
+          ],
+          "entity": "actor",
+          "mask": [
+            "111111",
+            "111111",
+            "111111",
+            "111111",
+            "111111",
+            "111111"
+          ],
+          "x": 20,
+          "y": 20
+        },
+        {
+          "color": [
+            255,
+            65,
+            54
+          ],
+          "entity": "other",
+          "mask": [
+            "111111",
+            "111111",
+            "111111",
+            "111111",
+            "111111",
+            "111111"
+          ],
+          "x": 26,
+          "y": 20
+        },
+        {
+          "color": [
+            46,
+            204,
+            64
+          ],
+          "entity": "third",
+          "mask": [
+            "111111",
+            "111111",
+            "111111",
+            "111111",
+            "111111",
+            "111111"
+          ],
+          "x": 42,
+          "y": 32
+        }
+      ],
+      "caption": "Remaining pair continues together.",
+      "frameId": "2",
+      "frameOrder": 2,
+      "image": "data/recordings/events_tests/member_removed/2/image.png",
+      "sha256": "bc1025b63423186f41c716aa86ad82868cbf68049b746812d3821e86976bec7c"
+    }
+  ],
+  "origin": "authored_synthetic_test_oracle",
+  "recognizerStatus": "not_run",
+  "requirements": [
+    "Removal is not dissolution: two members still form the group."
+  ],
+  "sampleIntervalSeconds": 1,
+  "schemaVersion": 1,
+  "sequenceId": "data/recordings/events_tests/member_removed",
+  "suiteId": "event-mini-recordings-v1"
+}

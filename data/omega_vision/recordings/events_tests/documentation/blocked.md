@@ -14,11 +14,11 @@ Intended start/continue/end at `2`, `3`, `4`; blocked ends when the attempts cha
 
 ## Required caution and fixture insufficiency
 
-Current recording has no real attempted-input trace. Its still-contact interval supports stationary/contact, not this stronger causal claim. New action-bearing fixtures are needed.
+The recording's state.json now carries the real ARC3 arrow commands (right, right, right, down as ACTION4/ACTION2), so a genuine attempted-input trace exists. The oracle user_input annotations remain separate evaluator vocabulary.
 
-These original frames contain only generic `FRAME` advances, not gameplay
-commands or measured force. Oracle `user_input` annotations cannot prove an
-attempt. Warm-up, causal-input and timing limitations above are intentionally
+Frame advances now record the gameplay arrow commands in `state.json`
+(`incoming_action`), though measured force is still absent. Oracle `user_input`
+annotations remain evaluator metadata, never recognizer facts. Warm-up, causal-input and timing limitations above are intentionally
 preserved rather than repaired by rewriting the fixture. Group membership,
 lineage and appearance/state producer contracts are not supplied by names.
 

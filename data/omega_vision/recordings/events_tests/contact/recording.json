@@ -19,7 +19,7 @@
       "state": "NOT_FINISHED"
     },
     {
-      "action": "FRAME",
+      "action": "ACTION4",
       "data": {},
       "directory": "data/recordings/events_tests/contact/1",
       "index": 1,
@@ -37,7 +37,7 @@
       "state": "NOT_FINISHED"
     },
     {
-      "action": "FRAME",
+      "action": "ACTION3",
       "data": {},
       "directory": "data/recordings/events_tests/contact/3",
       "index": 3,

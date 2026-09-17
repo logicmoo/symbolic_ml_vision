@@ -19,7 +19,7 @@
       "state": "NOT_FINISHED"
     },
     {
-      "action": "FRAME",
+      "action": "ACTION3",
       "data": {},
       "directory": "data/recordings/events_tests/group_dissolved/1",
       "index": 1,
@@ -28,7 +28,7 @@
       "state": "NOT_FINISHED"
     },
     {
-      "action": "FRAME",
+      "action": "ACTION3",
       "data": {},
       "directory": "data/recordings/events_tests/group_dissolved/2",
       "index": 2,

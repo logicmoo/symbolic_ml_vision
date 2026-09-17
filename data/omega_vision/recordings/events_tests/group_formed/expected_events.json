@@ -1,0 +1,246 @@
+{
+  "canvas": {
+    "background": [
+      0,
+      0,
+      0
+    ],
+    "height": 48,
+    "width": 64
+  },
+  "caseId": "group_formed",
+  "comparisonPolicy": {
+    "eventMatching": "required_subset_after_independent_entity_alignment",
+    "groundTruthIsRecognizerInput": false,
+    "incidentalEventsAllowed": true,
+    "initialFrame": "baseline_only"
+  },
+  "description": "Two independent pieces form a coherent moving assembly.",
+  "entityIds": [
+    "actor",
+    "group",
+    "other"
+  ],
+  "expectedAssessment": null,
+  "expectedEvents": [
+    {
+      "display": "group_formed(group)",
+      "fromFrameId": "0",
+      "target": "group_formed",
+      "term": {
+        "args": [
+          "group"
+        ],
+        "predicate": "group_formed"
+      },
+      "toFrameId": "1"
+    }
+  ],
+  "fixtureArgumentConventions": {
+    "group_member": [
+      "member",
+      "group"
+    ],
+    "member_added": [
+      "member",
+      "group"
+    ],
+    "member_removed": [
+      "member",
+      "group"
+    ],
+    "merged": [
+      "source_a",
+      "source_b",
+      "result"
+    ],
+    "split": [
+      "source",
+      "child_a",
+      "child_b"
+    ],
+    "status": "fixture_conventions_not_a_new_runtime_schema"
+  },
+  "frames": [
+    {
+      "atSeconds": 0,
+      "authoredAnnotations": [],
+      "authoredObjects": [
+        {
+          "color": [
+            0,
+            116,
+            217
+          ],
+          "entity": "actor",
+          "mask": [
+            "111111",
+            "111111",
+            "111111",
+            "111111",
+            "111111",
+            "111111"
+          ],
+          "x": 10,
+          "y": 20
+        },
+        {
+          "color": [
+            255,
+            65,
+            54
+          ],
+          "entity": "other",
+          "mask": [
+            "111111",
+            "111111",
+            "111111",
+            "111111",
+            "111111",
+            "111111"
+          ],
+          "x": 34,
+          "y": 20
+        }
+      ],
+      "caption": "Independent pieces.",
+      "frameId": "0",
+      "frameOrder": 0,
+      "image": "data/recordings/events_tests/group_formed/0/image.png",
+      "sha256": "f8520e3e9fd3854cd4f6ee574ab66f0e7b54010675d2c548aa6b46212c8c6801"
+    },
+    {
+      "atSeconds": 1,
+      "authoredAnnotations": [
+        {
+          "args": [
+            "actor",
+            "group"
+          ],
+          "predicate": "group_member"
+        },
+        {
+          "args": [
+            "other",
+            "group"
+          ],
+          "predicate": "group_member"
+        }
+      ],
+      "authoredObjects": [
+        {
+          "color": [
+            0,
+            116,
+            217
+          ],
+          "entity": "actor",
+          "mask": [
+            "111111",
+            "111111",
+            "111111",
+            "111111",
+            "111111",
+            "111111"
+          ],
+          "x": 20,
+          "y": 20
+        },
+        {
+          "color": [
+            255,
+            65,
+            54
+          ],
+          "entity": "other",
+          "mask": [
+            "111111",
+            "111111",
+            "111111",
+            "111111",
+            "111111",
+            "111111"
+          ],
+          "x": 26,
+          "y": 20
+        }
+      ],
+      "caption": "Pieces join into the authored assembly.",
+      "frameId": "1",
+      "frameOrder": 1,
+      "image": "data/recordings/events_tests/group_formed/1/image.png",
+      "sha256": "27316bdf97b43b91e3552ce2bb5a84ad650e31ed0741454782f180ea59ebb0e6"
+    },
+    {
+      "atSeconds": 2,
+      "authoredAnnotations": [
+        {
+          "args": [
+            "actor",
+            "group"
+          ],
+          "predicate": "group_member"
+        },
+        {
+          "args": [
+            "other",
+            "group"
+          ],
+          "predicate": "group_member"
+        }
+      ],
+      "authoredObjects": [
+        {
+          "color": [
+            0,
+            116,
+            217
+          ],
+          "entity": "actor",
+          "mask": [
+            "111111",
+            "111111",
+            "111111",
+            "111111",
+            "111111",
+            "111111"
+          ],
+          "x": 24,
+          "y": 20
+        },
+        {
+          "color": [
+            255,
+            65,
+            54
+          ],
+          "entity": "other",
+          "mask": [
+            "111111",
+            "111111",
+            "111111",
+            "111111",
+            "111111",
+            "111111"
+          ],
+          "x": 30,
+          "y": 20
+        }
+      ],
+      "caption": "Assembly translates together.",
+      "frameId": "2",
+      "frameOrder": 2,
+      "image": "data/recordings/events_tests/group_formed/2/image.png",
+      "sha256": "7138653b6c2a9080984798d018f81323f9c0902cf4e111bd7c76a93851efeecc"
+    }
+  ],
+  "origin": "authored_synthetic_test_oracle",
+  "recognizerStatus": "not_run",
+  "requirements": [
+    "Group identity/membership is annotated intent, not implied by proximity alone."
+  ],
+  "sampleIntervalSeconds": 1,
+  "schemaVersion": 1,
+  "sequenceId": "data/recordings/events_tests/group_formed",
+  "suiteId": "event-mini-recordings-v1"
+}

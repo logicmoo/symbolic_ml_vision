@@ -472,7 +472,7 @@
   "origin": "authored_synthetic_test_oracle",
   "recognizerStatus": "not_run",
   "requirements": [
-    "No user_input is authored anywhere in this case: attempt evidence must be abduced from the unexplained dwell at the wall followed by redirected movement.",
+    "No user_input is revealed anywhere in this case (every advance is an opaque FRAME): attempt evidence must be abduced from the unexplained dwell at the wall followed by redirected movement.",
     "The wall persists through every frame; blocked ends because movement resumes in a new direction."
   ],
   "sampleIntervalSeconds": 1,

@@ -1,0 +1,136 @@
+{
+  "canvas": {
+    "background": [
+      0,
+      0,
+      0
+    ],
+    "height": 48,
+    "width": 64
+  },
+  "caseId": "scaled",
+  "comparisonPolicy": {
+    "eventMatching": "required_subset_after_independent_entity_alignment",
+    "groundTruthIsRecognizerInput": false,
+    "incidentalEventsAllowed": true,
+    "initialFrame": "baseline_only"
+  },
+  "description": "A square grows uniformly about its center.",
+  "entityIds": [
+    "actor"
+  ],
+  "expectedAssessment": null,
+  "expectedEvents": [
+    {
+      "display": "scaled(actor)",
+      "fromFrameId": "0",
+      "target": "scaled",
+      "term": {
+        "args": [
+          "actor"
+        ],
+        "predicate": "scaled"
+      },
+      "toFrameId": "1"
+    }
+  ],
+  "fixtureArgumentConventions": {
+    "group_member": [
+      "member",
+      "group"
+    ],
+    "member_added": [
+      "member",
+      "group"
+    ],
+    "member_removed": [
+      "member",
+      "group"
+    ],
+    "merged": [
+      "source_a",
+      "source_b",
+      "result"
+    ],
+    "split": [
+      "source",
+      "child_a",
+      "child_b"
+    ],
+    "status": "fixture_conventions_not_a_new_runtime_schema"
+  },
+  "frames": [
+    {
+      "atSeconds": 0,
+      "authoredAnnotations": [],
+      "authoredObjects": [
+        {
+          "color": [
+            0,
+            116,
+            217
+          ],
+          "entity": "actor",
+          "mask": [
+            "111111",
+            "111111",
+            "111111",
+            "111111",
+            "111111",
+            "111111"
+          ],
+          "x": 12,
+          "y": 20
+        }
+      ],
+      "caption": "6 by 6 square.",
+      "frameId": "0",
+      "frameOrder": 0,
+      "image": "data/recordings/events_tests/scaled/0/image.png",
+      "sha256": "f22d75a4f02aea8de982bb402e6a034383d0019622ec6966c2e79d1c64bc8862"
+    },
+    {
+      "atSeconds": 1,
+      "authoredAnnotations": [],
+      "authoredObjects": [
+        {
+          "color": [
+            0,
+            116,
+            217
+          ],
+          "entity": "actor",
+          "mask": [
+            "1111111111",
+            "1111111111",
+            "1111111111",
+            "1111111111",
+            "1111111111",
+            "1111111111",
+            "1111111111",
+            "1111111111",
+            "1111111111",
+            "1111111111"
+          ],
+          "x": 10,
+          "y": 18
+        }
+      ],
+      "caption": "10 by 10 square, same center and color.",
+      "frameId": "1",
+      "frameOrder": 1,
+      "image": "data/recordings/events_tests/scaled/1/image.png",
+      "sha256": "e0e786c94554341b07e16bdd63ece92bbb91351898bc9b57561f075a669ffae2"
+    }
+  ],
+  "origin": "authored_synthetic_test_oracle",
+  "recognizerStatus": "not_run",
+  "requirements": [
+    "Stable identity is an authored oracle; the tracker must establish its own correspondence.",
+    "Uniform scale is distinct from arbitrary area or shape change."
+  ],
+  "sampleIntervalSeconds": 1,
+  "schemaVersion": 1,
+  "sequenceId": "data/recordings/events_tests/scaled",
+  "suiteId": "event-mini-recordings-v1"
+}

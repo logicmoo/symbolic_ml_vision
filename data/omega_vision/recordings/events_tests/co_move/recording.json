@@ -19,7 +19,7 @@
       "state": "NOT_FINISHED"
     },
     {
-      "action": "FRAME",
+      "action": "ACTION4",
       "data": {},
       "directory": "data/recordings/events_tests/co_move/1",
       "index": 1,
@@ -28,7 +28,7 @@
       "state": "NOT_FINISHED"
     },
     {
-      "action": "FRAME",
+      "action": "ACTION4",
       "data": {},
       "directory": "data/recordings/events_tests/co_move/2",
       "index": 2,
@@ -37,7 +37,7 @@
       "state": "NOT_FINISHED"
     },
     {
-      "action": "FRAME",
+      "action": "ACTION4",
       "data": {},
       "directory": "data/recordings/events_tests/co_move/3",
       "index": 3,

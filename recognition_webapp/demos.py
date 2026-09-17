@@ -13,6 +13,21 @@ from pathlib import Path
 from frame_pipeline import find_recordings
 
 
+def processed_marker(recording: Path) -> Path | None:
+    """The file proving the crawler processed this recording: induction only ever lives
+    under frame dirs now, so the LAST frame's induction.json is the marker (legacy
+    root-level induction.json still counts for old stores)."""
+    frame_dirs = sorted((child for child in recording.iterdir()
+                         if child.is_dir() and child.name.isdigit()),
+                        key=lambda path: int(path.name), reverse=True)
+    for frame in frame_dirs:
+        candidate = frame / "induction.json"
+        if candidate.is_file():
+            return candidate
+    legacy = recording / "induction.json"
+    return legacy if legacy.is_file() else None
+
+
 class DemoCatalog:
     def __init__(self, root: Path):
         self.root = root.resolve(strict=True)
@@ -64,7 +79,7 @@ class DemoCatalog:
         properties = {
             "family": identifier.split("/", 1)[0],
             "frameCount": sequence.get("frameCount") or len(frames),
-            "processed": (recording / "induction.json").is_file(),
+            "processed": recording.is_dir() and processed_marker(recording) is not None,
             "onDisk": bool(sequence.get("onDisk")),
         }
         first = frames[0]["frameId"] if frames else "0"

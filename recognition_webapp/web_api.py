@@ -17,7 +17,7 @@ from pathlib import Path
 
 from recognition import examples, recognize
 from pipelines import PipelineError, capabilities, run_pipeline
-from demos import DemoCatalog
+from demos import DemoCatalog, processed_marker as demo_processed_marker
 from expectations import frame_expectations
 from frame_pipeline import (deduce2_from_payload, process_recording, find_recordings,
                             source_epoch, stabilize_result, clean_generated)
@@ -204,12 +204,11 @@ def _get(path: str, query: str, data_root: Path) -> dict:
         for recording in find_recordings(root):
             frames = sum(1 for child in recording.iterdir()
                          if child.is_dir() and child.name.isdigit() and (child / "image.png").is_file())
-            # Cheap processed marker: the crawler writes induction.json at the recording root.
-            marker = recording / "induction.json"
-            processed = marker.is_file()
+            # Processed marker: induction lives under the LAST frame dir (legacy root honoured).
+            marker = demo_processed_marker(recording)
             listing.append({"id": recording.relative_to(data_root).as_posix(),
-                            "frames": frames, "processed": processed,
-                            "outputsUpdated": marker.stat().st_mtime if processed else 0})
+                            "frames": frames, "processed": marker is not None,
+                            "outputsUpdated": marker.stat().st_mtime if marker else 0})
         return _json(200, {"recordings": listing, "sourceEpoch": source_epoch()})
     if path == "/omega_vision/api/v1/scene":
         params = _query_params(query)

@@ -322,12 +322,20 @@ def learned_scene(data_root: Path, sequence_id: str, upto: int | None = None,
     buffer = BytesIO()
     image.save(buffer, format="PNG")
     induction = None
-    induction_path = recording / "induction.json"
-    if induction_path.is_file():
+    # Induction lives under frame dirs: serve the belief state AS OF the composed range
+    # (last frame ≤ upto), falling back to the legacy recording-root file for old stores.
+    frame_candidates = sorted((child for child in recording.iterdir()
+                               if child.is_dir() and child.name.isdigit()
+                               and (upto is None or int(child.name) <= upto)),
+                              key=lambda path: int(path.name), reverse=True)
+    for candidate in [frame / "induction.json" for frame in frame_candidates] + [recording / "induction.json"]:
+        if not candidate.is_file():
+            continue
         try:
-            induction = json.loads(induction_path.read_text(encoding="utf-8"))
+            induction = json.loads(candidate.read_text(encoding="utf-8"))
+            break
         except (OSError, ValueError):
-            induction = None
+            continue
     return {
         "sequenceId": sequence_id, "width": width, "height": height,
         "mode": "aperture" if aperture_mode else "symbolic",

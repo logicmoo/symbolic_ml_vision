@@ -197,7 +197,7 @@ RESERVED_INPUTS = ("image.png", "image.jpg", "image.jpeg", "state.json")
 
 _GENERATED_NAMES = ("regions.pl", "groups.pl", "acceptance.pl", "turtles.pl", "context.pl",
                     "geometry.json", "recognition.json", "deductions.pl", "beliefs.json",
-                    "induction.json", "induction.metta")
+                    "induction.json", "induction.metta", "induction.pl")
 _GENERATED_PATTERNS = (re.compile(r"^frame-[A-Za-z0-9_.-]+\.metta$"),
                        re.compile(r"^(regions|groups|acceptance|turtles|context|deductions)\.metta$"))
 

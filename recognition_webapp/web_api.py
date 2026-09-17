@@ -20,7 +20,7 @@ from pipelines import PipelineError, capabilities, run_pipeline
 from demos import DemoCatalog
 from expectations import frame_expectations
 from frame_pipeline import (deduce2_from_payload, process_recording, find_recordings,
-                            source_epoch, stabilize_result)
+                            source_epoch, stabilize_result, clean_generated)
 from scene_memory import cached_frame_result, learned_scene
 from tracker import track_frame
 from diff_frames import diff_frames
@@ -39,7 +39,7 @@ STATIC = {
     f"{WEB_PREFIX}/style.css": ("style.css", "text/css; charset=utf-8"),
 }
 POST_ROUTES = ("/omega_vision/api/v1/recognize", "/omega_vision/api/v1/deduce2", "/omega_vision/api/v1/track", "/omega_vision/api/v1/diff",
-               "/omega_vision/api/v1/source-syntax", "/omega_vision/api/v1/process")
+               "/omega_vision/api/v1/source-syntax", "/omega_vision/api/v1/process", "/omega_vision/api/v1/clear")
 
 
 def _response(status: int, body: bytes, content_type: str) -> dict:
@@ -240,6 +240,27 @@ def _post(path: str, body: bytes, content_type: str, transfer_encoding: str | No
                 raise ValueError("Unknown recording.")
             return _json(200, process_recording(recording, pipeline=payload.get("pipeline", "prolog"),
                                                 force=bool(payload.get("force"))))
+        except ValueError as error:
+            return _json(422, {"error": str(error)})
+    if path == "/omega_vision/api/v1/clear":
+        try:
+            if not isinstance(payload, dict) or not isinstance(payload.get("recording"), str):
+                raise ValueError("A recording id (e.g. recordings/events_tests/blocked) is required.")
+            relative = payload["recording"].replace("\\", "/").strip("/")
+            if relative.split("/", 1)[0] not in ("recordings", "curated"):
+                raise ValueError("Recordings live under recordings/ or curated/.")
+            root = data_root.resolve()
+            recording = (root / relative).resolve()
+            if (not recording.is_relative_to(root) or not recording.is_dir()
+                    or not any(child.is_dir() and child.name.isdigit() and (child / "image.png").is_file()
+                               for child in recording.iterdir())):
+                raise ValueError("Unknown recording.")
+            # Deletes ONLY files this pipeline generated (manifest-matched); the reserved
+            # inputs (image.*, state.json) and anything else are untouchable by contract.
+            removed = clean_generated(recording, dry_run=False)
+            return _json(200, {"recording": relative,
+                               "removed": len(removed),
+                               "files": [p.relative_to(recording).as_posix() for p in removed[:200]]})
         except ValueError as error:
             return _json(422, {"error": str(error)})
     if path == "/omega_vision/api/v1/deduce2":

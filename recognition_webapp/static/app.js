@@ -2844,6 +2844,28 @@ byId("next-frame").addEventListener("click", () => {
   byId("demo-frame").value = String(Number(byId("demo-frame").value) + 1);
   loadDemoFrame();
 });
+byId("clear-recording").addEventListener("click", async () => {
+  const sequence = selectedRecording();
+  if (!sequence) return;
+  const button = byId("clear-recording");
+  button.disabled = true;
+  try {
+    const result = await request("/omega_vision/api/v1/clear", {
+      method: "POST", headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ recording: sequence.id }),
+    });
+    // Reserved inputs remain; drop the derived views and reload the frame live.
+    byId("scene-cell").hidden = true;
+    byId("induction-sub").hidden = true;
+    state.induction = null;
+    status(`Cleared ${result.removed} generated files from ${result.recording}. Reserved inputs kept; the crawler will rebuild.`);
+    void loadDemoFrame();
+  } catch (problem) {
+    error(`Clear failed: ${problem.message}`);
+  } finally {
+    button.disabled = false;
+  }
+});
 
 byId("recognize").addEventListener("click", recognize);
 function pipelineControls() {

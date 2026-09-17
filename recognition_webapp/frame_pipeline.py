@@ -920,6 +920,7 @@ def process_recording(recording: Path, *, pipeline: str = "prolog", stamp_epoch:
                 # only beliefs whose evidence has already happened.
                 snapshot = induce(transitions)
                 snapshot["upto"] = order
+                last_snapshot = snapshot
                 if _write(frame_dir / "beliefs.json",
                           json.dumps(snapshot, ensure_ascii=True, indent=2) + "\n"):
                     produced.append({"recording": recording_id, "frame": frame_id,
@@ -949,10 +950,11 @@ def process_recording(recording: Path, *, pipeline: str = "prolog", stamp_epoch:
                 errors.append({"frame": frame_id, "stage": "metta-sidecar",
                                "file": pl_path.name, "error": str(error)})
 
-    # Inductive guesses across the whole sequence, with counted-evidence truth values,
-    # prior-evidence pooling, prediction scoring, and the prior revision preserved in the
-    # historical record.
-    induction = induce(transitions, priors)
+    # Final beliefs ARE the last frame's accumulated snapshot: induction only ever builds
+    # up frame to frame. The recording-level induction files are the END STATE of that
+    # accumulation (plus the historical revisions of earlier passes) - never a separate
+    # top-level pass that could know something no frame step revealed.
+    induction = dict(last_snapshot) if last_snapshot is not None else induce(transitions)
     induction["inducedAt"] = datetime.now(timezone.utc).isoformat(timespec="seconds")
     history = _induction_history(recording, induction)
     rendered = _render_induction(recording_id, induction, sorted(set(metta_sources)), history)

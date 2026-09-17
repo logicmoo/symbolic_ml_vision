@@ -179,7 +179,8 @@ def cached_frame_result(payload: dict, data_root: Path) -> dict | None:
     return result
 
 
-def learned_scene(data_root: Path, sequence_id: str, upto: int | None = None) -> dict:
+def learned_scene(data_root: Path, sequence_id: str, upto: int | None = None,
+                  static_only: bool = False) -> dict:
     """Compose the whole scene a recording has LEARNED across its frames.
 
     Darkness only OCCLUDES, it never erases. Two evidence modes:
@@ -189,6 +190,11 @@ def learned_scene(data_root: Path, sequence_id: str, upto: int | None = None) ->
       union of every aperture's contents. Alpha 0 stays unknown darkness.
     * Opaque recordings: the cached recognition's foreground regions are painted into
       scene memory; the detected background acts as the occluding darkness.
+
+    With static_only, the composition keeps ONLY entities that never moved across the
+    frames seen: the static scenery as it slowly got unoccluded. Every entity whose
+    stable identity was ever seen at a different position is excluded entirely.
+    (Aperture recordings carry no entity ownership, so static_only is ignored there.)
 
     Caches are never destroyed: frames whose cached recognition was written under older
     Prolog rules are still composed and listed in framesAwaitingReprocess (advisory);
@@ -216,6 +222,8 @@ def learned_scene(data_root: Path, sequence_id: str, upto: int | None = None) ->
     darkness = (13, 17, 26)
     aperture_mode = False
     frames_used, frames_stale, frames_awaiting = [], [], []
+    origins: dict = {}   # stable entity id -> first seen (x, y) origin
+    moved: set = set()   # stable ids seen at more than one position (movables)
     for frame_dir in frames:
         cached = cached_recognition(frame_dir)
         if cached is None:
@@ -258,8 +266,18 @@ def learned_scene(data_root: Path, sequence_id: str, upto: int | None = None) ->
         bg_colors = [color for rid, (color, _) in pixels.items() if rid in background]
         if bg_colors:
             darkness = _hex_rgb(bg_colors[0])
-        foreground = [(rid, _hex_rgb(color), cells) for rid, (color, cells) in pixels.items()
-                      if rid not in background]
+        stable_ids = result.get("stable_ids") or {}
+        foreground = [(stable_ids.get(rid, rid), _hex_rgb(color), cells)
+                      for rid, (color, cells) in pixels.items() if rid not in background]
+        # Track movement by STABLE identity: an entity whose origin ever changes is a
+        # movable, never part of the static scenery layer.
+        for sid, _, cells in foreground:
+            if not cells:
+                continue
+            origin = (min(x for x, _ in cells), min(y for _, y in cells))
+            if sid in origins and origins[sid] != origin:
+                moved.add(sid)
+            origins.setdefault(sid, origin)
         # PURGE on observed absence: an opaque frame observes EVERY pixel. Wherever this
         # frame shows background (not covered by any foreground entity), remembered content
         # was seen to be gone - a removed wall must not haunt the scene. Memory survives
@@ -280,6 +298,14 @@ def learned_scene(data_root: Path, sequence_id: str, upto: int | None = None) ->
     if scene is None:
         raise ValueError("No fresh cached recognition for this recording yet; the crawler "
                          "must (re)process it before the learned scene can be composed.")
+    if static_only and not aperture_mode:
+        # Static scenery only: drop every pixel owned by an entity that ever moved.
+        for y in range(height):
+            row = scene[y]
+            for x in range(width):
+                value = row[x]
+                if value is not None and len(value) == 2 and isinstance(value[1], str) and value[1] in moved:
+                    row[x] = None
     if aperture_mode:
         darkness = (0, 0, 0)
     image = Image.new("RGB", (width, height), darkness)
@@ -310,5 +336,6 @@ def learned_scene(data_root: Path, sequence_id: str, upto: int | None = None) ->
         "framesAwaitingReprocess": frames_awaiting,
         "revealedPixels": revealed, "coverage": round(revealed / (width * height), 4),
         "stillOccluded": width * height - revealed,
+        "staticOnly": static_only, "movedEntities": sorted(moved),
         "induction": induction, "sourceEpoch": source_epoch(),
     }

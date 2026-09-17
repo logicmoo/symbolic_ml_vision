@@ -133,10 +133,29 @@ def _get(path: str, query: str, data_root: Path) -> dict:
             if len(params["upto"]) != 1 or not params["upto"][0].isdigit():
                 return _json(422, {"error": "upto must be a frame number."})
             upto = int(params["upto"][0])
+        static_only = params.get("static", ["0"])[0] in ("1", "true")
         try:
-            return _json(200, learned_scene(data_root, params["sequence"][0], upto=upto))
+            return _json(200, learned_scene(data_root, params["sequence"][0], upto=upto,
+                                            static_only=static_only))
         except ValueError as error:
             return _json(422, {"error": str(error)})
+    if path == "/omega_vision/api/v1/demos/state":
+        # A frame's reserved state.json (read-only input evidence): the recorded command
+        # that led INTO this frame, game/level scalars, timing. Never pipeline output.
+        params = _query_params(query)
+        if any(len(params.get(key, [])) != 1 for key in ("sequence", "frame")):
+            return _json(422, {"error": "Choose a recording sequence and frame."})
+        sequence, frame = params["sequence"][0], params["frame"][0]
+        root = data_root.resolve()
+        if sequence.split("/", 1)[0] not in ("recordings", "curated") or not frame.isdigit():
+            return _json(422, {"error": "Frames live under recordings/ or curated/ with numeric ids."})
+        state_path = (root / sequence / frame / "state.json").resolve()
+        if not state_path.is_relative_to(root) or not state_path.is_file():
+            return _json(404, {"error": "This frame has no recorded state.json."})
+        try:
+            return _json(200, json.loads(state_path.read_text(encoding="utf-8")))
+        except (OSError, ValueError):
+            return _json(422, {"error": "The frame's state.json is unreadable."})
     if path == "/omega_vision/api/v1/induction":
         params = _query_params(query)
         if len(params.get("sequence", [])) != 1:

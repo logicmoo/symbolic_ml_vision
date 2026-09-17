@@ -112,16 +112,8 @@
           <div class="canvas-wrap">
             <div class="frame-pairs">
               <div class="pair-cell only-demos" id="prev-cell" hidden><span class="pair-tag">Previous</span><canvas id="prev-canvas" aria-label="Previous frame original image, read-only context"></canvas></div>
+              <div class="pair-cell command-cell only-demos" id="command-cell" hidden><span class="pair-tag">Command</span><div id="command-badge" class="command-badge" title="The recorded input (from this frame's reserved state.json) that led from the previous frame into this one"></div></div>
               <div class="pair-cell" id="current-cell"><span class="pair-tag only-demos">Original</span><canvas id="image-canvas" width="640" height="480" tabindex="0" role="img" aria-label="Analysis grid. Use arrow keys to move the drawing cursor, Space to paint."></canvas></div>
-            </div>
-          </div>
-        </details>
-        <details id="companion-images" class="frame-images-collapse only-demos" open hidden aria-labelledby="companion-images-title">
-          <summary class="panel-collapse-summary"><span class="section-label"><h3 id="companion-images-title">Companion Views</h3></span><span class="collapse-caret" aria-hidden="true">&#9662;</span></summary>
-          <div class="canvas-wrap">
-            <div class="frame-pairs">
-              <div class="pair-cell companion-cell only-demos" id="prev-companion-cell" hidden><span class="pair-tag" id="prev-companion-tag">Prev companion</span><canvas id="prev-companion-canvas" aria-label="Companion derived image for the previous frame"></canvas></div>
-              <div class="pair-cell companion-cell only-demos" id="companion-cell" hidden><span class="pair-tag" id="companion-tag">Companion</span><canvas id="companion-canvas" aria-label="Companion derived image for the current frame"></canvas></div>
             </div>
           </div>
         </details>
@@ -136,11 +128,9 @@
         <details id="layer-images" class="frame-images-collapse only-demos" hidden aria-labelledby="layer-images-title">
           <summary class="panel-collapse-summary"><span class="section-label"><h3 id="layer-images-title">Layer Images</h3></span><span class="collapse-caret" aria-hidden="true">&#9662;</span></summary>
           <div class="canvas-wrap only-demos" id="deduction-wrap">
-            <div class="frame-pairs">
-              <div class="pair-cell" id="same-cell"><span class="pair-tag">Layer 0 &middot; complete background</span><canvas id="same-canvas" aria-label="Layer 0: complete reconstructed background with the figure removed"></canvas></div>
-              <div class="pair-cell companion-cell" id="layer0-companion-cell" hidden><span class="pair-tag" id="layer0-companion-tag">Layer 0 companion</span><canvas id="layer0-companion-canvas" aria-label="Companion analysis of the reconstructed background layer"></canvas></div>
-              <div class="pair-cell" id="moved-cell"><span class="pair-tag">Layer 1 &middot; movement (above)</span><canvas id="moved-canvas" aria-label="Layer 1: moving objects composited above the background"></canvas></div>
-              <div class="pair-cell companion-cell" id="layer1-companion-cell" hidden><span class="pair-tag" id="layer1-companion-tag">Layer 1 companion</span><canvas id="layer1-companion-canvas" aria-label="Companion analysis of the movement layer"></canvas></div>
+            <div class="frame-pairs" id="layer-pairs">
+              <div class="pair-cell" id="same-cell"><span class="pair-tag">Layer 0 &middot; complete background</span><canvas id="same-canvas" aria-label="Layer 0: complete reconstructed background with the movers removed"></canvas></div>
+              <div class="pair-cell" id="moved-cell"><span class="pair-tag">Layer 1 &middot; static scenery</span><canvas id="moved-canvas" aria-label="Layer 1: things that never moved but slowly got unoccluded across the frames seen so far"></canvas></div>
             </div>
           </div>
         </details>
@@ -155,23 +145,21 @@
           <div id="layer0-grouping-host" class="group-tree"></div>
         </details>
         <details id="layer1-parts" class="frame-analysis only-demos" hidden aria-labelledby="layer1-parts-title">
-          <summary class="analysis-heading"><h3 id="layer1-parts-title">Layer1 Parts</h3><span>movement layer analysis</span></summary>
-          <p class="hint">Parts, V/W/G group and turtle thumbnails from running recognition on the Layer 1 movers.</p>
+          <summary class="analysis-heading"><h3 id="layer1-parts-title">Layer1 Parts</h3><span>static scenery layer analysis</span></summary>
+          <p class="hint">Parts, V/W/G group and turtle thumbnails from running recognition on the Layer 1 static scenery.</p>
           <div id="layer1-analysis-images" class="analysis-images"></div>
         </details>
         <details id="layer1-grouping" class="frame-analysis only-demos" hidden aria-labelledby="layer1-grouping-title">
           <summary class="analysis-heading"><h3 id="layer1-grouping-title">Layer1 Grouping</h3><span>group tree (read-only)</span></summary>
-          <p class="hint">Accepted groups and their member parts from the Layer 1 movement recognition.</p>
+          <p class="hint">Accepted groups and their member parts from the Layer 1 static scenery recognition.</p>
           <div id="layer1-grouping-host" class="group-tree"></div>
         </details>
         <details id="frame-analysis" class="frame-analysis only-demos" open hidden aria-labelledby="frame-analysis-title">
-          <summary class="analysis-heading"><h3 id="frame-analysis-title">Frame Parts</h3><span>Click an image to use it as the companion beside the frame</span></summary>
+          <summary class="analysis-heading"><h3 id="frame-analysis-title">Frame Parts</h3><span>parts, groups and turtle analyses of this frame</span></summary>
           <p id="analysis-status" class="analysis-status" role="status" aria-live="polite"></p>
           <div id="analysis-images" class="analysis-images"></div>
-          <div class="companion-control" id="companion-control" hidden>
-            <span id="companion-status">Click an image above to show it as the companion beside the frame.</span>
-            <button type="button" id="clear-companion" class="secondary">Clear companion</button>
-            <label class="overlay-slider" title="Blend the original frame under the 5 derived images">Original overlay
+          <div class="companion-control" id="companion-control">
+            <label class="overlay-slider" title="Blend the original frame under the derived images">Original overlay
               <input id="overlay-opacity" type="range" min="0" max="100" value="25" aria-label="Original overlay opacity">
               <span id="overlay-opacity-val">25%</span>
             </label>

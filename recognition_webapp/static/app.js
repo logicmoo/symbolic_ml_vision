@@ -11,7 +11,7 @@ const state = {
   demoFrame: null, loadingDemo: false,
   sourcePreview: null, prevPreview: null,
   prevResult: null, prevPreview2: null, prevDebug: null, prevRef: null, prevBusy: false, twoFrame: null,
-  companion: "W", overlayOpacity: 0.25, groupSort1: "consensus", groupSort2: "parts",   wEngine: "crack", strongEdgePct: 1, oldEdgePct: 25, upscale: 1, crackAngleTol: 40,
+  overlayOpacity: 0.25, groupSort1: "consensus", groupSort2: "parts",   wEngine: "crack", strongEdgePct: 1, oldEdgePct: 25, upscale: 1, crackAngleTol: 40,
   debugPreview: null, analysisMode: "parts",
   selectedParts: new Set(),
   activeOutput: "metta", outputDrafts: new Map(),
@@ -82,10 +82,7 @@ function invalidate(soft = false) {
   // place once the new frame's data arrives.
   if (!soft) {
     byId("prev-cell").hidden = true;
-    byId("prev-companion-cell").hidden = true;
-    byId("companion-cell").hidden = true;
-    byId("companion-images").hidden = true;
-    byId("companion-control").hidden = true;
+    byId("command-cell").hidden = true;
     byId("interframe").hidden = true;
     byId("two-frame-sub").hidden = true;
     byId("tracker-sub").hidden = true;
@@ -94,10 +91,9 @@ function invalidate(soft = false) {
     byId("layer-images").hidden = true;
     byId("layer0-grouping").hidden = true;
     byId("layer1-grouping").hidden = true;
-    byId("layer0-companion-cell").hidden = true;
     byId("layer0-parts").hidden = true;
-    byId("layer1-companion-cell").hidden = true;
     byId("layer1-parts").hidden = true;
+    clearMoverLayers();
     byId("parts-grouping-panel").hidden = true;
     byId("group-tree").replaceChildren();
     byId("frame-metta").hidden = true;
@@ -498,9 +494,7 @@ function renderFrameAnalysis() {
     const button = document.createElement("button");
     button.className = "analysis-image";
     button.dataset.mode = thumb.key;
-    button.classList.toggle("companion-selected", state.companion === thumb.key);
-    button.setAttribute("aria-label", `Use ${thumb.title} as the companion image`);
-    button.setAttribute("aria-pressed", String(state.companion === thumb.key));
+    button.setAttribute("aria-label", thumb.title);
     const title = document.createElement("strong");
     title.textContent = thumb.title;
     const image = document.createElement("canvas");
@@ -510,33 +504,9 @@ function renderFrameAnalysis() {
     const caption = document.createElement("small");
     caption.textContent = thumb.caption;
     button.append(title, image, caption);
-    button.addEventListener("click", () => setCompanion(state.companion === thumb.key ? "none" : thumb.key));
     return button;
   }));
   renderPartsGrouping();
-  byId("companion-control").hidden = false;
-  renderCompanion();
-}
-
-function setCompanion(mode) {
-  state.companion = mode;
-  for (const control of document.querySelectorAll(".companion-button")) {
-    const on = control.dataset.companion === mode;
-    control.classList.toggle("active", on);
-    control.setAttribute("aria-pressed", String(on));
-  }
-  for (const thumb of byId("analysis-images").children) {
-    const on = thumb.dataset.mode === mode;
-    thumb.classList.toggle("companion-selected", on);
-    thumb.setAttribute("aria-pressed", String(on));
-  }
-  byId("group-preview").classList.toggle("companion-selected", mode === "selection");
-  byId("companion-status").textContent = mode === "none"
-    ? "Click an image above to show it as the companion beside the frame."
-    : `Companion beside the frame: ${analysisTitle(mode)}.`;
-  renderCompanion();
-  renderPrevPair();
-  void ensurePrevPipeline();
 }
 
 function refreshPartSelection() {
@@ -750,36 +720,10 @@ function onLayerChange() {
   refreshPartSelection();
 }
 
-function redrawLayerCompanions() {
-  // Re-render the layer companion canvases from cached layer results (e.g. after the
-  // turtle outer/inner/medials toggles change what the turtle companion draws).
-  for (const prefix of ["layer0", "layer1"]) {
-    const result = state[`${prefix}Result`];
-    const cell = byId(`${prefix}-companion-cell`);
-    if (!cell || !result) continue;
-    const mode = state.companion;
-    if (mode === "none" || mode === "original") {
-      cell.hidden = true;
-      continue;
-    }
-    const label = prefix === "layer0" ? "Layer 0" : "Layer 1";
-    const ok = companionDraw(byId(`${prefix}-companion-canvas`), mode,
-      { result, preview: state[`${prefix}Preview`], debug: state[`${prefix}Debug`],
-        parts: null, original: state[`${prefix}Source`], overlay: true }, true);
-    cell.hidden = !ok;
-    if (ok) byId(`${prefix}-companion-tag`).textContent = `${label} companion: ${COMPANION_LABELS[mode]}`;
-  }
-}
-
 for (const id of ["turtle-outer", "turtle-holes", "turtle-medials"]) {
   byId(id).addEventListener("change", () => {
     renderFrameAnalysis();
     if (state.view === "analysis" && state.analysisMode === "turtles") renderGrid();
-    // Turtle programs must know which layers to draw EVERYWHERE they render:
-    // the frame companion, the previous-frame companion, and the layer companions.
-    renderCompanion();
-    renderPrevPair();
-    redrawLayerCompanions();
   });
 }
 
@@ -1306,6 +1250,8 @@ async function loadDemoFrame() {
       else clearFrameGuide();
       void loadLearnedScene();  // belief state is per-frame now
       void loadInduction();     // beliefs as of this frame (tutorial stepping)
+      void loadFrameCommand(sequence.id, frame.frameId);
+      void renderDeductionImages(); // hides stale layers immediately (e.g. back at frame 0)
       requestDemoAnalysis();
       void loadPrevPreview(sequence, Number(byId("demo-frame").value), token);
     }
@@ -1331,34 +1277,6 @@ async function decodeDataImage(base64) {
   image.src = `data:image/png;base64,${base64}`;
   await image.decode();
   return image;
-}
-
-const COMPANION_LABELS = { original: "Original", V: "V groups", W: "W groups", selection: "Selected parts", turtles: "Turtle (selected)" };
-
-function companionDraw(canvasEl, key, base, isPrev) {
-  if (key === "original") {
-    const image = base.original;
-    if (!image) return false;
-    const scale = Math.max(1, Math.floor(360 / Math.max(image.width, image.height)));
-    canvasEl.width = image.width * scale;
-    canvasEl.height = image.height * scale;
-    const brush = canvasEl.getContext("2d");
-    brush.imageSmoothingEnabled = false;
-    brush.drawImage(image, 0, 0, canvasEl.width, canvasEl.height);
-    return true;
-  }
-  if (!base.result?.native) return false;
-  const selection = state.selectedParts;
-  const ctxByKey = {
-    V: { ...base, groupsOverride: base.result.group_layers.V, parts: new Set() },
-    W: { ...base, groupsOverride: base.result.group_layers.W, parts: new Set() },
-    selection: { ...base, parts: selection },
-    turtles: { ...base, parts: selection },
-  };
-  const ctx = ctxByKey[key];
-  if (!ctx) return false;
-  drawAnalysis(canvasEl, key === "turtles" ? "turtles" : "groups", ctx);
-  return true;
 }
 
 function labelMaps(result) {
@@ -1415,64 +1333,48 @@ function attachHover(canvasEl, resultGetter) {
 }
 
 
-function companionCtx(kind) {
-  if (kind === "prev") return { result: state.prevResult, preview: state.prevPreview2, debug: state.prevDebug, parts: null, original: state.prevPreview, overlay: true };
-  return { result: state.result, preview: state.preview, debug: state.debugPreview, parts: null, original: state.sourcePreview, overlay: true };
+// The command shown between the Previous and Original images comes from the CURRENT
+// frame's reserved state.json (incoming_action): the input that led INTO this frame.
+let commandRequest = 0;
+async function loadFrameCommand(sequenceId, frameId) {
+  const token = ++commandRequest;
+  state.frameCommand = null;
+  updateCommandCell();
+  try {
+    const query = new URLSearchParams({ sequence: sequenceId, frame: frameId });
+    const frameState = await request(`/omega_vision/api/v1/demos/state?${query}`);
+    if (token !== commandRequest) return;
+    state.frameCommand = frameState.incoming_action || null;
+    if (state.frameCommand && frameState.action_data && Object.keys(frameState.action_data).length) {
+      state.frameCommand += ` ${JSON.stringify(frameState.action_data)}`;
+    }
+  } catch {
+    state.frameCommand = null; // no state.json: nothing to show between the frames
+  }
+  updateCommandCell();
 }
 
-function drawCompanionCanvas(canvasEl, key, base, isPrev) {
-  return companionDraw(canvasEl, key, base, isPrev);
-}
-
-// Companions live in their own collapsible section, never inside the Frame Images strip;
-// the section shows only while at least one companion canvas is drawable.
-function syncCompanionSection() {
-  const section = byId("companion-images");
-  if (section) section.hidden = byId("prev-companion-cell").hidden && byId("companion-cell").hidden;
-}
-
-function renderCompanion() {
-  renderCompanionCell();
-  syncCompanionSection();
-}
-
-function renderCompanionCell() {
-  const cell = byId("companion-cell");
-  const mode = state.companion;
-  if (pageMode !== "demos" || mode === "none") { cell.hidden = true; return; }
-  const ok = drawCompanionCanvas(byId("companion-canvas"), mode, companionCtx("current"), false);
-  cell.hidden = !ok;
-  if (ok) byId("companion-tag").textContent = `Companion: ${COMPANION_LABELS[mode]} (this frame)`;
+function updateCommandCell() {
+  const cell = byId("command-cell");
+  const show = pageMode === "demos" && !byId("prev-cell").hidden && Boolean(state.frameCommand);
+  cell.hidden = !show;
+  if (show) byId("command-badge").textContent = `${state.frameCommand} \u2192`;
 }
 
 function renderPrevPair() {
-  renderPrevPairCells();
-  syncCompanionSection();
-}
-
-function renderPrevPairCells() {
   const show = pageMode === "demos" && byId("show-prev").checked && Boolean(state.prevPreview);
   byId("prev-cell").hidden = !show;
-  if (!show) { byId("prev-companion-cell").hidden = true; return; }
-  const image = state.prevPreview;
-  const canvasEl = byId("prev-canvas");
-  const scale = Math.max(1, Math.floor(360 / Math.max(image.width, image.height)));
-  canvasEl.width = image.width * scale;
-  canvasEl.height = image.height * scale;
-  const brush = canvasEl.getContext("2d");
-  brush.imageSmoothingEnabled = false;
-  brush.drawImage(image, 0, 0, canvasEl.width, canvasEl.height);
-  const cell = byId("prev-companion-cell");
-  const mode = state.companion;
-  if (mode === "none") { cell.hidden = true; return; }
-  if (mode !== "original" && !state.prevResult) {
-    cell.hidden = true;
-    void ensurePrevPipeline();
-    return;
+  if (show) {
+    const image = state.prevPreview;
+    const canvasEl = byId("prev-canvas");
+    const scale = Math.max(1, Math.floor(360 / Math.max(image.width, image.height)));
+    canvasEl.width = image.width * scale;
+    canvasEl.height = image.height * scale;
+    const brush = canvasEl.getContext("2d");
+    brush.imageSmoothingEnabled = false;
+    brush.drawImage(image, 0, 0, canvasEl.width, canvasEl.height);
   }
-  const ok = drawCompanionCanvas(byId("prev-companion-canvas"), mode, companionCtx("prev"), true);
-  cell.hidden = !ok;
-  if (ok) byId("prev-companion-tag").textContent = `Prev companion: ${COMPANION_LABELS[mode]}`;
+  updateCommandCell();
 }
 
 async function runPrevPipeline(ref, token) {
@@ -1501,7 +1403,7 @@ async function runPrevPipeline(ref, token) {
 }
 
 async function ensurePrevPipeline() {
-  if (!byId("show-prev").checked || state.companion === "none" || state.companion === "original") return;
+  if (!byId("show-prev").checked) return;
   if (state.prevResult || !state.prevRef || state.prevBusy) return;
   const ref = state.prevRef;
   state.prevBusy = true;
@@ -2301,11 +2203,18 @@ function objectBoundsMap(result) {
   return new Map(result.objects.map((obj) => [obj.id, obj.bounds]));
 }
 
+function clearMoverLayers() {
+  for (const cell of document.querySelectorAll("#layer-pairs .mover-cell")) cell.remove();
+}
+
 async function renderDeductionImages() {
   const panel = byId("layer-images");
   const deduction = state.twoFrame;
   if (pageMode !== "demos" || !byId("show-prev").checked || !hasPrevFrame()) {
+    // At frame 0 a background/mover decomposition is IMPOSSIBLE to know: no motion
+    // evidence exists yet, so the whole panel hides (including any stale content).
     panel.hidden = true;
+    clearMoverLayers();
     return;
   }
   if (!deduction || !state.result?.native || !state.prevResult?.native) return;
@@ -2319,83 +2228,95 @@ async function renderDeductionImages() {
     b.drawImage(img, 0, 0);
     return b;
   };
-  const drawArrows = (brush) => {
-    const bounds = objectBoundsMap(state.result);
+  const bounds = objectBoundsMap(state.result);
+  const drawArrow = (brush, match, scale = 1) => {
+    const b = bounds.get(match.currentNative);
+    if (!b) return;
     brush.strokeStyle = "#ffd34d";
     brush.fillStyle = "#ffd34d";
     brush.lineWidth = 1;
-    for (const match of deduction.matches) {
-      if (match.dx === 0 && match.dy === 0) continue;
-      const b = bounds.get(match.currentNative);
-      if (!b) continue;
-      const cx = b[0] + b[2] / 2, cy = b[1] + b[3] / 2;
-      const px = cx - match.dx, py = cy - match.dy;
-      brush.beginPath();
-      brush.moveTo(px, py);
-      brush.lineTo(cx, cy);
-      brush.stroke();
-      const angle = Math.atan2(cy - py, cx - px);
-      brush.beginPath();
-      brush.moveTo(cx, cy);
-      brush.lineTo(cx - 5 * Math.cos(angle - 0.4), cy - 5 * Math.sin(angle - 0.4));
-      brush.lineTo(cx - 5 * Math.cos(angle + 0.4), cy - 5 * Math.sin(angle + 0.4));
-      brush.closePath();
-      brush.fill();
-    }
+    const cx = (b[0] + b[2] / 2) * scale, cy = (b[1] + b[3] / 2) * scale;
+    const px = cx - match.dx * scale, py = cy - match.dy * scale;
+    brush.beginPath();
+    brush.moveTo(px, py);
+    brush.lineTo(cx, cy);
+    brush.stroke();
+    const angle = Math.atan2(cy - py, cx - px);
+    brush.beginPath();
+    brush.moveTo(cx, cy);
+    brush.lineTo(cx - 5 * Math.cos(angle - 0.4), cy - 5 * Math.sin(angle - 0.4));
+    brush.lineTo(cx - 5 * Math.cos(angle + 0.4), cy - 5 * Math.sin(angle + 0.4));
+    brush.closePath();
+    brush.fill();
   };
 
-  // Prefer the server-composited layers (built in Python so a merged background exists even
-  // without a browser). Fall back to client compositing only if the server didn't send them.
+  // Layer 0: complete background reconstruction (server-composited when available).
   const layers = deduction.layers;
-  if (layers && layers.layer0Image && layers.layer1Image) {
-    const [l0, l1] = await Promise.all([
-      decodeDataImage(layers.layer0Image.split(",")[1]),
-      decodeDataImage(layers.layer1Image.split(",")[1]),
-    ]);
+  if (layers && layers.layer0Image) {
+    const l0 = await decodeDataImage(layers.layer0Image.split(",")[1]);
     drawNatural(byId("same-canvas"), l0);
-    const layer1Source = document.createElement("canvas");
-    drawNatural(layer1Source, l1);          // clean movers image feeds the pipeline
-    const movedBrush = drawNatural(byId("moved-canvas"), l1);
-    drawArrows(movedBrush);                  // display copy gets motion arrows
-    void ensureLayerPipeline("layer0", byId("same-canvas"));
-    void ensureLayerPipeline("layer1", layer1Source);
-    return;
+  } else {
+    const stationaryCurr = new Set(deduction.matches.filter((m) => m.dx === 0 && m.dy === 0).map((m) => m.currentNative));
+    const stationaryPrev = new Set(deduction.matches.filter((m) => m.dx === 0 && m.dy === 0).map((m) => m.previousNative));
+    const bgPixels = (result, idSet) => {
+      const map = new Map();
+      const parts = result.opencv ? result.opencv.parts : result.prolog.parts;
+      for (const part of parts) {
+        if (!idSet.has(part.id)) continue;
+        if (part.pixelRuns) { for (const [y, l, r] of part.pixelRuns) for (let x = l; x <= r; x++) map.set(y * result.width + x, part.color); }
+        else if (part.cells) { for (const [x, y] of part.cells) map.set(y * result.width + x, part.color); }
+      }
+      return map;
+    };
+    const completeBg = bgPixels(state.prevResult, stationaryPrev);
+    for (const [key, color] of bgPixels(state.result, stationaryCurr)) completeBg.set(key, color);
+    const same = byId("same-canvas");
+    const w = state.result.width, h = state.result.height;
+    same.width = w; same.height = h;
+    const sbrush = same.getContext("2d");
+    sbrush.imageSmoothingEnabled = false;
+    sbrush.fillStyle = "#101725"; sbrush.fillRect(0, 0, w, h);
+    for (const [key, color] of completeBg) {
+      sbrush.fillStyle = color;
+      sbrush.fillRect(key % w, Math.floor(key / w), 1, 1);
+    }
+  }
+  void ensureLayerPipeline("layer0", byId("same-canvas"));
+
+  // Layer 1: things that NEVER moved but slowly got unoccluded — the accumulated static
+  // scenery composed server-side from the frames seen so far (movers excluded entirely).
+  const staticCell = byId("moved-cell");
+  try {
+    const upto = String(Number(byId("demo-frame").value) || 0);
+    const staticScene = await request(`/omega_vision/api/v1/scene?${new URLSearchParams({
+      sequence: state.demoFrame.sequenceId, upto, static: "1" })}`);
+    const image = await decodeDataImage(staticScene.scene);
+    drawNatural(byId("moved-canvas"), image);
+    staticCell.hidden = false;
+    staticCell.querySelector(".pair-tag").textContent =
+      `Layer 1 \u00b7 static scenery (never moved, unoccluded over ${staticScene.framesUsed.length} frames)`;
+    void ensureLayerPipeline("layer1", byId("moved-canvas"));
+  } catch {
+    staticCell.hidden = true; // no fresh cache yet: the crawler has not composed this recording
   }
 
-  // ---- Fallback: composite in the browser (older path) ----
-  const stationaryCurr = new Set(deduction.matches.filter((m) => m.dx === 0 && m.dy === 0).map((m) => m.currentNative));
-  const stationaryPrev = new Set(deduction.matches.filter((m) => m.dx === 0 && m.dy === 0).map((m) => m.previousNative));
-  const movedCurr = new Set(deduction.matches.filter((m) => m.dx !== 0 || m.dy !== 0).map((m) => m.currentNative));
-  const bgPixels = (result, idSet) => {
-    const map = new Map();
-    const parts = result.opencv ? result.opencv.parts : result.prolog.parts;
-    for (const part of parts) {
-      if (!idSet.has(part.id)) continue;
-      if (part.pixelRuns) { for (const [y, l, r] of part.pixelRuns) for (let x = l; x <= r; x++) map.set(y * result.width + x, part.color); }
-      else if (part.cells) { for (const [x, y] of part.cells) map.set(y * result.width + x, part.color); }
-    }
-    return map;
-  };
-  const currBg = bgPixels(state.result, stationaryCurr);
-  const prevBg = bgPixels(state.prevResult, stationaryPrev);
-  const completeBg = new Map(prevBg);
-  for (const [key, color] of currBg) completeBg.set(key, color);
-  const same = byId("same-canvas");
-  const w = state.result.width, h = state.result.height;
-  same.width = w; same.height = h;
-  const sbrush = same.getContext("2d");
-  sbrush.imageSmoothingEnabled = false;
-  sbrush.fillStyle = "#101725"; sbrush.fillRect(0, 0, same.width, same.height);
-  for (const [key, color] of completeBg) {
-    sbrush.fillStyle = color;
-    sbrush.fillRect(key % w, Math.floor(key / w), 1, 1);
-  }
-  const layer1Source = document.createElement("canvas");
-  paintPartsById(layer1Source, state.result, (part) => (movedCurr.has(part.id) ? part.color : null));
-  const movedBrush = drawNatural(byId("moved-canvas"), layer1Source);
-  drawArrows(movedBrush);
-  void ensureLayerPipeline("layer0", byId("same-canvas"));
-  void ensureLayerPipeline("layer1", layer1Source);
+  // Layer 2..N: one layer per MOVABLE, appended on the same line.
+  clearMoverLayers();
+  const row = byId("layer-pairs");
+  const movers = deduction.matches.filter((m) => m.dx !== 0 || m.dy !== 0);
+  movers.forEach((match, index) => {
+    const cell = document.createElement("div");
+    cell.className = "pair-cell mover-cell";
+    const tag = document.createElement("span");
+    tag.className = "pair-tag";
+    tag.textContent = `Layer ${2 + index} \u00b7 ${match.current || match.currentNative} movable (dx ${match.dx}, dy ${match.dy})`;
+    const canvasEl = document.createElement("canvas");
+    canvasEl.setAttribute("aria-label", `Movable object ${match.current || match.currentNative} on its own layer`);
+    const { brush, scale } = paintPartsById(canvasEl, state.result, (part) => (part.id === match.currentNative ? part.color : null));
+    drawArrow(brush, match, scale);
+    cell.append(tag, canvasEl);
+    row.append(cell);
+  });
 }
 
 const layerRequests = {};
@@ -2421,16 +2342,6 @@ async function ensureLayerPipeline(prefix, sourceCanvas) {
     state[`${prefix}Preview`] = preview;
     state[`${prefix}Debug`] = debug;
     state[`${prefix}Source`] = sourceCanvas;
-    const cell = byId(`${prefix}-companion-cell`);
-    const mode = state.companion;
-    if (mode === "none" || mode === "original") {
-      cell.hidden = true;
-    } else {
-      const ok = companionDraw(byId(`${prefix}-companion-canvas`), mode,
-        { result, preview, debug, parts: null, original: sourceCanvas, overlay: true }, true);
-      cell.hidden = !ok;
-      if (ok) byId(`${prefix}-companion-tag`).textContent = `${label} companion: ${COMPANION_LABELS[mode]}`;
-    }
     renderLayerParts(prefix, label);
     renderLayerGrouping(prefix, label);
   } catch {
@@ -2942,20 +2853,14 @@ for (const name of ["prev", "input", "regions", "reconstruction"]) {
 }
 byId("view-groups")?.addEventListener("click", () => { state.analysisMode = "groups"; setView("analysis"); });
 byId("show-prev")?.addEventListener("change", () => { renderPrevPair(); void ensurePrevPipeline(); });
-byId("clear-companion")?.addEventListener("click", () => setCompanion("none"));
-byId("group-preview")?.addEventListener("click", () => setCompanion(state.companion === "selection" ? "none" : "selection"));
-attachHover(byId("companion-canvas"), () => state.result);
 attachHover(byId("group-preview"), () => state.result);
 attachHover(byId("image-canvas"), () => state.result);
-attachHover(byId("prev-companion-canvas"), () => state.prevResult);
 const overlaySlider = byId("overlay-opacity");
 if (overlaySlider) overlaySlider.addEventListener("input", () => {
   state.overlayOpacity = Number(overlaySlider.value) / 100;
   byId("overlay-opacity-val").textContent = `${overlaySlider.value}%`;
   if (state.result?.native) renderFrameAnalysis();
   if (state.view === "analysis") renderGrid();
-  renderCompanion();
-  renderPrevPair();
 });
 if (pageMode === "demos") byId("view-input").textContent = "Original";
 byId("grid-lines").addEventListener("change", renderGrid);
@@ -3061,7 +2966,6 @@ function renderClauseExplorer() {
 const NAV_SECTIONS = [
   ["config-panel", "Config"],
   ["frame-images", "Frame Images"],
-  ["companion-images", "Companions"],
   ["scene-memory", "Scene Memory"],
   ["frame-analysis", "Frame Parts"],
   ["parts-grouping-panel", "Frame Grouping"],
@@ -3077,7 +2981,7 @@ const NAV_SECTIONS = [
 ];
 // Desired top-to-bottom order of the in-panel sections (the matrix layout).
 const SECTION_ORDER = [
-  "frame-images", "companion-images", "scene-memory", "frame-analysis", "parts-grouping-panel",
+  "frame-images", "scene-memory", "frame-analysis", "parts-grouping-panel",
   "layer-images", "layer0-parts", "layer0-grouping",
   "layer1-parts", "layer1-grouping",
   "interframe", "frame-metta", "frame-guide",
@@ -3091,7 +2995,6 @@ const DEFAULT_NAV_ORDER = [
   "frame-metta",          // Output
   "config-panel",         // Config
   "frame-images",         // Frame Images
-  "companion-images",     // Companion Views
   "scene-memory",         // Scene Memory
   "interframe",           // Interframe
   "layer-images",         // Layer Images
@@ -3155,8 +3058,8 @@ function initSectionNav() {
   const grouping = byId("parts-grouping");
   if (groupingHost && grouping) groupingHost.append(grouping);
   // Per-section image size slider for sections that render (potentially large) images.
-  const IMG_SIZE_DEFAULTS = { "frame-images": 200, "companion-images": 200, "scene-memory": 200, "layer-images": 200, "interframe": 120 };
-  for (const secId of ["frame-images", "companion-images", "scene-memory", "layer-images", "interframe"]) {
+  const IMG_SIZE_DEFAULTS = { "frame-images": 200, "scene-memory": 200, "layer-images": 200, "interframe": 120 };
+  for (const secId of ["frame-images", "scene-memory", "layer-images", "interframe"]) {
     const section = byId(secId);
     if (!section || section.querySelector(":scope > .img-size-control")) continue;
     const def = IMG_SIZE_DEFAULTS[secId] || 200;

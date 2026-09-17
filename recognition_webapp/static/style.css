@@ -170,6 +170,8 @@ details.frame-guide[open] > summary::before { content: "\25BE"; }
 body[data-page="demos"] .frame-pairs #image-canvas,
 body[data-page="demos"] .frame-pairs #image-canvas.original-frame { width: auto; height: auto; max-width: 100%; max-height: var(--img-max, 300px); box-shadow: none; }
 .companion-control { display: flex; flex-wrap: wrap; align-items: center; gap: 8px 14px; padding: 0 14px 8px; font-size: 10px; color: #6b7c92; }
+.command-cell { justify-content: center; }
+.command-badge { display: flex; align-items: center; justify-content: center; min-width: 90px; padding: 10px 14px; border: 1px dashed #8fa3bd; border-radius: 8px; font-family: ui-monospace, monospace; font-size: 13px; font-weight: 600; color: #2c3e57; background: #eef3fa; white-space: nowrap; }
 .companion-buttons { display: flex; flex-wrap: wrap; gap: 5px; }
 .companion-button { background: #eef2f9; color: #5b7495; padding: 5px 9px; border-radius: 5px; font-size: 11px; }
 .companion-button.active { background: #345f94; color: #fff; font-weight: 650; }

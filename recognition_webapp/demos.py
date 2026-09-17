@@ -28,6 +28,40 @@ def processed_marker(recording: Path) -> Path | None:
     return legacy if legacy.is_file() else None
 
 
+_CATALOG_CACHE: dict = {}
+_LISTING_CACHE: dict = {}
+_LISTING_TTL_SECONDS = 10.0
+
+
+def catalog_for(root: Path) -> "DemoCatalog":
+    """A cached DemoCatalog: the multi-megabyte dataset.json is parsed once per revision
+    (mtime+size keyed), not on every request, so the Task list stays snappy while the
+    crawler hammers the same disk."""
+    resolved = root.resolve(strict=True)
+    manifest = resolved / "dataset.json"
+    stat = manifest.stat()
+    key = (str(resolved), stat.st_mtime_ns, stat.st_size)
+    cached = _CATALOG_CACHE.get(str(resolved))
+    if cached is None or cached[0] != key:
+        _CATALOG_CACHE[str(resolved)] = (key, DemoCatalog(resolved))
+        _LISTING_CACHE.pop(str(resolved), None)
+    return _CATALOG_CACHE[str(resolved)][1]
+
+
+def cached_listing(root: Path) -> dict:
+    """The catalog listing with a short TTL: the per-sequence property scan walks every
+    recording's frame dirs, which is worth reusing for a few seconds between requests."""
+    import time
+    resolved = str(root.resolve(strict=True))
+    cached = _LISTING_CACHE.get(resolved)
+    now = time.monotonic()
+    if cached and now - cached[0] < _LISTING_TTL_SECONDS:
+        return cached[1]
+    listing = catalog_for(root).listing()
+    _LISTING_CACHE[resolved] = (now, listing)
+    return listing
+
+
 class DemoCatalog:
     def __init__(self, root: Path):
         self.root = root.resolve(strict=True)

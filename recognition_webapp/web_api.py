@@ -17,7 +17,7 @@ from pathlib import Path
 
 from recognition import examples, recognize
 from pipelines import PipelineError, capabilities, run_pipeline
-from demos import DemoCatalog, processed_marker as demo_processed_marker
+from demos import DemoCatalog, catalog_for, cached_listing, processed_marker as demo_processed_marker
 from expectations import frame_expectations
 from frame_pipeline import (deduce2_from_payload, process_recording, find_recordings,
                             source_epoch, stabilize_result, clean_generated)
@@ -313,9 +313,9 @@ def _get(path: str, query: str, data_root: Path) -> dict:
         return _json(404, {"error": "The crawler has not induced this recording yet."})
     if path in ("/omega_vision/api/v1/demos", "/omega_vision/api/v1/demos/frame", "/omega_vision/api/v1/demos/expectations"):
         try:
-            demos = DemoCatalog(data_root)
             if path == "/omega_vision/api/v1/demos":
-                return _json(200, demos.listing())
+                return _json(200, cached_listing(data_root))
+            demos = catalog_for(data_root)
             params = _query_params(query)
             if any(len(params.get(key, [])) != 1 for key in ("sequence", "frame")):
                 raise ValueError("Choose a demo recording and frame.")

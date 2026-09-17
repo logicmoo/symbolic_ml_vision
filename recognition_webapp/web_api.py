@@ -75,10 +75,21 @@ def _redirect(location: str) -> dict:
 
 
 def _authorized(host: str | None, origin: str | None, port: int) -> bool:
-    hosts = {f"127.0.0.1:{port}", f"localhost:{port}"}
-    if host not in hosts or (origin is not None and origin not in {f"http://{h}" for h in hosts}):
+    """Any Host is welcome (local, LAN, tunnel); only cross-SITE browser calls are refused.
+
+    A request is rejected only when it carries an Origin header naming a DIFFERENT site
+    than the one addressed - i.e. some other web page scripting this app. Direct visits,
+    tunnels (e.g. *.trycloudflare.com) and same-origin app requests always work.
+    """
+    if not host:
         return False
-    return True
+    if origin is None:
+        return True
+    local = {f"127.0.0.1:{port}", f"localhost:{port}"}
+    origin_host = origin.split("://", 1)[-1]
+    if origin_host in local and host in local:
+        return True
+    return origin_host.lower() == host.lower()
 
 
 def _query_params(query: str) -> dict:

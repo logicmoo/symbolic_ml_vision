@@ -617,6 +617,9 @@ class HudReadoutAndInputEvidenceTests(unittest.TestCase):
             self.assertFalse(is_generated(frame_dir / name))
             with self.assertRaisesRegex(ValueError, "reserved input"):
                 _write(frame_dir / name, "clobber")
+        # The recording-level action script is reserved input too.
+        self.assertTrue(is_reserved_input(frame_dir.parent / "recording.json"))
+        self.assertFalse(is_generated(frame_dir.parent / "recording.json"))
         self.assertTrue(is_generated(frame_dir / "recognition.json"))
         self.assertTrue(is_generated(frame_dir / "context.pl"))
         victims = clean_generated(frame_dir.parent, dry_run=True)

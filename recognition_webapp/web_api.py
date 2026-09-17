@@ -154,28 +154,34 @@ def _get(path: str, query: str, data_root: Path) -> dict:
                         or any(child.is_dir() and child.name.isdigit() and (child / "image.png").is_file()
                                for child in recording.iterdir()))):
             return _json(404, {"error": "Unknown recording."})
-        # Tutorial mode: beliefs AS OF a frame (only evidence that has already happened).
+        # Induction always lives under a frame dir: beliefs AS OF that frame (only evidence
+        # that has already happened). Without upto, serve the LAST frame's end state.
         upto = params.get("upto", [None])[0]
+        frame_dirs_sorted = sorted((child for child in recording.iterdir()
+                                    if child.is_dir() and child.name.isdigit()),
+                                   key=lambda child: int(child.name))
+        candidates = []
         if upto is not None and upto.isdigit():
-            snapshot_path = recording / upto / "beliefs.json"
-            if snapshot_path.is_file():
-                try:
-                    return _json(200, {"sequenceId": sequence, "upto": int(upto),
-                                       "induction": json.loads(snapshot_path.read_text(encoding="utf-8")),
-                                       "scope": "as_of_frame",
-                                       "updated": snapshot_path.stat().st_mtime})
-                except (OSError, ValueError):
-                    pass  # fall through to the whole-recording summary
-        induction_path = recording / "induction.json"
-        if not induction_path.is_file():
-            return _json(404, {"error": "The crawler has not induced this recording yet."})
-        try:
+            candidates += [recording / upto / "induction.json", recording / upto / "beliefs.json"]
+            scope = "as_of_frame"
+        else:
+            candidates += [frame / name for frame in reversed(frame_dirs_sorted)
+                           for name in ("induction.json", "beliefs.json")]
+            scope = "final_frame"
+        candidates.append(recording / "induction.json")  # legacy root layout
+        for snapshot_path in candidates:
+            if not snapshot_path.is_file():
+                continue
+            try:
+                payload_out = json.loads(snapshot_path.read_text(encoding="utf-8"))
+            except (OSError, ValueError):
+                continue
             return _json(200, {"sequenceId": sequence,
-                               "induction": json.loads(induction_path.read_text(encoding="utf-8")),
-                               "scope": "whole_recording",
-                               "updated": induction_path.stat().st_mtime})
-        except (OSError, ValueError):
-            return _json(422, {"error": "induction.json is unreadable."})
+                               "upto": payload_out.get("upto"),
+                               "induction": payload_out,
+                               "scope": scope if snapshot_path.parent != recording else "legacy_root",
+                               "updated": snapshot_path.stat().st_mtime})
+        return _json(404, {"error": "The crawler has not induced this recording yet."})
     if path in ("/omega_vision/api/v1/demos", "/omega_vision/api/v1/demos/frame", "/omega_vision/api/v1/demos/expectations"):
         try:
             demos = DemoCatalog(data_root)

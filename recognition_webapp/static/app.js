@@ -2644,7 +2644,9 @@ async function loadInduction() {
     state.induction = induction;  // beliefs feed the live two-frame abduction
     byId("induction-title").textContent = data.scope === "as_of_frame"
       ? `Induction \u00b7 beliefs as of frame ${data.upto} (nothing from later frames)`
-      : "Induction \u00b7 whole-recording crawler knowledge (frame snapshots not built yet)";
+      : data.scope === "final_frame"
+        ? "Induction \u00b7 final frame's accumulated beliefs"
+        : "Induction \u00b7 legacy whole-recording file (crawler rebuild pending)";
     const body = byId("induction-body");
     body.replaceChildren();
     const line = (strong, rest) => {

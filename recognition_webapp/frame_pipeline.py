@@ -193,7 +193,7 @@ def stabilize_result(result: dict, sequence_id: str, order: int) -> dict:
 # them. GENERATED names are the only files this pipeline creates; any cleanup must remove
 # only names matching the generated manifest and must leave everything else untouched.
 
-RESERVED_INPUTS = ("image.png", "image.jpg", "image.jpeg", "state.json")
+RESERVED_INPUTS = ("image.png", "image.jpg", "image.jpeg", "state.json", "recording.json")
 
 _GENERATED_NAMES = ("regions.pl", "groups.pl", "acceptance.pl", "turtles.pl", "context.pl",
                     "geometry.json", "recognition.json", "deductions.pl", "beliefs.json",
@@ -289,16 +289,25 @@ def _event_type_key(event: dict) -> str:
 
 
 def _load_priors(recording: Path) -> dict:
-    """Prior beliefs from the recording's previous induction.json (historical knowledge).
-    Used to seed implication evidence pooling and to issue next-frame predictions."""
-    path = recording / "induction.json"
-    if not path.is_file():
-        return {}
-    try:
-        prior = json.loads(path.read_text(encoding="utf-8"))
-    except (OSError, ValueError):
-        return {}
-    return prior if isinstance(prior, dict) else {}
+    """Prior beliefs from the previous pass: the LAST frame's induction.json (induction only
+    ever lives under frame dirs). Falls back to legacy locations (frame beliefs.json, then
+    the old recording-root induction.json) so older stores keep working."""
+    frame_dirs_sorted = sorted((child for child in recording.iterdir()
+                                if child.is_dir() and child.name.isdigit()),
+                               key=lambda path: int(path.name), reverse=True)
+    candidates = [frame / name for frame in frame_dirs_sorted
+                  for name in ("induction.json", "beliefs.json")]
+    candidates.append(recording / "induction.json")  # legacy root layout
+    for path in candidates:
+        if not path.is_file():
+            continue
+        try:
+            prior = json.loads(path.read_text(encoding="utf-8"))
+        except (OSError, ValueError):
+            continue
+        if isinstance(prior, dict):
+            return prior
+    return {}
 
 
 def _predict_next(priors: dict, events: list, matched_ids: set) -> list:
@@ -817,6 +826,7 @@ def process_recording(recording: Path, *, pipeline: str = "prolog", stamp_epoch:
     prev_raw = None
     known_entities: set = set()
     prev_velocities: dict = {}
+    pending_snapshot = None
     # Prior beliefs (previous induction pass) drive next-frame predictions and pool their
     # evidence into this pass's implications.
     priors = _load_priors(recording)
@@ -917,14 +927,12 @@ def process_recording(recording: Path, *, pipeline: str = "prolog", stamp_epoch:
                                                     set(prev_velocities))
                 # TUTORIAL belief snapshot: what has been induced from the transitions seen
                 # SO FAR (no prior passes pooled in) - a student stepping to this frame sees
-                # only beliefs whose evidence has already happened.
+                # only beliefs whose evidence has already happened. Written after the
+                # sidecar pass below as this frame's induction.json/.pl/.metta.
                 snapshot = induce(transitions)
                 snapshot["upto"] = order
                 last_snapshot = snapshot
-                if _write(frame_dir / "beliefs.json",
-                          json.dumps(snapshot, ensure_ascii=True, indent=2) + "\n"):
-                    produced.append({"recording": recording_id, "frame": frame_id,
-                                     "file": (frame_dir / "beliefs.json").as_posix(), "kind": "json"})
+                pending_snapshot = snapshot
                 if wrote_any or _needs([frame_dir / "deductions.pl", frame_dir / "deductions.metta"]):
                     for artifact in deduced.get("files", []):
                         if _write(frame_dir / artifact["name"], artifact["content"]):
@@ -937,10 +945,14 @@ def process_recording(recording: Path, *, pipeline: str = "prolog", stamp_epoch:
         prev_result, prev_order, prev_raw = result, order, raw
 
         # Guarantee a .metta sidecar for every .pl in this frame directory.
+        frame_metta_sources = []
         for pl_path in sorted(frame_dir.glob("*.pl")):
+            if pl_path.name == "induction.pl":
+                continue  # induction is rendered below, never sidecar-converted
             try:
                 metta_path, wrote, diagnostics = ensure_metta_sidecar(pl_path)
                 metta_sources.append(metta_path.relative_to(recording).as_posix())
+                frame_metta_sources.append(metta_path.name)
                 if wrote:
                     produced.append({"recording": recording_id, "frame": frame_id,
                                      "file": metta_path.as_posix(), "kind": "metta",
@@ -950,25 +962,43 @@ def process_recording(recording: Path, *, pipeline: str = "prolog", stamp_epoch:
                 errors.append({"frame": frame_id, "stage": "metta-sidecar",
                                "file": pl_path.name, "error": str(error)})
 
-    # Final beliefs ARE the last frame's accumulated snapshot: induction only ever builds
-    # up frame to frame. The recording-level induction files are the END STATE of that
-    # accumulation (plus the historical revisions of earlier passes) - never a separate
-    # top-level pass that could know something no frame step revealed.
-    induction = dict(last_snapshot) if last_snapshot is not None else induce(transitions)
-    induction["inducedAt"] = datetime.now(timezone.utc).isoformat(timespec="seconds")
-    history = _induction_history(recording, induction)
-    rendered = _render_induction(recording_id, induction, sorted(set(metta_sources)), history)
-    for name, text in rendered.items():
-        path = recording / name
-        if _write(path, text):
-            produced.append({"recording": recording_id, "frame": None,
-                             "file": path.as_posix(), "kind": Path(name).suffix.lstrip(".")})
-    # Record the reverse include-into marker on each aggregated source .metta.
-    for rel in sorted(set(metta_sources)):
-        try:
-            _mark_included_into(recording / rel, "../induction.metta")
-        except OSError:
-            continue
+        # INDUCTION LIVES UNDER THE FRAME, never at the recording root: this frame's
+        # induction.json/.pl/.metta hold the beliefs accumulated over transitions 0..N
+        # (with per-frame revision history from earlier passes).
+        if pending_snapshot is not None:
+            snapshot = dict(pending_snapshot)
+            snapshot["inducedAt"] = datetime.now(timezone.utc).isoformat(timespec="seconds")
+            history = _induction_history(frame_dir, snapshot)
+            rendered = _render_induction(recording_id, snapshot, sorted(frame_metta_sources), history)
+            for name, text in rendered.items():
+                if _write(frame_dir / name, text):
+                    produced.append({"recording": recording_id, "frame": frame_id,
+                                     "file": (frame_dir / name).as_posix(),
+                                     "kind": Path(name).suffix.lstrip(".")})
+            for name in sorted(frame_metta_sources):
+                try:
+                    _mark_included_into(frame_dir / name, "induction.metta")
+                except OSError:
+                    continue
+            legacy = frame_dir / "beliefs.json"  # superseded by frame-level induction.json
+            if legacy.is_file() and is_generated(legacy):
+                try:
+                    legacy.unlink()
+                except OSError:
+                    pass
+            pending_snapshot = None
 
+    # No recording-root induction: knowledge only ever builds frame to frame, so the final
+    # belief state is the LAST frame's induction files. Obsolete root-level induction
+    # artifacts from earlier layouts are removed (they are our own generated files).
+    for legacy in ("induction.json", "induction.pl", "induction.metta", "beliefs.json"):
+        path = recording / legacy
+        if path.is_file() and is_generated(path):
+            try:
+                path.unlink()
+            except OSError:
+                pass
+
+    final_beliefs = dict(last_snapshot) if last_snapshot is not None else induce(transitions)
     return {"recording": recording_id, "path": recording.as_posix(), "frames": len(frames),
-            "produced": produced, "errors": errors, "induction": induction}
+            "produced": produced, "errors": errors, "induction": final_beliefs}

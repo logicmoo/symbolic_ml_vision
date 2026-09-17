@@ -8,18 +8,16 @@
     "height": 48,
     "width": 64
   },
-  "caseId": "blocked",
+  "caseId": "blocked_unobserved",
   "comparisonPolicy": {
     "eventMatching": "required_subset_after_independent_entity_alignment",
     "groundTruthIsRecognizerInput": false,
     "incidentalEventsAllowed": true,
     "initialFrame": "baseline_only"
   },
-  "description": "A wall halts rightward movement; repeated attempts fail until the actor moves another way with the wall still standing.",
+  "description": "Blocked with no observed inputs: the actor sits at the wall an extra frame, so a failed attempt must be abduced before movement resumes in another direction.",
   "entityIds": [
     "actor",
-    "down",
-    "right",
     "wall"
   ],
   "expectedAssessment": null,
@@ -175,7 +173,7 @@
       "caption": "Actor approaches wall.",
       "frameId": "0",
       "frameOrder": 0,
-      "image": "data/recordings/events_tests/blocked/0/image.png",
+      "image": "data/recordings/events_tests/blocked_unobserved/0/image.png",
       "sha256": "7663f8257c2727c24f01dbf8ad187d9e4efb448b24499831b4f366d0fec2def8"
     },
     {
@@ -248,20 +246,12 @@
       "caption": "Actor reaches wall and stays against it.",
       "frameId": "1",
       "frameOrder": 1,
-      "image": "data/recordings/events_tests/blocked/1/image.png",
+      "image": "data/recordings/events_tests/blocked_unobserved/1/image.png",
       "sha256": "d5eac521766a8514e708c69e014e6c01d72ab089c7b4fe35ee61bbeb154c5f0d"
     },
     {
       "atSeconds": 2,
-      "authoredAnnotations": [
-        {
-          "args": [
-            "actor",
-            "right"
-          ],
-          "predicate": "user_input"
-        }
-      ],
+      "authoredAnnotations": [],
       "authoredObjects": [
         {
           "color": [
@@ -326,23 +316,15 @@
           "y": 8
         }
       ],
-      "caption": "Rightward attempt cannot move actor through wall.",
+      "caption": "Actor sits at the wall an extra frame with no visible cause.",
       "frameId": "2",
       "frameOrder": 2,
-      "image": "data/recordings/events_tests/blocked/2/image.png",
+      "image": "data/recordings/events_tests/blocked_unobserved/2/image.png",
       "sha256": "d5eac521766a8514e708c69e014e6c01d72ab089c7b4fe35ee61bbeb154c5f0d"
     },
     {
       "atSeconds": 3,
-      "authoredAnnotations": [
-        {
-          "args": [
-            "actor",
-            "right"
-          ],
-          "predicate": "user_input"
-        }
-      ],
+      "authoredAnnotations": [],
       "authoredObjects": [
         {
           "color": [
@@ -407,23 +389,15 @@
           "y": 8
         }
       ],
-      "caption": "Another rightward attempt has no effect; actor stays on the wall.",
+      "caption": "Actor still sits at the wall; whatever was tried did not work.",
       "frameId": "3",
       "frameOrder": 3,
-      "image": "data/recordings/events_tests/blocked/3/image.png",
+      "image": "data/recordings/events_tests/blocked_unobserved/3/image.png",
       "sha256": "d5eac521766a8514e708c69e014e6c01d72ab089c7b4fe35ee61bbeb154c5f0d"
     },
     {
       "atSeconds": 4,
-      "authoredAnnotations": [
-        {
-          "args": [
-            "actor",
-            "down"
-          ],
-          "predicate": "user_input"
-        }
-      ],
+      "authoredAnnotations": [],
       "authoredObjects": [
         {
           "color": [
@@ -488,22 +462,21 @@
           "y": 8
         }
       ],
-      "caption": "Downward attempt succeeds; the wall never moves.",
+      "caption": "Actor moves down instead; the wall never moves.",
       "frameId": "4",
       "frameOrder": 4,
-      "image": "data/recordings/events_tests/blocked/4/image.png",
+      "image": "data/recordings/events_tests/blocked_unobserved/4/image.png",
       "sha256": "08de9d89d1903ec69a8eda01839d8f1b51c43c2a0547bfee3623f26bcb3a507d"
     }
   ],
   "origin": "authored_synthetic_test_oracle",
   "recognizerStatus": "not_run",
   "requirements": [
-    "Blocked is a causal scenario: intention/attempt evidence is required in addition to stationary contact.",
-    "The wall persists through every frame; blocked ends because the actor's attempts change direction, never because the wall disappears.",
-    "Authored input is separate oracle metadata, not injected into recording FRAME actions."
+    "No user_input is authored anywhere in this case: attempt evidence must be abduced from the unexplained dwell at the wall followed by redirected movement.",
+    "The wall persists through every frame; blocked ends because movement resumes in a new direction."
   ],
   "sampleIntervalSeconds": 1,
   "schemaVersion": 1,
-  "sequenceId": "data/recordings/events_tests/blocked",
+  "sequenceId": "data/recordings/events_tests/blocked_unobserved",
   "suiteId": "event-mini-recordings-v1"
 }

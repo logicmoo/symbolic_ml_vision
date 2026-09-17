@@ -1,5 +1,5 @@
 {
-  "count": 54,
+  "count": 55,
   "schemaVersion": 1,
   "sourcePlanSha256": "05d69ba4066646bf67b56f21a43d6df7e177d531c18bfec406dd13680e48d090",
   "suiteId": "documented-recording-tests-v1",
@@ -545,8 +545,24 @@
           "visualSequenceId": "recordings/events_tests/blocked"
         }
       ],
-      "summary": "A wall prevents an intended rightward move until the wall is removed.",
+      "summary": "A wall halts rightward movement; repeated attempts fail until the actor moves another way with the wall still standing.",
       "title": "Blocked"
+    },
+    {
+      "documentationFile": "documentation/blocked_unobserved.md",
+      "executionStatus": "not_run",
+      "group": "Events",
+      "id": "blocked_unobserved",
+      "recordings": [
+        {
+          "frameCount": 5,
+          "label": "Unobserved-input variant",
+          "partition": "event_baseline",
+          "visualSequenceId": "recordings/events_tests/blocked_unobserved"
+        }
+      ],
+      "summary": "Blocked with no observed inputs: the actor sits at the wall an extra frame, so a failed attempt must be abduced before movement resumes in another direction.",
+      "title": "Blocked (unobserved inputs)"
     },
     {
       "documentationFile": "documentation/follow.md",

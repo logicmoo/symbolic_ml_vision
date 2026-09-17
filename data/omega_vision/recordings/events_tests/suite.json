@@ -348,10 +348,22 @@
     },
     {
       "caseId": "blocked",
-      "description": "A wall prevents an intended rightward move until the wall is removed.",
+      "description": "A wall halts rightward movement; repeated attempts fail until the actor moves another way with the wall still standing.",
       "expectedAssessment": null,
       "frameCount": 5,
       "recording": "data/recordings/events_tests/blocked",
+      "targets": [
+        "start(blocked)",
+        "continue(blocked)",
+        "end(blocked)"
+      ]
+    },
+    {
+      "caseId": "blocked_unobserved",
+      "description": "Blocked with no observed inputs: the actor sits at the wall an extra frame, so a failed attempt must be abduced before movement resumes in another direction.",
+      "expectedAssessment": null,
+      "frameCount": 5,
+      "recording": "data/recordings/events_tests/blocked_unobserved",
       "targets": [
         "start(blocked)",
         "continue(blocked)",
@@ -400,7 +412,7 @@
     }
   ],
   "description": "One miniature recording per event type or lasting relation, plus assessment controls.",
-  "frameCount": 122,
+  "frameCount": 127,
   "gameId": "events_tests",
   "loadInstructions": "Choose the events_tests recording group, then an individual event type.",
   "oraclePolicy": "Expected events and world annotations are test intent, never detected facts or published memory.",

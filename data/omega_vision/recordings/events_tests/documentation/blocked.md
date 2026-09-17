@@ -1,6 +1,6 @@
 # Blocked
 
-A wall prevents an intended rightward move until the wall is removed.
+A wall halts rightward movement; repeated attempts fail until the actor moves another way with the wall still standing.
 
 **Execution status: not run.**
 
@@ -10,7 +10,7 @@ Prior approach/contact, repeated actual attempted inputs, wall geometry and fail
 
 ## Measured new evidence and decision / episode timing
 
-Intended start/continue/end at `2`, `3`, `4`; wall removal permits motion
+Intended start/continue/end at `2`, `3`, `4`; blocked ends when the attempts change direction and motion resumes while the wall persists in every frame
 
 ## Required caution and fixture insufficiency
 

@@ -1,5 +1,5 @@
 {
-  "description": "A wall halts rightward movement; repeated attempts fail until the actor moves another way with the wall still standing.",
+  "description": "Blocked with no observed inputs: the actor sits at the wall an extra frame, so a failed attempt must be abduced before movement resumes in another direction.",
   "expected_events_file": "expected_events.json",
   "fixture_suite": "event-mini-recordings-v1",
   "game_directory": "events_tests",
@@ -7,12 +7,12 @@
   "kind": "arc3_play_recording",
   "last_event": "fixture_created",
   "level": "1",
-  "level_directory": "data/recordings/events_tests/blocked",
+  "level_directory": "data/recordings/events_tests/blocked_unobserved",
   "moves": [
     {
       "action": null,
       "data": {},
-      "directory": "data/recordings/events_tests/blocked/0",
+      "directory": "data/recordings/events_tests/blocked_unobserved/0",
       "index": 0,
       "level": "1",
       "recorded_at": "2000-01-01T00:00:00Z",
@@ -21,7 +21,7 @@
     {
       "action": "FRAME",
       "data": {},
-      "directory": "data/recordings/events_tests/blocked/1",
+      "directory": "data/recordings/events_tests/blocked_unobserved/1",
       "index": 1,
       "level": "1",
       "recorded_at": "2000-01-01T00:00:00Z",
@@ -30,7 +30,7 @@
     {
       "action": "FRAME",
       "data": {},
-      "directory": "data/recordings/events_tests/blocked/2",
+      "directory": "data/recordings/events_tests/blocked_unobserved/2",
       "index": 2,
       "level": "1",
       "recorded_at": "2000-01-01T00:00:00Z",
@@ -39,7 +39,7 @@
     {
       "action": "FRAME",
       "data": {},
-      "directory": "data/recordings/events_tests/blocked/3",
+      "directory": "data/recordings/events_tests/blocked_unobserved/3",
       "index": 3,
       "level": "1",
       "recorded_at": "2000-01-01T00:00:00Z",
@@ -48,7 +48,7 @@
     {
       "action": "FRAME",
       "data": {},
-      "directory": "data/recordings/events_tests/blocked/4",
+      "directory": "data/recordings/events_tests/blocked_unobserved/4",
       "index": 4,
       "level": "1",
       "recorded_at": "2000-01-01T00:00:00Z",

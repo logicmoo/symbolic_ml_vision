@@ -58,6 +58,7 @@ function invalidate(soft = false) {
   autoAnalysisPending = false;
   state.entityMap = {};  // r# -> e# map is per-frame; the tracker repopulates it
   state.deductionFiles = [];  // cross-frame deduction files; two-frame repopulates them
+  state.frameFiles = [];      // the frame's N/ dir enumeration; loadFrameFiles repopulates it
   // Soft mode (frame navigation): keep every section mounted with its current content and
   // just tint it "stale" while the new frame loads; each renderer swaps its own section in
   // place and clears the tint. This avoids the whole page collapsing and reforming.
@@ -1251,6 +1252,7 @@ async function loadDemoFrame() {
       void loadLearnedScene();  // belief state is per-frame now
       void loadInduction();     // beliefs as of this frame (tutorial stepping)
       void loadFrameCommand(sequence.id, frame.frameId);
+      void loadFrameFiles(sequence.id, frame.frameId);
       void renderDeductionImages(); // hides stale layers immediately (e.g. back at frame 0)
       requestDemoAnalysis();
       void loadPrevPreview(sequence, Number(byId("demo-frame").value), token);
@@ -2886,15 +2888,35 @@ byId("download-artifact").addEventListener("click", () => {
   if (artifact) download(artifact.content, artifact.name, artifact.media_type);
 });
 function outputArtifacts() {
-  const files = [...(state.result?.artifacts || []), ...(state.deductionFiles || [])];
-  if (state.result?.metta && !files.some(file => file.name === state.result.metta.name)) files.push(state.result.metta);
-  if (state.result && !files.some(file => file.name === "recognition.json")) {
-    files.push({ name: "recognition.json", content: JSON.stringify(state.result, null, 2) + "\n", media_type: "application/json" });
-  }
-  if (state.twoFrame && state.deductionFiles?.length && !files.some(file => file.name === "deductions.json")) {
-    files.push({ name: "deductions.json", content: JSON.stringify(state.twoFrame, null, 2) + "\n", media_type: "application/json" });
+  // The frame's N/ directory on disk is the authoritative file list; in-memory pipeline
+  // results only fill gaps (fresh live runs the crawler has not written to disk yet).
+  const files = [...(state.frameFiles || [])];
+  const have = new Set(files.map((file) => file.name));
+  const add = (file) => { if (file && !have.has(file.name)) { files.push(file); have.add(file.name); } };
+  for (const artifact of state.result?.artifacts || []) add(artifact);
+  for (const file of state.deductionFiles || []) add(file);
+  if (state.result?.metta) add(state.result.metta);
+  if (state.result) add({ name: "recognition.json", content: JSON.stringify(state.result, null, 2) + "\n", media_type: "application/json" });
+  if (state.twoFrame && state.deductionFiles?.length) {
+    add({ name: "deductions.json", content: JSON.stringify(state.twoFrame, null, 2) + "\n", media_type: "application/json" });
   }
   return files;
+}
+
+let frameFilesRequest = 0;
+async function loadFrameFiles(sequenceId, frameId) {
+  // Enumerate the frame's N/ dir from disk so the explorer shows EVERY frame file
+  // (induction, context, state.json, ...), not just in-memory pipeline output.
+  const token = ++frameFilesRequest;
+  try {
+    const query = new URLSearchParams({ sequence: sequenceId, frame: frameId });
+    const payload = await request(`/omega_vision/api/v1/demos/frame-files?${query}`);
+    if (token !== frameFilesRequest) return;
+    state.frameFiles = payload.files || [];
+  } catch {
+    if (token === frameFilesRequest) state.frameFiles = [];
+  }
+  renderOutputEditor();
 }
 function outputDraftKey(artifact) {
   return JSON.stringify([state.result.frame, state.result.pipeline, artifact.name, artifact.content]);

@@ -139,6 +139,30 @@ def _get(path: str, query: str, data_root: Path) -> dict:
                                             static_only=static_only))
         except ValueError as error:
             return _json(422, {"error": str(error)})
+    if path == "/omega_vision/api/v1/demos/frame-files":
+        # Enumerate the frame's N/ directory verbatim: every text file (pl/metta/json)
+        # that exists on disk, reserved inputs included as read-only evidence.
+        params = _query_params(query)
+        if any(len(params.get(key, [])) != 1 for key in ("sequence", "frame")):
+            return _json(422, {"error": "Choose a recording sequence and frame."})
+        sequence, frame = params["sequence"][0], params["frame"][0]
+        root = data_root.resolve()
+        if sequence.split("/", 1)[0] not in ("recordings", "curated") or not frame.isdigit():
+            return _json(422, {"error": "Frames live under recordings/ or curated/ with numeric ids."})
+        frame_dir = (root / sequence / frame).resolve()
+        if not frame_dir.is_relative_to(root) or not frame_dir.is_dir():
+            return _json(404, {"error": "Unknown frame."})
+        media = {".json": "application/json", ".pl": "text/x-prolog", ".metta": "text/plain"}
+        listing = []
+        for file_path in sorted(frame_dir.iterdir()):
+            if not file_path.is_file() or file_path.suffix not in media:
+                continue
+            try:
+                listing.append({"name": file_path.name, "content": file_path.read_text(encoding="utf-8"),
+                                "media_type": media[file_path.suffix]})
+            except (OSError, UnicodeDecodeError):
+                continue
+        return _json(200, {"sequenceId": sequence, "frame": frame, "files": listing})
     if path == "/omega_vision/api/v1/demos/state":
         # A frame's reserved state.json (read-only input evidence): the recorded command
         # that led INTO this frame, game/level scalars, timing. Never pipeline output.
